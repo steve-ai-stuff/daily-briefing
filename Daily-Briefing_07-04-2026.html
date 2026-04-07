@@ -1257,11 +1257,26 @@ function renderDoughnutChart() {
 }
 
 function fetchWeather() {
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=57.6875&longitude=-4.1613&current=temperature_2m,apparent_temperature,precipitation,wind_speed_10m,cloud_cover,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=7&windspeed_unit=mph')
-    .then(function(r){return r.json();})
-    .then(renderWeather)
-    .catch(function(){
-      document.getElementById('weather-content').innerHTML='<p style="color:rgba(255,255,255,0.70);font-size:0.82rem;">Weather unavailable — visit <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank" style="color:#fff;text-decoration:underline;">Met Office Invergordon</a></p>';
+  var WEATHER_URL = 'https://api.open-meteo.com/v1/forecast?latitude=57.6875&longitude=-4.1613&current=temperature_2m,apparent_temperature,precipitation,wind_speed_10m,cloud_cover,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=7&windspeed_unit=mph';
+  function showWeatherFallback(err) {
+    console.error('Weather unavailable (all attempts failed):', err);
+    document.getElementById('weather-content').innerHTML='<p style="color:rgba(255,255,255,0.70);font-size:0.82rem;">Weather unavailable — visit <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank" style="color:#fff;text-decoration:underline;">Met Office Invergordon</a></p>';
+  }
+  function tryRender(data) {
+    if (data && data.error) throw new Error('Open-Meteo API error: ' + data.reason);
+    renderWeather(data);
+  }
+  // Primary: direct Open-Meteo request
+  fetch(WEATHER_URL)
+    .then(function(r){ return r.json(); })
+    .then(tryRender)
+    .catch(function(err) {
+      console.warn('Weather direct fetch failed, trying proxy:', err);
+      // Fallback: route through allorigins (same proxy traffic uses)
+      fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(WEATHER_URL))
+        .then(function(r){ return r.json(); })
+        .then(tryRender)
+        .catch(showWeatherFallback);
     });
 }
 function wmoIcon(c){if(c===0)return'☀️';if(c<=2)return'🌤️';if(c===3)return'☁️';if(c<=48)return'🌫️';if(c<=57)return'🌧️';if(c<=67)return'🌧️';if(c<=77)return'🌨️';if(c<=82)return'🌦️';if(c<=86)return'🌨️';if(c<=99)return'⛈️';return'🌡️';}

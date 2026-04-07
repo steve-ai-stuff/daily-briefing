@@ -478,7 +478,9 @@ footer {
   var start = new Date(now.getFullYear(),0,0);
   var dayOfYear = Math.floor((now - start) / 86400000);
   var img = images[dayOfYear % images.length];
-  document.documentElement.style.setProperty('--bg-image','url("../Background Images/' + img + '")');
+  var isGitHub = window.location.hostname.includes('github.io');
+  var imgPath = isGitHub ? img : '../Background Images/' + img;
+  document.documentElement.style.setProperty('--bg-image','url("' + imgPath + '")');
 })();
 </script>
 

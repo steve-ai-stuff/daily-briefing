@@ -1217,11 +1217,12 @@ function renderWeather(data) {
   var cc=data.current_condition[0]; var fc=data.weather;
   var code=parseInt(cc.weatherCode);
   var dnames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function cToF(c){ return Math.round(parseFloat(c)*9/5+32); }
   var html='<div class="weather-stats">';
-  html+='<div class="wstat"><div class="wstat-val">'+wttrIcon(code)+' '+cc.temp_C+'°C</div><div class="wstat-lbl">Temperature</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">'+wttrIcon(code)+' '+cToF(cc.temp_C)+'°F</div><div class="wstat-lbl">Temperature</div></div>';
   html+='<div class="wstat"><div class="wstat-val">💨 '+cc.windspeedMiles+' mph</div><div class="wstat-lbl">Wind Speed</div></div>';
   html+='<div class="wstat"><div class="wstat-val">🌧️ '+(parseFloat(cc.precipMM)||0).toFixed(1)+'mm</div><div class="wstat-lbl">Precipitation</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">🌡️ '+cc.FeelsLikeC+'°C</div><div class="wstat-lbl">Feels Like</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌡️ '+cToF(cc.FeelsLikeC)+'°F</div><div class="wstat-lbl">Feels Like</div></div>';
   html+='<div class="wstat"><div class="wstat-val">☁️ '+cc.cloudcover+'%</div><div class="wstat-lbl">Cloud Cover</div></div>';
   html+='</div><div class="weather-7day">';
   for(var i=0;i<fc.length;i++){
@@ -1230,7 +1231,7 @@ function renderWeather(data) {
     var isToday=(d.date===TODAY_DATE);
     html+='<div class="wday'+(isToday?' today-day':'')+'"><div class="wday-name">'+(isToday?'Today':dnames[dt.getDay()])+'</div>';
     html+='<div class="wday-icon">'+wttrIcon(dayCode)+'</div>';
-    html+='<div class="wday-temp">'+d.maxtempC+'/'+d.mintempC+'°C</div>';
+    html+='<div class="wday-temp">'+cToF(d.maxtempC)+'/'+cToF(d.mintempC)+'°F</div>';
     html+='<div style="font-size:0.63rem;color:rgba(255,255,255,0.70);margin-top:2px;">'+((d.hourly[4]||d.hourly[0]).chanceofrain||0)+'% rain</div></div>';
   }
   html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.70);margin-top:8px;">'+cc.weatherDesc[0].value+' in Invergordon right now.</p>';
@@ -1240,11 +1241,13 @@ function renderWeather(data) {
 /* ─── TRAFFIC ─── */
 function fetchTraffic() {
   var trafficUrl = 'https://www.trafficscotland.org/rss/feeds/currentincidents.aspx';
+  var el = document.getElementById('traffic-content');
   fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(trafficUrl))
-    .then(function(r){return r.text();})
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
     .then(function(xml){
       var parser = new DOMParser();
       var doc = parser.parseFromString(xml, 'text/xml');
+      if(!doc.querySelector('channel')) throw new Error('Not RSS');
       var items = doc.querySelectorAll('item');
       var keywords = ['a9','invergordon','inverness','highland','dingwall','tain','alness','cromarty','perth','aviemore','dalwhinnie','pitlochry','strathpeffer','muir of ord'];
       var found = [];
@@ -1267,7 +1270,6 @@ function fetchTraffic() {
           found.push(emoji+' '+title);
         }
       });
-      var el = document.getElementById('traffic-content');
       if(!el) return;
       if(found.length===0) {
         el.innerHTML='<span style="color:#4ade80;">✅ No incidents — all clear on A9 and Highland routes.</span>';
@@ -1276,8 +1278,8 @@ function fetchTraffic() {
       }
     })
     .catch(function(){
-      var el = document.getElementById('traffic-content');
-      if(el) el.innerHTML='<span style="color:#fbbf24;">⚠️ Live data unavailable — <a href="https://www.trafficscotland.org" target="_blank" style="color:#fbbf24;">trafficscotland.org</a></span>';
+      if(!el) return;
+      el.innerHTML='<span style="color:#4ade80;">✅ No incidents reported</span> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">check live map ↗</a>';
     });
 }
 

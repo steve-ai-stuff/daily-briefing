@@ -117,7 +117,7 @@ body > * { position: relative; z-index: 1; }
 /* ─── ROCKET ANIMATION ─── */
 @keyframes rocketFly { 0%{left:10%;opacity:0;transform:rotate(30deg)} 15%{opacity:1} 85%{opacity:1} 100%{left:94%;opacity:0;transform:rotate(30deg)} }
 @keyframes bangPop   { 0%{transform:scale(0.2);opacity:0} 40%{transform:scale(1.8);opacity:1} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1.0);opacity:0} }
-@keyframes popperPop { 0%{transform:scale(0) rotate(-20deg)} 60%{transform:scale(1.3) rotate(10deg)} 100%{transform:scale(1.0) rotate(0deg);opacity:0} }
+@keyframes popperPop { 0%{transform:scale(0) rotate(-20deg);opacity:1} 40%{transform:scale(1.3) rotate(10deg);opacity:1} 75%{transform:scale(1.0) rotate(0deg);opacity:1} 100%{transform:scale(1.0) rotate(0deg);opacity:0} }
 #rocket-wrap { position:absolute;top:8px;font-size:1.4rem;display:none;pointer-events:none; }
 #rocket-wrap.flying { display:block;animation:rocketFly 5s linear forwards; }
 .bang-pop { position:absolute;top:2px;font-size:1.5rem;display:none;pointer-events:none; }
@@ -125,7 +125,7 @@ body > * { position: relative; z-index: 1; }
 #bang-emoji  { position:absolute;top:4px;left:50%;font-size:1.6rem;display:none;pointer-events:none; }
 #bang-emoji.show { display:block;animation:bangPop 1s ease-out forwards; }
 #party-popper { position:absolute;top:4px;right:70px;font-size:1.6rem;display:none;pointer-events:none;transform:scale(0); }
-#party-popper.show { display:block;animation:popperPop 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+#party-popper.show { display:block;animation:popperPop 1.2s cubic-bezier(0.34,1.56,0.64,1) forwards; }
 
 /* ─── TOAST ─── */
 #toast-container {
@@ -1144,7 +1144,7 @@ function updateRing() {
       },b.t);
     });
     setTimeout(function(){var b=document.getElementById('bang-emoji');b.classList.add('show');setTimeout(function(){b.classList.remove('show');b.style.display='none';},1000);},1600);
-    setTimeout(function(){var pp=document.getElementById('party-popper');pp.classList.add('show');setTimeout(function(){pp.classList.remove('show');pp.style.display='none';},500);},4800);
+    setTimeout(function(){var pp=document.getElementById('party-popper');pp.classList.add('show');setTimeout(function(){pp.classList.remove('show');pp.style.display='none';},1300);},4800);
     showToast("🎉 100%! You're on fire today, Steve! Don't forget to CONFIRM! 🚀");
   }
 }

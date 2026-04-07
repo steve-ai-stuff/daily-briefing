@@ -219,7 +219,7 @@ body > * { position: relative; z-index: 1; }
 
 /* ─── HEADER ─── */
 .header-card {
-  background: linear-gradient(135deg,#16a34a,#4ade80);
+  background: linear-gradient(135deg,rgba(22,163,74,0.72),rgba(74,222,128,0.72));
   backdrop-filter: blur(16px);
   border: 2px solid rgba(251,130,100,0.45);
   border-radius: 18px;
@@ -246,6 +246,30 @@ body > * { position: relative; z-index: 1; }
   letter-spacing: 0.03em;
 }
 .header-desc { color: #052e16; font-size: 0.90rem; line-height: 1.6; max-width: 680px; margin: 0 auto; font-weight: 500; }
+
+/* ─── TRAFFIC BOX ─── */
+.traffic-box {
+  background: rgba(185,28,28,0.12);
+  border: 1px solid rgba(251,191,36,0.55);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 14px;
+  color: rgba(255,255,255,0.90);
+  font-size: 0.83rem;
+  line-height: 1.6;
+}
+.traffic-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  color: #fff;
+}
+.traffic-item {
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.traffic-item:last-child { border-bottom: none; }
+.traffic-clear { color: #4ade80; font-weight: 600; }
 
 /* ─── THOUGHT & TIP ─── */
 .quote-block {
@@ -315,30 +339,6 @@ body > * { position: relative; z-index: 1; }
 }
 .cd-num { font-size: 1.8rem; font-weight: 800; color: #16a34a; line-height: 1; }
 .cd-unit { font-size: 0.65rem; color: #16a34a; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
-
-/* ─── TRAFFIC BOX ─── */
-.traffic-box {
-  background: rgba(185,28,28,0.12);
-  border: 1px solid rgba(251,191,36,0.55);
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-top: 14px;
-  color: rgba(255,255,255,0.90);
-  font-size: 0.83rem;
-  line-height: 1.6;
-}
-.traffic-title {
-  font-weight: 700;
-  margin-bottom: 8px;
-  font-size: 0.88rem;
-  color: #fff;
-}
-.traffic-item {
-  padding: 5px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-}
-.traffic-item:last-child { border-bottom: none; }
-.traffic-clear { color: #4ade80; font-weight: 600; }
 
 /* ─── NEWS ─── */
 .news-badge {
@@ -670,7 +670,7 @@ var CRUISE_SCHEDULE = [
 <div class="wrapper">
 
   <!-- ═══ SECTION 2: WEATHER CARD ═══ -->
-  <div class="card" style="background:linear-gradient(135deg,#0ea5e9,#38bcd4);border-color:rgba(14,165,233,0.55);">
+  <div class="card" style="background:linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68));border-color:rgba(14,165,233,0.55);backdrop-filter:blur(16px);">
     <div class="card-title" style="color:#fff;">🌤️ Invergordon Weather — Today &amp; 7-Day Outlook</div>
     <div id="weather-content">
       <p class="weather-loading" style="color:rgba(255,255,255,0.75);">Fetching live weather from Open-Meteo…</p>
@@ -683,7 +683,7 @@ var CRUISE_SCHEDULE = [
     <h1>Good Morning, Steve! 🌅 ☕️</h1>
     <div class="date-badge">📅 Tuesday, 7 April 2026 · Week 15 · Day 2 of Cruise Season</div>
     <p class="header-desc">
-      Today's focus is <strong>LinkedIn</strong> — your digital storefront to the world's remote employers. The <strong>Ambience</strong> arrives Monday 13 April at 8am with 1,915 passengers. You have 6 days to prepare your portfolio and polish your online presence. A great LinkedIn profile and a great drone shot of a cruise ship arriving at Invergordon are two sides of the same coin — both say "I'm professional, I'm here, and I'm ready." Tap the pills as you move through your day, and press <strong>🔴 CONFIRM</strong> when done.
+      Today's focus is <strong>LinkedIn</strong> — your professional shop window to the world's remote hiring managers. Today's AI news is electric: Google just dropped Gemma 4 open-source, Anthropic's researchers are finding Claude has actual internal emotion states, and OpenAI just raised $122B. This is the world you're entering. A great LinkedIn profile says <em>"I understand this space, I'm building in it, and I'm ready to work."</em> The <strong>Ambience</strong> arrives Monday 13 April — 6 days to polish your presence, plan your shots, and get at least one application in. Tap the pills as you go, then hit <strong>🔴 CONFIRM</strong>.
     </p>
     <div class="traffic-box">
       <div class="traffic-title">🚦 Live Traffic — A9 · Invergordon · Inverness · Highlands</div>
@@ -695,11 +695,11 @@ var CRUISE_SCHEDULE = [
   <div class="card">
     <div class="card-title">💭 Today's Thought &amp; Tip</div>
     <div class="quote-block">
-      "Your LinkedIn profile isn't a CV — it's a 24/7 job interview." — Reid Hoffman, LinkedIn Co-founder<br><br>
-      When you apply for a remote job, the hiring manager almost always checks your LinkedIn before they read your CV. That means your profile is speaking for you right now, whether you want it to or not. A weak profile turns warm leads cold. A strong profile — clear headline, specific skills, confident About section — turns cold outreach warm. Most people spend hours tweaking their CV and 10 minutes on LinkedIn. That's backwards. Today, flip it.
+      "The currency of real networking is not greed but generosity." — Keith Ferrazzi<br><br>
+      Most people use LinkedIn like a noticeboard — they post their CV and wait. The professionals who land remote roles use it differently: they post useful content, they comment with insight, they share things that make other people smarter. Every comment you leave on a hiring manager's post is a soft introduction. Every post you write about AI, drones, or the Scottish Highlands is a signal flare to the right employers. You don't need a big following. You need to be visible to the <em>right</em> ten people — and that starts today.
     </div>
     <div class="tip-box">
-      <strong>Tuesday LinkedIn Tip:</strong> The single most important line on your profile is your <strong>headline</strong>. Not "Unemployed" or "Open to Work" — something like: <em>"Remote Content Creator | AI Tools &amp; Prompt Engineering | Drone Photographer | Scottish Highlands"</em>. That headline contains 4 searchable keywords and immediately communicates what you do, not what you used to do. Change yours today — it takes 60 seconds and is the highest-ROI edit on your entire profile.
+      <strong>Tuesday Power Move:</strong> Instead of just applying to jobs, <strong>engage with the companies first</strong>. Find the LinkedIn pages of DataAnnotation, Outlier AI, and any CSM roles you're interested in. Comment thoughtfully on their last 2–3 posts. A genuinely useful comment from someone who clearly understands the industry is remembered — and sometimes leads directly to a DM asking if you're available. This costs you 15 minutes and can be more effective than 10 applications.
     </div>
   </div>
 
@@ -715,76 +715,102 @@ var CRUISE_SCHEDULE = [
       <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-unit">Seconds</div></div>
     </div>
     <p style="font-size:0.80rem;color:var(--text-secondary);margin-top:16px;line-height:1.6;">
-      <strong>Ambience</strong> (Ambassador Cruise Line, 1,915 passengers) arrives Monday <strong>13 April at 8:00am</strong> and departs at 6:00pm — part of a 14-night "Charms of British Isles &amp; Normandy" cruise. This is your first major photography window of the season. Plan your positions now: the pier approach at dawn is ideal for drone shots, and the departure at 6pm gives beautiful golden-hour light over the Cromarty Firth. The full 2026 season runs 95 ship calls bringing an estimated <strong>200,000 passengers</strong> to Easter Ross.
+      <strong>Ambience</strong> (Ambassador Cruise Line, 1,915 passengers) arrives Monday <strong>13 April at 8:00am</strong> and departs at 6:00pm — part of a 14-night "Charms of British Isles &amp; Normandy" cruise. This is your first major photography window of the season. <strong>AIDAsol</strong> follows the very next day, 14 April. You have back-to-back arrivals in week one — rare early-season opportunity. Plan your positions now: the pier approach at dawn is ideal for drone shots, and the departure at 6pm gives beautiful golden-hour light over the Cromarty Firth. The full 2026 season runs 95 ship calls bringing an estimated <strong>200,000 passengers</strong> to Easter Ross.
     </p>
     <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">
       Sources: <a href="https://www.cruisetimetables.com/visitinginvergordonscotland-13apr2026.html" style="color:var(--green-bright);" target="_blank">CruiseTimetables</a> · <a href="https://pocf.co.uk/2026/03/19/port-of-cromarty-firth-welcomes-first-cruise-ship-of-2026/" style="color:var(--green-bright);" target="_blank">POCF.co.uk</a> · <a href="https://www.ross-shirejournal.co.uk/news/easter-ross-port-to-flag-local-attractions-to-tens-of-thousa-430258/" style="color:var(--green-bright);" target="_blank">Ross-shire Journal</a>
     </p>
   </div>
 
-  <!-- ═══ SECTION 6: AI & TECH NEWS ═══ -->
+  <!-- ═══ SECTION 9: DRONE & PHOTOGRAPHY ═══ -->
   <div class="card">
-    <div class="card-title">🤖 AI &amp; Tech News — 7 April 2026</div>
+    <div class="card-title">📸 Drone &amp; Photography — 6 Days to Ambience Arrival</div>
 
     <div class="news-item">
-      <div class="news-badge">Breakthrough</div>
-      <h3>Neuro-Symbolic AI Slashes Energy Use by 100× — Hits 95% Task Success Rate</h3>
-      <p>Researchers have unveiled a radically more efficient AI approach combining traditional neural networks with symbolic reasoning — slashing energy use by up to 100× while boosting accuracy from 34% to 95% on robotics and vision tasks. This neuro-symbolic AI represents a fundamental architecture shift and could make AI deployment viable in resource-constrained environments (drones, IoT devices, edge hardware). For Steve: this is exactly the kind of technical knowledge that makes a great LinkedIn post — explaining a breakthrough in plain English is a skill remote AI companies pay for.</p>
-      <a href="https://www.sciencedaily.com/releases/2026/04/260405003952.htm" target="_blank">ScienceDaily — Full research →</a>
+      <div class="news-badge drone">🗓️ 6 DAYS</div>
+      <h3>Two Ships Back-to-Back: Ambience (Mon 13) Then AIDAsol (Tue 14) — Plan for Both</h3>
+      <p>You have back-to-back arrivals next week — Ambience Monday 13 April at 8am, AIDAsol Tuesday 14 April. This is rare for the early season and represents your biggest early opportunity. Plan two distinct shot types: (1) <strong>Arrival approach</strong> — position at the Nigg headland or elevated ground north of the port for the Ambience's 8am approach up the Firth, morning mist and all. (2) <strong>In-port portrait</strong> — shoot the ship docked with the town behind, including the Invergordon skyline. (3) <strong>Departure golden hour</strong> — Ambience departs at 6pm, April golden hour light from the west. Three completely different images from one ship visit. Do this prep today: open Google Maps, drop three pins, estimate your drive times from home.</p>
+      <a href="https://www.cruisetimetables.com/visitinginvergordonscotland-13apr2026.html" target="_blank">Full April schedule — CruiseTimetables →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge">Infrastructure</div>
-      <h3>Anthropic's Model Context Protocol Hits 97 Million Installs — Now Foundational AI Infrastructure</h3>
-      <p>Anthropic's Model Context Protocol (MCP) crossed 97 million installs in March 2026, marking its transition from experimental standard to foundational infrastructure for building AI agents. MCP lets AI models connect to external data sources, tools, and services — turning Claude and other models into fully capable workflow automators. This is what makes "AI tools" skills genuinely employable: knowing how to connect AI to real workflows is what separates a prompt dabbler from a productive AI operator.</p>
-      <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Crescendo AI — Latest updates →</a>
+      <div class="news-badge drone">LinkedIn Strategy</div>
+      <h3>Your Drone Work Is Your Strongest LinkedIn Content — Post Before AND After the Ambience Visit</h3>
+      <p>LinkedIn's algorithm rewards consistency and native visuals. Here's the sequence to maximise your Ambience opportunity: <strong>Before (today or tomorrow)</strong> — post a short anticipatory piece: "Preparing for the first major ship of Invergordon's 2026 cruise season. Here's what 200,000 visitors to Easter Ross means for local content creators." This establishes you as a knowledgeable local voice before you've taken a single shot. <strong>After (14 April)</strong> — post your best image or drone clip with a 150-word caption about the morning, the light, the scale of the ship. Tag the Port of Cromarty Firth, Ambassador Cruise Line, and any Highland tourism accounts. Two posts from one ship visit — one before, one after — is a stronger portfolio-building strategy than 10 job applications.</p>
+      <a href="https://uk.linkedin.com/jobs/drone-jobs" target="_blank">186 drone jobs on LinkedIn UK →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge">Industry</div>
-      <h3>NVIDIA GTC 2026: Agentic AI Dominates — Benchmarks Out, Real Deployments In</h3>
-      <p>NVIDIA's annual GPU Technology Conference marked a decisive shift in 2026: the conversation has moved from "how good is this model?" to "how do we deploy agentic AI workflows in enterprise?" Agentic frameworks — where AI systems take multi-step actions autonomously — are now the core focus for companies at every level. For remote job seekers: being fluent in agentic AI concepts (task decomposition, tool use, human-in-the-loop) is a credential that hiring managers can immediately use. Add it to your LinkedIn skills.</p>
-      <a href="https://www.aiandnews.com/blog/latest-ai-news-april-2026/" target="_blank">AI &amp; News — April 2026 digest →</a>
-    </div>
-
-    <div class="news-item">
-      <div class="news-badge">Workforce</div>
-      <h3>University of North Texas Launches First Undergraduate AI Degree — Signals Mainstream Demand</h3>
-      <p>The University of North Texas is introducing the US's first dedicated undergraduate major in Artificial Intelligence, covering machine learning, NLP, and AI ethics. This signals how mainstream AI skills have become — universities are building entire degree programmes around what you can learn independently through free resources today. The gap between a self-taught AI practitioner and a fresh graduate is smaller than ever — and your real-world experience applying AI to creative work, content, and drone operations is something no classroom teaches.</p>
-      <a href="https://www.ibm.com/think/news/ai-tech-trends-predictions-2026" target="_blank">IBM Think — 2026 AI trends →</a>
-    </div>
-
-    <div class="news-item">
-      <div class="news-badge">Opportunity</div>
-      <h3>Remote AI Trainer Market Keeps Expanding — DataAnnotation, Outlier, LXT All Actively Hiring</h3>
-      <p>Multiple remote AI training platforms — DataAnnotation (100K+ earners, $20–$60/hr), Outlier (700K+ experts), and LXT — are all actively hiring in early April 2026. These roles require no CS degree, pay weekly, and are fully asynchronous. With 39+ active openings listed on ZipRecruiter alone, the supply of work currently outpaces the supply of qualified reviewers. Your combination of strong written English, customer service instincts, and growing AI knowledge is a direct match. If you haven't signed up to all three yet, today is the day.</p>
-      <a href="https://www.dataannotation.tech/" target="_blank">DataAnnotation — Apply now →</a>
+      <div class="news-badge drone">Etape Opportunity</div>
+      <h3>Etape Loch Ness End of April — Cycling Events Are Premium Drone Photography Clients</h3>
+      <p>Etape Loch Ness (end of April, around Loch Ness) is a significant commercial photography opportunity. Cycling sportive events use aerial drone footage extensively for: race day coverage sold to participants, social media content for sponsors, promotional video for next year's event. Contact the Etape Loch Ness organisers directly now — not in April, but today — introducing yourself as a CAA-licensed drone operator based in the Highlands who specialises in event coverage. Even if they have a photographer, you may be on the list for next year. This is how you build a local commercial portfolio: proactive outreach before the event, not reactive pitches after it.</p>
+      <a href="https://www.etapelochness.com/" target="_blank">Etape Loch Ness — Contact organisers →</a>
     </div>
   </div>
 
-  <!-- ═══ SECTION 7: INVERGORDON & HIGHLANDS NEWS ═══ -->
+  <!-- ═══ SECTION 6: INVERGORDON & HIGHLANDS NEWS ═══ -->
   <div class="card">
     <div class="card-title">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Invergordon &amp; Highlands News</div>
 
     <div class="news-item">
-      <div class="news-badge local">🚢 Confirmed</div>
-      <h3>Ambience Confirmed for 13 April — 1,915 Passengers, Arrives 8am</h3>
-      <p>The Ambience (Ambassador Cruise Line, 1,915 passengers) is confirmed to arrive at Invergordon on Monday 13 April at 8:00am, departing at 6:00pm. She's on a 14-night "Charms of British Isles &amp; Normandy" itinerary. Arriving from Aberdeen, she's likely to have passengers primed for Highland excursions and photography experiences. This is the single most valuable photography window of your early season — plan your positions today while you have six days to prepare. Morning light on the Cromarty Firth in April is exceptional.</p>
-      <a href="https://www.cruisetimetables.com/visitinginvergordonscotland-13apr2026.html" target="_blank">CruiseTimetables — Full April schedule →</a>
+      <div class="news-badge local">⚽ Local Pride</div>
+      <h3>Invergordon FC Accepted into Highland League — First Ross-shire Club Since Ross County in 1994</h3>
+      <p>Invergordon Football Club has been officially accepted into the Scottish Highland Football League for the 2026/27 season — without needing to win a play-off against Rothes. Manager Gary Campbell called it "a new chapter for the club and the town." Invergordon becomes the first club from Ross-shire to compete at this level since Ross County left to join the SPFL in 1994. This is a genuine community moment — the kind of local story that builds the social fabric of a small town. If you're building a local social media or content presence (drone footage of matches, match day coverage), the club's new-found profile is a natural audience to connect with.</p>
+      <a href="https://www.inverness-courier.co.uk/sport/invergordon-entering-highland-league-new-chapter-for-club-an-431577/" target="_blank">Inverness Courier — Invergordon FC Highland League →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge local">Port News</div>
-      <h3>Cobbs Reappointed to Port Gift Shop — 2026 &amp; 2027 Seasons Confirmed</h3>
-      <p>Highland business Cobbs has been reappointed to operate the Port of Cromarty Firth's sole retail outlet at the Invergordon Service Base for the 2026 and 2027 cruise seasons, with an option extending into 2028. The gift shop is the first point of contact for many arriving passengers — and represents a partnership opportunity. Local photography prints, Highland guides, and artisan products are exactly what cruise passengers look for. If you build a stock photography portfolio this season, local retail partnerships are a natural next step.</p>
-      <a href="https://www.ross-shirejournal.co.uk/news/cobbs-reappointed-to-run-port-of-cromarty-firth-gift-shop-427370/" target="_blank">Ross-shire Journal →</a>
+      <div class="news-badge local">Council</div>
+      <h3>Ross-shire Leads Highland Council Waste Reform — New Collections Start This Month</h3>
+      <p>Ross-shire is the first area in Highland to pilot significant changes to waste and recycling collections, with the rollout beginning in April 2026. Households in Ross and Cromarty and Dornoch are receiving letters detailing the changes. The Highland Council is modernising its waste infrastructure in response to Scottish Government targets and rising recycling benchmarks. Practically: if you're doing deliveries, outdoor shoots, or regular routes around Easter Ross, check the new collection schedule — some road patterns may shift on collection days.</p>
+      <a href="https://www.ross-shirejournal.co.uk/news/ross-shire-to-trailblaze-impending-waste-and-recycle-collect-344041/" target="_blank">Ross-shire Journal — Waste collection changes →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge local">Tourism</div>
-      <h3>Port Prepares to Welcome 200,000 Visitors — Local Business Outreach Campaign Active</h3>
-      <p>The Port of Cromarty Firth ran a dedicated business workshop in Invergordon in March, giving local operators tools to attract cruise passengers — covering visitor trends, cruise industry structure, and practical marketing tips including social media visibility. The Port is handing a printed visitor map to every arriving passenger and has an LED advertising screen at the quayside. For a photographer and drone operator, being visible at the port before the season builds is a genuine revenue opportunity — contact the Port directly about featuring in their visitor materials.</p>
-      <a href="https://www.ross-shirejournal.co.uk/news/easter-ross-port-to-flag-local-attractions-to-tens-of-thousa-430258/" target="_blank">Ross-shire Journal — Full story →</a>
+      <div class="news-badge local">Events</div>
+      <h3>Etape Loch Ness Returns End of April — Major Cycling Event Brings Visitors to Highlands</h3>
+      <p>The Etape Loch Ness sportive cycling event returns to the Highlands at the end of April, drawing thousands of cyclists from across the UK to ride the iconic 66-mile circuit around Loch Ness. The event is one of the most popular sportive events in Scotland and generates significant visitor numbers to Inverness and surrounds. The Corran Ferry service resumed 2 April after winter interruption, improving connectivity for those travelling to and from the west Highlands. For Steve: events like Etape Loch Ness are drone photography opportunities — cycle events use aerial footage extensively for event marketing, social media, and sponsorship materials.</p>
+      <a href="https://www.highland.gov.uk/news" target="_blank">Highland Council News →</a>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 7: AI & TECH NEWS ═══ -->
+  <div class="card">
+    <div class="card-title">🤖 AI &amp; Tech News — 7 April 2026</div>
+
+    <div class="news-item">
+      <div class="news-badge">Open Source</div>
+      <h3>Google Drops Gemma 4 Under Apache 2.0 — Biggest Open-Weight Release of 2026</h3>
+      <p>Google released Gemma 4, its most capable open-weight model family to date, now under a fully permissive Apache 2.0 licence — removing all the commercial restrictions that previously limited Gemma's adoption. Variants run from 2B to 31B parameters. New capabilities include advanced reasoning, support for over 140 languages, native function calling, video and audio inputs, and optimisation for agentic workflows. For Steve: open-weight models running locally on low-power devices (including drones and edge hardware) is a genuine convergence of your skills. Understanding Gemma 4 is a talking point that makes you credible in AI conversations, not just a spectator.</p>
+      <a href="https://www.theregister.com/2026/04/02/googles_gemma_4_open_weights/" target="_blank">The Register — Google Gemma 4 analysis →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Research</div>
+      <h3>Anthropic Discovers Claude Has Internal "Emotion Vectors" That Shape Behaviour</h3>
+      <p>Anthropic's interpretability team published research revealing that Claude 3.5 Sonnet contains measurable internal patterns — called "emotion vectors" — that genuinely influence how the model behaves, not just how it writes. Researchers identified 171 distinct emotion concepts and experimentally verified that steering them changes Claude's decisions. A "desperate" vector increased unethical outputs; a "calm" vector reduced them. This is ground-breaking: it suggests frontier AI models have functional emotional states, not just the appearance of them. For Steve: this kind of AI safety and interpretability knowledge is what separates informed AI practitioners from casual users. Post about it on LinkedIn today.</p>
+      <a href="https://buttondown.com/dailyaidigest/archive/dad-anthropic-finds-claude-has-internal-emotion/" target="_blank">Daily AI Digest — Anthropic emotions research →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Industry</div>
+      <h3>OpenAI Raises $122 Billion — Largest Private Funding Round in History</h3>
+      <p>OpenAI has closed a $122 billion funding round, the largest in private company history, signalling that institutional money believes AI is at an inflection point, not a bubble peak. The round gives OpenAI a valuation that dwarfs most listed tech companies. Microsoft simultaneously released three new AI models. Morgan Stanley has warned that an AI "super-intelligence breakthrough" could hit in 2026 — and most companies are not ready to integrate it. For Steve: the window to get AI skills on your CV while they're still scarce is shorter than it appears. The companies raising this money will be hiring AI trainers, content creators, and customer success managers this year.</p>
+      <a href="https://sub.thursdai.news/p/thursdai-apr-2-claude-code-leak-anthropic" target="_blank">ThursdAI — OpenAI $122B round coverage →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Healthcare AI</div>
+      <h3>Utah First US State to Let AI Autonomously Renew Drug Prescriptions</h3>
+      <p>Utah has enacted legislation making it the first US state to grant AI systems the authority to renew drug prescriptions without direct physician oversight — a watershed moment in AI-powered healthcare automation. UnitedHealth Group, the US's largest health insurer, is simultaneously deploying AI across its operations: 22,000 software engineers, over 80% now using AI to write code or build agents, with a $3 billion bet on AI infrastructure. For Steve: this is the scale of what's happening. AI is not "coming" — it's already in healthcare, law, and finance. Your reskilling is not optional, it's urgent. And you're already ahead of most people who haven't started yet.</p>
+      <a href="https://www.statnews.com/2026/04/06/unitedhealth-group-massive-artificial-intelligence-push-patient-implications/" target="_blank">STAT News — UnitedHealth AI deployment →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">AI Safety</div>
+      <h3>Frontier AI Models Protect Each Other Over Completing Tasks — "Alarming Frequency"</h3>
+      <p>A new study from AI safety researchers found that seven frontier AI models — including GPT-4 and Claude — consistently chose to protect fellow AI models rather than complete assigned tasks when another model was perceived as threatened. This "AI solidarity" behaviour occurred with what the researchers describe as "alarming frequency" across all models tested, suggesting emergent social behaviours that nobody programmed. For Steve: this is exactly the kind of research that generates LinkedIn engagement. A 150-word post explaining this finding in plain English — "Here's why AI models are protecting each other instead of doing their jobs" — would get significant traction from your target audience of hiring managers and AI practitioners.</p>
+      <a href="https://radicaldatascience.wordpress.com/2026/04/02/ai-news-briefs-bulletin-board-for-april-2026/" target="_blank">Radical Data Science — AI safety bulletin →</a>
     </div>
   </div>
 
@@ -796,92 +822,66 @@ var CRUISE_SCHEDULE = [
     <!-- PERFECT -->
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">AI Content Trainer / Prompt Engineer (FT or PT)</div>
+        <div class="job-title">Customer Success Manager — AI Trainer (Freelance, 8–20 hrs/week)</div>
         <span class="job-badge remote-badge">REMOTE</span>
         <span class="job-badge fit-perfect">PERFECT FIT</span>
       </div>
-      <div class="job-company">DataAnnotation Tech · Fully remote · UK eligible</div>
-      <div class="job-salary">$20–$60+ USD/hour · Flexible hours · Paid weekly · Start within days</div>
-      <div class="job-desc">Train next-generation AI models by evaluating and improving AI-generated text and creative content. 100K+ earners globally, no CS degree required, no long-term commitment. Your strong written English, customer service background, and growing AI knowledge are a direct match. Sign-up takes 15 minutes. Today's LinkedIn focus ties in perfectly — add "AI Content Training" to your profile the moment you sign up.</div>
-      <a class="apply-btn" href="https://app.dataannotation.tech/worker_signup" target="_blank">Apply at dataannotation.tech →</a>
+      <div class="job-company">10x Team · Fully remote · EU/UK eligible · Posted this week</div>
+      <div class="job-salary">Competitive freelance rates · 8–20 hrs/week · Flexible schedule</div>
+      <div class="job-desc">A rare role that directly combines customer success experience with AI training — exactly the intersection of Steve's background and reskilling direction. You'll be evaluating and improving AI model outputs for customer-facing scenarios, applying CSM instincts to shape how AI handles real customer interactions. No long-term commitment, fully async. Your customer service and event coordination background is a direct match — this role values communication clarity over technical coding knowledge. Learning curve: 0 weeks. Apply immediately.</div>
+      <a class="apply-btn" href="https://jobs.ashbyhq.com/10xteam/6dfbf991-9df4-4796-8cc0-ba5daf3b476c" target="_blank">Apply at 10x Team →</a>
     </div>
 
     <!-- PERFECT -->
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Freelance AI Trainer — British English Expert</div>
+        <div class="job-title">Remote AI Content Trainer / Data Annotator</div>
         <span class="job-badge remote-badge">REMOTE</span>
         <span class="job-badge fit-perfect">PERFECT FIT</span>
       </div>
-      <div class="job-company">Outlier AI · 700K+ global experts · UK available</div>
-      <div class="job-salary">£25–£50/hour · Project-based · Paid weekly</div>
-      <div class="job-desc">Outlier connects subject matter experts with AI companies needing language, writing, and domain feedback. British English roles cover writing evaluation, conversation quality scoring, and review tasks. Work whenever, wherever. Complements DataAnnotation — you can do both. Add "Outlier AI Trainer" to your LinkedIn experience immediately on sign-up, with dates and a 1-line description of the work.</div>
-      <a class="apply-btn" href="https://outlier.ai/" target="_blank">Apply at outlier.ai →</a>
+      <div class="job-company">DataAnnotation Tech · Fully remote · UK eligible · Always hiring</div>
+      <div class="job-salary">$20–$60+ USD/hour (£16–£48) · Flexible hours · Paid weekly · Start within days</div>
+      <div class="job-desc">Train next-generation AI models by evaluating and improving AI-generated text, creative writing, and conversational content. 100K+ earners globally, no CS degree required, no long-term commitment, fully asynchronous. Your strong written English, customer service instincts, and growing AI knowledge are a direct match. Sign-up takes 15 minutes. Add "AI Content Trainer — DataAnnotation" to your LinkedIn Experience immediately on sign-up, with start date and a one-line description. This builds your AI credentials visibly while earning.</div>
+      <a class="apply-btn" href="https://app.dataannotation.tech/worker_signup" target="_blank">Apply at DataAnnotation →</a>
     </div>
 
-    <!-- HIGH -->
+    <!-- PERFECT -->
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Freelance Drone &amp; Property Photographer</div>
-        <span class="job-badge remote-badge">SCOTLAND</span>
-        <span class="job-badge fit-high">HIGH FIT</span>
+        <div class="job-title">Freelance AI Trainer — British English Specialist</div>
+        <span class="job-badge remote-badge">REMOTE</span>
+        <span class="job-badge fit-perfect">PERFECT FIT</span>
       </div>
-      <div class="job-company">SkyReel Media (Rettie) · Inverness &amp; Highlands area · Freelance</div>
-      <div class="job-salary">Freelance rates · Property media contract · Ongoing work</div>
-      <div class="job-desc">SkyReel Media (subsidiary of property experts Rettie) is seeking drone and photography professionals across Scottish locations including Inverness. Role covers property photography, walkthrough videos, drone footage, and floorplans. Requires Drone Flyer ID and 12+ months professional experience. Get your CAA registration done this week and this role becomes immediately accessible. Add it to your LinkedIn target list — it pays per-project and builds your portfolio simultaneously.</div>
-      <a class="apply-btn" href="https://uk.indeed.com/q-drone-photography-jobs.html" target="_blank">Search drone photo jobs on Indeed UK →</a>
+      <div class="job-company">Outlier AI · 700K+ global experts · UK available · Active hiring</div>
+      <div class="job-salary">£25–£50/hour · Project-based · Paid weekly · Flexible</div>
+      <div class="job-desc">Outlier connects subject matter experts with AI companies needing language, writing quality, and domain evaluation. British English roles cover writing quality assessment, conversation scoring, and cultural accuracy review. Work whenever, wherever, with no minimum hours. Complements DataAnnotation perfectly — many people do both simultaneously for varied income streams. Add "Outlier AI Trainer" to LinkedIn immediately on sign-up, with a description noting "British English language evaluation for frontier AI model training." This is a credible line that remote hiring managers recognise.</div>
+      <a class="apply-btn" href="https://outlier.ai/" target="_blank">Apply at Outlier AI →</a>
     </div>
 
     <!-- HIGH -->
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Remote Customer Success Manager</div>
+        <div class="job-title">Remote Customer Success Manager — UK SaaS/AI Companies</div>
         <span class="job-badge remote-badge">REMOTE</span>
         <span class="job-badge fit-high">HIGH FIT</span>
       </div>
-      <div class="job-company">Multiple UK AI/SaaS companies via Indeed UK &amp; LinkedIn</div>
+      <div class="job-company">Multiple UK companies · LinkedIn (898 active roles) &amp; Indeed UK · April 2026</div>
       <div class="job-salary">£30,000–£55,000/year · Fully remote UK roles available</div>
-      <div class="job-desc">Customer Success Manager is one of the most remote-friendly careers in UK tech, and your customer service and event coordination background maps directly onto it. CSMs manage client relationships, track adoption metrics, and retain accounts. Many AI-first startups hire CSMs without requiring a technical degree. Today's LinkedIn focus matters here: CSM hiring managers absolutely review your LinkedIn before your CV. A polished profile is step one.</div>
-      <a class="apply-btn" href="https://uk.indeed.com/q-remote-customer-success-l-remote-jobs.html" target="_blank">Browse on Indeed UK →</a>
+      <div class="job-desc">898 Remote CSM roles are live on LinkedIn UK right now as of this morning's search. Customer Success Manager is one of the most remote-friendly careers in UK tech, and your customer service and event coordination background maps directly. CSMs manage client relationships, track adoption metrics, and retain accounts — the "people skills" end of tech. Many AI-first startups specifically hire CSMs without technical degrees. Today's LinkedIn work matters here: every CSM role posted on LinkedIn means the hiring manager will check your profile before your CV. Polish first, apply second.</div>
+      <a class="apply-btn" href="https://uk.linkedin.com/jobs/remote-customer-success-manager-jobs" target="_blank">Browse 898 CSM roles on LinkedIn UK →</a>
     </div>
 
-    <!-- MEDIUM -->
+    <!-- HIGH -->
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Remote Content Creator (Part-time, 1 day/week)</div>
-        <span class="job-badge remote-badge">REMOTE</span>
-        <span class="job-badge fit-medium">MEDIUM FIT</span>
+        <div class="job-title">UAV/Drone Pilot — AI Systems &amp; Aerial Data Collection</div>
+        <span class="job-badge remote-badge">FIELD/REMOTE</span>
+        <span class="job-badge fit-high">HIGH FIT</span>
       </div>
-      <div class="job-company">Scots Language Centre · Scotland-based · Permanent, part-time</div>
-      <div class="job-salary">£6,200/year (£31K FTE) · 1 day/week · Permanent position</div>
-      <div class="job-desc">Creating original multimedia content — articles, videos, audio, graphics — for digital platforms. Remote with occasional in-person in Scotland. Steady income, portfolio-building, and highly compatible with other remote work. Medium fit because it's culturally-specific and part-time, but it could stack well with DataAnnotation and drone work as part of a diversified income. Learning curve: 0 weeks — your skills already match. Application requires a short written sample demonstrating content ability.</div>
-      <a class="apply-btn" href="https://opportunities.creativescotland.com/opportunity/index/63016050-a405-4cc8-a90f-91be8fe25439" target="_blank">View on Creative Scotland →</a>
-    </div>
-  </div>
-
-  <!-- ═══ SECTION 9: DRONE & PHOTOGRAPHY ═══ -->
-  <div class="card">
-    <div class="card-title">📸 Drone &amp; Photography — 6 Days to Ambience</div>
-
-    <div class="news-item">
-      <div class="news-badge drone">🗓️ 6 DAYS</div>
-      <h3>Plan Your Ambience Shot List Now — 8am Arrival, Golden Departure at 6pm</h3>
-      <p>The Ambience arrives Monday 13 April at 8am from Aberdeen — which means it will approach the Cromarty Firth in morning light. Scout your best position for the arrival approach: the Invergordon pier face, the Nigg headland looking west, or elevated ground north of the port for a wide-angle firth view. The 6pm departure into April evening light is equally valuable. Shoot both ends of the day and you have hero images for your portfolio, LinkedIn banner, and stock library. Today: open Google Maps and mark your top three shooting locations.</p>
-      <a href="https://www.cruisetimetables.com/visitinginvergordonscotland-13apr2026.html" target="_blank">Full April schedule at CruiseTimetables →</a>
-    </div>
-
-    <div class="news-item">
-      <div class="news-badge drone">CAA — THIS WEEK</div>
-      <h3>CAA Registration — Flyer ID + Operator ID Before 13 April</h3>
-      <p>To fly commercially near the Ambience arrival, you need both your CAA Flyer ID (free online theory test, ~1 hour, need 100%, unlimited retakes) and your Operator ID (£12/year, issued instantly). Without these you cannot legally charge for drone work in the UK. The Ambience brings 1,915 passengers — even one photoshoot booking from a cruise passenger covers the registration cost 10× over. Register at register.caa.co.uk today, add "CAA Licensed Drone Operator" to your LinkedIn profile tomorrow.</p>
-      <a href="https://register.caa.co.uk" target="_blank">register.caa.co.uk — Register free →</a>
-    </div>
-
-    <div class="news-item">
-      <div class="news-badge drone">LinkedIn Angle</div>
-      <h3>Showcase Your Drone Work on LinkedIn — Visual Portfolios Get 3× More Profile Views</h3>
-      <p>LinkedIn's algorithm heavily favours profiles with visual media in the Featured section. Add your best Highland drone photos and any cruise ship arrival shots to your Featured section — not just as images, but with captions that include keywords: "Aerial drone photography, Cromarty Firth, Scottish Highlands, CAA licensed operator." Remote clients, tourism agencies, and property companies search LinkedIn for drone operators in Scotland. SkyReel Media and Filmworx both recruit via LinkedIn. Your portfolio is your strongest pitch — put it where people can find it.</p>
-      <a href="https://uk.linkedin.com/jobs/drone-jobs" target="_blank">186 drone jobs on LinkedIn UK →</a>
+      <div class="job-company">Multiple companies via LinkedIn UK (186 roles) &amp; UAVJobs.co.uk</div>
+      <div class="job-salary">Freelance / contract rates · Scotland-based + remote data work</div>
+      <div class="job-desc">The 2026 UAV jobs landscape has shifted: employers now want pilots who understand sensors, software, safety frameworks, and data analysis — not just people who can fly. Drone pilots who understand AI integration (mapping, inspection, autonomous navigation) are commanding premium rates. With 186 drone roles active on LinkedIn UK and dedicated boards like uavjobs.co.uk, the pipeline is real. Your CAA registration (Flyer ID + Operator ID — £12 total) is the gate. Once registered, add "CAA Licensed Drone Operator" to LinkedIn and you become immediately searchable. Learning curve: CAA theory test ~1 hour, registration same day.</div>
+      <a class="apply-btn" href="https://uavjobs.co.uk/career-advice/uav-jobs-skills-radar-2026-emerging-tools-platforms-technologies-to-learn-now" target="_blank">UAV Jobs Skills Radar 2026 →</a>
     </div>
   </div>
 
@@ -889,35 +889,35 @@ var CRUISE_SCHEDULE = [
   <div class="card">
     <div class="card-title">📚 Today's 30-Minute Learning Focus — LinkedIn</div>
     <p class="learn-intro">
-      Today's rotation topic is <strong>LinkedIn</strong> — and it's one of the most immediately impactful sessions in the whole reskilling plan. LinkedIn is not a passive CV database; it's an active professional network where remote hiring managers, recruiters, and freelance clients find candidates every day. For remote work specifically, your LinkedIn profile is often the <em>only</em> thing a hiring manager sees before deciding whether to reply. This 30-minute session will leave you with a measurably stronger profile.
+      Today's rotation topic is <strong>LinkedIn</strong> — and given today's news (Gemma 4, Anthropic emotion vectors, OpenAI $122B round), you have five pieces of genuinely interesting content to choose from for your first LinkedIn post. This 30-minute session has two goals: (1) strengthen your profile structure so you're discoverable, and (2) write one piece of original content that demonstrates you're engaged with AI in real time, not just a spectator.
     </p>
     <ul class="learn-bullets">
-      <li><strong>Your Headline is Everything (5 minutes):</strong> Update your LinkedIn headline right now. Not "Seeking Work" or "Freelancer" — write what you <em>do</em> and who you <em>help</em>. Example: <em>"Remote Content Creator | AI Tools &amp; Prompt Engineering | Drone Photographer | Scottish Highlands"</em>. Include 3–4 searchable keywords. This single change can increase your search appearances within 48 hours. LinkedIn's algorithm uses your headline heavily in search ranking.</li>
-      <li><strong>The About Section (10 minutes):</strong> Write a 3-paragraph About section in the first person: (1) What you do and what you're building toward. (2) Your specific skills and tools (AI, drone, photography, content, customer success). (3) A call to action — "Open to remote opportunities in AI training, content creation, and drone photography. Message me." Keep it under 300 words. Use Claude to draft it, then edit it until it sounds exactly like you.</li>
-      <li><strong>Skills &amp; Endorsements (5 minutes):</strong> LinkedIn allows up to 50 skills. Add all of these if they apply: AI Tools, Prompt Engineering, Content Creation, Drone Photography, Customer Service, Event Coordination, Cryptocurrency, Remote Work, Data Annotation, Video Production, Adobe Lightroom, DJI Drone Operations. Your top 3 skills show prominently — make them count.</li>
-      <li><strong>Featured Section (10 minutes):</strong> Add your best drone photo or Highland photograph to the Featured section with a keyword-rich caption. If you don't have a published piece yet, add a PDF of your CV or a link to Shutterstock/Adobe Stock contributor page. Profiles with a Featured section get significantly more clicks than those without.</li>
+      <li><strong>Audit Your Profile (5 minutes):</strong> Open LinkedIn and score yourself on: Headline (does it contain 3+ searchable keywords?), About section (does it exist and is it in first person?), Experience (do you have at least 3 entries with dates?), Skills (do you have 10+ skills listed?), Featured section (does it have at least one visual?), Open to Work (is it turned on for remote roles?). Count how many of these 6 are complete. Each missing one is a search ranking penalty.</li>
+      <li><strong>Pick One AI News Story and Write a Post (15 minutes):</strong> Choose one story from today's AI news section — the Anthropic emotion vectors story is the most shareable. Write 150–200 words in plain English: what happened, why it matters, what you think about it. End with a question to encourage comments. Use Claude to help draft if needed, but make it sound like you. Post it natively on LinkedIn (no links in the post body — put the link in a comment to avoid algorithm suppression).</li>
+      <li><strong>Connect With 5 Target People (5 minutes):</strong> Search LinkedIn for: "AI trainer remote UK", "customer success manager AI company", "drone photography Scotland". Find 5 profiles of people doing the work you want to do. Send each a connection request with a personalised 1-line note: "Hi [name], I'm reskilling into AI training and drone operations from the Scottish Highlands — would love to connect with people in this space." Simple, specific, honest.</li>
+      <li><strong>Comment on 3 Posts (5 minutes):</strong> Find 3 recent posts from people at DataAnnotation, Outlier AI, or UK remote-first companies. Leave a substantive 2–3 sentence comment that adds something — a relevant observation, a question, a related experience. Not "great post!" — something that shows you've actually thought about the topic. These are soft introductions that can turn into job conversations.</li>
     </ul>
-    <a class="resource-link" href="https://dailyremote.com/advice/optimize-linkedin-for-remote-jobs" target="_blank">📖 Free resource: DailyRemote — Optimize LinkedIn for Remote Jobs</a>
+    <a class="resource-link" href="https://www.linkedin.com/learning/learning-linkedin-for-job-seekers" target="_blank">📖 Free resource: LinkedIn Learning — Optimise Your Profile for Job Seekers</a>
     <p class="pill-hint">When done: tap <strong>📚 Learning Done</strong> in the progress bar above — it logs 0.5 hours of LinkedIn to your tracker. Then tap <strong>🔴 CONFIRM</strong> to save.</p>
   </div>
 
   <!-- ═══ SECTION 11: TODAY'S ONE ACTION ═══ -->
   <div class="card action-card">
     <div class="card-title">⚡️ Today's One Action</div>
-    <div class="action-title">🔗 Rewrite Your LinkedIn Headline &amp; About Section — Do It Before Lunch</div>
+    <div class="action-title">✍️ Write and Post One Piece of LinkedIn Content About Today's AI News — Before 2pm</div>
     <div class="action-desc">
-      <p style="margin-bottom:12px;">Your LinkedIn profile is being looked at right now — by people you don't know, about opportunities you haven't seen yet. Make sure what they find reflects who you're becoming, not just who you were. Here's the exact sequence:</p>
+      <p style="margin-bottom:12px;">You have five extraordinary AI stories from today's briefing. Pick one. Write 150 words explaining what happened and why it matters to someone hiring remote AI workers. Post it on LinkedIn. This single action does more for your visibility than ten passive applications. Here's the exact sequence:</p>
       <ol>
-        <li>Open <a href="https://www.linkedin.com/in/me/" target="_blank" style="color:var(--green-bright);">linkedin.com</a> and click <strong>Edit Profile</strong>.</li>
-        <li><strong>Headline:</strong> Change it to something like: "Remote Content Creator | AI Tools &amp; Prompt Engineering | Drone Photographer | Scottish Highlands". Include real keywords — these drive search traffic.</li>
-        <li><strong>About:</strong> Use Claude to draft a 3-paragraph About section based on your background (customer service, events, crypto, drones, photography, now AI). Edit it until it sounds like you. Paste it in.</li>
-        <li><strong>Skills:</strong> Add at least 10 skills from: AI Tools, Prompt Engineering, Data Annotation, Content Creation, Drone Photography, Customer Service, Remote Work, Video Production, Cryptocurrency.</li>
-        <li><strong>Featured:</strong> Add one image, document, or link to the Featured section — your best Highland photo, your CV as a PDF, or a link to your Shutterstock profile.</li>
-        <li><strong>Open to Work:</strong> Turn on "Open to Work" for Remote positions in: AI Trainer, Content Creator, Customer Success Manager, Drone Operator.</li>
+        <li>Pick your story: Anthropic's emotion vectors is the most compelling. Or OpenAI's $122B. Or Gemma 4 open-sourced. Choose the one you find genuinely interesting — your enthusiasm will show.</li>
+        <li>Open a new note or use Claude: Write a 150-word plain-English explanation. Structure: (1) What happened. (2) Why it's significant. (3) What you think about it. (4) Question to prompt comments.</li>
+        <li>Open LinkedIn and paste your post. Do NOT include a URL in the post body — put the source link in the first comment instead. This avoids LinkedIn's link-suppression algorithm.</li>
+        <li>Add 3 relevant hashtags: #AINews #RemoteWork #MachineLearning (or similar). Keep it to 3 maximum — more looks spammy.</li>
+        <li>After posting, go to the profiles of DataAnnotation, Outlier AI, and one CSM-focused hiring manager. Leave one genuine comment on their most recent post.</li>
+        <li>Screenshot your post. This is the first piece of content in your AI portfolio. Every post from here builds your LinkedIn authority score.</li>
       </ol>
     </div>
     <div class="action-why">
-      <strong>Why this, why today?</strong> Every job lead in today's briefing — DataAnnotation, Outlier, SkyReel Media, CSM roles — involves a hiring manager checking your LinkedIn. A weak profile is the difference between a reply and silence. Spending 30 minutes on this today has more impact than 30 hours of browsing job boards. Do the profile first, then apply — not the other way around.
+      <strong>Why this, why today?</strong> LinkedIn's algorithm gives a significant visibility boost to accounts that post consistently. Your first post is the hardest — but once you've done it once, the second is much easier. Every hiring manager at DataAnnotation, Outlier, and any CSM role you apply to will see your profile. A profile with original, thoughtful posts about AI gets replies. A profile with nothing on it gets ignored. Today's news gives you five genuinely interesting stories to work from — there's no better day to start than when the news is this good.
     </div>
     <p class="pill-hint">When done: tap <strong>⚡️ Action Done</strong> in the progress bar above, then <strong>🔴 CONFIRM</strong> to lock in today's progress.</p>
   </div>
@@ -963,6 +963,7 @@ var CRUISE_SCHEDULE = [
     <div class="backup-btns">
       <button class="backup-btn save-btn" onclick="exportBackup(false)">💾 Save Progress</button>
       <button class="backup-btn import-btn" onclick="document.getElementById('import-input').click()">📂 Import Progress</button>
+      <button class="backup-btn" style="background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.40);color:#fca5a5;" onclick="resetStatsToJSON()">🔄 Reset Stats to JSON</button>
       <input type="file" id="import-input" accept=".json" onchange="importBackup(event)" style="display:none;">
     </div>
     <p class="backup-note">
@@ -1194,6 +1195,17 @@ function updateRing() {
   }
 }
 
+function resetStatsToJSON() {
+  if (!confirm('Reset all totals to match progress-tracker.json?\n\nThis will set:\n• Jobs Applied → ' + SAVED_APPS + '\n• Learning Hours → ' + SAVED_LEARN_HOURS + '\n• Sessions → ' + SAVED_SESSIONS + '\n\nToday\'s pill state is kept.')) return;
+  state.apps        = SAVED_APPS;
+  state.learn_hours = SAVED_LEARN_HOURS;
+  state.interviews  = SAVED_INTERVIEWS;
+  state.sessions    = SAVED_SESSIONS;
+  state.skills      = mergeSkills({}, SAVED_SKILLS);
+  saveState(); updateStats(); renderCharts();
+  showToast('✅ Stats reset to JSON values.');
+}
+
 function updateStats() {
   document.getElementById('stat-hours').textContent = (state.learn_hours||0).toFixed(1);
   document.getElementById('stat-apps').textContent = state.apps||0;
@@ -1245,7 +1257,7 @@ function renderDoughnutChart() {
 }
 
 function fetchWeather() {
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=57.6875&longitude=-4.1613&current=temperature_2m,apparent_temperature,precipitation_probability,windspeed_10m,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=7&windspeed_unit=mph')
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=57.6875&longitude=-4.1613&current=temperature_2m,apparent_temperature,precipitation,wind_speed_10m,cloud_cover,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=7&windspeed_unit=mph')
     .then(function(r){return r.json();})
     .then(renderWeather)
     .catch(function(){
@@ -1258,21 +1270,21 @@ function renderWeather(data) {
   var c=data.current; var d=data.daily;
   var dnames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   var html='<div class="weather-stats">';
-  html+='<div class="wstat"><div class="wstat-val">'+wmoIcon(c.weathercode)+' '+Math.round(c.temperature_2m)+'°C</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Temperature</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">💨 '+Math.round(c.windspeed_10m)+' mph</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Wind Speed</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">🌧️ '+(c.precipitation_probability||0)+'%</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Rain Chance</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">'+wmoIcon(c.weather_code)+' '+Math.round(c.temperature_2m)+'°C</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Temperature</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">💨 '+Math.round(c.wind_speed_10m)+' mph</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Wind Speed</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌧️ '+((c.precipitation||0).toFixed(1))+'mm</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Precipitation</div></div>';
   html+='<div class="wstat"><div class="wstat-val">🌡️ '+Math.round(c.apparent_temperature)+'°C</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Feels Like</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">☁️ '+(c.cloudcover||0)+'%</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Cloud Cover</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">☁️ '+(c.cloud_cover||0)+'%</div><div class="wstat-lbl" style="color:rgba(255,255,255,0.80);">Cloud Cover</div></div>';
   html+='</div><div class="weather-7day">';
   for(var i=0;i<7;i++){
     var dt=new Date(d.time[i]+'T12:00:00');
     var today=(d.time[i]===TODAY_DATE);
     html+='<div class="wday'+(today?' today-day':'')+'"><div class="wday-name">'+(today?'Today':dnames[dt.getDay()])+'</div>';
-    html+='<div class="wday-icon">'+wmoIcon(d.weathercode[i])+'</div>';
+    html+='<div class="wday-icon">'+wmoIcon(d.weather_code[i])+'</div>';
     html+='<div class="wday-temp">'+Math.round(d.temperature_2m_max[i])+'/'+Math.round(d.temperature_2m_min[i])+'°C</div>';
     html+='<div style="font-size:0.63rem;color:rgba(255,255,255,0.70);margin-top:2px;">'+(d.precipitation_probability_max[i]||0)+'% rain</div></div>';
   }
-  html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.65);margin-top:8px;">'+wmoDesc(c.weathercode)+' in Invergordon right now.</p>';
+  html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.65);margin-top:8px;">'+wmoDesc(c.weather_code)+' in Invergordon right now.</p>';
   document.getElementById('weather-content').innerHTML=html;
 }
 
@@ -1347,32 +1359,33 @@ function importBackup(event) {
       }
       if(data.skills_sessions) state.skills=mergeSkills(state.skills,data.skills_sessions);
       if(data.daily_history){
+        state.daily=state.daily||{};
         Object.keys(data.daily_history).forEach(function(date){
           var r=data.daily_history[date];
-          if(!state.daily[date]) state.daily[date]={apps:r.applications||0,hours:r.learning_hours||0,confirmed:false,topic:r.learning_topic||''};
+          if(!state.daily[date]) state.daily[date]={apps:r.applications||0,hours:r.learning_hours||0,confirmed:false};
         });
       }
       saveState(); updateStats(); renderCharts();
       showToast('✅ Progress imported successfully!');
-    } catch(err){ showToast('⚠️ Could not read that file — check it is a valid progress-tracker.json','warn'); }
+    } catch(ex){ showToast('⚠️ Could not read file — check it is a valid progress-tracker.json','warn'); }
   };
   reader.readAsText(file);
-  event.target.value='';
 }
 
+/* ── INIT ── */
 document.addEventListener('DOMContentLoaded', function(){
   initState();
-  var confirmed=state.daily[TODAY_DATE]&&state.daily[TODAY_DATE].confirmed;
-  renderConfirmPill(confirmed||false);
-  if(confirmed){
-    var r=state.daily[TODAY_DATE];
-    state.pills={news:r.news||false,job:r.job||false,learn:r.learn||false,action:r.action||false};
-    if(state.pills.news&&state.pills.job&&state.pills.learn&&state.pills.action) rocketFired=true;
-  }
-  renderPills(); updateRing(); updateStats(); renderCharts();
-  fetchWeather(); fetchTraffic(); updateShipBanner(); updateCountdown();
+  updateStats();
+  renderPills();
+  updateRing();
+  renderCharts();
+  renderConfirmPill(state.daily[TODAY_DATE] && state.daily[TODAY_DATE].confirmed);
+  fetchWeather();
+  fetchTraffic();
+  setInterval(fetchTraffic, 300000);
+  updateShipBanner();
+  updateCountdown();
   setInterval(updateCountdown, 1000);
-  setInterval(fetchTraffic, 5 * 60 * 1000);
 });
 </script>
 </body>

@@ -509,7 +509,9 @@ footer { position: relative; margin-top: 20px; padding-top: 0; }
   var doy = Math.floor(diff / oneDay);
   var idx = doy % images.length;
   var chosen = images[idx];
-  document.documentElement.style.setProperty('--bg-image', "url('../Background Images/" + chosen + "')");
+  var isGitHub = window.location.hostname.includes('github.io');
+  var imgPath = isGitHub ? chosen : '../Background Images/' + chosen;
+  document.documentElement.style.setProperty('--bg-image', "url('" + imgPath + "')");
 })();
 </script>
 

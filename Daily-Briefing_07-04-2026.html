@@ -1175,39 +1175,56 @@ function renderDoughnutChart() {
   });
 }
 
-/* ─── WEATHER ─── */
-var WEATHER_URL = 'https://api.open-meteo.com/v1/forecast?latitude=57.6875&longitude=-4.1613&current=temperature_2m,apparent_temperature,precipitation,wind_speed_10m,cloud_cover,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=7&windspeed_unit=mph';
+/* ─── WEATHER (wttr.in — no API key, proper CORS) ─── */
+var WEATHER_URL = 'https://wttr.in/Invergordon,Scotland?format=j1';
 function showWeatherFallback(err){ console.error('Weather failed:',err); document.getElementById('weather-content').innerHTML='<p style="color:rgba(255,255,255,0.80);font-size:0.82rem;">Weather unavailable — <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank" style="color:#fff;font-weight:700;">Met Office Invergordon</a></p>'; }
-function tryRender(data){ if(data&&data.error) throw new Error(data.reason||'API error'); renderWeather(data); }
 function fetchWeather() {
-  fetch(WEATHER_URL).then(function(r){return r.json();}).then(tryRender).catch(function(err){
-    console.warn('Direct weather fetch failed, trying proxy:',err);
-    fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(WEATHER_URL)).then(function(r){return r.json();}).then(tryRender).catch(showWeatherFallback);
-  });
+  fetch(WEATHER_URL)
+    .then(function(r){return r.json();})
+    .then(renderWeather)
+    .catch(function(err){
+      console.warn('wttr.in direct fetch failed, trying proxy:',err);
+      fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(WEATHER_URL))
+        .then(function(r){return r.json();})
+        .then(renderWeather)
+        .catch(showWeatherFallback);
+    });
 }
 
-function wmoIcon(c){if(c===0)return'☀️';if(c<=2)return'🌤️';if(c===3)return'☁️';if(c<=48)return'🌫️';if(c<=57)return'🌦️';if(c<=67)return'🌧️';if(c<=77)return'🌨️';if(c<=82)return'🌦️';if(c<=86)return'🌨️';if(c<=99)return'⛈️';return'🌡️';}
-function wmoDesc(c){if(c===0)return'Clear sky';if(c<=2)return'Partly cloudy';if(c===3)return'Overcast';if(c<=45)return'Foggy';if(c<=57)return'Drizzle';if(c<=67)return'Rainy';if(c<=77)return'Snowy';if(c<=82)return'Showers';if(c<=99)return'Thunderstorm';return'Mixed';}
+function wttrIcon(c){
+  if(c===113)return'☀️';if(c===116)return'🌤️';if(c>=119&&c<=122)return'☁️';
+  if(c===143||c===248||c===260)return'🌫️';if(c>=200&&c<=230)return'⛈️';
+  if(c>=263&&c<=281)return'🌧️';if(c>=293&&c<=321)return'🌧️';
+  if(c>=323&&c<=395)return'🌨️';if(c>=386&&c<=395)return'⛈️';return'🌡️';
+}
+function wttrDesc(c){
+  if(c===113)return'Clear sky';if(c===116)return'Partly cloudy';
+  if(c>=119&&c<=122)return'Overcast';if(c===143||c>=248)return'Foggy';
+  if(c>=200&&c<=230)return'Thunderstorm';if(c>=263&&c<=281)return'Drizzle';
+  if(c>=293&&c<=321)return'Rainy';if(c>=323&&c<=395)return'Snowy';return'Mixed';
+}
 
 function renderWeather(data) {
-  var c=data.current; var d=data.daily;
+  var cc=data.current_condition[0]; var fc=data.weather;
+  var code=parseInt(cc.weatherCode);
   var dnames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   var html='<div class="weather-stats">';
-  html+='<div class="wstat"><div class="wstat-val">'+wmoIcon(c.weather_code)+' '+Math.round(c.temperature_2m)+'°C</div><div class="wstat-lbl">Temperature</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">💨 '+Math.round(c.wind_speed_10m)+' mph</div><div class="wstat-lbl">Wind Speed</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">🌧️ '+Math.round(c.precipitation||0)+' mm</div><div class="wstat-lbl">Precipitation</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">🌡️ '+Math.round(c.apparent_temperature)+'°C</div><div class="wstat-lbl">Feels Like</div></div>';
-  html+='<div class="wstat"><div class="wstat-val">☁️ '+(c.cloud_cover||0)+'%</div><div class="wstat-lbl">Cloud Cover</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">'+wttrIcon(code)+' '+cc.temp_C+'°C</div><div class="wstat-lbl">Temperature</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">💨 '+cc.windspeedMiles+' mph</div><div class="wstat-lbl">Wind Speed</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌧️ '+(parseFloat(cc.precipMM)||0).toFixed(1)+'mm</div><div class="wstat-lbl">Precipitation</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌡️ '+cc.FeelsLikeC+'°C</div><div class="wstat-lbl">Feels Like</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">☁️ '+cc.cloudcover+'%</div><div class="wstat-lbl">Cloud Cover</div></div>';
   html+='</div><div class="weather-7day">';
-  for(var i=0;i<Math.min(7,(d.time||[]).length);i++){
-    var dt=new Date((d.time[i]||'')+'T12:00:00');
-    var isToday=(d.time[i]===TODAY_DATE);
+  for(var i=0;i<fc.length;i++){
+    var d=fc[i]; var dt=new Date(d.date+'T12:00:00');
+    var dayCode=parseInt((d.hourly[4]||d.hourly[0]).weatherCode);
+    var isToday=(d.date===TODAY_DATE);
     html+='<div class="wday'+(isToday?' today-day':'')+'"><div class="wday-name">'+(isToday?'Today':dnames[dt.getDay()])+'</div>';
-    html+='<div class="wday-icon">'+wmoIcon(d.weather_code[i])+'</div>';
-    html+='<div class="wday-temp">'+Math.round(d.temperature_2m_max[i])+'/'+Math.round(d.temperature_2m_min[i])+'°C</div>';
-    html+='<div style="font-size:0.63rem;color:rgba(255,255,255,0.70);margin-top:2px;">'+(d.precipitation_probability_max[i]||0)+'% rain</div></div>';
+    html+='<div class="wday-icon">'+wttrIcon(dayCode)+'</div>';
+    html+='<div class="wday-temp">'+d.maxtempC+'/'+d.mintempC+'°C</div>';
+    html+='<div style="font-size:0.63rem;color:rgba(255,255,255,0.70);margin-top:2px;">'+((d.hourly[4]||d.hourly[0]).chanceofrain||0)+'% rain</div></div>';
   }
-  html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.70);margin-top:8px;">'+wmoDesc(c.weather_code)+' in Invergordon right now.</p>';
+  html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.70);margin-top:8px;">'+cc.weatherDesc[0].value+' in Invergordon right now.</p>';
   document.getElementById('weather-content').innerHTML=html;
 }
 

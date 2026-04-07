@@ -119,7 +119,9 @@ body > * { position: relative; z-index: 1; }
 @keyframes bangPop   { 0%{transform:scale(0.2);opacity:0} 40%{transform:scale(1.8);opacity:1} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1.0);opacity:0} }
 @keyframes popperPop { 0%{transform:scale(0) rotate(-20deg)} 60%{transform:scale(1.3) rotate(10deg)} 100%{transform:scale(1.0) rotate(0deg);opacity:0} }
 #rocket-wrap { position:absolute;top:8px;font-size:1.4rem;display:none;pointer-events:none; }
-#rocket-wrap.flying { display:block;animation:rocketFly 3.2s cubic-bezier(0.22,1,0.36,1) forwards; }
+#rocket-wrap.flying { display:block;animation:rocketFly 5s linear forwards; }
+.bang-pop { position:absolute;top:2px;font-size:1.5rem;display:none;pointer-events:none; }
+.bang-pop.show { display:block;animation:bangPop 0.9s ease-out forwards; }
 #bang-emoji  { position:absolute;top:4px;left:50%;font-size:1.6rem;display:none;pointer-events:none; }
 #bang-emoji.show { display:block;animation:bangPop 1s ease-out forwards; }
 #party-popper { position:absolute;top:4px;right:70px;font-size:1.6rem;display:none;pointer-events:none;transform:scale(0); }
@@ -642,6 +644,11 @@ var CRUISE_SCHEDULE = [
 <!-- ═══ SECTION 1: STICKY PROGRESS BAR ═══ -->
 <div id="progress-bar">
   <div id="rocket-wrap">🚀</div>
+  <div class="bang-pop" id="bang1" style="left:20%">💥</div>
+  <div class="bang-pop" id="bang2" style="left:35%">💥</div>
+  <div class="bang-pop" id="bang3" style="left:50%">💥</div>
+  <div class="bang-pop" id="bang4" style="left:65%">💥</div>
+  <div class="bang-pop" id="bang5" style="left:80%">💥</div>
   <div id="bang-emoji">💥</div>
   <div id="party-popper">🎉</div>
   <div id="ring-wrap">
@@ -1127,9 +1134,17 @@ function updateRing() {
     rocketFired=true;
     var r=document.getElementById('rocket-wrap');
     r.classList.add('flying');
-    setTimeout(function(){r.style.display='none';r.classList.remove('flying');},3400);
+    setTimeout(function(){r.style.display='none';r.classList.remove('flying');},5300);
+    /* Trail of 5 explosions spread evenly as rocket crosses the bar (5s linear) */
+    [{id:'bang1',t:700},{id:'bang2',t:1600},{id:'bang3',t:2500},{id:'bang4',t:3400},{id:'bang5',t:4300}].forEach(function(b){
+      setTimeout(function(){
+        var el=document.getElementById(b.id); if(!el) return;
+        el.classList.add('show');
+        setTimeout(function(){el.classList.remove('show');el.style.display='none';},900);
+      },b.t);
+    });
     setTimeout(function(){var b=document.getElementById('bang-emoji');b.classList.add('show');setTimeout(function(){b.classList.remove('show');b.style.display='none';},1000);},1600);
-    setTimeout(function(){var pp=document.getElementById('party-popper');pp.classList.add('show');setTimeout(function(){pp.classList.remove('show');pp.style.display='none';},500);},2200);
+    setTimeout(function(){var pp=document.getElementById('party-popper');pp.classList.add('show');setTimeout(function(){pp.classList.remove('show');pp.style.display='none';},500);},4800);
     showToast("🎉 100%! You're on fire today, Steve! Don't forget to CONFIRM! 🚀");
   }
 }

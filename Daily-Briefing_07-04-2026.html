@@ -188,6 +188,7 @@ body > * { position: relative; z-index: 1; }
   background: linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68));
   backdrop-filter: blur(16px);
   border: 2px solid rgba(251,130,100,0.45);
+  position: relative; overflow: hidden;
   border-radius: 18px;
   padding: 28px 32px;
   box-shadow: 0 8px 40px rgba(0,0,0,0.35);
@@ -198,7 +199,15 @@ body > * { position: relative; z-index: 1; }
 .wstat { text-align: center; flex: 1; min-width: 70px; }
 .wstat-val { font-size: 1.1rem; font-weight: 700; color: #fff; }
 .wstat-lbl { font-size: 0.68rem; color: rgba(255,255,255,0.75); margin-top: 2px; }
-.weather-7day { display: grid; grid-template-columns: repeat(7,1fr); gap: 6px; margin-top: 14px; }
+.weather-7day { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 14px; }
+#weather-particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:0; }
+.weather-card > * { position:relative; z-index:1; }
+@keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.8} 100%{transform:translateY(220px);opacity:0} }
+@keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.9} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
+@keyframes sunPulse { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:0.25;transform:scale(1.08)} }
+@keyframes sunRayPulse { 0%,100%{opacity:0.18;transform:scaleY(1)} 50%{opacity:0.30;transform:scaleY(1.4)} }
+@keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.11} 90%{opacity:0.11} to{transform:translateX(110%);opacity:0} }
+@keyframes lightningFlash { 0%,100%{opacity:0} 5%,7%{opacity:0.55} 6%{opacity:0} }
 .wday {
   background: rgba(255,255,255,0.15);
   border-radius: 10px;
@@ -220,8 +229,8 @@ body > * { position: relative; z-index: 1; }
 
 /* ─── HEADER ─── */
 .header-card {
-  background: linear-gradient(135deg,rgba(22,163,74,0.72),rgba(74,222,128,0.72));
-  backdrop-filter: blur(16px);
+  background: linear-gradient(135deg,rgba(22,163,74,0.32),rgba(74,222,128,0.32));
+  backdrop-filter: blur(20px);
   border: 2px solid rgba(251,130,100,0.45);
   border-radius: 18px;
   padding: 32px;
@@ -504,7 +513,7 @@ footer {
   .countdown-grid { grid-template-columns: repeat(2,1fr); }
   .stats-grid { grid-template-columns: repeat(2,1fr); }
   .charts-row { grid-template-columns: 1fr; }
-  .weather-7day { grid-template-columns: repeat(4,1fr); }
+  .weather-7day { grid-template-columns: repeat(3,1fr); }
   .pills-row { gap: 5px; }
   .pill { padding: 4px 9px; font-size: 0.72rem; }
   .cd-num { font-size: 1.4rem; }
@@ -676,7 +685,8 @@ var CRUISE_SCHEDULE = [
 
   <!-- ═══ SECTION 2: WEATHER CARD ═══ -->
   <div class="weather-card">
-    <div class="card-title" style="color:#fff;">🌤️ Invergordon Weather — Today &amp; 7-Day Outlook</div>
+    <div id="weather-particles"></div>
+    <div class="card-title" style="color:#fff;">🌤️ Invergordon Weather — Today &amp; 5-Day Outlook</div>
     <div id="weather-content">
       <p class="weather-loading">Fetching live weather from Open-Meteo…</p>
     </div>
@@ -1199,36 +1209,110 @@ function renderDoughnutChart() {
   });
 }
 
-/* ─── WEATHER (wttr.in — no API key, proper CORS) ─── */
-var WEATHER_URL = 'https://wttr.in/Invergordon,Scotland?format=j1';
+/* ─── WEATHER (Open-Meteo primary — native CORS, 5-day; wttr.in fallback) ─── */
+var OPENMETEO_URL = 'https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm';
+var WTTR_URL = 'https://wttr.in/Invergordon,Scotland?format=j1';
+
 function showWeatherFallback(err){ console.error('Weather failed:',err); document.getElementById('weather-content').innerHTML='<p style="color:rgba(255,255,255,0.80);font-size:0.82rem;">Weather unavailable — <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank" style="color:#fff;font-weight:700;">Met Office Invergordon</a></p>'; }
+
 function fetchWeather() {
-  fetch(WEATHER_URL)
-    .then(function(r){return r.json();})
-    .then(renderWeather)
+  fetch(OPENMETEO_URL)
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(renderWeatherOM)
     .catch(function(err){
-      console.warn('wttr.in direct fetch failed, trying proxy:',err);
-      fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(WEATHER_URL))
-        .then(function(r){return r.json();})
-        .then(renderWeather)
+      console.warn('Open-Meteo failed, falling back to wttr.in:', err);
+      fetch(WTTR_URL)
+        .then(function(r){ return r.json(); })
+        .then(renderWeatherWttr)
         .catch(showWeatherFallback);
     });
 }
 
+/* WMO weather code → emoji */
+function wmoIcon(c){
+  if(c===0)return'☀️'; if(c<=2)return'⛅'; if(c===3)return'☁️';
+  if(c<=48)return'🌫️'; if(c<=55)return'🌦️'; if(c<=67)return'🌧️';
+  if(c<=77)return'❄️'; if(c<=82)return'🌦️'; if(c<=86)return'🌨️';
+  if(c>=95)return'⛈️'; return'🌤️';
+}
+function wmoDesc(c){
+  var d={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Icy fog',
+    51:'Light drizzle',53:'Moderate drizzle',55:'Dense drizzle',61:'Light rain',63:'Moderate rain',
+    65:'Heavy rain',71:'Light snow',73:'Moderate snow',75:'Heavy snow',77:'Snow grains',
+    80:'Rain showers',81:'Moderate showers',82:'Heavy showers',85:'Snow showers',
+    86:'Heavy snow showers',95:'Thunderstorm',96:'Thunderstorm & hail',99:'Heavy thunderstorm'};
+  return d[c]||'Variable';
+}
+
+/* wttr.in codes (fallback) */
 function wttrIcon(c){
   if(c===113)return'☀️';if(c===116)return'🌤️';if(c>=119&&c<=122)return'☁️';
   if(c===143||c===248||c===260)return'🌫️';if(c>=200&&c<=230)return'⛈️';
   if(c>=263&&c<=281)return'🌧️';if(c>=293&&c<=321)return'🌧️';
-  if(c>=323&&c<=395)return'🌨️';if(c>=386&&c<=395)return'⛈️';return'🌡️';
-}
-function wttrDesc(c){
-  if(c===113)return'Clear sky';if(c===116)return'Partly cloudy';
-  if(c>=119&&c<=122)return'Overcast';if(c===143||c>=248)return'Foggy';
-  if(c>=200&&c<=230)return'Thunderstorm';if(c>=263&&c<=281)return'Drizzle';
-  if(c>=293&&c<=321)return'Rainy';if(c>=323&&c<=395)return'Snowy';return'Mixed';
+  if(c>=323&&c<=395)return'🌨️';return'🌡️';
 }
 
-function renderWeather(data) {
+/* ── Weather particle animations ── */
+function setWeatherAnimation(code) {
+  var p = document.getElementById('weather-particles');
+  if(!p) return;
+  var html = '';
+  var isRain  = (code>=51&&code<=67)||(code>=80&&code<=82)||code>=95;
+  var isSnow  = (code>=71&&code<=77)||(code>=85&&code<=86);
+  var isSun   = code<=1;
+  var isCloudy= code===2||code===3;
+  if(isRain) {
+    for(var i=0;i<20;i++){
+      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;width:1.5px;height:11px;background:rgba(147,210,255,0.50);border-radius:2px;animation:rainFall '+(0.38+Math.random()*0.45)+'s linear infinite;animation-delay:'+(-Math.random()*2)+'s"></div>';
+    }
+    if(code>=95){
+      html+='<div style="position:absolute;right:15%;top:0;width:3px;height:55%;background:linear-gradient(rgba(255,255,160,0),rgba(255,255,160,0.45),rgba(255,255,160,0));animation:lightningFlash 5s ease-in-out infinite;animation-delay:1.5s;pointer-events:none"></div>';
+    }
+  } else if(isSnow) {
+    var flakes=['❄','❅','❆'];
+    for(var i=0;i<15;i++){
+      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;font-size:'+(0.55+Math.random()*0.45)+'rem;color:rgba(255,255,255,0.72);animation:snowFall '+(1.8+Math.random()*2.2)+'s ease-in-out infinite;animation-delay:'+(-Math.random()*3)+'s">'+flakes[i%3]+'</div>';
+    }
+  } else if(isSun) {
+    html+='<div style="position:absolute;right:-15px;top:-15px;width:110px;height:110px;background:radial-gradient(circle,rgba(251,191,36,0.22),transparent 70%);border-radius:50%;animation:sunPulse 3.5s ease-in-out infinite"></div>';
+    for(var i=0;i<8;i++){
+      var angle=(i/8)*360;
+      html+='<div style="position:absolute;right:30px;top:30px;width:2px;height:'+(18+i%3*7)+'px;background:rgba(251,191,36,0.28);transform-origin:bottom center;transform:rotate('+angle+'deg) translateY(-38px);animation:sunRayPulse '+(1.6+i*0.18)+'s ease-in-out infinite;animation-delay:'+(i*0.12)+'s"></div>';
+    }
+  } else if(isCloudy) {
+    var sizes=['3.2rem','2.2rem','3.8rem'],tops=['5%','22%','12%'],durs=[22,30,38],dels=[0,-9,-5];
+    for(var i=0;i<3;i++){
+      html+='<div style="position:absolute;font-size:'+sizes[i]+';top:'+tops[i]+';opacity:0.10;animation:cloudDrift '+durs[i]+'s linear infinite;animation-delay:'+dels[i]+'s">☁️</div>';
+    }
+  }
+  p.innerHTML = html;
+}
+
+/* Open-Meteo renderer (primary) */
+function renderWeatherOM(data) {
+  var c=data.current, d=data.daily, code=c.weathercode;
+  var dnames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var html='<div class="weather-stats">';
+  html+='<div class="wstat"><div class="wstat-val">'+wmoIcon(code)+' '+Math.round(c.temperature_2m)+'°F</div><div class="wstat-lbl">Temperature</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">💨 '+Math.round(c.windspeed_10m)+' mph</div><div class="wstat-lbl">Wind Speed</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌧️ '+(c.precipitation||0).toFixed(1)+'mm</div><div class="wstat-lbl">Precipitation</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌡️ '+Math.round(c.apparent_temperature)+'°F</div><div class="wstat-lbl">Feels Like</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">☁️ '+c.cloudcover+'%</div><div class="wstat-lbl">Cloud Cover</div></div>';
+  html+='</div><div class="weather-7day">';
+  for(var i=0;i<d.time.length;i++){
+    var dt=new Date(d.time[i]+'T12:00:00'), dc=d.weathercode[i], isToday=(d.time[i]===TODAY_DATE);
+    html+='<div class="wday'+(isToday?' today-day':'')+'"><div class="wday-name">'+(isToday?'Today':dnames[dt.getDay()])+'</div>';
+    html+='<div class="wday-icon">'+wmoIcon(dc)+'</div>';
+    html+='<div class="wday-temp">'+Math.round(d.temperature_2m_max[i])+'/'+Math.round(d.temperature_2m_min[i])+'°F</div>';
+    html+='<div style="font-size:0.63rem;color:rgba(255,255,255,0.70);margin-top:2px;">'+(d.precipitation_probability_max[i]||0)+'% rain</div></div>';
+  }
+  html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.70);margin-top:8px;">'+wmoDesc(code)+' in Invergordon right now.</p>';
+  document.getElementById('weather-content').innerHTML=html;
+  setWeatherAnimation(code);
+}
+
+/* wttr.in renderer (fallback) */
+function renderWeatherWttr(data) {
   var cc=data.current_condition[0]; var fc=data.weather;
   var code=parseInt(cc.weatherCode);
   var dnames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -1251,6 +1335,14 @@ function renderWeather(data) {
   }
   html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.70);margin-top:8px;">'+cc.weatherDesc[0].value+' in Invergordon right now.</p>';
   document.getElementById('weather-content').innerHTML=html;
+  /* map wttr code to WMO-ish for animation */
+  var wmo=0;
+  if(code>=200&&code<=230||code>=386)wmo=95;
+  else if(code>=323&&code<=395)wmo=73;
+  else if(code>=263&&code<=321)wmo=61;
+  else if(code>=119&&code<=122)wmo=3;
+  else if(code===116)wmo=2;
+  setWeatherAnimation(wmo);
 }
 
 /* ─── TRAFFIC ─── */

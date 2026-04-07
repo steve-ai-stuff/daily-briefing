@@ -95,6 +95,8 @@ body > * { position: relative; z-index: 1; }
   60%  { transform: scale(1.10); }
   100% { transform: scale(1.00); }
 }
+@keyframes explosionPop { 0%{transform:scale(0) rotate(-20deg);opacity:1;} 55%{transform:scale(1.4) rotate(10deg);opacity:1;} 100%{transform:scale(0.7) rotate(5deg);opacity:0;} }
+@keyframes rocketFly { from{transform:translateX(0) rotate(41deg);} to{transform:translateX(var(--rocket-travel)) rotate(41deg);} }
 .pill-confirm {
   background: rgba(239,68,68,0.12);
   border-color: rgba(239,68,68,0.40);
@@ -284,13 +286,14 @@ body > * { position: relative; z-index: 1; }
   text-align: center;
 }
 .cd-box {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
-  padding: 14px 6px;
+  background: rgba(254,243,199,0.18);
+  border: 2px solid rgba(251,130,100,0.50);
+  border-radius: 14px;
+  padding: 18px 10px;
+  text-align: center;
 }
-.cd-num { font-size: 1.8rem; font-weight: 800; color: #4ade80; line-height: 1; }
-.cd-unit { font-size: 0.65rem; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+.cd-num { font-size: 2.4rem; font-weight: 800; color: #fb923c; line-height: 1; }
+.cd-unit { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 
 /* ─── NEWS ─── */
 .news-badge {
@@ -622,9 +625,10 @@ var CRUISE_SCHEDULE = [
     <span id="ring-emoji">🌑</span>
     <svg id="ring-svg" viewBox="0 0 36 36">
       <circle cx="18" cy="18" r="15.9" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="3"/>
-      <circle id="ring-arc" cx="18" cy="18" r="15.9" fill="none" stroke="#4ade80" stroke-width="3"
-        stroke-dasharray="0 100" stroke-dashoffset="25" stroke-linecap="round"
-        style="transition: stroke-dasharray 0.4s ease;"/>
+      <circle id="ring-circle" cx="18" cy="18" r="15" fill="none"
+        stroke="#4ade80" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="0 94.2" stroke-dashoffset="23.55"
+        style="transform-origin:center;transform:rotate(-90deg);transition:stroke-dasharray 0.4s ease;"/>
     </svg>
     <span id="ring-pct">0%</span>
   </div>
@@ -1061,8 +1065,9 @@ function updateRing() {
   var p = state.pills;
   var count = (p.news?1:0) + (p.job?1:0) + (p.learn?1:0) + (p.action?1:0);
   var pct = count * 25;
-  var arc = document.getElementById('ring-arc');
-  if (arc) arc.setAttribute('stroke-dasharray', pct + ' ' + (100 - pct));
+  var circle = document.getElementById('ring-circle');
+  var C = 2 * Math.PI * 15;
+  if (circle) { var d = C * pct / 100; circle.setAttribute('stroke-dasharray', d + ' ' + (C - d)); }
   var pctEl = document.getElementById('ring-pct');
   if (pctEl) pctEl.textContent = pct + '%';
   var emojiEl = document.getElementById('ring-emoji');
@@ -1074,8 +1079,68 @@ function updateRing() {
   }
   if (pct === 100 && !rocketFired) {
     rocketFired = true;
-    showToast('🎉 All tasks marked! Tap 🔴 CONFIRM to lock it in.', 'success');
+    showToast('🎉 100%! Incredible work today, Steve! Don\'t forget to CONFIRM!');
+    setTimeout(fireRocket, 400);
   }
+  if (pct < 100) rocketFired = false;
+}
+
+function fireRocket() {
+  var bar   = document.getElementById('progress-bar');
+  var pctEl = document.getElementById('ring-pct');
+  if (!bar || !pctEl) return;
+  var barRect  = bar.getBoundingClientRect();
+  var pctRect  = pctEl.getBoundingClientRect();
+  var rocketY  = barRect.top + barRect.height / 2 - 20;
+  var startX   = -70;
+  var endX     = window.innerWidth + 70;
+  var travel   = endX - startX;
+  var explodeX = pctRect.left + pctRect.width / 2;
+  var explodeY = pctRect.top  + pctRect.height / 2;
+  var explodeFrac = (explodeX - startX) / travel;
+  var totalMs  = 5200;
+  var explodeMs = totalMs * explodeFrac;
+  var rocket = document.createElement('div');
+  rocket.textContent = '🚀';
+  rocket.style.cssText = [
+    'position:fixed','top:' + rocketY + 'px','left:' + startX + 'px',
+    'font-size:2.2rem','z-index:9997','pointer-events:none',
+    '--rocket-travel:' + travel + 'px',
+    'animation:rocketFly ' + totalMs + 'ms cubic-bezier(0.30,0,0.70,1) forwards'
+  ].join(';');
+  document.body.appendChild(rocket);
+  setTimeout(function(){ triggerExplosion(explodeX, explodeY); }, Math.max(0, explodeMs - 500));
+  setTimeout(function(){ if (rocket.parentNode) rocket.parentNode.removeChild(rocket); }, totalMs + 100);
+}
+
+function triggerExplosion(cx, cy) {
+  var pieces = [
+    {dx:  4, dy: -6,  size:'3.2rem', delay:  0},
+    {dx:-30, dy:-22,  size:'2.4rem', delay: 80},
+    {dx: 28, dy:-18,  size:'3.0rem', delay:160},
+    {dx: -6, dy: 30,  size:'2.8rem', delay: 40},
+    {dx: 36, dy:  8,  size:'2.0rem', delay:260},
+    {dx:-38, dy: 12,  size:'3.2rem', delay:340},
+    {dx: 10, dy:-38,  size:'2.6rem', delay:120},
+    {dx:-16, dy: 36,  size:'3.6rem', delay:500},
+    {dx: 42, dy:-28,  size:'2.2rem', delay:420},
+    {dx: -4, dy:  6,  size:'4.0rem', delay:620},
+    {dx:-44, dy:-10,  size:'2.8rem', delay:750},
+    {dx: 22, dy: 40,  size:'2.4rem', delay:900},
+    {dx:-18, dy:-32,  size:'3.4rem', delay:1080},
+    {dx: 38, dy: 22,  size:'2.6rem', delay:1300}
+  ];
+  pieces.forEach(function(p) {
+    var el = document.createElement('div');
+    el.textContent = '💥';
+    el.style.cssText = [
+      'position:fixed','left:' + (cx + p.dx) + 'px','top:' + (cy + p.dy) + 'px',
+      'font-size:' + p.size,'z-index:9999','pointer-events:none',
+      'animation:explosionPop 0.90s ease-out ' + p.delay + 'ms both'
+    ].join(';');
+    document.body.appendChild(el);
+    setTimeout(function(){ if (el.parentNode) el.parentNode.removeChild(el); }, 2400 + p.delay);
+  });
 }
 
 function confirmDay() {
@@ -1430,6 +1495,8 @@ function updateCountdown() {
 // ══════════════════════════════════════════════
 function showToast(msg, type) {
   var c = document.getElementById('toast-container');
+  var bar = document.getElementById('progress-bar');
+  if (bar) { var br = bar.getBoundingClientRect(); c.style.top = (br.bottom + 10) + 'px'; }
   var t = document.createElement('div');
   t.className = 'toast' + (type === 'warn' ? ' warn' : type === 'info' ? ' info' : '');
   t.textContent = msg;

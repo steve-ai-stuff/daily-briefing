@@ -540,6 +540,14 @@ var SAVED_DAILY_HISTORY = [
 var TODAY_DATE = "2026-04-07";
 var TODAY_TOPIC = "LinkedIn";
 
+/* Baked-in roadworks for today — updated each morning by the daily task */
+var ROADWORKS = [
+  "A9 Cromarty Bridge maintenance — until 17 Apr",
+  "A9 south of Tain resurfacing — until 17 Apr",
+  "A9 Raigmore Interchange, Inverness — until 1 May",
+  "A9 north of Achalone Junction — until 20 Apr"
+];
+
 var CRUISE_SCHEDULE = [
   {date:"2026-04-06",ships:["AIDAmar"]},
   {date:"2026-04-13",ships:["Ambience"]},
@@ -678,6 +686,7 @@ var CRUISE_SCHEDULE = [
     <div class="traffic-box">
       <div class="traffic-title">🚦 Live Traffic — A9 · Invergordon · Inverness · Highlands</div>
       <div id="traffic-content">Loading…</div>
+      <div id="roadworks-content" style="margin-top:8px;padding-top:7px;border-top:1px solid rgba(251,191,36,0.28);"></div>
     </div>
   </div>
 
@@ -1272,6 +1281,18 @@ function fetchTraffic() {
     });
 }
 
+/* ─── ROADWORKS ─── */
+function renderRoadworks() {
+  var el = document.getElementById('roadworks-content');
+  if (!el) return;
+  if (!ROADWORKS || ROADWORKS.length === 0) { el.style.display='none'; return; }
+  var html = '<div style="font-weight:700;font-size:0.78rem;margin-bottom:5px;color:rgba(255,255,255,0.75);">🚧 Active Roadworks Nearby</div>';
+  ROADWORKS.forEach(function(r){
+    html += '<div style="margin-bottom:3px;font-size:0.80rem;">🚧 '+r+'</div>';
+  });
+  el.innerHTML = html;
+}
+
 /* ─── SHIP BANNER ─── */
 function updateShipBanner() {
   var banner=document.getElementById('ship-banner'); if(!banner) return;
@@ -1380,7 +1401,7 @@ document.addEventListener('DOMContentLoaded', function(){
     if(state.pills.news&&state.pills.job&&state.pills.learn&&state.pills.action) rocketFired=true;
   }
   renderPills(); updateRing(); updateStats(); renderCharts();
-  fetchWeather(); updateShipBanner(); updateCountdown(); fetchTraffic();
+  fetchWeather(); updateShipBanner(); updateCountdown(); fetchTraffic(); renderRoadworks();
   setInterval(updateCountdown, 1000);
   setInterval(fetchTraffic, 300000);
 });

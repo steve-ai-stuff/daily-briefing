@@ -202,11 +202,11 @@ body > * { position: relative; z-index: 1; }
 .weather-7day { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 14px; }
 #weather-particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:0; }
 .weather-card > * { position:relative; z-index:1; }
-@keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.8} 100%{transform:translateY(220px);opacity:0} }
-@keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.9} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
-@keyframes sunPulse { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:0.25;transform:scale(1.08)} }
-@keyframes sunRayPulse { 0%,100%{opacity:0.18;transform:scaleY(1)} 50%{opacity:0.30;transform:scaleY(1.4)} }
-@keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.11} 90%{opacity:0.11} to{transform:translateX(110%);opacity:0} }
+@keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.85} 100%{transform:translateY(220px);opacity:0} }
+@keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.90} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
+@keyframes sunPulse { 0%,100%{opacity:0.35;transform:scale(1)} 50%{opacity:0.55;transform:scale(1.08)} }
+@keyframes sunRayPulse { 0%,100%{opacity:0.40;transform:scaleY(1)} 50%{opacity:0.60;transform:scaleY(1.4)} }
+@keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.45} 90%{opacity:0.45} to{transform:translateX(110%);opacity:0} }
 @keyframes lightningFlash { 0%,100%{opacity:0} 5%,7%{opacity:0.55} 6%{opacity:0} }
 .wday {
   background: rgba(255,255,255,0.15);
@@ -547,16 +547,16 @@ var SAVED_DAILY_HISTORY = [
   {date:"2026-03-31", apps:0, hours:0},
   {date:"2026-04-05", apps:0, hours:0},
   {date:"2026-04-06", apps:0, hours:0},
-  {date:"2026-04-07", apps:0, hours:0}
+  {date:"2026-04-07", apps:0, hours:0},
+  {date:"2026-04-08", apps:0, hours:0}
 ];
-var TODAY_DATE = "2026-04-08";
-var TODAY_TOPIC = "Freelancing";
+var TODAY_DATE = "2026-04-09";
+var TODAY_TOPIC = "Freelancing Platforms";
 
-/* Baked-in roadworks for today — updated each morning by the daily task */
+/* Baked-in roadworks — updated each morning */
 var ROADWORKS = [
-  "A9 south of Tain — lane closure at night, resumes 14 Apr",
-  "A9 north of Achalone Junction — resurfacing started 7 Apr",
-  "A9 Raigmore Interchange, Inverness — overnight works ongoing"
+  "A9 Cromarty Bridge — nighttime lane closures 7pm–6am, convoy system, resurfacing until 22 Apr",
+  "A9 Raigmore Interchange, Inverness — nighttime works 7pm–6am, improvement works until 1 May"
 ];
 
 var CRUISE_SCHEDULE = [
@@ -690,15 +690,15 @@ var CRUISE_SCHEDULE = [
     <div id="weather-content">
       <p class="weather-loading">Fetching live weather from Open-Meteo…</p>
     </div>
-    <p style="font-size:0.70rem;color:rgba(255,255,255,0.65);margin-top:10px;">Sources: Open-Meteo · Met Office · BBC Weather</p>
+    <p style="font-size:0.70rem;color:rgba(255,255,255,0.65);margin-top:10px;">Sources: Open-Meteo · wttr.in · Met Office</p>
   </div>
 
   <!-- ═══ SECTION 3: HEADER BANNER ═══ -->
   <div class="header-card">
     <h1>Good Morning, Steve! 🌅 ☕️</h1>
-    <div class="date-badge">📅 Wednesday, 8 April 2026 · Week 15</div>
+    <div class="date-badge">📅 Thursday, 9 April 2026 · Week 15</div>
     <p class="header-desc">
-      Day 3 of the cruise season — the <strong>Ambience arrives in 5 days (Monday 13 April)</strong>. Today is your <strong>Freelancing day</strong>: the fastest path from zero income to your first remote payment. Platforms like Upwork, Fiverr, and PeoplePerHour connect clients with freelancers in AI tools, content creation, and drone photography around the globe. One profile, set up properly today, can generate inbound leads for months. Tap the task pills above as you work through your day, and press <strong>🔴 CONFIRM</strong> when you're done to lock in your progress.
+      Day 4 of the cruise season — the <strong>Ambience arrives in 4 days (Monday 13 April)</strong>. Today is your <strong>Freelancing Platforms day</strong>: understanding which platforms match which services, and setting up your income streams strategically. You don't need to be on all platforms — you need to be on the <em>right</em> ones. Mindrift and DataAnnotation can pay you this week. Upwork and Fiverr build long-term client pipelines. Today we map the landscape and pick your entry points. Tap the task pills above as you work through your day, and press <strong>🔴 CONFIRM</strong> when you're done to lock in your progress.
     </p>
     <div class="traffic-box">
       <div class="traffic-title">🚦 Live Traffic — A9 · Invergordon · Inverness · Highlands</div>
@@ -711,11 +711,11 @@ var CRUISE_SCHEDULE = [
   <div class="card">
     <div class="card-title">💭 Today's Thought &amp; Tip</div>
     <div class="quote-block">
-      "Don't wait until you feel ready. The freelancer who starts imperfect today earns more this month than the one waiting to feel like an expert." — Unknown<br><br>
-      Freelancing is not about credentials — it's about demonstrating value clearly and quickly. The single biggest barrier new freelancers face isn't skill; it's visibility. A profile that doesn't exist can't get hired. A proposal that isn't sent can't be accepted. Today's objective is simple: exist on the platforms where clients are already searching for someone exactly like you.
+      "The secret to getting ahead is getting started. Pick one platform, build one profile, send one proposal. That is infinitely more than zero." — adapted from Mark Twain<br><br>
+      Every successful freelancer started with an empty profile and zero reviews. The platforms don't care about your past employment — they care about what you can demonstrate right now. One strong profile, strategically positioned on the right platform for your skills, will outperform ten weak profiles scattered everywhere. Today's work: understand the map, then plant your flag.
     </div>
     <div class="tip-box">
-      <strong>Wednesday Focus Tip:</strong> Before you write your Upwork profile today, spend 10 minutes as a buyer. Search for the services you want to offer — "AI tools specialist", "content creator", "drone operator UK". Look at the top-rated freelancers' profiles. Notice their <strong>headlines</strong> (specific, outcome-focused), their <strong>hourly rates</strong> (competitive but not rock-bottom), and their <strong>overviews</strong> (they talk about the client's problem, not their own CV). Steal the structure. Your first profile doesn't need to be perfect — it needs to be live.
+      <strong>Thursday Focus Tip — Freelancing Platforms:</strong> Not all platforms are equal. <strong>Mindrift and DataAnnotation pay within days, no portfolio needed</strong> — they're the fastest path to your first remote income. <strong>Upwork</strong> builds client relationships worth £30–£100/hour over time but takes weeks to gain traction. <strong>Fiverr</strong> rewards productised, fixed-price services (e.g. "I will create 5 LinkedIn posts using AI — £65"). <strong>PeoplePerHour</strong> is strong for UK SME clients. Your strategy: start Mindrift/DataAnnotation for <em>immediate</em> cash flow, build Upwork/Fiverr for <em>sustainable</em> income. Both tracks running in parallel from day one is the optimal approach.
     </div>
   </div>
 
@@ -731,7 +731,7 @@ var CRUISE_SCHEDULE = [
       <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-unit">Seconds</div></div>
     </div>
     <p style="font-size:0.80rem;color:var(--text-secondary);margin-top:16px;line-height:1.6;">
-      The 2026 season is two days in — <strong>AIDAmar visited on Monday 6 April</strong>, kicking off an estimated <strong>95 ship calls</strong> and <strong>200,000 passengers</strong> arriving in Invergordon through 14 October. Next arrival: <strong>Ambience on Monday 13 April</strong>. Five days to finalise your freelancing profile, photography portfolio, and drone registration. Every ship call is a potential client, a portfolio shot, and a social media post.
+      The season is 3 days old — <strong>AIDAmar opened proceedings on Monday 6 April</strong>. The next arrival is <strong>Ambience on Monday 13 April</strong> — 4 days away. Two ships visit back-to-back on 13 &amp; 14 April (Ambience + AIDAsol), then a busy run through to October. <strong>95 ship calls, ~200,000 passengers</strong>. The platforms you set up this week will be generating income by the time the busy summer season kicks in. Drone footage of those ships, stock photography from the Firth, and Highland-themed content are all products you can sell from right here.
     </p>
     <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">
       Source: <a href="https://pocf.co.uk" style="color:var(--green-bright);" target="_blank">pocf.co.uk</a> · <a href="https://www.ross-shirejournal.co.uk" style="color:var(--green-bright);" target="_blank">Ross-shire Journal</a>
@@ -740,27 +740,27 @@ var CRUISE_SCHEDULE = [
 
   <!-- ═══ SECTION 6: DRONE & PHOTOGRAPHY TIP ═══ -->
   <div class="card">
-    <div class="card-title">📸 Drone &amp; Photography Tip — Freelancing Edition</div>
+    <div class="card-title">📸 Drone &amp; Photography Tip — Platforms Edition</div>
 
     <div class="news-item">
-      <div class="news-badge drone">📋 Freelancing</div>
-      <h3>Set Up Your Drone Operator Profiles on FilmFolk and DroneJobs.app Today</h3>
-      <p>FilmFolk connects freelance drone operators with film, TV, and commercial clients across the UK. DroneJobs.app is a dedicated marketplace specifically for drone work — surveying, inspections, photography, events. Both are free to join and immediately surface your profile to clients searching for operators in the Highlands and Easter Ross area. With cruise ship photography opportunities starting now and ScotWind energy infrastructure at Nigg, your postcode is a genuine selling point. On your FilmFolk profile, list your equipment (DJI model), your CAA Flyer ID, any GVC or A2 CofC certification, and add 3–5 portfolio shots. Do the same on DroneJobs. Clients search by location — be found.</p>
-      <a href="https://www.filmfolk.com/services/freelance-drone-operator" target="_blank">FilmFolk Freelance Drone Operators →</a> &nbsp; <a href="https://www.dronejobs.app/" target="_blank">DroneJobs.app →</a>
+      <div class="news-badge drone">🎬 Stock Video</div>
+      <h3>Sell Your Drone Footage on Pond5 and Artgrid — Highland Content Is Under-Supplied</h3>
+      <p>Pond5 and Artgrid are the two leading stock video marketplaces for drone and cinematic footage. Pond5 pays 50% royalties (or 80% for exclusively licensed clips), with no minimum upload requirement and immediate listing. A search for "Cromarty Firth", "Invergordon port", or "Scottish Highlands aerial" returns thin, dated results — you have a six-month window, starting now, to become the dominant contributor for your location. Recommended workflow: shoot during each ship arrival (golden hour mornings are ideal on the Firth), edit a 15–30 second clip per scene, upload to Pond5, Shutterstock, and Adobe Stock simultaneously using Distributor tools like MovieTools. Every clip you upload today earns royalties for years.</p>
+      <a href="https://www.pond5.com/sell-stock-footage" target="_blank">Pond5 Contributor →</a> &nbsp; <a href="https://artgrid.io/contribute" target="_blank">Artgrid Contributor →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge drone">💰 Stock</div>
-      <h3>Cromarty Firth Cruise Ship Arrivals: Build a Stock Photography Revenue Stream</h3>
-      <p>Adobe Stock, Shutterstock, and Getty Images are significantly under-stocked with high-quality images of the Cromarty Firth and Invergordon cruise port. A search for "Invergordon cruise ship" returns thin, dated results — a gap you can fill over the next six months. The business model: shoot each ship arrival, submit 10–20 images per visit to the contributor portals, earn royalties every time a travel brand, publisher, or tourism operator licenses your work. With 95 ship calls this season, 95 shooting sessions means potentially 950–1,900 stock images. At even modest royalty rates, a strong stock portfolio compounds in value year over year. Start submitting today — the barrier is just your time.</p>
-      <a href="https://submit.shutterstock.com/" target="_blank">Shutterstock Contributor →</a> &nbsp; <a href="https://contributor.stock.adobe.com/" target="_blank">Adobe Stock Contributor →</a>
+      <div class="news-badge drone">📋 Gig Platforms</div>
+      <h3>List Your Drone Services on Bark.com — Instant Access to UK Commercial Clients</h3>
+      <p>Bark.com is the UK's largest services marketplace — property developers, event companies, wedding planners, estate agents, and businesses post requests and freelancers respond. Drone photography and videography is one of the fastest-growing categories. Unlike Upwork (which requires proposals), Bark sends you <em>automatic alerts</em> when someone nearby needs a drone operator — you simply respond with your availability and price. Create your Bark profile today under "Drone Photography &amp; Videography", list your equipment (DJI model), certifications (CAA Flyer ID, A2 CofC if held), and coverage area. Highland operators who cover the Inverness–Invergordon–Tain corridor are genuinely scarce. Be the first result that appears.</p>
+      <a href="https://www.bark.com/en/gb/become-a-professional/" target="_blank">Bark.com — List Your Services →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge drone">🎬 Upwork</div>
-      <h3>Drone Videography on Upwork: 348+ Active Jobs, UK Clients Actively Searching</h3>
-      <p>Upwork currently lists 348+ open drone jobs. Many are one-off projects — a property developer needs aerial shots of a new build, an events company wants footage of an outdoor festival, a tourism board needs a promotional video of Highland landscapes. Day rates on confirmed shoots range from £150 to £400+. The key to winning Upwork drone jobs is specificity in your profile: "Highlands &amp; Easter Ross aerial videographer · CAA licensed · DJI Mavic 3 · available for remote projects and travel" lands better than "drone operator available UK." Set up your Upwork account today with that framing — it costs nothing to be listed, and Highland-based operators are rare on the platform.</p>
-      <a href="https://www.upwork.com/freelance-jobs/drones/" target="_blank">Upwork Drone Jobs →</a>
+      <div class="news-badge drone">🖼️ Photography</div>
+      <h3>Alamy: The Best Royalty Rate in Stock Photography — 50% With No Exclusivity Required</h3>
+      <p>Alamy pays 50% commission on every sale — the highest standard royalty in the stock photography industry — with no exclusivity requirement, meaning your images can also be listed on Shutterstock and Adobe Stock simultaneously. Alamy's strength is editorial and travel content, exactly where Scottish Highlands and cruise port photography thrives. Key opportunity: photograph the Ambience arriving on 13 April, submit the images to Alamy within 48 hours, and you could have your first editorial sale before the end of the month. Cruise ship arrivals at Invergordon are genuinely newsworthy and licensable. For each ship arrival this season, plan to shoot 20 images and submit 10 — that's a potential 950 Alamy listings by October.</p>
+      <a href="https://www.alamy.com/contributor/" target="_blank">Alamy Contributor Programme →</a>
     </div>
   </div>
 
@@ -770,164 +770,186 @@ var CRUISE_SCHEDULE = [
 
     <div class="news-item">
       <div class="news-badge local">🚢 Cruise</div>
-      <h3>Port of Cromarty Firth 2026 Season Underway — 200,000 Visitors Expected</h3>
-      <p>The Port of Cromarty Firth officially opened its 2026 cruise season on Monday 6 April with the arrival of AIDAmar, a 2,600-passenger AIDA Cruises ship. The season runs through 14 October, with 95 scheduled ship calls bringing an estimated 200,000 passengers to Invergordon and the wider Highlands. Port CEO Bob Buskie describes the season as "cruising towards boom" — local businesses have been briefed on attracting cruise visitors, and the port's gift shop has been re-contracted to Cobbs. For Steve: every one of those 200,000 passengers is a potential photography client, a LinkedIn connection story, and a demonstration of your Highland location as an asset rather than a liability.</p>
-      <a href="https://pocf.co.uk/2026/03/19/port-of-cromarty-firth-welcomes-first-cruise-ship-of-2026/" target="_blank">Port of Cromarty Firth →</a>
-    </div>
-
-    <div class="news-item">
-      <div class="news-badge local">🏗️ Roads</div>
-      <h3>A9 North of Achalone Junction: Resurfacing Underway from 7 April</h3>
-      <p>BEAR Scotland, on behalf of Transport Scotland, began essential carriageway resurfacing on the A9 north of Achalone Junction on Tuesday 7 April 2026. This is in addition to the existing overnight lane restrictions on the A9 south of Tain, which are paused until 14 April before returning for a further three nights. The A9 Raigmore Interchange improvement works in Inverness also continue, with overnight restrictions expected until approximately May 2026. If you're travelling south from Invergordon toward Inverness, allow extra time particularly for evening journeys.</p>
-      <a href="https://www.ross-shirejournal.co.uk/news/a9-roadworks-south-of-tain-new-dates-shared-as-project-pau-431358/" target="_blank">Ross-shire Journal — A9 Tain roadworks →</a>
+      <h3>Port of Cromarty Firth 2026 Season in Full Swing — 200,000 Visitors Expected</h3>
+      <p>The Port of Cromarty Firth's 2026 cruise season launched on 6 April with the arrival of AIDAmar, and the port is gearing up for a record-breaking year. Around 95 ship calls are scheduled through to 14 October, bringing an estimated 200,000 passengers to Invergordon — a significant boost for local businesses, tourism, and the wider Highlands economy. Port CEO Bob Buskie says the season represents "cruising towards boom" for the region. With two ships back-to-back arriving next week (Ambience on 13 April, AIDAsol on 14 April), the season is already building momentum. For Steve: the combination of drone photography opportunities, stock imagery gaps to fill, and a captive audience of 200,000 visitors creates a genuine six-month business window starting right now.</p>
+      <a href="https://pocf.co.uk" target="_blank">Port of Cromarty Firth →</a>
     </div>
 
     <div class="news-item">
       <div class="news-badge local">⚽ Sport</div>
-      <h3>Invergordon FC Prepare for First Highland League Season — Final North Cal Match on 11 April</h3>
-      <p>Following their historic acceptance into the Scottish Highland Football League for 2026/27 — the first Ross-shire club since Ross County joined the SPFL in 1994 — Invergordon FC play their final North Caledonian League match on Saturday 11 April at Morrison Park against Halkirk United, before travelling to Alness United in the North Cal Cup semi-finals. Manager Gary Campbell is upbeat about the transition, noting the club is "in a great position" heading into a historic new chapter for the town. The Highland League campaign will bring higher-profile away fixtures, more media coverage, and fresh community pride to Invergordon.</p>
+      <h3>Invergordon FC Accepted Into Highland League — First Ross-shire Club Since 1994</h3>
+      <p>Invergordon FC has been formally accepted into the Scottish Highland Football League for the 2026/27 season without requiring a playoff, making them the first Ross-shire club to compete at that level since Ross County joined the SPFL in 1994. Manager Gary Campbell is upbeat about the transition. The club's final North Caledonian League match is on Saturday 11 April at Morrison Park against Halkirk United, before North Cal Cup semi-final duties. The Highland League campaign will bring higher-profile fixtures, more media coverage, and significant community momentum to Invergordon — which is good news for local businesses, community engagement opportunities, and social media content creators in the area.</p>
       <a href="https://www.ross-shirejournal.co.uk/sport/new-club-accepted-into-highland-league-for-next-season-431568/" target="_blank">Ross-shire Journal — Invergordon FC →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge local">🏗️ Inverness</div>
+      <h3>Landmark Building Near A9 Kessock Bridge Now Being Demolished at Port of Inverness</h3>
+      <p>New Century House — the prominent landmark building sitting adjacent to the A9 Kessock Bridge at the Port of Inverness — is in the final stages of demolition. The site is being cleared to provide additional storage and operational space for Port of Inverness development. The demolition marks a visible change on one of the most-travelled stretches of the Highland road network. If you're travelling southbound on the A9 toward Inverness, expect a changed skyline around the Kessock Bridge area. No road closures or restrictions are associated with the demolition itself.</p>
+      <a href="https://www.inverness-courier.co.uk/news/landmark-building-s-days-numbered-as-demolition-gathers-pace-431866/" target="_blank">Inverness Courier — Kessock Bridge →</a>
     </div>
   </div>
 
   <!-- ═══ SECTION 8: AI & TECH NEWS ═══ -->
   <div class="card">
-    <div class="card-title">🤖 AI &amp; Tech News — 8 April 2026</div>
+    <div class="card-title">🤖 AI &amp; Tech News — 9 April 2026</div>
 
     <div class="news-item">
-      <div class="news-badge">Anthropic</div>
-      <h3>Claude Mythos 5 Testing Underway — Anthropic's First 10-Trillion-Parameter Model</h3>
-      <p>Anthropic is internally testing Claude Mythos 5, described as "by far the most powerful AI model we've ever developed." At an estimated 10 trillion parameters, it represents an entirely new capability tier — specifically engineered for high-stakes environments including cybersecurity, academic research, and complex coding tasks. A Q2 2026 launch is anticipated. For freelancers building AI-tool skills: models of this calibre won't replace skilled human prompt engineers and workflow designers — they'll make them more productive. The operators of powerful AI models are the people who know how to direct them toward specific results. That skill is what you're building.</p>
-      <a href="https://fortune.com/2026/03/26/anthropic-says-testing-mythos-powerful-new-ai-model-after-data-leak-reveals-its-existence-step-change-in-capabilities/" target="_blank">Fortune: Claude Mythos →</a>
+      <div class="news-badge">Google</div>
+      <h3>Google Launches Offline AI Dictation App — Transcription Without Internet, Powered by Gemma</h3>
+      <p>Google quietly released "AI Edge Eloquent" on iOS — an offline-first AI dictation app using Gemma-based automatic speech recognition that processes speech entirely on-device with no internet connection required. The app is free, runs on older hardware, and supports real-time transcription across standard English accents. For freelancers: offline AI transcription is a genuine productivity multiplier for remote workers in areas with unreliable connectivity — like rural Highlands. More importantly, it signals that AI transcription services are becoming commoditised at the consumer layer, which means the value is now in <em>what you do with</em> transcribed content (editing, summarising, repurposing) rather than the transcription itself. Position your services around the workflow, not the tool.</p>
+      <a href="https://techcrunch.com/2026/04/07/google-quietly-releases-an-offline-first-ai-dictation-app-on-ios/" target="_blank">TechCrunch: Google AI Edge Eloquent →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Atlassian</div>
+      <h3>Atlassian Launches Visual AI Tools in Confluence — Data Becomes Charts and Graphics Automatically</h3>
+      <p>Atlassian announced "Remix" — a visual AI tool now in open beta in Confluence — that automatically converts documents, data tables, and text into visual assets including charts, diagrams, and infographics. Enterprise teams can now turn meeting notes into visual summaries without a designer. This is a direct signal for freelancers: the gap between raw data and polished visual output is closing rapidly. Your competitive edge isn't making charts — it's knowing <em>which charts to make</em> and <em>what story they should tell</em>. AI tools specialists who understand data storytelling and can prompt these tools toward strategic insight are more valuable now than pure designers or pure data analysts. That hybrid skill is exactly what today's topic — Freelancing Platforms — should help you package and sell.</p>
+      <a href="https://techcrunch.com/2026/04/08/atlassian-confluence-visual-ai-tools-agents/" target="_blank">TechCrunch: Atlassian Confluence AI →</a>
     </div>
 
     <div class="news-item">
       <div class="news-badge">Microsoft</div>
-      <h3>Microsoft Launches Three New Foundational AI Models Including MAI-Voice and MAI-Transcribe</h3>
-      <p>Microsoft AI released three new foundational models this week: MAI-Transcribe-1 (speech-to-text across 25 languages, 2.5× faster than Azure Fast), MAI-Voice-1 (generates 60 seconds of audio in one second, custom voice cloning), and a third image generation model. These are now available through Azure AI Foundry. For freelancers: MAI-Voice-1 opens up a significant new niche — AI voiceover production for content creators, podcasters, e-learning providers, and tourism operators. Highland tourism operators will soon need narrated audio guides, promotional videos, and multi-language content for cruise ship visitors. Your proximity to that market is a direct business opportunity.</p>
-      <a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">TechCrunch: Microsoft AI models →</a>
+      <h3>Microsoft Releases MAI-Voice-1 and MAI-Transcribe-1 — Custom Voice Cloning Goes Mainstream</h3>
+      <p>Microsoft AI launched three foundational models including MAI-Transcribe-1 (speech-to-text across 25 languages, 2.5× faster than Azure Fast) and MAI-Voice-1 (generates 60 seconds of audio in one second, custom voice cloning). Both are now available through Azure AI Foundry. The custom voice cloning capability is the biggest opportunity for freelancers: tourism operators, audiobook publishers, e-learning platforms, and podcast studios all need high-quality AI-generated narration in regional accents. A "Scottish Highlands narrator" voice profile, marketed through Fiverr or Upwork, is a niche with almost no current competition and growing commercial demand as 200,000 cruise visitors per year create a market for Highland audio tours, promotional videos, and multilingual guides.</p>
+      <a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">TechCrunch: Microsoft MAI models →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge">Open Source</div>
-      <h3>DeepSeek V4 Released with Open Weights — Frontier Performance at $5.2M Training Cost</h3>
-      <p>DeepSeek released V4, a 1-trillion-parameter Mixture-of-Experts model with fully open weights, trained for an estimated $5.2 million — a fraction of comparable frontier model costs. It scored 94.7% on HumanEval and matched or exceeded closed models on major benchmarks. Open-weight models are transformative for freelancers: they can be run locally, fine-tuned on specific datasets, and deployed in client workflows without API costs. As an AI-tools freelancer, understanding when to recommend open-weight models (cost-sensitive clients, privacy requirements) versus proprietary APIs (ease of use, reliability) is a genuine differentiator that most generalist freelancers don't yet possess.</p>
-      <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Crescendo: AI news digest →</a>
+      <div class="news-badge">Google</div>
+      <h3>Gemini 3.1 Flash-Lite: 2.5× Faster, 45% More Efficient, $0.25 per Million Tokens</h3>
+      <p>Google unveiled Gemini 3.1 Flash-Lite — an efficiency-focused model delivering 2.5× faster response times and 45% faster output generation at just $0.25 per million input tokens. This continues a market trend toward powerful-but-cheap AI inference, which has major implications for freelancers building client workflows. As API costs fall to near-zero, the value in AI freelancing shifts entirely toward <em>system design</em> — knowing how to structure prompts, chain outputs, build automations, and integrate AI into real client workflows. The tools become cheaper; the knowledge of how to deploy them becomes more valuable. Every hour you spend learning today compounds in earning power as the market matures.</p>
+      <a href="https://fortune.com/section/artificial-intelligence/" target="_blank">Fortune: AI News →</a>
     </div>
 
     <div class="news-item">
-      <div class="news-badge">Infrastructure</div>
-      <h3>Anthropic's Model Context Protocol Crosses 97 Million Installs — Becomes Foundational Standard</h3>
-      <p>Anthropic's Model Context Protocol (MCP) — the open standard that lets AI models connect to external tools, APIs, and data sources — reached 97 million installs in March 2026, signalling its transition from experimental standard to essential infrastructure for AI agents. MCP is the plumbing that connects AI assistants to real-world systems: email, calendars, databases, CRMs, web browsers. For AI freelancers, understanding MCP unlocks the ability to build and pitch AI workflows that actually integrate with client systems — not just standalone chatbot demos. This is an advanced but learnable skill that commands premium rates. Keep it on your radar for next month's learning rotation.</p>
-      <a href="https://techcrunch.com/category/artificial-intelligence/" target="_blank">TechCrunch AI →</a>
-    </div>
-
-    <div class="news-item">
-      <div class="news-badge">Efficiency</div>
-      <h3>Neuro-Symbolic AI Cuts Energy Use 100× While Improving Accuracy — Edge AI Accelerates</h3>
-      <p>Researchers have published a breakthrough combining neural networks with symbolic reasoning that reduces AI energy consumption by up to 100 times while actually improving accuracy on structured tasks. Tested on robotic manipulation tasks, the neuro-symbolic approach significantly outperformed vision-language-action models at a tiny fraction of the compute cost. The implication for AI practitioners: the era of powerful AI running locally on laptops, phones, and drones — without cloud infrastructure — is arriving faster than expected. Drone-mounted edge AI for real-time object recognition, local processing for privacy-sensitive clients, and offline AI tools are all becoming practical. The freelancers who understand these architectures will design the next generation of client workflows.</p>
-      <a href="https://www.sciencedaily.com/releases/2026/04/260405003952.htm" target="_blank">ScienceDaily — AI energy breakthrough →</a>
+      <div class="news-badge">Research</div>
+      <h3>Neuro-Symbolic AI Cuts Energy 100× While Boosting Accuracy — Edge AI Accelerates Faster Than Expected</h3>
+      <p>Researchers published a breakthrough combining neural networks with symbolic reasoning that reduces AI energy consumption by up to 100× while simultaneously improving accuracy on structured tasks. Testing on robotic manipulation showed dramatic performance advantages over standard vision-language-action models at a fraction of the compute cost. The practical implication: powerful AI running locally on drones, laptops, and mobile devices is arriving faster than the industry anticipated. Drone-mounted edge AI for real-time subject tracking, autonomous path planning around Cromarty Firth, and offline AI processing for Highland fieldwork are all becoming practical within 12–18 months. Understanding these capabilities now puts you ahead of competitors who are still thinking about AI as purely a cloud-based tool.</p>
+      <a href="https://www.sciencedaily.com/releases/2026/04/260405003952.htm" target="_blank">ScienceDaily — AI efficiency breakthrough →</a>
     </div>
   </div>
 
   <!-- ═══ SECTION 9: REMOTE JOB LEADS ═══ -->
   <div class="card">
-    <div class="card-title">💼 Remote Job Leads — 8 April 2026</div>
-    <p class="section-hint">Today's topic is Freelancing — these leads include both platform-based freelance opportunities and remote staff roles. Apply to at least one today, then tap 💼 Job Applied and 🔴 CONFIRM.</p>
+    <div class="card-title">💼 Remote Job Leads — 9 April 2026</div>
+    <p class="section-hint">Today's topic is Freelancing Platforms — these leads span the immediate-income platforms (AI training) and higher-earning staff roles. Apply to at least one today, then tap 💼 Job Applied and 🔴 CONFIRM.</p>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Web3 Social Media Manager</div>
+        <span class="job-badge remote-badge">FULLY REMOTE</span>
+        <span class="job-badge fit-perfect">PERFECT FIT</span>
+      </div>
+      <div class="job-company">Serotonin · Europe-based · Fully remote</div>
+      <div class="job-salary">£65,000–£105,000/year · Senior role · Crypto-native team</div>
+      <div class="job-desc">Serotonin is a leading Web3 marketing agency hiring a Social Media Manager with crypto/blockchain knowledge and 3+ years social media management experience. Your crypto background is a direct differentiator that most applicants can't match — Crypto Twitter/Farcaster fluency is explicitly valued, and event coordination maps directly to campaign management. This is one of the highest-paid remote social roles available in Europe right now. The salary range is exceptional for a fully remote position accessible from Invergordon. Learning curve: 2–4 weeks to get job-ready for the application.</div>
+      <a class="apply-btn" href="https://to.indeed.com/aa6yx9xlfqv4" target="_blank">[APPLY] Serotonin via Indeed →</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Social Media Specialist — AI Trainer</div>
+        <span class="job-badge remote-badge">FULLY REMOTE</span>
+        <span class="job-badge fit-perfect">PERFECT FIT</span>
+      </div>
+      <div class="job-company">YO IT Consulting · Freelance/Contract · Flexible schedule</div>
+      <div class="job-salary">$30–$40/hour (~£24–£32/hr) · Freelance · Start immediately</div>
+      <div class="job-desc">Train AI models by evaluating social media content, visual assets, and digital outputs. Combines your AI knowledge with your social media and photography background — exactly the profile this role targets. Writing quality, visual content analysis, and attention to detail are the core requirements; no technical degree needed. This is one of the highest-overlap roles for your current skill set — the only barrier is applying. Immediate start possible. Learning curve: 1–2 weeks to first earnings.</div>
+      <a class="apply-btn" href="https://to.indeed.com/aagqpm47vkby" target="_blank">[APPLY] via Indeed →</a>
+    </div>
 
     <div class="job-card">
       <div class="job-header">
         <div class="job-title">AI Content Trainer / Expert Annotator</div>
-        <span class="job-badge remote-badge">REMOTE</span>
+        <span class="job-badge remote-badge">FULLY REMOTE</span>
         <span class="job-badge fit-perfect">PERFECT FIT</span>
       </div>
-      <div class="job-company">DataAnnotation Tech · UK eligible · Start immediately</div>
-      <div class="job-salary">Up to $60 USD/hour · Flexible hours · Project-based freelance</div>
-      <div class="job-desc">Help train next-generation AI models by evaluating AI-generated text, creative writing, and conversation quality. DataAnnotation is one of the highest-paying AI training platforms operating in the UK with no long-term commitment — work your own schedule, start today. Your customer service background gives you strong communication evaluation instincts, and your growing AI knowledge makes you exactly the profile they seek. No degree required. Apply via dataannotation.tech, link your LinkedIn profile, and you can be earning within days.</div>
+      <div class="job-company">DataAnnotation Tech · UK eligible · Project-based freelance</div>
+      <div class="job-salary">Up to $60 USD/hour · Flexible hours · Start within days</div>
+      <div class="job-desc">Help train next-generation AI models by evaluating AI-generated text, creative writing, and conversation quality. DataAnnotation is one of the highest-paying AI training platforms operating in the UK — no long-term commitment, work your own schedule, start this week. Your customer service background gives you strong communication evaluation instincts. Apply via dataannotation.tech, link your LinkedIn profile. This platform, alongside Mindrift, represents your fastest path from zero to first remote income — potentially earning within 48–72 hours of approval.</div>
       <a class="apply-btn" href="https://dataannotation.tech/" target="_blank">[APPLY] dataannotation.tech →</a>
     </div>
 
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Remote AI Expert — British English Track</div>
-        <span class="job-badge remote-badge">REMOTE</span>
-        <span class="job-badge fit-perfect">PERFECT FIT</span>
+        <div class="job-title">Social Community Manager — UK (Entertainment)</div>
+        <span class="job-badge remote-badge">FULLY REMOTE</span>
+        <span class="job-badge fit-high">HIGH FIT</span>
       </div>
-      <div class="job-company">Mindrift (Toloka) · Paid weekly · UK track open</div>
+      <div class="job-company">Think Jam · UK-based · Fully remote</div>
+      <div class="job-salary">Competitive package · Permanent role · UK right to work required</div>
+      <div class="job-desc">Think Jam is a leading entertainment marketing agency hiring a Community Manager with 2–3 years social media experience, Twitter/X and Threads expertise, and strong internet culture fluency. Your customer service experience maps directly to community management and real-time audience engagement. Photography and AI tools knowledge strengthens the application. This is a permanent staff role with the security of employment, rather than freelance income variability — worth running alongside platform applications. Learning curve: 3–6 weeks focused on entertainment social media strategy.</div>
+      <a class="apply-btn" href="https://to.indeed.com/aalxjjzjjfvr" target="_blank">[APPLY] Think Jam via Indeed →</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Short Form Content Social Media Manager</div>
+        <span class="job-badge remote-badge">FULLY REMOTE</span>
+        <span class="job-badge fit-high">HIGH FIT</span>
+      </div>
+      <div class="job-company">Shot Social · Fully remote · Growing digital agency</div>
+      <div class="job-salary">£25,000–£30,000/year · Permanent · Remote-first culture</div>
+      <div class="job-desc">Shot Social is a social-first digital agency specialising in short-form video (TikTok, Instagram Reels, YouTube Shorts) hiring a Social Media Manager. Your photography background is directly valuable for visual content direction. AI tools knowledge helps with content planning and batch creation workflows. The role involves managing multiple client accounts, developing content calendars, and tracking performance. A strong base role if you want predictable income alongside freelance platform work. Learning curve: 2–4 weeks to strengthen short-form video editing skills.</div>
+      <a class="apply-btn" href="https://to.indeed.com/aadmg2qx6gyk" target="_blank">[APPLY] Shot Social via Indeed →</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Remote AI Expert — British English Track</div>
+        <span class="job-badge remote-badge">FULLY REMOTE</span>
+        <span class="job-badge fit-high">HIGH FIT</span>
+      </div>
+      <div class="job-company">Mindrift (by Toloka) · Paid weekly · UK track open</div>
       <div class="job-salary">£20–£50/hour · Flexible freelance · Weekly payments</div>
-      <div class="job-desc">Mindrift by Toloka is actively recruiting British English AI experts for structured freelance AI training work — writing, evaluating, and improving AI outputs across domains including customer service, travel, general knowledge, and creative writing. The platform pays weekly and requires no experience with AI systems — just strong written English and domain knowledge. Your event coordination and customer service background maps directly. Register at mindrift.ai, complete the skills assessment, and you can begin earning within 48 hours. This is arguably the fastest legitimate path to your first remote AI income.</div>
+      <div class="job-desc">Mindrift by Toloka is actively recruiting British English AI experts for structured AI training work — writing, evaluating, and improving AI outputs across customer service, travel, general knowledge, and creative writing domains. Weekly payments, fully remote, no experience with AI systems required (just strong written English). Your event coordination and customer service background maps exactly. Register at mindrift.ai, complete the skills assessment, and you can begin earning within 48 hours. This is the clearest, fastest path to first remote AI income — start today alongside any other applications.</div>
       <a class="apply-btn" href="https://mindrift.ai/" target="_blank">[APPLY] mindrift.ai →</a>
     </div>
 
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Freelance AI Content Creator / Social Media Specialist</div>
-        <span class="job-badge remote-badge">REMOTE</span>
-        <span class="job-badge fit-high">HIGH FIT</span>
+        <div class="job-title">Customer Success Manager</div>
+        <span class="job-badge remote-badge">FULLY REMOTE</span>
+        <span class="job-badge fit-medium">MEDIUM FIT</span>
       </div>
-      <div class="job-company">Multiple clients · via Upwork, Freelancer.com, PeoplePerHour</div>
-      <div class="job-salary">£200–£600/week freelance · £40,000–£80,000/year equivalent</div>
-      <div class="job-desc">Over 2,571 active AI Content Creation jobs are listed on Upwork alone right now. Companies need freelancers who understand AI tools (Claude, ChatGPT, Midjourney, Runway) and can use them to produce compelling content at scale: social posts, blog articles, email campaigns, video scripts. Your existing daily use of AI tools puts you significantly ahead of general applicants. Create a focused Upwork profile today — pick one niche (AI-assisted tourism content, or Highland photography + social media) and pitch that specifically. Niche profiles convert far better than generic "content creator" listings.</div>
-      <a class="apply-btn" href="https://www.upwork.com/freelance-jobs/ai-content-creation/" target="_blank">[APPLY] Upwork AI Content →</a>
-    </div>
-
-    <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Remote Customer Success Manager</div>
-        <span class="job-badge remote-badge">REMOTE</span>
-        <span class="job-badge fit-high">HIGH FIT</span>
-      </div>
-      <div class="job-company">SaaS companies · Indeed UK &amp; Remote.co · Tier 1</div>
-      <div class="job-salary">£40,000–£60,000/year · Senior roles avg £54,981</div>
-      <div class="job-desc">Customer Success Manager is consistently one of the most remote-friendly, fastest-hiring roles in the tech industry — and your customer service and event coordination background maps directly. CSMs manage client relationships, track product adoption, and proactively reduce churn. Many companies hire CSMs from customer service backgrounds without requiring a technical degree. Search "remote customer success manager" on Indeed UK — apply to 3 roles today while your freelancing profile is loading. Diversify your income sources from day one: freelancing income + staff role applications running in parallel is the optimal strategy at this stage.</div>
-      <a class="apply-btn" href="https://uk.indeed.com/q-remote-customer-success-jobs.html" target="_blank">[APPLY] Indeed UK CSM →</a>
-    </div>
-
-    <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Freelance Drone Operator / Aerial Content Creator</div>
-        <span class="job-badge remote-badge">UK-WIDE</span>
-        <span class="job-badge fit-high">HIGH FIT</span>
-      </div>
-      <div class="job-company">FilmFolk · DroneJobs.app · Upwork · LinkedIn · Tier 1</div>
-      <div class="job-salary">£150–£400/day · £30–£120/hour via Upwork</div>
-      <div class="job-desc">FilmFolk and DroneJobs.app are the two primary UK platforms for freelance drone operator work. FilmFolk focuses on film/TV/commercial work; DroneJobs covers surveying, inspections, real estate, and events. Both list Highland-area projects regularly. Day rates for licensed operators range from £150 for basic photography to £400+ for inspection or cinematic work. CAA Flyer ID is required minimum; A2 CofC or GVC unlocks higher-value commercial contracts. With 95 cruise ship calls on your doorstep and ScotWind energy infrastructure at Nigg, your location is genuinely rare on these platforms — use it as your opening pitch on every profile.</div>
-      <a class="apply-btn" href="https://www.filmfolk.com/services/freelance-drone-operator" target="_blank">[APPLY] FilmFolk →</a>
+      <div class="job-company">Xibo Signage · Fully remote · SaaS product company</div>
+      <div class="job-salary">£38,000–£42,000/year · Permanent · Bi-yearly team travel</div>
+      <div class="job-desc">Xibo Signage is a digital signage SaaS platform hiring a Customer Success Manager. Your customer service background is directly applicable — CSMs manage client relationships, track product adoption, and proactively prevent churn. The 4+ years requirement is the main gap; however, framing your event coordination and customer service experience strongly in your CV can bridge it. This role pays reliably and builds the CSM experience needed for higher-tier positions. Apply now and use the interview process as practice even if this specific role needs more prep time. Learning curve: 8–12 weeks to strengthen CRM and SaaS product knowledge.</div>
+      <a class="apply-btn" href="https://to.indeed.com/aaf4w6r7dbfy" target="_blank">[APPLY] Xibo Signage via Indeed →</a>
     </div>
   </div>
 
   <!-- ═══ SECTION 10: TODAY'S 30-MIN LEARNING FOCUS ═══ -->
   <div class="card">
-    <div class="card-title">📚 Today's 30-Minute Learning Focus — Freelancing</div>
+    <div class="card-title">📚 Today's 30-Minute Learning Focus — Freelancing Platforms</div>
     <p class="learn-intro">
-      Today's rotation topic is <strong>Freelancing</strong> — turning your skills into income without needing an employer to say yes. In 2026, the global freelance market exceeds $1.5 trillion annually. Platforms like Upwork, Fiverr, PeoplePerHour, and Freelancer.com connect millions of clients with skilled freelancers every day. Today's 30 minutes: understand the platform ecosystem and set up your first professional profile.
+      Today's rotation topic is <strong>Freelancing Platforms</strong> — the marketplaces that connect you to paying clients without needing job applications, interviews, or a formal employer. In 2026, the global freelance platform economy exceeds $1.5 trillion. Knowing which platform to use, when, and how to position yourself on each one is the difference between sporadic income and a reliable remote career. Today's 30 minutes: map the landscape and activate your fastest income path.
     </p>
     <ul class="learn-bullets">
-      <li><strong>Choose your platform(s) strategically:</strong> Upwork is the largest and best for ongoing client relationships and higher-value contracts (£50–£150/hour). Fiverr is better for productised, fixed-price services ("I will write 5 AI-optimised LinkedIn posts for £75"). PeoplePerHour is UK-focused and popular with SMEs. Mindrift and DataAnnotation pay immediately for AI training work — no portfolio required. Start with Upwork for long-term, and Mindrift/DataAnnotation for immediate income.</li>
-      <li><strong>Write a client-focused profile overview:</strong> The most common mistake is writing your CV on your profile. Instead, write about your client's problem. "Are you a small business owner struggling to produce consistent, high-quality content? I help teams use AI tools to create a month's worth of posts, articles, and emails in a single day — so you can focus on running your business." That converts 5–10× better than "I am an experienced content creator with 5 years of experience."</li>
-      <li><strong>Set your rates correctly from day one:</strong> Research the market before setting your rate. On Upwork, search for profiles similar to yours and note what established freelancers charge. Start 10–20% below mid-market to build initial reviews — not at rock bottom. A £20/hour rate signals poor quality; £45/hour with a well-written profile wins more jobs than £20/hour with a weak one. Your goal is 5 strong reviews — then raise your rate.</li>
-      <li><strong>Proposals win jobs — not profiles alone:</strong> Your profile gets you considered; your proposal wins the contract. For every job you apply to, read the entire posting, mention something specific from it in your opening line, explain briefly why you're the right fit, and include one concrete example or relevant experience. Keep it under 150 words. Generic copy-paste proposals are rejected instantly — specific, personal proposals convert. Write 3 proposals today.</li>
+      <li><strong>Immediate income platforms — start here:</strong> Mindrift (mindrift.ai) and DataAnnotation (dataannotation.tech) pay British English speakers for AI training work within 24–72 hours of approval. No portfolio needed. No client pitching. Just a skills assessment and a working bank account. These are not long-term career builders on their own, but they generate real income while you build your Upwork profile and accumulate reviews. Sign up for both today. They run in parallel with everything else.</li>
+      <li><strong>Upwork — your primary long-term platform:</strong> Upwork is the largest professional freelance marketplace in the world. The key insight most beginners miss: Upwork rewards specificity. "AI Content Specialist helping tourism businesses create a month of content in a day" beats "content writer" by an enormous margin. Your profile should describe one client's problem in the first paragraph, your relevant background in the second, and invite them to message you in the third. Set your rate at £40–£50/hour for AI/content work and £150/day for drone/photography. Send 3–5 tailored proposals per week minimum.</li>
+      <li><strong>Fiverr — for productised, fixed-price services:</strong> Fiverr works best when you package your service into a clear, repeatable deliverable. Examples: "I will write 5 AI-optimised LinkedIn posts for £75 (delivered in 48 hours)." Or: "I will create a 60-second drone footage edit of your property for £120." These are called "Gigs". Fiverr buyers search for specific deliverables, not skills — so your gig title is everything. Start with 2–3 gigs that you can deliver confidently and quickly, get your first few reviews, then expand. Response speed and review quality drive Fiverr's algorithm — respond to every enquiry within 1 hour.</li>
+      <li><strong>PeoplePerHour — strong for UK SMEs:</strong> PeoplePerHour (PPH) is popular with UK-based small and medium businesses looking for freelancers in content, design, and digital marketing. The platform allows you to post "Hourlies" (fixed-price service listings) similar to Fiverr Gigs, and also lets you bid on posted projects. PPH has less competition than Upwork for AI/content roles and is actively used by Highland and Scottish businesses — a direct local market advantage for you. Create a PPH profile this week alongside Upwork.</li>
     </ul>
-    <a class="resource-link" href="https://www.youtube.com/results?search_query=upwork+profile+tips+2026" target="_blank">📖 Free resource: YouTube — "Upwork Profile Tips 2026" (multiple free tutorials)</a>
-    <p class="pill-hint">When done: tap <strong>📚 Learning Done</strong> in the progress bar above — it logs 0.5 hours of Freelancing to your tracker. Then tap <strong>🔴 CONFIRM</strong> to save.</p>
+    <a class="resource-link" href="https://www.youtube.com/results?search_query=upwork+fiverr+freelancing+platforms+comparison+2026" target="_blank">📖 Free resource: YouTube — "Freelancing Platform Comparison 2026" (multiple free comparisons)</a>
+    <p class="pill-hint">When done: tap <strong>📚 Learning Done</strong> in the progress bar above — it logs 0.5 hours of Freelancing Platforms to your tracker. Then tap <strong>🔴 CONFIRM</strong> to save.</p>
   </div>
 
   <!-- ═══ SECTION 11: TODAY'S ONE ACTION ═══ -->
   <div class="card action-card">
     <div class="card-title">⚡️ Today's One Action</div>
-    <div class="action-title">🖥️ Create Your Upwork Profile and Send Your First 3 Proposals</div>
+    <div class="action-title">🖥️ Sign Up for Mindrift AND DataAnnotation — Your First Remote Income Can Start Today</div>
     <div class="action-desc">
-      <p style="margin-bottom:12px;">The freelance economy rewards momentum. Getting your first profile live and your first proposals sent today means you could have your first client conversation this week. Here's exactly what to do:</p>
+      <p style="margin-bottom:12px;">Every other platform takes weeks to gain traction. These two pay you within days — no portfolio, no pitching, no waiting for reviews. Here's exactly what to do in 30 minutes:</p>
       <ol>
-        <li>Go to <strong>upwork.com</strong> and create a freelancer account. Use your real name, a professional photo (your LinkedIn photo works), and set your location to Invergordon, Scotland.</li>
-        <li>Write your <strong>profile headline</strong> using a specific, client-focused formula. Example: <em>"AI Tools Specialist &amp; Content Creator | Helping teams automate workflows &amp; produce Highland photography &amp; drone content | UK-based, remote-first"</em>.</li>
-        <li>Complete your <strong>overview section</strong> in 200–300 words. Focus on the client's problem first (para 1), your relevant experience second (para 2), and a call to action third ("Message me to discuss your project").</li>
-        <li>Set an <strong>hourly rate</strong>: £35–£45/hour for AI/content work; £150/day for drone/photography work.</li>
-        <li>Browse <strong>open jobs</strong> in AI content creation or customer success and send <strong>3 targeted proposals</strong> today — personalised, specific, under 150 words each.</li>
+        <li>Go to <strong>mindrift.ai</strong> and click "Become an Expert". Select <strong>British English</strong> as your language track. Fill in your profile — customer service background, event coordination, and general knowledge are all relevant strengths. Complete the skills assessment (it takes 15–20 minutes). Submit. You'll typically receive approval and access to paid tasks within 24–48 hours.</li>
+        <li>Open a new tab and go to <strong>dataannotation.tech</strong>. Click "Apply Now". Enter your email, create an account, and link your LinkedIn profile — this significantly boosts approval speed. Select the task categories that match you: Creative Writing, Customer Service, General Knowledge. Complete any onboarding quiz. DataAnnotation pays up to $60 USD/hour for top-rated contributors and has consistent task availability for UK applicants.</li>
+        <li>While waiting for approvals, spend 5 minutes on <strong>Upwork</strong> — create your basic account and upload a profile photo. You don't need to complete the whole profile today; just getting the account live means you appear in new talent listings immediately.</li>
       </ol>
     </div>
     <div class="action-why">
-      <strong>Why this, why today?</strong> Upwork's algorithm gives new profiles a brief "new talent" boost — surfacing them to more clients in the first 2–4 weeks. This is your best window to get early visibility and land your first reviews. <strong>A freelancing profile you don't create today is money you won't earn next week.</strong> The Ambience arrives in 5 days — by then, you want at least one active client conversation started.
+      <strong>Why this, why today?</strong> The Ambience arrives in 4 days. By the time that ship is in port, you want to have your first AI training approvals through and potentially your first tasks underway. <strong>Every day you delay is a day without income that could have started.</strong> Mindrift and DataAnnotation have zero setup friction — no portfolio required, no minimum experience, no client approval needed. You are already qualified for these roles right now. The only thing standing between you and your first remote payment is submitting the application.
     </div>
     <p class="pill-hint">When done: tap <strong>⚡️ Action Done</strong> in the progress bar above, then <strong>🔴 CONFIRM</strong> to lock in today's progress.</p>
   </div>
@@ -1208,7 +1230,7 @@ function renderDoughnutChart() {
   });
 }
 
-/* ─── WEATHER (Open-Meteo primary — native CORS, 5-day; wttr.in fallback) ─── */
+/* ─── WEATHER (Open-Meteo primary — native CORS, no proxy; wttr.in fallback) ─── */
 var OPENMETEO_URL = 'https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm';
 var WTTR_URL = 'https://wttr.in/Invergordon,Scotland?format=j1';
 
@@ -1262,26 +1284,26 @@ function setWeatherAnimation(code) {
   var isCloudy= code===2||code===3;
   if(isRain) {
     for(var i=0;i<20;i++){
-      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;width:1.5px;height:11px;background:rgba(147,210,255,0.50);border-radius:2px;animation:rainFall '+(0.38+Math.random()*0.45)+'s linear infinite;animation-delay:'+(-Math.random()*2)+'s"></div>';
+      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;width:1.5px;height:11px;background:rgba(147,210,255,0.75);border-radius:2px;animation:rainFall '+(0.38+Math.random()*0.45)+'s linear infinite;animation-delay:'+(-Math.random()*2)+'s"></div>';
     }
     if(code>=95){
-      html+='<div style="position:absolute;right:15%;top:0;width:3px;height:55%;background:linear-gradient(rgba(255,255,160,0),rgba(255,255,160,0.45),rgba(255,255,160,0));animation:lightningFlash 5s ease-in-out infinite;animation-delay:1.5s;pointer-events:none"></div>';
+      html+='<div style="position:absolute;right:15%;top:0;width:3px;height:55%;background:linear-gradient(rgba(255,255,160,0),rgba(255,255,160,0.55),rgba(255,255,160,0));animation:lightningFlash 5s ease-in-out infinite;animation-delay:1.5s;pointer-events:none"></div>';
     }
   } else if(isSnow) {
     var flakes=['❄','❅','❆'];
     for(var i=0;i<15;i++){
-      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;font-size:'+(0.55+Math.random()*0.45)+'rem;color:rgba(255,255,255,0.72);animation:snowFall '+(1.8+Math.random()*2.2)+'s ease-in-out infinite;animation-delay:'+(-Math.random()*3)+'s">'+flakes[i%3]+'</div>';
+      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;font-size:'+(0.55+Math.random()*0.45)+'rem;color:rgba(255,255,255,0.90);animation:snowFall '+(1.8+Math.random()*2.2)+'s ease-in-out infinite;animation-delay:'+(-Math.random()*3)+'s">'+flakes[i%3]+'</div>';
     }
   } else if(isSun) {
-    html+='<div style="position:absolute;right:-15px;top:-15px;width:110px;height:110px;background:radial-gradient(circle,rgba(251,191,36,0.22),transparent 70%);border-radius:50%;animation:sunPulse 3.5s ease-in-out infinite"></div>';
+    html+='<div style="position:absolute;right:-15px;top:-15px;width:110px;height:110px;background:radial-gradient(circle,rgba(251,191,36,0.45),transparent 70%);border-radius:50%;animation:sunPulse 3.5s ease-in-out infinite;opacity:0.45"></div>';
     for(var i=0;i<8;i++){
       var angle=(i/8)*360;
-      html+='<div style="position:absolute;right:30px;top:30px;width:2px;height:'+(18+i%3*7)+'px;background:rgba(251,191,36,0.28);transform-origin:bottom center;transform:rotate('+angle+'deg) translateY(-38px);animation:sunRayPulse '+(1.6+i*0.18)+'s ease-in-out infinite;animation-delay:'+(i*0.12)+'s"></div>';
+      html+='<div style="position:absolute;right:30px;top:30px;width:2px;height:'+(18+i%3*7)+'px;background:rgba(251,191,36,0.55);transform-origin:bottom center;transform:rotate('+angle+'deg) translateY(-38px);animation:sunRayPulse '+(1.6+i*0.18)+'s ease-in-out infinite;animation-delay:'+(i*0.12)+'s;opacity:0.45"></div>';
     }
   } else if(isCloudy) {
     var sizes=['3.2rem','2.2rem','3.8rem'],tops=['5%','22%','12%'],durs=[22,30,38],dels=[0,-9,-5];
     for(var i=0;i<3;i++){
-      html+='<div style="position:absolute;font-size:'+sizes[i]+';top:'+tops[i]+';opacity:0.10;animation:cloudDrift '+durs[i]+'s linear infinite;animation-delay:'+dels[i]+'s">☁️</div>';
+      html+='<div style="position:absolute;font-size:'+sizes[i]+';top:'+tops[i]+';opacity:0.45;animation:cloudDrift '+durs[i]+'s linear infinite;animation-delay:'+dels[i]+'s">☁️</div>';
     }
   }
   p.innerHTML = html;
@@ -1343,48 +1365,45 @@ function renderWeatherWttr(data) {
   setWeatherAnimation(wmo);
 }
 
-/* ─── TRAFFIC ─── */
+/* ─── TRAFFIC — Primary: Moray Firth Radio; Fallback: Traffic Scotland link ─── */
 function fetchTraffic() {
-  var trafficUrl = 'https://www.trafficscotland.org/rss/feeds/currentincidents.aspx';
   var el = document.getElementById('traffic-content');
-  fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(trafficUrl))
+  fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.mfr.co.uk/news/traffic/'))
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
-    .then(function(xml){
+    .then(function(html){
       var parser = new DOMParser();
-      var doc = parser.parseFromString(xml, 'text/xml');
-      if(!doc.querySelector('channel')) throw new Error('Not RSS');
-      var items = doc.querySelectorAll('item');
-      var keywords = ['a9','invergordon','inverness','highland','dingwall','tain','alness','cromarty','perth','aviemore','dalwhinnie','pitlochry','strathpeffer','muir of ord'];
+      var doc = parser.parseFromString(html, 'text/html');
+      var elements = doc.querySelectorAll('p, li, h2, h3, [class*="article"], [class*="content"], [class*="traffic"]');
+      var keywords = ['invergordon','tain','dingwall','inverness','kessock','a9','a96','a835','a862','cromarty','alness','muir of ord','strathpeffer','black isle','conon bridge','evanton','fearn','nigg','fort george','loch ness','drumnadrochit'];
       var found = [];
-      items.forEach(function(item){
-        var title = (item.querySelector('title')||{}).textContent||'';
-        var desc = (item.querySelector('description')||{}).textContent||'';
-        var combined = (title+' '+desc).toLowerCase();
-        var match = keywords.some(function(k){return combined.indexOf(k)>=0;});
-        if(match) {
-          var t = title.toLowerCase();
+      elements.forEach(function(item){
+        var text = (item.textContent||'').trim();
+        if(!text || text.length < 10) return;
+        var lower = text.toLowerCase();
+        var match = keywords.some(function(k){ return lower.indexOf(k) >= 0; });
+        if(match && found.length < 6) {
           var emoji = '🚦';
-          if(/accident|crash|collision/.test(t)) emoji='🚗💥';
-          else if(/police|closure/.test(t)) emoji='🚔';
-          else if(/roadwork|road work/.test(t)) emoji='🚧';
-          else if(/animal|livestock|deer/.test(t)) emoji='🐄⚠️';
-          else if(/flood/.test(t)) emoji='🌊⚠️';
-          else if(/snow|ice|gate/.test(t)) emoji='❄️🚧';
-          else if(/congestion|queue|delay/.test(t)) emoji='🚗🐌';
-          else if(/breakdown/.test(t)) emoji='🚗🔧';
-          found.push(emoji+' '+title);
+          if(/accident|crash|collision/.test(lower)) emoji='🚗💥';
+          else if(/police|closure|closed/.test(lower)) emoji='🚔';
+          else if(/roadwork|road work/.test(lower)) emoji='🚧';
+          else if(/animal|livestock|deer/.test(lower)) emoji='🐄⚠️';
+          else if(/flood/.test(lower)) emoji='🌊⚠️';
+          else if(/snow|ice|frost/.test(lower)) emoji='❄️🚧';
+          else if(/congestion|queue|delay|slow/.test(lower)) emoji='🚗🐌';
+          else if(/breakdown/.test(lower)) emoji='🚗🔧';
+          found.push(emoji + ' ' + text.slice(0,150));
         }
       });
       if(!el) return;
-      if(found.length===0) {
-        el.innerHTML='<span style="color:#4ade80;">✅ No incidents — all clear on A9 and Highland routes.</span>';
+      if(found.length === 0) {
+        el.innerHTML = '<span style="color:#4ade80;">✅ No local incidents reported on MFR</span> &nbsp;·&nbsp; <a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;font-size:0.78rem;">MFR Traffic ↗</a> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">Traffic Scotland ↗</a>';
       } else {
-        el.innerHTML = found.map(function(f){return '<div style="margin-bottom:4px;">'+f+'</div>';}).join('');
+        el.innerHTML = found.map(function(f){ return '<div style="margin-bottom:4px;">' + f + '</div>'; }).join('');
       }
     })
     .catch(function(){
       if(!el) return;
-      el.innerHTML='<span style="color:#4ade80;">✅ No incidents reported</span> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">check live map ↗</a>';
+      el.innerHTML = '<span style="color:rgba(255,255,255,0.70);">Traffic data unavailable</span> &nbsp;·&nbsp; <a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;font-size:0.78rem;">MFR Traffic ↗</a> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">Traffic Scotland ↗</a>';
     });
 }
 
@@ -1395,7 +1414,7 @@ function renderRoadworks() {
   if (!ROADWORKS || ROADWORKS.length === 0) { el.style.display='none'; return; }
   var html = '<div style="font-weight:700;font-size:0.78rem;margin-bottom:5px;color:rgba(255,255,255,0.75);">🚧 Active Roadworks Nearby</div>';
   ROADWORKS.forEach(function(r){
-    html += '<div style="margin-bottom:3px;font-size:0.80rem;">🚧 '+r+'</div>';
+    html += '<div style="margin-bottom:3px;font-size:0.80rem;">🚧 ' + r + '</div>';
   });
   el.innerHTML = html;
 }

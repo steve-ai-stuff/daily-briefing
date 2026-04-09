@@ -1514,32 +1514,46 @@ function fetchTraffic() {
       var parser = new DOMParser();
       var doc = parser.parseFromString(xml, 'text/xml');
       var items = Array.prototype.slice.call(doc.querySelectorAll('item'));
+
+      // Local Highlands/Invergordon place names
       var localKw = ['a9','invergordon','inverness','highland','dingwall','tain',
         'alness','cromarty','a96','a835','kessock','black isle','conon','evanton',
         'ross-shire','ross shire','fearn','nigg','strathpeffer'];
-      var roadKw  = ['crash','accident','collision','road closure','lane closure',
-        'breakdown','diversion','roadworks','flooding','snow','ice','traffic delay',
-        'road reopened','trunk road'];
+
+      // Road incident phrases — specific enough to avoid false matches
+      var roadKw = ['crash','accident','collision','road closure','lane closure',
+        'breakdown','diversion','roadworks','road works','flooding','traffic delay',
+        'road reopened','trunk road','traffic incident','road closed'];
+
+      // Short ambiguous words — only match as whole words to avoid
+      // "violence" matching "ice", "service" matching "ice", etc.
+      var weatherRoadRe = /\b(icy|ice road|snow on|snowfall|frost on|frozen road)\b/;
+
       var found = [];
       items.forEach(function(item){
         var title = (item.querySelector('title')||{textContent:''}).textContent || '';
         var desc  = (item.querySelector('description')||{textContent:''}).textContent || '';
         var combined = (title + ' ' + desc).toLowerCase();
-        var isLocal  = localKw.some(function(k){ return combined.indexOf(k) >= 0; });
-        var isRoad   = roadKw.some(function(k){ return combined.indexOf(k) >= 0; });
-        if((isLocal || isRoad) && found.length < 5) {
+
+        var isLocal = localKw.some(function(k){ return combined.indexOf(k) >= 0; });
+        var isRoad  = roadKw.some(function(k){ return combined.indexOf(k) >= 0; })
+                   || weatherRoadRe.test(combined);
+
+        // MUST match BOTH a local place AND a road/traffic keyword
+        if(isLocal && isRoad && found.length < 5) {
           var emoji = '🚦';
           if(/crash|accident|collision/.test(combined))      emoji = '🚗💥';
           else if(/closure|closed|diversion/.test(combined)) emoji = '🚔';
           else if(/roadwork|road work/.test(combined))        emoji = '🚧';
           else if(/flood/.test(combined))                     emoji = '🌊⚠️';
-          else if(/snow|ice/.test(combined))                  emoji = '❄️🚧';
+          else if(weatherRoadRe.test(combined))               emoji = '❄️🚧';
           else if(/delay|slow|congestion/.test(combined))     emoji = '🚗🐌';
           else if(/breakdown/.test(combined))                 emoji = '🚗🔧';
           var headline = title.replace(/<[^>]+>/g,'').trim().slice(0, 120);
           if(headline) found.push(emoji + ' ' + headline);
         }
       });
+
       if(!el) return;
       if(found.length === 0) {
         el.innerHTML = '<span style="color:#4ade80;">✅ No road incidents in BBC Scotland news right now</span>'

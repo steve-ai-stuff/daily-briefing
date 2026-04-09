@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steve's Daily Briefing — 9 April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --green-bright: #4ade80;
+  --green-light: #86efac;
+  --text-primary: #f0fdf4;
+  --text-secondary: #d1fae5;
+  --text-muted: rgba(255,255,255,0.52);
+  --card-bg: rgba(8,22,13,0.70);
+  --bg-image: url('../Background Images/scotland_202.jpg');
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  color: var(--text-primary);
+  background: linear-gradient(160deg,#0b3520 0%,#061c10 30%,#08241a 60%,#041208 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.22;
+  z-index: 0;
+  animation: kenBurns 45s ease-in-out infinite alternate;
+}
+@keyframes kenBurns {
+  0%   { transform: scale(1.0) translate(0,0); }
+  50%  { transform: scale(1.08) translate(-1.5%,1%); }
+  100% { transform: scale(1.05) translate(1.5%,-0.5%); }
+}
+body > * { position: relative; z-index: 1; }
+
+/* ─── STICKY PROGRESS BAR ─── */
+#progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background: rgba(4,12,6,0.92);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(74,222,128,0.20);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+#ring-wrap { flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+#ring-emoji { font-size: 1.3rem; }
+#ring-svg { width: 36px; height: 36px; flex-shrink: 0; }
+#ring-pct { font-size: 0.75rem; font-weight: 700; color: var(--green-bright); white-space: nowrap; }
+.pills-row { display: flex; gap: 7px; flex-wrap: wrap; flex: 1; }
+.pill {
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1.5px solid rgba(255,255,255,0.22);
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.60);
+  transition: all 0.2s;
+  user-select: none;
+  white-space: nowrap;
+}
+.pill:hover { border-color: rgba(255,255,255,0.40); color: rgba(255,255,255,0.85); }
+.pill.done {
+  background: rgba(74,222,128,0.18);
+  border-color: rgba(74,222,128,0.55);
+  color: #4ade80;
+  animation: pillPop 0.3s ease-out;
+}
+.pill.done-yellow {
+  background: rgba(251,191,36,0.18);
+  border-color: rgba(251,191,36,0.55);
+  color: #fbbf24;
+  animation: pillPop 0.3s ease-out;
+}
+@keyframes pillPop {
+  0%   { transform: scale(0.90); }
+  60%  { transform: scale(1.10); }
+  100% { transform: scale(1.00); }
+}
+.pill-confirm {
+  background: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.40);
+  color: #fca5a5;
+}
+.pill-confirm:hover {
+  background: rgba(239,68,68,0.22);
+  border-color: rgba(239,68,68,0.65);
+  color: #fecaca;
+}
+.pill-confirm.confirmed {
+  background: rgba(74,222,128,0.15);
+  border-color: rgba(74,222,128,0.55);
+  color: #4ade80;
+  pointer-events: none;
+}
+
+/* ─── ROCKET ANIMATION ─── */
+@keyframes rocketFly { 0%{left:10%;opacity:0;transform:rotate(30deg)} 15%{opacity:1} 85%{opacity:1} 100%{left:94%;opacity:0;transform:rotate(30deg)} }
+@keyframes bangPop   { 0%{transform:scale(0.2);opacity:0} 40%{transform:scale(1.8);opacity:1} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1.0);opacity:0} }
+@keyframes popperPop { 0%{transform:scale(0) rotate(-20deg);opacity:1} 40%{transform:scale(1.3) rotate(10deg);opacity:1} 75%{transform:scale(1.0) rotate(0deg);opacity:1} 100%{transform:scale(1.0) rotate(0deg);opacity:0} }
+#rocket-wrap { position:absolute;top:8px;font-size:1.4rem;display:none;pointer-events:none; }
+#rocket-wrap.flying { display:block;animation:rocketFly 5s linear forwards; }
+.bang-pop { position:absolute;top:2px;font-size:1.5rem;display:none;pointer-events:none; }
+.bang-pop.show { display:block;animation:bangPop 0.9s ease-out forwards; }
+#bang-emoji  { position:absolute;top:4px;left:50%;font-size:1.6rem;display:none;pointer-events:none; }
+#bang-emoji.show { display:block;animation:bangPop 1s ease-out forwards; }
+#party-popper { position:absolute;top:4px;right:70px;font-size:1.6rem;display:none;pointer-events:none;transform:scale(0); }
+#party-popper.show { display:block;animation:popperPop 1.2s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+/* ─── TOAST ─── */
+#toast-container {
+  position: fixed;
+  top: 70px;
+  right: 16px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  background: rgba(8,22,13,0.96);
+  backdrop-filter: blur(16px);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.83rem;
+  font-weight: 500;
+  max-width: 320px;
+  animation: toastIn 0.3s ease-out;
+  border-left: 4px solid #4ade80;
+}
+.toast.warn { border-left-color: #f97316; }
+.toast.info { border-left-color: #60a5fa; }
+@keyframes toastIn {
+  from { opacity:0; transform: translateX(20px); }
+  to   { opacity:1; transform: translateX(0); }
+}
+
+/* ─── WRAPPER ─── */
+.wrapper { max-width: 960px; margin: 0 auto; padding: 16px 16px 40px; }
+
+/* ─── CARD BASE ─── */
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(251,130,100,0.45);
+  border-radius: 18px;
+  padding: 28px 32px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  margin-bottom: 20px;
+  animation: fadeInUp 0.5s ease-out;
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(18px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fbbf24;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── WEATHER ─── */
+.weather-card {
+  background: linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68));
+  backdrop-filter: blur(16px);
+  border: 2px solid rgba(251,130,100,0.45);
+  position: relative; overflow: hidden;
+  border-radius: 18px;
+  padding: 28px 32px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+  margin-bottom: 20px;
+  animation: fadeInUp 0.5s ease-out;
+}
+.weather-stats { display: flex; gap: 16px; flex-wrap: wrap; margin: 14px 0; }
+.wstat { text-align: center; flex: 1; min-width: 70px; }
+.wstat-val { font-size: 1.1rem; font-weight: 700; color: #fff; }
+.wstat-lbl { font-size: 0.68rem; color: rgba(255,255,255,0.75); margin-top: 2px; }
+.weather-7day { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 14px; }
+#weather-particles { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:0; }
+.weather-card > * { position:relative; z-index:1; }
+@keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.8} 100%{transform:translateY(220px);opacity:0} }
+@keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.9} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
+@keyframes sunPulse { 0%,100%{opacity:0.15;transform:scale(1)} 50%{opacity:0.25;transform:scale(1.08)} }
+@keyframes sunRayPulse { 0%,100%{opacity:0.18;transform:scaleY(1)} 50%{opacity:0.30;transform:scaleY(1.4)} }
+@keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.11} 90%{opacity:0.11} to{transform:translateX(110%);opacity:0} }
+@keyframes lightningFlash { 0%,100%{opacity:0} 5%,7%{opacity:0.55} 6%{opacity:0} }
+.wday {
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 8px 4px;
+  text-align: center;
+  font-size: 0.70rem;
+  color: rgba(255,255,255,0.90);
+  border: 1px solid rgba(255,255,255,0.20);
+}
+.wday.today-day {
+  background: rgba(255,255,255,0.30);
+  border-color: rgba(255,255,255,0.55);
+  color: #fff;
+  font-weight: 700;
+}
+.wday-name { font-weight: 700; margin-bottom: 4px; }
+.wday-icon { font-size: 1.2rem; margin: 4px 0; }
+.weather-loading { color: rgba(255,255,255,0.80); font-style: italic; }
+
+/* ─── HEADER ─── */
+.header-card {
+  background: linear-gradient(135deg,rgba(22,163,74,0.32),rgba(74,222,128,0.32));
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(251,130,100,0.45);
+  border-radius: 18px;
+  padding: 32px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeInUp 0.5s ease-out;
+}
+.header-card h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.date-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.25);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.82rem;
+  padding: 5px 16px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+  letter-spacing: 0.03em;
+}
+.header-desc { color: rgba(255,255,255,0.92); font-size: 0.90rem; line-height: 1.6; max-width: 680px; margin: 0 auto; }
+.traffic-box {
+  background: rgba(185,28,28,0.12);
+  border: 1px solid rgba(251,191,36,0.55);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.83rem;
+  margin-top: 18px;
+  padding: 12px 16px;
+  text-align: left;
+}
+.traffic-title { font-weight: 700; margin-bottom: 6px; font-size: 0.82rem; }
+
+/* ─── THOUGHT & TIP ─── */
+.quote-block {
+  border-left: 4px solid var(--green-bright);
+  padding: 12px 18px;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.tip-box {
+  background: rgba(74,222,128,0.07);
+  border: 1px solid rgba(74,222,128,0.20);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.tip-box strong { color: var(--green-bright); }
+
+/* ─── CRUISE ─── */
+.ship-banner {
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.ship-banner.in-port {
+  background: rgba(74,222,128,0.14);
+  border: 1.5px solid rgba(74,222,128,0.40);
+  color: #4ade80;
+}
+.ship-banner.next-ship {
+  background: rgba(251,191,36,0.10);
+  border: 1.5px solid rgba(251,191,36,0.35);
+  color: #fbbf24;
+}
+.ship-banner.season-over {
+  background: rgba(96,165,250,0.10);
+  border: 1.5px solid rgba(96,165,250,0.30);
+  color: #93c5fd;
+}
+.countdown-label {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 10px;
+  text-align: center;
+}
+.cd-box {
+  background: #fde68a;
+  border: 1.5px solid rgba(251,130,100,0.7);
+  border-radius: 12px;
+  padding: 14px 6px;
+  color: #16a34a;
+}
+.cd-num { font-size: 1.8rem; font-weight: 800; color: #16a34a; line-height: 1; }
+.cd-unit { font-size: 0.65rem; color: #15803d; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+
+/* ─── NEWS ─── */
+.news-badge {
+  display: inline-block;
+  background: rgba(251,130,100,0.18);
+  color: #fb8264;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+.news-badge.local { background: rgba(74,222,128,0.15); color: #4ade80; }
+.news-badge.drone { background: rgba(251,191,36,0.15); color: #fbbf24; }
+.news-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.news-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.news-item h3 { font-size: 0.97rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+.news-item p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; }
+.news-item a { color: var(--green-bright); text-decoration: none; font-size: 0.80rem; }
+.news-item a:hover { text-decoration: underline; }
+
+/* ─── JOB CARDS ─── */
+.job-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(96,165,250,0.20);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.job-card:last-child { margin-bottom: 0; }
+.job-header { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.job-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); flex: 1; }
+.job-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.remote-badge { background: rgba(74,222,128,0.18); color: #4ade80; border: 1px solid rgba(74,222,128,0.30); }
+.fit-perfect { background: rgba(74,222,128,0.22); color: #4ade80; border: 1px solid rgba(74,222,128,0.45); }
+.fit-high { background: rgba(251,191,36,0.18); color: #fbbf24; border: 1px solid rgba(251,191,36,0.40); }
+.fit-medium { background: rgba(251,130,100,0.18); color: #fb8264; border: 1px solid rgba(251,130,100,0.35); }
+.job-company { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px; }
+.job-salary { font-size: 0.80rem; font-weight: 600; color: #86efac; margin-bottom: 8px; }
+.job-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.55; margin-bottom: 10px; }
+.apply-btn {
+  display: inline-block;
+  background: rgba(96,165,250,0.15);
+  border: 1px solid rgba(96,165,250,0.35);
+  color: #93c5fd;
+  padding: 5px 14px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.apply-btn:hover { background: rgba(96,165,250,0.25); border-color: rgba(96,165,250,0.55); }
+.section-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+/* ─── LEARNING ─── */
+.learn-intro { font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.6; }
+.learn-bullets { list-style: none; padding: 0; margin: 0 0 14px; }
+.learn-bullets li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 7px 0 7px 22px;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  line-height: 1.55;
+}
+.learn-bullets li:last-child { border-bottom: none; }
+.learn-bullets li::before { content: '▶'; position: absolute; left: 0; color: var(--green-bright); font-size: 0.65rem; top: 10px; }
+.resource-link {
+  display: inline-block;
+  background: rgba(74,222,128,0.10);
+  border: 1px solid rgba(74,222,128,0.25);
+  color: var(--green-bright);
+  padding: 5px 14px;
+  border-radius: 8px;
+  font-size: 0.80rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.resource-link:hover { background: rgba(74,222,128,0.18); }
+.pill-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ─── ACTION ─── */
+.action-card { border-color: rgba(251,191,36,0.50) !important; }
+.action-title { font-size: 1.05rem; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+.action-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+.action-desc ol { padding-left: 18px; }
+.action-desc ol li { margin-bottom: 6px; }
+.action-why {
+  background: rgba(74,222,128,0.07);
+  border: 1px solid rgba(74,222,128,0.20);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.action-why strong { color: var(--green-bright); }
+
+/* ─── PROGRESS TRACKER ─── */
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 24px; }
+.stat-box {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 12px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.stat-num { font-size: 1.6rem; font-weight: 800; color: var(--green-bright); line-height: 1; }
+.stat-lbl { font-size: 0.68rem; color: var(--text-muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 0.05em; }
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.chart-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.chart-empty { font-size: 0.80rem; color: var(--text-muted); font-style: italic; padding: 20px; text-align: center; background: rgba(255,255,255,0.03); border-radius: 10px; }
+
+/* ─── BACKUP ─── */
+.backup-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.backup-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.83rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1.5px solid;
+  transition: all 0.2s;
+}
+.save-btn { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.40); color: #4ade80; }
+.save-btn:hover { background: rgba(74,222,128,0.22); }
+.import-btn { background: rgba(96,165,250,0.10); border-color: rgba(96,165,250,0.35); color: #93c5fd; }
+.import-btn:hover { background: rgba(96,165,250,0.20); }
+.reset-btn { background: rgba(251,130,100,0.10); border-color: rgba(251,130,100,0.35); color: #fb8264; }
+.reset-btn:hover { background: rgba(251,130,100,0.20); }
+.backup-note { font-size: 0.78rem; color: var(--text-muted); line-height: 1.6; }
+.backup-note a { color: var(--green-bright); }
+
+/* ─── FOOTER ─── */
+footer {
+  text-align: center;
+  padding: 20px 16px 10px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  position: relative;
+}
+.footer-hills { display: block; width: 100%; margin-bottom: 10px; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .card { padding: 20px 16px; }
+  .header-card { padding: 22px 16px; }
+  .header-card h1 { font-size: 1.5rem; }
+  .countdown-grid { grid-template-columns: repeat(2,1fr); }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .charts-row { grid-template-columns: 1fr; }
+  .weather-7day { grid-template-columns: repeat(3,1fr); }
+  .pills-row { gap: 5px; }
+  .pill { padding: 4px 9px; font-size: 0.72rem; }
+  .cd-num { font-size: 1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND ROTATION -->
+<script>
+(function(){
+  var images = ["scotland_001.jpg","scotland_008.jpg","scotland_009.jpg","scotland_010.jpg","scotland_011.jpg","scotland_012.jpg","scotland_013.jpg","scotland_014.jpg","scotland_016.jpg","scotland_017.jpg","scotland_019.jpg","scotland_020.jpg","scotland_032.jpg","scotland_036.jpg","scotland_039.jpg","scotland_041.jpg","scotland_060.jpg","scotland_061.jpg","scotland_064.jpg","scotland_072.jpg","scotland_073.jpg","scotland_077.jpg","scotland_101.jpg","scotland_103.jpg","scotland_104.jpg","scotland_109.jpg","scotland_115.jpg","scotland_116.jpg","scotland_117.jpg","scotland_121.jpg","scotland_122.jpg","scotland_123.jpg","scotland_124.jpg","scotland_125.jpg","scotland_126.jpg","scotland_127.jpg","scotland_128.jpg","scotland_130.jpg","scotland_132.jpg","scotland_133.jpg","scotland_135.jpg","scotland_136.jpg","scotland_138.jpg","scotland_139.jpg","scotland_141.jpg","scotland_145.jpg","scotland_146.jpg","scotland_147.jpg","scotland_149.jpg","scotland_150.jpg","scotland_151.jpg","scotland_152.jpg","scotland_155.jpg","scotland_156.jpg","scotland_157.jpg","scotland_159.jpg","scotland_161.jpg","scotland_162.jpg","scotland_163.jpg","scotland_164.jpg","scotland_165.jpg","scotland_166.jpg","scotland_167.jpg","scotland_169.jpg","scotland_171.jpg","scotland_172.jpg","scotland_173.jpg","scotland_174.jpg","scotland_177.jpg","scotland_180.jpg","scotland_183.jpg","scotland_185.jpg","scotland_186.jpg","scotland_187.jpg","scotland_188.jpg","scotland_190.jpg","scotland_191.jpg","scotland_192.jpg","scotland_194.jpg","scotland_196.jpg","scotland_198.jpg","scotland_199.jpg","scotland_200.jpg","scotland_201.jpg","scotland_202.jpg","scotland_203.jpg","scotland_204.jpg","scotland_205.jpg","scotland_206.jpg","scotland_207.jpg","scotland_208.jpg","scotland_209.jpg","scotland_210.jpg","scotland_211.jpg","scotland_212.jpg","scotland_213.jpg","scotland_214.jpg","scotland_217.jpg","scotland_219.jpg","scotland_221.jpg","scotland_223.jpg","scotland_224.jpg","scotland_225.jpg","scotland_228.jpg","scotland_229.jpg","scotland_230.jpg","scotland_232.jpg","scotland_233.jpg","scotland_234.jpg","scotland_235.jpg","scotland_237.jpg","scotland_239.jpg","scotland_240.jpg","scotland_241.jpg","scotland_244.jpg","scotland_246.jpg","scotland_247.jpg","scotland_248.jpg","scotland_249.jpg","scotland_253.jpg","scotland_254.jpg","scotland_255.jpg","scotland_257.jpg","scotland_258.jpg","scotland_259.jpg","scotland_260.jpg","scotland_262.jpg","scotland_263.jpg","scotland_264.jpg","scotland_266.jpg","scotland_267.jpg","scotland_268.jpg","scotland_269.jpg","scotland_270.jpg","scotland_271.jpg","scotland_272.jpg","scotland_273.jpg","scotland_276.jpg","scotland_277.jpg","scotland_279.jpg","scotland_281.jpg","scotland_283.jpg","scotland_284.jpg","scotland_290.jpg","scotland_297.jpg","scotland_299.jpg","scotland_302.jpg","scotland_304.jpg","scotland_305.jpg","scotland_306.jpg","scotland_308.jpg","scotland_309.jpg","scotland_310.jpg","scotland_311.jpg","scotland_312.jpg","scotland_313.jpg","scotland_314.jpg","scotland_317.jpg","scotland_319.jpg","scotland_322.jpg","scotland_323.jpg","scotland_324.jpg","scotland_327.jpg","scotland_328.jpg","scotland_329.jpg","scotland_330.jpg","scotland_332.jpg","scotland_335.jpg","scotland_336.jpg","scotland_339.jpg","scotland_345.jpg","scotland_346.jpg","scotland_347.jpg","scotland_351.jpg","scotland_352.jpg","scotland_355.jpg","scotland_357.jpg","scotland_360.jpg","scotland_361.jpg","scotland_362.jpg","scotland_363.jpg","scotland_364.jpg","scotland_367.jpg","scotland_368.jpg","scotland_370.jpg","scotland_371.jpg","scotland_372.jpg","scotland_373.jpg","scotland_374.jpg","scotland_375.jpg","scotland_377.jpg","scotland_378.jpg","scotland_381.jpg","scotland_384.jpg","scotland_385.jpg","scotland_386.jpg","scotland_387.jpg"];
+  var now = new Date();
+  var start = new Date(now.getFullYear(),0,0);
+  var dayOfYear = Math.floor((now - start) / 86400000);
+  var img = images[dayOfYear % images.length];
+  var isGitHub = window.location.hostname.includes('github.io');
+  var imgPath = isGitHub ? img : '../Background Images/' + img;
+  document.documentElement.style.setProperty('--bg-image','url("' + imgPath + '")');
+})();
+</script>
+
+<!-- JAVASCRIPT DATA BLOCK -->
+<script>
+var SAVED_LEARN_HOURS = 0;
+var SAVED_APPS = 0;
+var SAVED_INTERVIEWS = 0;
+var SAVED_SESSIONS = 0;
+var SAVED_SKILLS = {"Data Analysis":0,"Prompt Engineering":0,"Python":0,"AI Tools & Systems":0,"Drone & Regs":0,"Photography":0,"JavaScript":0,"LinkedIn":0,"Freelancing":0,"Freelancing Platforms":0};
+var SAVED_DAILY_HISTORY = [
+  {date:"2026-03-31", apps:0, hours:0},
+  {date:"2026-04-05", apps:0, hours:0},
+  {date:"2026-04-06", apps:0, hours:0},
+  {date:"2026-04-07", apps:0, hours:0}
+];
+var TODAY_DATE = "2026-04-08";
+var TODAY_TOPIC = "Freelancing";
+
+/* Baked-in roadworks for today — updated each morning by the daily task */
+var ROADWORKS = [
+  "A9 south of Tain — lane closure at night, resumes 14 Apr",
+  "A9 north of Achalone Junction — resurfacing started 7 Apr",
+  "A9 Raigmore Interchange, Inverness — overnight works ongoing"
+];
+
+var CRUISE_SCHEDULE = [
+  {date:"2026-04-06",ships:["AIDAmar"]},
+  {date:"2026-04-13",ships:["Ambience"]},
+  {date:"2026-04-14",ships:["AIDAsol"]},
+  {date:"2026-04-23",ships:["Renaissance"]},
+  {date:"2026-04-24",ships:["Majestic Princess"]},
+  {date:"2026-04-29",ships:["AIDAluna"]},
+  {date:"2026-05-04",ships:["Nieuw Statendam"]},
+  {date:"2026-05-06",ships:["Majestic Princess"]},
+  {date:"2026-05-13",ships:["Norwegian Star"]},
+  {date:"2026-05-16",ships:["Mein Schiff 2"]},
+  {date:"2026-05-18",ships:["MSC Preziosa"]},
+  {date:"2026-05-19",ships:["Celebrity Eclipse"]},
+  {date:"2026-05-21",ships:["Costa Favolosa"]},
+  {date:"2026-05-22",ships:["MSC Preziosa"]},
+  {date:"2026-05-26",ships:["Mein Schiff 2"]},
+  {date:"2026-05-27",ships:["AIDAsol"]},
+  {date:"2026-05-28",ships:["Norwegian Star"]},
+  {date:"2026-05-30",ships:["Majestic Princess"]},
+  {date:"2026-06-02",ships:["Norwegian Star"]},
+  {date:"2026-06-03",ships:["Star Pride"]},
+  {date:"2026-06-04",ships:["Silver Spirit"]},
+  {date:"2026-06-05",ships:["AIDAsol"]},
+  {date:"2026-06-07",ships:["Mein Schiff 2"]},
+  {date:"2026-06-09",ships:["Rotterdam"]},
+  {date:"2026-06-11",ships:["Seabourn Ovation"]},
+  {date:"2026-06-12",ships:["Queen Anne"]},
+  {date:"2026-06-13",ships:["MSC Preziosa"]},
+  {date:"2026-06-16",ships:["AIDAsol"]},
+  {date:"2026-06-18",ships:["Norwegian Star"]},
+  {date:"2026-06-19",ships:["Seven Seas Grandeur"]},
+  {date:"2026-06-21",ships:["Norwegian Sky"]},
+  {date:"2026-06-23",ships:["Ambience","Star Pride"]},
+  {date:"2026-06-24",ships:["Norwegian Star"]},
+  {date:"2026-06-27",ships:["Mein Schiff 2"]},
+  {date:"2026-06-29",ships:["AIDAsol"]},
+  {date:"2026-07-01",ships:["Mein Schiff 2"]},
+  {date:"2026-07-03",ships:["Norwegian Sky"]},
+  {date:"2026-07-07",ships:["Oceania Sirena"]},
+  {date:"2026-07-08",ships:["MSC Preziosa"]},
+  {date:"2026-07-09",ships:["Norwegian Star"]},
+  {date:"2026-07-11",ships:["Mein Schiff 2"]},
+  {date:"2026-07-12",ships:["Europa","Norwegian Sky"]},
+  {date:"2026-07-13",ships:["Celebrity Eclipse"]},
+  {date:"2026-07-14",ships:["Nieuw Statendam"]},
+  {date:"2026-07-15",ships:["Britannia"]},
+  {date:"2026-07-16",ships:["AIDAbella"]},
+  {date:"2026-07-17",ships:["Majestic Princess"]},
+  {date:"2026-07-20",ships:["Costa Favolosa"]},
+  {date:"2026-07-23",ships:["Mein Schiff 2"]},
+  {date:"2026-07-24",ships:["Azamara Quest"]},
+  {date:"2026-07-27",ships:["Borealis"]},
+  {date:"2026-07-29",ships:["Majestic Princess"]},
+  {date:"2026-07-30",ships:["Norwegian Star"]},
+  {date:"2026-07-31",ships:["Azamara Quest"]},
+  {date:"2026-08-02",ships:["Norwegian Sky"]},
+  {date:"2026-08-03",ships:["Star Legend"]},
+  {date:"2026-08-04",ships:["Majestic Princess"]},
+  {date:"2026-08-05",ships:["Oceania Marina"]},
+  {date:"2026-08-06",ships:["Mein Schiff 3"]},
+  {date:"2026-08-07",ships:["MSC Preziosa"]},
+  {date:"2026-08-11",ships:["Norwegian Sky"]},
+  {date:"2026-08-12",ships:["Celebrity Eclipse"]},
+  {date:"2026-08-15",ships:["Seven Seas Voyager"]},
+  {date:"2026-08-16",ships:["Mein Schiff 3"]},
+  {date:"2026-08-17",ships:["Oceania Vista"]},
+  {date:"2026-08-18",ships:["Nieuw Statendam"]},
+  {date:"2026-08-20",ships:["AIDAluna"]},
+  {date:"2026-08-22",ships:["Majestic Princess"]},
+  {date:"2026-08-24",ships:["Mein Schiff 2"]},
+  {date:"2026-08-25",ships:["MSC Preziosa"]},
+  {date:"2026-08-26",ships:["Nieuw Statendam"]},
+  {date:"2026-08-28",ships:["Mein Schiff 2"]},
+  {date:"2026-09-01",ships:["Valiant Lady"]},
+  {date:"2026-09-04",ships:["Seven Seas Mariner"]},
+  {date:"2026-09-07",ships:["Mein Schiff 2"]},
+  {date:"2026-09-09",ships:["Oceania Marina"]},
+  {date:"2026-09-10",ships:["Norwegian Star"]},
+  {date:"2026-09-11",ships:["MSC Preziosa"]},
+  {date:"2026-09-12",ships:["Spirit Of Adventure"]},
+  {date:"2026-09-15",ships:["Majestic Princess"]},
+  {date:"2026-09-16",ships:["Norwegian Star"]},
+  {date:"2026-09-24",ships:["Costa Favolosa"]},
+  {date:"2026-10-06",ships:["AIDAsol"]},
+  {date:"2026-10-14",ships:["AIDAsol"]}
+];
+</script>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ═══ SECTION 1: STICKY PROGRESS BAR ═══ -->
+<div id="progress-bar">
+  <div id="rocket-wrap">🚀</div>
+  <div class="bang-pop" id="bang1" style="left:20%">💥</div>
+  <div class="bang-pop" id="bang2" style="left:35%">💥</div>
+  <div class="bang-pop" id="bang3" style="left:50%">💥</div>
+  <div class="bang-pop" id="bang4" style="left:65%">💥</div>
+  <div class="bang-pop" id="bang5" style="left:80%">💥</div>
+  <div id="bang-emoji">💥</div>
+  <div id="party-popper">🎉</div>
+  <div id="ring-wrap">
+    <span id="ring-emoji">🌑</span>
+    <svg id="ring-svg" viewBox="0 0 36 36">
+      <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="3"/>
+      <circle id="ring-circle" cx="18" cy="18" r="15" fill="none"
+        stroke="#4ade80" stroke-width="3" stroke-linecap="round"
+        stroke-dasharray="0 94.2" stroke-dashoffset="23.55"
+        style="transform-origin:center;transform:rotate(-90deg);transition:stroke-dasharray 0.4s ease;"/>
+    </svg>
+    <span id="ring-pct">0%</span>
+  </div>
+  <div class="pills-row">
+    <div class="pill" id="pill-news"   onclick="togglePill('news')">🗞️ News</div>
+    <div class="pill" id="pill-job"    onclick="togglePill('job')">💼 Job Applied</div>
+    <div class="pill" id="pill-learn"  onclick="togglePill('learn')">📚 Learning Done</div>
+    <div class="pill" id="pill-action" onclick="togglePill('action')">⚡️ Action Done</div>
+    <div class="pill pill-confirm" id="pill-confirm" onclick="confirmDay()" title="Lock in today's progress and save to JSON">🔴 CONFIRM</div>
+  </div>
+</div>
+
+<!-- ═══ MAIN WRAPPER ═══ -->
+<div class="wrapper">
+
+  <!-- ═══ SECTION 2: WEATHER CARD ═══ -->
+  <div class="weather-card">
+    <div id="weather-particles"></div>
+    <div class="card-title" style="color:#fff;">🌤️ Invergordon Weather — Today &amp; 5-Day Outlook</div>
+    <div id="weather-content">
+      <p class="weather-loading">Fetching live weather from Open-Meteo…</p>
+    </div>
+    <p style="font-size:0.70rem;color:rgba(255,255,255,0.65);margin-top:10px;">Sources: Open-Meteo · Met Office · BBC Weather</p>
+  </div>
+
+  <!-- ═══ SECTION 3: HEADER BANNER ═══ -->
+  <div class="header-card">
+    <h1>Good Morning, Steve! 🌅 ☕️</h1>
+    <div class="date-badge">📅 Wednesday, 8 April 2026 · Week 15</div>
+    <p class="header-desc">
+      Day 3 of the cruise season — the <strong>Ambience arrives in 5 days (Monday 13 April)</strong>. Today is your <strong>Freelancing day</strong>: the fastest path from zero income to your first remote payment. Platforms like Upwork, Fiverr, and PeoplePerHour connect clients with freelancers in AI tools, content creation, and drone photography around the globe. One profile, set up properly today, can generate inbound leads for months. Tap the task pills above as you work through your day, and press <strong>🔴 CONFIRM</strong> when you're done to lock in your progress.
+    </p>
+    <div class="traffic-box">
+      <div class="traffic-title">🚦 Live Traffic — A9 · Invergordon · Inverness · Highlands</div>
+      <div id="traffic-content">Loading…</div>
+      <div id="roadworks-content" style="margin-top:8px;padding-top:7px;border-top:1px solid rgba(251,191,36,0.28);"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 4: TODAY'S THOUGHT & TIP ═══ -->
+  <div class="card">
+    <div class="card-title">💭 Today's Thought &amp; Tip</div>
+    <div class="quote-block">
+      "Don't wait until you feel ready. The freelancer who starts imperfect today earns more this month than the one waiting to feel like an expert." — Unknown<br><br>
+      Freelancing is not about credentials — it's about demonstrating value clearly and quickly. The single biggest barrier new freelancers face isn't skill; it's visibility. A profile that doesn't exist can't get hired. A proposal that isn't sent can't be accepted. Today's objective is simple: exist on the platforms where clients are already searching for someone exactly like you.
+    </div>
+    <div class="tip-box">
+      <strong>Wednesday Focus Tip:</strong> Before you write your Upwork profile today, spend 10 minutes as a buyer. Search for the services you want to offer — "AI tools specialist", "content creator", "drone operator UK". Look at the top-rated freelancers' profiles. Notice their <strong>headlines</strong> (specific, outcome-focused), their <strong>hourly rates</strong> (competitive but not rock-bottom), and their <strong>overviews</strong> (they talk about the client's problem, not their own CV). Steal the structure. Your first profile doesn't need to be perfect — it needs to be live.
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 5: CRUISE SEASON ═══ -->
+  <div class="card">
+    <div class="card-title">🚢 Port of Cromarty Firth — 2026 Cruise Season</div>
+    <div id="ship-banner" class="ship-banner next-ship">Loading ship schedule…</div>
+    <div class="countdown-label">⏳ Season ends in — 14 October 2026</div>
+    <div class="countdown-grid">
+      <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-unit">Days</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-unit">Hours</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-mins">--</div><div class="cd-unit">Minutes</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-unit">Seconds</div></div>
+    </div>
+    <p style="font-size:0.80rem;color:var(--text-secondary);margin-top:16px;line-height:1.6;">
+      The 2026 season is two days in — <strong>AIDAmar visited on Monday 6 April</strong>, kicking off an estimated <strong>95 ship calls</strong> and <strong>200,000 passengers</strong> arriving in Invergordon through 14 October. Next arrival: <strong>Ambience on Monday 13 April</strong>. Five days to finalise your freelancing profile, photography portfolio, and drone registration. Every ship call is a potential client, a portfolio shot, and a social media post.
+    </p>
+    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">
+      Source: <a href="https://pocf.co.uk" style="color:var(--green-bright);" target="_blank">pocf.co.uk</a> · <a href="https://www.ross-shirejournal.co.uk" style="color:var(--green-bright);" target="_blank">Ross-shire Journal</a>
+    </p>
+  </div>
+
+  <!-- ═══ SECTION 6: DRONE & PHOTOGRAPHY TIP ═══ -->
+  <div class="card">
+    <div class="card-title">📸 Drone &amp; Photography Tip — Freelancing Edition</div>
+
+    <div class="news-item">
+      <div class="news-badge drone">📋 Freelancing</div>
+      <h3>Set Up Your Drone Operator Profiles on FilmFolk and DroneJobs.app Today</h3>
+      <p>FilmFolk connects freelance drone operators with film, TV, and commercial clients across the UK. DroneJobs.app is a dedicated marketplace specifically for drone work — surveying, inspections, photography, events. Both are free to join and immediately surface your profile to clients searching for operators in the Highlands and Easter Ross area. With cruise ship photography opportunities starting now and ScotWind energy infrastructure at Nigg, your postcode is a genuine selling point. On your FilmFolk profile, list your equipment (DJI model), your CAA Flyer ID, any GVC or A2 CofC certification, and add 3–5 portfolio shots. Do the same on DroneJobs. Clients search by location — be found.</p>
+      <a href="https://www.filmfolk.com/services/freelance-drone-operator" target="_blank">FilmFolk Freelance Drone Operators →</a> &nbsp; <a href="https://www.dronejobs.app/" target="_blank">DroneJobs.app →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge drone">💰 Stock</div>
+      <h3>Cromarty Firth Cruise Ship Arrivals: Build a Stock Photography Revenue Stream</h3>
+      <p>Adobe Stock, Shutterstock, and Getty Images are significantly under-stocked with high-quality images of the Cromarty Firth and Invergordon cruise port. A search for "Invergordon cruise ship" returns thin, dated results — a gap you can fill over the next six months. The business model: shoot each ship arrival, submit 10–20 images per visit to the contributor portals, earn royalties every time a travel brand, publisher, or tourism operator licenses your work. With 95 ship calls this season, 95 shooting sessions means potentially 950–1,900 stock images. At even modest royalty rates, a strong stock portfolio compounds in value year over year. Start submitting today — the barrier is just your time.</p>
+      <a href="https://submit.shutterstock.com/" target="_blank">Shutterstock Contributor →</a> &nbsp; <a href="https://contributor.stock.adobe.com/" target="_blank">Adobe Stock Contributor →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge drone">🎬 Upwork</div>
+      <h3>Drone Videography on Upwork: 348+ Active Jobs, UK Clients Actively Searching</h3>
+      <p>Upwork currently lists 348+ open drone jobs. Many are one-off projects — a property developer needs aerial shots of a new build, an events company wants footage of an outdoor festival, a tourism board needs a promotional video of Highland landscapes. Day rates on confirmed shoots range from £150 to £400+. The key to winning Upwork drone jobs is specificity in your profile: "Highlands &amp; Easter Ross aerial videographer · CAA licensed · DJI Mavic 3 · available for remote projects and travel" lands better than "drone operator available UK." Set up your Upwork account today with that framing — it costs nothing to be listed, and Highland-based operators are rare on the platform.</p>
+      <a href="https://www.upwork.com/freelance-jobs/drones/" target="_blank">Upwork Drone Jobs →</a>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 7: INVERGORDON & HIGHLANDS NEWS ═══ -->
+  <div class="card">
+    <div class="card-title">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Invergordon &amp; Highlands News</div>
+
+    <div class="news-item">
+      <div class="news-badge local">🚢 Cruise</div>
+      <h3>Port of Cromarty Firth 2026 Season Underway — 200,000 Visitors Expected</h3>
+      <p>The Port of Cromarty Firth officially opened its 2026 cruise season on Monday 6 April with the arrival of AIDAmar, a 2,600-passenger AIDA Cruises ship. The season runs through 14 October, with 95 scheduled ship calls bringing an estimated 200,000 passengers to Invergordon and the wider Highlands. Port CEO Bob Buskie describes the season as "cruising towards boom" — local businesses have been briefed on attracting cruise visitors, and the port's gift shop has been re-contracted to Cobbs. For Steve: every one of those 200,000 passengers is a potential photography client, a LinkedIn connection story, and a demonstration of your Highland location as an asset rather than a liability.</p>
+      <a href="https://pocf.co.uk/2026/03/19/port-of-cromarty-firth-welcomes-first-cruise-ship-of-2026/" target="_blank">Port of Cromarty Firth →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge local">🏗️ Roads</div>
+      <h3>A9 North of Achalone Junction: Resurfacing Underway from 7 April</h3>
+      <p>BEAR Scotland, on behalf of Transport Scotland, began essential carriageway resurfacing on the A9 north of Achalone Junction on Tuesday 7 April 2026. This is in addition to the existing overnight lane restrictions on the A9 south of Tain, which are paused until 14 April before returning for a further three nights. The A9 Raigmore Interchange improvement works in Inverness also continue, with overnight restrictions expected until approximately May 2026. If you're travelling south from Invergordon toward Inverness, allow extra time particularly for evening journeys.</p>
+      <a href="https://www.ross-shirejournal.co.uk/news/a9-roadworks-south-of-tain-new-dates-shared-as-project-pau-431358/" target="_blank">Ross-shire Journal — A9 Tain roadworks →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge local">⚽ Sport</div>
+      <h3>Invergordon FC Prepare for First Highland League Season — Final North Cal Match on 11 April</h3>
+      <p>Following their historic acceptance into the Scottish Highland Football League for 2026/27 — the first Ross-shire club since Ross County joined the SPFL in 1994 — Invergordon FC play their final North Caledonian League match on Saturday 11 April at Morrison Park against Halkirk United, before travelling to Alness United in the North Cal Cup semi-finals. Manager Gary Campbell is upbeat about the transition, noting the club is "in a great position" heading into a historic new chapter for the town. The Highland League campaign will bring higher-profile away fixtures, more media coverage, and fresh community pride to Invergordon.</p>
+      <a href="https://www.ross-shirejournal.co.uk/sport/new-club-accepted-into-highland-league-for-next-season-431568/" target="_blank">Ross-shire Journal — Invergordon FC →</a>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 8: AI & TECH NEWS ═══ -->
+  <div class="card">
+    <div class="card-title">🤖 AI &amp; Tech News — 8 April 2026</div>
+
+    <div class="news-item">
+      <div class="news-badge">Anthropic</div>
+      <h3>Claude Mythos 5 Testing Underway — Anthropic's First 10-Trillion-Parameter Model</h3>
+      <p>Anthropic is internally testing Claude Mythos 5, described as "by far the most powerful AI model we've ever developed." At an estimated 10 trillion parameters, it represents an entirely new capability tier — specifically engineered for high-stakes environments including cybersecurity, academic research, and complex coding tasks. A Q2 2026 launch is anticipated. For freelancers building AI-tool skills: models of this calibre won't replace skilled human prompt engineers and workflow designers — they'll make them more productive. The operators of powerful AI models are the people who know how to direct them toward specific results. That skill is what you're building.</p>
+      <a href="https://fortune.com/2026/03/26/anthropic-says-testing-mythos-powerful-new-ai-model-after-data-leak-reveals-its-existence-step-change-in-capabilities/" target="_blank">Fortune: Claude Mythos →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Microsoft</div>
+      <h3>Microsoft Launches Three New Foundational AI Models Including MAI-Voice and MAI-Transcribe</h3>
+      <p>Microsoft AI released three new foundational models this week: MAI-Transcribe-1 (speech-to-text across 25 languages, 2.5× faster than Azure Fast), MAI-Voice-1 (generates 60 seconds of audio in one second, custom voice cloning), and a third image generation model. These are now available through Azure AI Foundry. For freelancers: MAI-Voice-1 opens up a significant new niche — AI voiceover production for content creators, podcasters, e-learning providers, and tourism operators. Highland tourism operators will soon need narrated audio guides, promotional videos, and multi-language content for cruise ship visitors. Your proximity to that market is a direct business opportunity.</p>
+      <a href="https://techcrunch.com/2026/04/02/microsoft-takes-on-ai-rivals-with-three-new-foundational-models/" target="_blank">TechCrunch: Microsoft AI models →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Open Source</div>
+      <h3>DeepSeek V4 Released with Open Weights — Frontier Performance at $5.2M Training Cost</h3>
+      <p>DeepSeek released V4, a 1-trillion-parameter Mixture-of-Experts model with fully open weights, trained for an estimated $5.2 million — a fraction of comparable frontier model costs. It scored 94.7% on HumanEval and matched or exceeded closed models on major benchmarks. Open-weight models are transformative for freelancers: they can be run locally, fine-tuned on specific datasets, and deployed in client workflows without API costs. As an AI-tools freelancer, understanding when to recommend open-weight models (cost-sensitive clients, privacy requirements) versus proprietary APIs (ease of use, reliability) is a genuine differentiator that most generalist freelancers don't yet possess.</p>
+      <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank">Crescendo: AI news digest →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Infrastructure</div>
+      <h3>Anthropic's Model Context Protocol Crosses 97 Million Installs — Becomes Foundational Standard</h3>
+      <p>Anthropic's Model Context Protocol (MCP) — the open standard that lets AI models connect to external tools, APIs, and data sources — reached 97 million installs in March 2026, signalling its transition from experimental standard to essential infrastructure for AI agents. MCP is the plumbing that connects AI assistants to real-world systems: email, calendars, databases, CRMs, web browsers. For AI freelancers, understanding MCP unlocks the ability to build and pitch AI workflows that actually integrate with client systems — not just standalone chatbot demos. This is an advanced but learnable skill that commands premium rates. Keep it on your radar for next month's learning rotation.</p>
+      <a href="https://techcrunch.com/category/artificial-intelligence/" target="_blank">TechCrunch AI →</a>
+    </div>
+
+    <div class="news-item">
+      <div class="news-badge">Efficiency</div>
+      <h3>Neuro-Symbolic AI Cuts Energy Use 100× While Improving Accuracy — Edge AI Accelerates</h3>
+      <p>Researchers have published a breakthrough combining neural networks with symbolic reasoning that reduces AI energy consumption by up to 100 times while actually improving accuracy on structured tasks. Tested on robotic manipulation tasks, the neuro-symbolic approach significantly outperformed vision-language-action models at a tiny fraction of the compute cost. The implication for AI practitioners: the era of powerful AI running locally on laptops, phones, and drones — without cloud infrastructure — is arriving faster than expected. Drone-mounted edge AI for real-time object recognition, local processing for privacy-sensitive clients, and offline AI tools are all becoming practical. The freelancers who understand these architectures will design the next generation of client workflows.</p>
+      <a href="https://www.sciencedaily.com/releases/2026/04/260405003952.htm" target="_blank">ScienceDaily — AI energy breakthrough →</a>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 9: REMOTE JOB LEADS ═══ -->
+  <div class="card">
+    <div class="card-title">💼 Remote Job Leads — 8 April 2026</div>
+    <p class="section-hint">Today's topic is Freelancing — these leads include both platform-based freelance opportunities and remote staff roles. Apply to at least one today, then tap 💼 Job Applied and 🔴 CONFIRM.</p>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">AI Content Trainer / Expert Annotator</div>
+        <span class="job-badge remote-badge">REMOTE</span>
+        <span class="job-badge fit-perfect">PERFECT FIT</span>
+      </div>
+      <div class="job-company">DataAnnotation Tech · UK eligible · Start immediately</div>
+      <div class="job-salary">Up to $60 USD/hour · Flexible hours · Project-based freelance</div>
+      <div class="job-desc">Help train next-generation AI models by evaluating AI-generated text, creative writing, and conversation quality. DataAnnotation is one of the highest-paying AI training platforms operating in the UK with no long-term commitment — work your own schedule, start today. Your customer service background gives you strong communication evaluation instincts, and your growing AI knowledge makes you exactly the profile they seek. No degree required. Apply via dataannotation.tech, link your LinkedIn profile, and you can be earning within days.</div>
+      <a class="apply-btn" href="https://dataannotation.tech/" target="_blank">[APPLY] dataannotation.tech →</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Remote AI Expert — British English Track</div>
+        <span class="job-badge remote-badge">REMOTE</span>
+        <span class="job-badge fit-perfect">PERFECT FIT</span>
+      </div>
+      <div class="job-company">Mindrift (Toloka) · Paid weekly · UK track open</div>
+      <div class="job-salary">£20–£50/hour · Flexible freelance · Weekly payments</div>
+      <div class="job-desc">Mindrift by Toloka is actively recruiting British English AI experts for structured freelance AI training work — writing, evaluating, and improving AI outputs across domains including customer service, travel, general knowledge, and creative writing. The platform pays weekly and requires no experience with AI systems — just strong written English and domain knowledge. Your event coordination and customer service background maps directly. Register at mindrift.ai, complete the skills assessment, and you can begin earning within 48 hours. This is arguably the fastest legitimate path to your first remote AI income.</div>
+      <a class="apply-btn" href="https://mindrift.ai/" target="_blank">[APPLY] mindrift.ai →</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Freelance AI Content Creator / Social Media Specialist</div>
+        <span class="job-badge remote-badge">REMOTE</span>
+        <span class="job-badge fit-high">HIGH FIT</span>
+      </div>
+      <div class="job-company">Multiple clients · via Upwork, Freelancer.com, PeoplePerHour</div>
+      <div class="job-salary">£200–£600/week freelance · £40,000–£80,000/year equivalent</div>
+      <div class="job-desc">Over 2,571 active AI Content Creation jobs are listed on Upwork alone right now. Companies need freelancers who understand AI tools (Claude, ChatGPT, Midjourney, Runway) and can use them to produce compelling content at scale: social posts, blog articles, email campaigns, video scripts. Your existing daily use of AI tools puts you significantly ahead of general applicants. Create a focused Upwork profile today — pick one niche (AI-assisted tourism content, or Highland photography + social media) and pitch that specifically. Niche profiles convert far better than generic "content creator" listings.</div>
+      <a class="apply-btn" href="https://www.upwork.com/freelance-jobs/ai-content-creation/" target="_blank">[APPLY] Upwork AI Content →</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Remote Customer Success Manager</div>
+        <span class="job-badge remote-badge">REMOTE</span>
+        <span class="job-badge fit-high">HIGH FIT</span>
+      </div>
+      <div class="job-company">SaaS companies · Indeed UK &amp; Remote.co · Tier 1</div>
+      <div class="job-salary">£40,000–£60,000/year · Senior roles avg £54,981</div>
+      <div class="job-desc">Customer Success Manager is consistently one of the most remote-friendly, fastest-hiring roles in the tech industry — and your customer service and event coordination background maps directly. CSMs manage client relationships, track product adoption, and proactively reduce churn. Many companies hire CSMs from customer service backgrounds without requiring a technical degree. Search "remote customer success manager" on Indeed UK — apply to 3 roles today while your freelancing profile is loading. Diversify your income sources from day one: freelancing income + staff role applications running in parallel is the optimal strategy at this stage.</div>
+      <a class="apply-btn" href="https://uk.indeed.com/q-remote-customer-success-jobs.html" target="_blank">[APPLY] Indeed UK CSM →</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Freelance Drone Operator / Aerial Content Creator</div>
+        <span class="job-badge remote-badge">UK-WIDE</span>
+        <span class="job-badge fit-high">HIGH FIT</span>
+      </div>
+      <div class="job-company">FilmFolk · DroneJobs.app · Upwork · LinkedIn · Tier 1</div>
+      <div class="job-salary">£150–£400/day · £30–£120/hour via Upwork</div>
+      <div class="job-desc">FilmFolk and DroneJobs.app are the two primary UK platforms for freelance drone operator work. FilmFolk focuses on film/TV/commercial work; DroneJobs covers surveying, inspections, real estate, and events. Both list Highland-area projects regularly. Day rates for licensed operators range from £150 for basic photography to £400+ for inspection or cinematic work. CAA Flyer ID is required minimum; A2 CofC or GVC unlocks higher-value commercial contracts. With 95 cruise ship calls on your doorstep and ScotWind energy infrastructure at Nigg, your location is genuinely rare on these platforms — use it as your opening pitch on every profile.</div>
+      <a class="apply-btn" href="https://www.filmfolk.com/services/freelance-drone-operator" target="_blank">[APPLY] FilmFolk →</a>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 10: TODAY'S 30-MIN LEARNING FOCUS ═══ -->
+  <div class="card">
+    <div class="card-title">📚 Today's 30-Minute Learning Focus — Freelancing</div>
+    <p class="learn-intro">
+      Today's rotation topic is <strong>Freelancing</strong> — turning your skills into income without needing an employer to say yes. In 2026, the global freelance market exceeds $1.5 trillion annually. Platforms like Upwork, Fiverr, PeoplePerHour, and Freelancer.com connect millions of clients with skilled freelancers every day. Today's 30 minutes: understand the platform ecosystem and set up your first professional profile.
+    </p>
+    <ul class="learn-bullets">
+      <li><strong>Choose your platform(s) strategically:</strong> Upwork is the largest and best for ongoing client relationships and higher-value contracts (£50–£150/hour). Fiverr is better for productised, fixed-price services ("I will write 5 AI-optimised LinkedIn posts for £75"). PeoplePerHour is UK-focused and popular with SMEs. Mindrift and DataAnnotation pay immediately for AI training work — no portfolio required. Start with Upwork for long-term, and Mindrift/DataAnnotation for immediate income.</li>
+      <li><strong>Write a client-focused profile overview:</strong> The most common mistake is writing your CV on your profile. Instead, write about your client's problem. "Are you a small business owner struggling to produce consistent, high-quality content? I help teams use AI tools to create a month's worth of posts, articles, and emails in a single day — so you can focus on running your business." That converts 5–10× better than "I am an experienced content creator with 5 years of experience."</li>
+      <li><strong>Set your rates correctly from day one:</strong> Research the market before setting your rate. On Upwork, search for profiles similar to yours and note what established freelancers charge. Start 10–20% below mid-market to build initial reviews — not at rock bottom. A £20/hour rate signals poor quality; £45/hour with a well-written profile wins more jobs than £20/hour with a weak one. Your goal is 5 strong reviews — then raise your rate.</li>
+      <li><strong>Proposals win jobs — not profiles alone:</strong> Your profile gets you considered; your proposal wins the contract. For every job you apply to, read the entire posting, mention something specific from it in your opening line, explain briefly why you're the right fit, and include one concrete example or relevant experience. Keep it under 150 words. Generic copy-paste proposals are rejected instantly — specific, personal proposals convert. Write 3 proposals today.</li>
+    </ul>
+    <a class="resource-link" href="https://www.youtube.com/results?search_query=upwork+profile+tips+2026" target="_blank">📖 Free resource: YouTube — "Upwork Profile Tips 2026" (multiple free tutorials)</a>
+    <p class="pill-hint">When done: tap <strong>📚 Learning Done</strong> in the progress bar above — it logs 0.5 hours of Freelancing to your tracker. Then tap <strong>🔴 CONFIRM</strong> to save.</p>
+  </div>
+
+  <!-- ═══ SECTION 11: TODAY'S ONE ACTION ═══ -->
+  <div class="card action-card">
+    <div class="card-title">⚡️ Today's One Action</div>
+    <div class="action-title">🖥️ Create Your Upwork Profile and Send Your First 3 Proposals</div>
+    <div class="action-desc">
+      <p style="margin-bottom:12px;">The freelance economy rewards momentum. Getting your first profile live and your first proposals sent today means you could have your first client conversation this week. Here's exactly what to do:</p>
+      <ol>
+        <li>Go to <strong>upwork.com</strong> and create a freelancer account. Use your real name, a professional photo (your LinkedIn photo works), and set your location to Invergordon, Scotland.</li>
+        <li>Write your <strong>profile headline</strong> using a specific, client-focused formula. Example: <em>"AI Tools Specialist &amp; Content Creator | Helping teams automate workflows &amp; produce Highland photography &amp; drone content | UK-based, remote-first"</em>.</li>
+        <li>Complete your <strong>overview section</strong> in 200–300 words. Focus on the client's problem first (para 1), your relevant experience second (para 2), and a call to action third ("Message me to discuss your project").</li>
+        <li>Set an <strong>hourly rate</strong>: £35–£45/hour for AI/content work; £150/day for drone/photography work.</li>
+        <li>Browse <strong>open jobs</strong> in AI content creation or customer success and send <strong>3 targeted proposals</strong> today — personalised, specific, under 150 words each.</li>
+      </ol>
+    </div>
+    <div class="action-why">
+      <strong>Why this, why today?</strong> Upwork's algorithm gives new profiles a brief "new talent" boost — surfacing them to more clients in the first 2–4 weeks. This is your best window to get early visibility and land your first reviews. <strong>A freelancing profile you don't create today is money you won't earn next week.</strong> The Ambience arrives in 5 days — by then, you want at least one active client conversation started.
+    </div>
+    <p class="pill-hint">When done: tap <strong>⚡️ Action Done</strong> in the progress bar above, then <strong>🔴 CONFIRM</strong> to lock in today's progress.</p>
+  </div>
+
+  <!-- ═══ SECTION 12: PROGRESS TRACKER ═══ -->
+  <div class="card">
+    <div class="card-title">📊 Your Progress Tracker</div>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-num" id="stat-hours">0</div>
+        <div class="stat-lbl">Learning Hours</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-apps">0</div>
+        <div class="stat-lbl">Jobs Applied</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-interviews">0</div>
+        <div class="stat-lbl">Interviews</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="stat-sessions">0</div>
+        <div class="stat-lbl">Sessions Done</div>
+      </div>
+    </div>
+    <div class="charts-row">
+      <div class="chart-box">
+        <div class="chart-label">📅 Daily Applications (Last 7 Days)</div>
+        <div id="bar-empty" class="chart-empty">Tap 💼 and 🔴 CONFIRM each day to start logging your applications here.</div>
+        <canvas id="bar-chart" style="display:none;max-height:180px;"></canvas>
+      </div>
+      <div class="chart-box">
+        <div class="chart-label">🧠 Skills Sessions Breakdown</div>
+        <div id="doughnut-empty" class="chart-empty">Complete learning sessions to build your skills chart.</div>
+        <canvas id="doughnut-chart" style="display:none;max-height:180px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SECTION 13: BACKUP / EXPORT ═══ -->
+  <div class="card">
+    <div class="card-title">💾 Backup &amp; Progress Export</div>
+    <div class="backup-btns">
+      <button class="backup-btn save-btn" onclick="exportBackup(false)">💾 Save Progress</button>
+      <button class="backup-btn import-btn" onclick="document.getElementById('import-input').click()">📂 Import Progress</button>
+      <button class="backup-btn reset-btn" onclick="resetStats()">🔄 Reset Stats</button>
+      <input type="file" id="import-input" accept=".json" onchange="importBackup(event)" style="display:none;">
+    </div>
+    <p class="backup-note">
+      <strong>Save Progress</strong> downloads <code>progress-tracker.json</code> — replace the one in your <em>Tracking Data</em> folder to keep running totals accurate across all future briefings.<br>
+      <strong>Import Progress</strong> loads a previously saved JSON back into this briefing session.<br>
+      <strong>Reset Stats</strong> resets this session's stats to the values saved in your progress-tracker.json, fixing any accumulated localStorage drift.<br>
+      View all briefings online: <a href="https://steve-ai-stuff.github.io/daily-briefing/" target="_blank">steve-ai-stuff.github.io/daily-briefing</a>
+    </p>
+  </div>
+
+</div><!-- end .wrapper -->
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <svg class="footer-hills" viewBox="0 0 960 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,80 L0,55 Q80,20 160,45 Q240,65 320,35 Q400,5 480,30 Q560,55 640,25 Q720,0 800,30 Q880,55 960,40 L960,80 Z" fill="rgba(22,101,52,0.35)"/>
+    <path d="M0,80 L0,65 Q100,40 200,58 Q300,72 400,50 Q500,28 600,52 Q700,72 800,55 Q880,42 960,60 L960,80 Z" fill="rgba(15,70,35,0.55)"/>
+  </svg>
+  Generated 9 April 2026 &nbsp;·&nbsp; Powered by Claude AI &nbsp;·&nbsp; 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Invergordon, Scottish Highlands &nbsp;·&nbsp; Next briefing: 10 April 2026
+</footer>
+
+<!-- ═══ MAIN SCRIPT ═══ -->
+<script>
+var LS_KEY = "steve_briefing_progress";
+var state = {};
+var rocketFired = false;
+var barChart = null;
+var doughnutChart = null;
+
+function showToast(msg, type) {
+  var cls = 'toast' + (type === 'warn' ? ' warn' : type === 'info' ? ' info' : '');
+  var el = document.createElement('div');
+  el.className = cls;
+  el.textContent = msg;
+  document.getElementById('toast-container').appendChild(el);
+  setTimeout(function(){ if(el.parentNode) el.parentNode.removeChild(el); }, 4000);
+}
+
+function mergeSkills(stored, saved) {
+  var out = {};
+  var s = stored || {}; var v = saved || {};
+  var keys = Object.keys(v);
+  Object.keys(s).forEach(function(k){ if(keys.indexOf(k)<0) keys.push(k); });
+  keys.forEach(function(k){ out[k] = Math.max(s[k]||0, v[k]||0); });
+  return out;
+}
+
+function initState() {
+  var raw = null;
+  try { raw = localStorage.getItem(LS_KEY); } catch(e){}
+  if (raw) {
+    try {
+      var p = JSON.parse(raw);
+      if (p.last_updated === TODAY_DATE) {
+        state = p;
+        state.learn_hours = Math.max(state.learn_hours||0, SAVED_LEARN_HOURS);
+        state.apps        = Math.max(state.apps||0, SAVED_APPS);
+        state.interviews  = Math.max(state.interviews||0, SAVED_INTERVIEWS);
+        state.sessions    = Math.max(state.sessions||0, SAVED_SESSIONS);
+        state.skills      = mergeSkills(state.skills, SAVED_SKILLS);
+        return;
+      } else {
+        state = {
+          learn_hours: Math.max(p.learn_hours||0, SAVED_LEARN_HOURS),
+          apps:        Math.max(p.apps||0, SAVED_APPS),
+          interviews:  Math.max(p.interviews||0, SAVED_INTERVIEWS),
+          sessions:    Math.max(p.sessions||0, SAVED_SESSIONS),
+          skills:      mergeSkills(p.skills, SAVED_SKILLS),
+          daily:       p.daily || {},
+          last_updated: TODAY_DATE,
+          pills:       {news:false, job:false, learn:false, action:false}
+        };
+        if (!state.daily[TODAY_DATE]) {
+          state.daily[TODAY_DATE] = {apps:0,hours:0,confirmed:false,topic:TODAY_TOPIC,news:false,action:false,job:false,learn:false};
+        }
+        return;
+      }
+    } catch(e){ console.log('parse err',e); }
+  }
+  var seed = {};
+  (SAVED_DAILY_HISTORY||[]).forEach(function(e){ seed[e.date]={apps:e.apps||0,hours:e.hours||0,confirmed:false}; });
+  if (!seed[TODAY_DATE]) seed[TODAY_DATE]={apps:0,hours:0,confirmed:false,topic:TODAY_TOPIC,news:false,action:false,job:false,learn:false};
+  state = {
+    learn_hours: SAVED_LEARN_HOURS, apps: SAVED_APPS, interviews: SAVED_INTERVIEWS, sessions: SAVED_SESSIONS,
+    skills: mergeSkills({}, SAVED_SKILLS), daily: seed, last_updated: TODAY_DATE,
+    pills: {news:false,job:false,learn:false,action:false}
+  };
+}
+
+function saveState() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e){}
+}
+
+function togglePill(key) {
+  if (state.daily[TODAY_DATE] && state.daily[TODAY_DATE].confirmed) return;
+  state.pills = state.pills || {};
+  state.pills[key] = !state.pills[key];
+  showToast("Marked — tap 🔴 CONFIRM when you're done for the day.", 'info');
+  renderPills(); updateRing(); saveState();
+}
+
+function confirmDay() {
+  if (state.daily[TODAY_DATE] && state.daily[TODAY_DATE].confirmed) {
+    showToast("Already confirmed — use 💾 Save Progress to re-download.", 'warn'); return;
+  }
+  var p = state.pills || {};
+  if (!p.news && !p.job && !p.learn && !p.action) {
+    showToast("Tap at least one pill first to record what you did today.", 'warn'); return;
+  }
+  var addApps = p.job ? 1 : 0;
+  var addHours = p.learn ? 0.5 : 0;
+  var addSessions = p.learn ? 1 : 0;
+  state.apps += addApps;
+  state.learn_hours = Math.round((state.learn_hours + addHours) * 100) / 100;
+  state.sessions += addSessions;
+  if (p.learn) {
+    state.skills = state.skills || {};
+    state.skills[TODAY_TOPIC] = (state.skills[TODAY_TOPIC]||0) + 1;
+  }
+  state.daily[TODAY_DATE] = {apps:addApps, hours:addHours, confirmed:true, topic:TODAY_TOPIC,
+    news:!!p.news, action:!!p.action, job:!!p.job, learn:!!p.learn};
+  state.last_updated = TODAY_DATE;
+  saveState(); updateStats(); renderCharts(); renderPills(); renderConfirmPill(true);
+  var parts = [];
+  if (p.news)   parts.push('🗞️ news read');
+  if (p.job)    parts.push('💼 +1 application');
+  if (p.learn)  parts.push('📚 +0.5h ' + TODAY_TOPIC);
+  if (p.action) parts.push('⚡️ action done');
+  showToast('✅ Confirmed: ' + parts.join(' · '));
+  setTimeout(function(){ exportBackup(true); }, 1000);
+}
+
+function renderConfirmPill(isConfirmed) {
+  var el = document.getElementById('pill-confirm');
+  if (!el) return;
+  if (isConfirmed) { el.classList.add('confirmed'); el.innerHTML = '✅ Confirmed'; }
+  else { el.classList.remove('confirmed'); el.innerHTML = '🔴 CONFIRM'; }
+}
+
+function renderPills() {
+  var p = state.pills || {};
+  var confirmed = state.daily[TODAY_DATE] && state.daily[TODAY_DATE].confirmed;
+  if (confirmed) { var r=state.daily[TODAY_DATE]; p={news:r.news||false,job:r.job||false,learn:r.learn||false,action:r.action||false}; }
+  setPill('pill-news',   p.news,   false);
+  setPill('pill-job',    p.job,    false);
+  setPill('pill-learn',  p.learn,  false);
+  setPill('pill-action', p.action, true);
+}
+function setPill(id, active, yellow) {
+  var el = document.getElementById(id); if (!el) return;
+  el.classList.remove('done','done-yellow');
+  if (active) el.classList.add(yellow ? 'done-yellow' : 'done');
+}
+
+function updateRing() {
+  var p = state.pills || {};
+  var confirmed = state.daily[TODAY_DATE] && state.daily[TODAY_DATE].confirmed;
+  if (confirmed) { var r=state.daily[TODAY_DATE]; p={news:r.news||false,job:r.job||false,learn:r.learn||false,action:r.action||false}; }
+  var count = [p.news,p.job,p.learn,p.action].filter(Boolean).length;
+  var pct = Math.round(count/4*100);
+  var circle = document.getElementById('ring-circle');
+  var C = 2*Math.PI*15;
+  if (circle) { var d=C*pct/100; circle.setAttribute('stroke-dasharray', d+' '+(C-d)); }
+  document.getElementById('ring-pct').textContent = pct+'%';
+  var emoji = pct===0?'🌑':pct<25?'🌒':pct<50?'🌓':pct<75?'🌔':pct<100?'✅':'🚀';
+  document.getElementById('ring-emoji').textContent = emoji;
+  if (pct===100 && !rocketFired) {
+    rocketFired=true;
+    var r=document.getElementById('rocket-wrap');
+    r.classList.add('flying');
+    setTimeout(function(){r.style.display='none';r.classList.remove('flying');},5300);
+    [{id:'bang1',t:700},{id:'bang2',t:1600},{id:'bang3',t:2500},{id:'bang4',t:3400},{id:'bang5',t:4300}].forEach(function(b){
+      setTimeout(function(){
+        var el=document.getElementById(b.id); if(!el) return;
+        el.classList.add('show');
+        setTimeout(function(){el.classList.remove('show');el.style.display='none';},900);
+      },b.t);
+    });
+    setTimeout(function(){var b=document.getElementById('bang-emoji');b.classList.add('show');setTimeout(function(){b.classList.remove('show');b.style.display='none';},1000);},1600);
+    setTimeout(function(){var pp=document.getElementById('party-popper');pp.classList.add('show');setTimeout(function(){pp.classList.remove('show');pp.style.display='none';},1300);},4800);
+    showToast("🎉 100%! You're on fire today, Steve! Don't forget to CONFIRM! 🚀");
+  }
+}
+
+function updateStats() {
+  document.getElementById('stat-hours').textContent = (state.learn_hours||0).toFixed(1);
+  document.getElementById('stat-apps').textContent = state.apps||0;
+  document.getElementById('stat-interviews').textContent = state.interviews||0;
+  document.getElementById('stat-sessions').textContent = state.sessions||0;
+}
+
+function renderCharts() { renderBarChart(); renderDoughnutChart(); }
+
+function renderBarChart() {
+  var daily = state.daily||{};
+  var sorted = Object.keys(daily).sort().slice(-7);
+  var labels = sorted.map(function(d){return d.slice(5);});
+  var data = sorted.map(function(d){return daily[d].apps||0;});
+  var hasData = data.some(function(v){return v>0;});
+  var empty = document.getElementById('bar-empty');
+  var canvas = document.getElementById('bar-chart');
+  if (!hasData) { empty.style.display='block'; canvas.style.display='none'; return; }
+  empty.style.display='none'; canvas.style.display='block';
+  if (barChart) { barChart.destroy(); barChart=null; }
+  barChart = new Chart(canvas, {
+    type:'bar', data:{
+      labels:labels,
+      datasets:[{label:'Applications',data:data,backgroundColor:'rgba(74,222,128,0.55)',borderColor:'rgba(74,222,128,0.90)',borderWidth:1,borderRadius:4}]
+    },
+    options:{responsive:true,plugins:{legend:{display:false}},scales:{
+      x:{ticks:{color:'rgba(255,255,255,0.50)',font:{size:10}},grid:{color:'rgba(255,255,255,0.05)'}},
+      y:{ticks:{color:'rgba(255,255,255,0.50)',font:{size:10},stepSize:1},grid:{color:'rgba(255,255,255,0.05)'},beginAtZero:true}
+    }}
+  });
+}
+
+function renderDoughnutChart() {
+  var skills = state.skills||{};
+  var keys = Object.keys(skills).filter(function(k){return skills[k]>0;});
+  var empty = document.getElementById('doughnut-empty');
+  var canvas = document.getElementById('doughnut-chart');
+  if (!keys.length) { empty.style.display='block'; canvas.style.display='none'; return; }
+  empty.style.display='none'; canvas.style.display='block';
+  if (doughnutChart) { doughnutChart.destroy(); doughnutChart=null; }
+  var cols=['#4ade80','#fbbf24','#60a5fa','#f472b6','#a78bfa','#34d399','#fb923c','#e879f9','#22d3ee'];
+  doughnutChart = new Chart(canvas, {
+    type:'doughnut', data:{
+      labels:keys,
+      datasets:[{data:keys.map(function(k){return skills[k];}),backgroundColor:keys.map(function(_,i){return cols[i%cols.length];})}]
+    },
+    options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:'rgba(255,255,255,0.65)',font:{size:10},padding:8}}}}
+  });
+}
+
+/* ─── WEATHER (Open-Meteo primary — native CORS, 5-day; wttr.in fallback) ─── */
+var OPENMETEO_URL = 'https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm';
+var WTTR_URL = 'https://wttr.in/Invergordon,Scotland?format=j1';
+
+function showWeatherFallback(err){ console.error('Weather failed:',err); document.getElementById('weather-content').innerHTML='<p style="color:rgba(255,255,255,0.80);font-size:0.82rem;">Weather unavailable — <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank" style="color:#fff;font-weight:700;">Met Office Invergordon</a></p>'; }
+
+function fetchWeather() {
+  fetch(OPENMETEO_URL)
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(renderWeatherOM)
+    .catch(function(err){
+      console.warn('Open-Meteo failed, falling back to wttr.in:', err);
+      fetch(WTTR_URL)
+        .then(function(r){ return r.json(); })
+        .then(renderWeatherWttr)
+        .catch(showWeatherFallback);
+    });
+}
+
+/* WMO weather code → emoji */
+function wmoIcon(c){
+  if(c===0)return'☀️'; if(c<=2)return'⛅'; if(c===3)return'☁️';
+  if(c<=48)return'🌫️'; if(c<=55)return'🌦️'; if(c<=67)return'🌧️';
+  if(c<=77)return'❄️'; if(c<=82)return'🌦️'; if(c<=86)return'🌨️';
+  if(c>=95)return'⛈️'; return'🌤️';
+}
+function wmoDesc(c){
+  var d={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Icy fog',
+    51:'Light drizzle',53:'Moderate drizzle',55:'Dense drizzle',61:'Light rain',63:'Moderate rain',
+    65:'Heavy rain',71:'Light snow',73:'Moderate snow',75:'Heavy snow',77:'Snow grains',
+    80:'Rain showers',81:'Moderate showers',82:'Heavy showers',85:'Snow showers',
+    86:'Heavy snow showers',95:'Thunderstorm',96:'Thunderstorm & hail',99:'Heavy thunderstorm'};
+  return d[c]||'Variable';
+}
+
+/* wttr.in codes (fallback) */
+function wttrIcon(c){
+  if(c===113)return'☀️';if(c===116)return'🌤️';if(c>=119&&c<=122)return'☁️';
+  if(c===143||c===248||c===260)return'🌫️';if(c>=200&&c<=230)return'⛈️';
+  if(c>=263&&c<=281)return'🌧️';if(c>=293&&c<=321)return'🌧️';
+  if(c>=323&&c<=395)return'🌨️';return'🌡️';
+}
+
+/* ── Weather particle animations ── */
+function setWeatherAnimation(code) {
+  var p = document.getElementById('weather-particles');
+  if(!p) return;
+  var html = '';
+  var isRain  = (code>=51&&code<=67)||(code>=80&&code<=82)||code>=95;
+  var isSnow  = (code>=71&&code<=77)||(code>=85&&code<=86);
+  var isSun   = code<=1;
+  var isCloudy= code===2||code===3;
+  if(isRain) {
+    for(var i=0;i<20;i++){
+      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;width:1.5px;height:11px;background:rgba(147,210,255,0.50);border-radius:2px;animation:rainFall '+(0.38+Math.random()*0.45)+'s linear infinite;animation-delay:'+(-Math.random()*2)+'s"></div>';
+    }
+    if(code>=95){
+      html+='<div style="position:absolute;right:15%;top:0;width:3px;height:55%;background:linear-gradient(rgba(255,255,160,0),rgba(255,255,160,0.45),rgba(255,255,160,0));animation:lightningFlash 5s ease-in-out infinite;animation-delay:1.5s;pointer-events:none"></div>';
+    }
+  } else if(isSnow) {
+    var flakes=['❄','❅','❆'];
+    for(var i=0;i<15;i++){
+      html+='<div style="position:absolute;left:'+(Math.random()*106-3)+'%;top:0;font-size:'+(0.55+Math.random()*0.45)+'rem;color:rgba(255,255,255,0.72);animation:snowFall '+(1.8+Math.random()*2.2)+'s ease-in-out infinite;animation-delay:'+(-Math.random()*3)+'s">'+flakes[i%3]+'</div>';
+    }
+  } else if(isSun) {
+    html+='<div style="position:absolute;right:-15px;top:-15px;width:110px;height:110px;background:radial-gradient(circle,rgba(251,191,36,0.22),transparent 70%);border-radius:50%;animation:sunPulse 3.5s ease-in-out infinite"></div>';
+    for(var i=0;i<8;i++){
+      var angle=(i/8)*360;
+      html+='<div style="position:absolute;right:30px;top:30px;width:2px;height:'+(18+i%3*7)+'px;background:rgba(251,191,36,0.28);transform-origin:bottom center;transform:rotate('+angle+'deg) translateY(-38px);animation:sunRayPulse '+(1.6+i*0.18)+'s ease-in-out infinite;animation-delay:'+(i*0.12)+'s"></div>';
+    }
+  } else if(isCloudy) {
+    var sizes=['3.2rem','2.2rem','3.8rem'],tops=['5%','22%','12%'],durs=[22,30,38],dels=[0,-9,-5];
+    for(var i=0;i<3;i++){
+      html+='<div style="position:absolute;font-size:'+sizes[i]+';top:'+tops[i]+';opacity:0.10;animation:cloudDrift '+durs[i]+'s linear infinite;animation-delay:'+dels[i]+'s">☁️</div>';
+    }
+  }
+  p.innerHTML = html;
+}
+
+/* Open-Meteo renderer (primary) */
+function renderWeatherOM(data) {
+  var c=data.current, d=data.daily, code=c.weathercode;
+  var dnames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var html='<div class="weather-stats">';
+  html+='<div class="wstat"><div class="wstat-val">'+wmoIcon(code)+' '+Math.round(c.temperature_2m)+'°F</div><div class="wstat-lbl">Temperature</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">💨 '+Math.round(c.windspeed_10m)+' mph</div><div class="wstat-lbl">Wind Speed</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌧️ '+(c.precipitation||0).toFixed(1)+'mm</div><div class="wstat-lbl">Precipitation</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌡️ '+Math.round(c.apparent_temperature)+'°F</div><div class="wstat-lbl">Feels Like</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">☁️ '+c.cloudcover+'%</div><div class="wstat-lbl">Cloud Cover</div></div>';
+  html+='</div><div class="weather-7day">';
+  for(var i=0;i<d.time.length;i++){
+    var dt=new Date(d.time[i]+'T12:00:00'), dc=d.weathercode[i], isToday=(d.time[i]===TODAY_DATE);
+    html+='<div class="wday'+(isToday?' today-day':'')+'"><div class="wday-name">'+(isToday?'Today':dnames[dt.getDay()])+'</div>';
+    html+='<div class="wday-icon">'+wmoIcon(dc)+'</div>';
+    html+='<div class="wday-temp">'+Math.round(d.temperature_2m_max[i])+'/'+Math.round(d.temperature_2m_min[i])+'°F</div>';
+    html+='<div style="font-size:0.63rem;color:rgba(255,255,255,0.70);margin-top:2px;">'+(d.precipitation_probability_max[i]||0)+'% rain</div></div>';
+  }
+  html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.70);margin-top:8px;">'+wmoDesc(code)+' in Invergordon right now.</p>';
+  document.getElementById('weather-content').innerHTML=html;
+  setWeatherAnimation(code);
+}
+
+/* wttr.in renderer (fallback) */
+function renderWeatherWttr(data) {
+  var cc=data.current_condition[0]; var fc=data.weather;
+  var code=parseInt(cc.weatherCode);
+  var dnames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function cToF(c){ return Math.round(parseFloat(c)*9/5+32); }
+  var html='<div class="weather-stats">';
+  html+='<div class="wstat"><div class="wstat-val">'+wttrIcon(code)+' '+cToF(cc.temp_C)+'°F</div><div class="wstat-lbl">Temperature</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">💨 '+cc.windspeedMiles+' mph</div><div class="wstat-lbl">Wind Speed</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌧️ '+(parseFloat(cc.precipMM)||0).toFixed(1)+'mm</div><div class="wstat-lbl">Precipitation</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">🌡️ '+cToF(cc.FeelsLikeC)+'°F</div><div class="wstat-lbl">Feels Like</div></div>';
+  html+='<div class="wstat"><div class="wstat-val">☁️ '+cc.cloudcover+'%</div><div class="wstat-lbl">Cloud Cover</div></div>';
+  html+='</div><div class="weather-7day">';
+  for(var i=0;i<fc.length;i++){
+    var d=fc[i]; var dt=new Date(d.date+'T12:00:00');
+    var dayCode=parseInt((d.hourly[4]||d.hourly[0]).weatherCode);
+    var isToday=(d.date===TODAY_DATE);
+    html+='<div class="wday'+(isToday?' today-day':'')+'"><div class="wday-name">'+(isToday?'Today':dnames[dt.getDay()])+'</div>';
+    html+='<div class="wday-icon">'+wttrIcon(dayCode)+'</div>';
+    html+='<div class="wday-temp">'+cToF(d.maxtempC)+'/'+cToF(d.mintempC)+'°F</div>';
+    html+='<div style="font-size:0.63rem;color:rgba(255,255,255,0.70);margin-top:2px;">'+((d.hourly[4]||d.hourly[0]).chanceofrain||0)+'% rain</div></div>';
+  }
+  html+='</div><p style="font-size:0.72rem;color:rgba(255,255,255,0.70);margin-top:8px;">'+cc.weatherDesc[0].value+' in Invergordon right now.</p>';
+  document.getElementById('weather-content').innerHTML=html;
+  var wmo=0;
+  if(code>=200&&code<=230||code>=386)wmo=95;
+  else if(code>=323&&code<=395)wmo=73;
+  else if(code>=263&&code<=321)wmo=61;
+  else if(code>=119&&code<=122)wmo=3;
+  else if(code===116)wmo=2;
+  setWeatherAnimation(wmo);
+}
+
+/* ─── TRAFFIC ─── */
+function fetchTraffic() {
+  var trafficUrl = 'https://www.trafficscotland.org/rss/feeds/currentincidents.aspx';
+  var el = document.getElementById('traffic-content');
+  fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(trafficUrl))
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
+    .then(function(xml){
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(xml, 'text/xml');
+      if(!doc.querySelector('channel')) throw new Error('Not RSS');
+      var items = doc.querySelectorAll('item');
+      var keywords = ['a9','invergordon','inverness','highland','dingwall','tain','alness','cromarty','perth','aviemore','dalwhinnie','pitlochry','strathpeffer','muir of ord'];
+      var found = [];
+      items.forEach(function(item){
+        var title = (item.querySelector('title')||{}).textContent||'';
+        var desc = (item.querySelector('description')||{}).textContent||'';
+        var combined = (title+' '+desc).toLowerCase();
+        var match = keywords.some(function(k){return combined.indexOf(k)>=0;});
+        if(match) {
+          var t = title.toLowerCase();
+          var emoji = '🚦';
+          if(/accident|crash|collision/.test(t)) emoji='🚗💥';
+          else if(/police|closure/.test(t)) emoji='🚔';
+          else if(/roadwork|road work/.test(t)) emoji='🚧';
+          else if(/animal|livestock|deer/.test(t)) emoji='🐄⚠️';
+          else if(/flood/.test(t)) emoji='🌊⚠️';
+          else if(/snow|ice|gate/.test(t)) emoji='❄️🚧';
+          else if(/congestion|queue|delay/.test(t)) emoji='🚗🐌';
+          else if(/breakdown/.test(t)) emoji='🚗🔧';
+          found.push(emoji+' '+title);
+        }
+      });
+      if(!el) return;
+      if(found.length===0) {
+        el.innerHTML='<span style="color:#4ade80;">✅ No incidents — all clear on A9 and Highland routes.</span>';
+      } else {
+        el.innerHTML = found.map(function(f){return '<div style="margin-bottom:4px;">'+f+'</div>';}).join('');
+      }
+    })
+    .catch(function(){
+      if(!el) return;
+      el.innerHTML='<span style="color:#4ade80;">✅ No incidents reported</span> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">check live map ↗</a>';
+    });
+}
+
+/* ─── ROADWORKS ─── */
+function renderRoadworks() {
+  var el = document.getElementById('roadworks-content');
+  if (!el) return;
+  if (!ROADWORKS || ROADWORKS.length === 0) { el.style.display='none'; return; }
+  var html = '<div style="font-weight:700;font-size:0.78rem;margin-bottom:5px;color:rgba(255,255,255,0.75);">🚧 Active Roadworks Nearby</div>';
+  ROADWORKS.forEach(function(r){
+    html += '<div style="margin-bottom:3px;font-size:0.80rem;">🚧 '+r+'</div>';
+  });
+  el.innerHTML = html;
+}
+
+/* ─── SHIP BANNER ─── */
+function updateShipBanner() {
+  var banner=document.getElementById('ship-banner'); if(!banner) return;
+  var entry=null;
+  for(var i=0;i<CRUISE_SCHEDULE.length;i++){if(CRUISE_SCHEDULE[i].date===TODAY_DATE){entry=CRUISE_SCHEDULE[i];break;}}
+  if(entry){
+    banner.className='ship-banner in-port';
+    banner.innerHTML='🚢 <strong>'+entry.ships.join(' &amp; ')+'</strong> '+(entry.ships.length>1?'are':'is')+' in port at Invergordon TODAY!';
+    return;
+  }
+  var future=CRUISE_SCHEDULE.filter(function(e){return e.date>TODAY_DATE;});
+  if(!future.length){
+    banner.className='ship-banner season-over';
+    banner.innerHTML='✅ 2026 Season Complete — What a season!'; return;
+  }
+  var next=future[0];
+  var nd=new Date(next.date+'T12:00:00');
+  var diff=Math.ceil((nd-new Date())/86400000);
+  var wk=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var mo=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  banner.className='ship-banner next-ship';
+  banner.innerHTML='⏭️ Next arrival: <strong>'+next.ships.join(' &amp; ')+'</strong> — '+wk[nd.getDay()]+' '+nd.getDate()+' '+mo[nd.getMonth()]+' ('+diff+' day'+(diff===1?'':'s')+' away)';
+}
+
+/* ─── COUNTDOWN ─── */
+function updateCountdown() {
+  var end=new Date('2026-10-14T23:59:00');
+  var diff=end-new Date();
+  if(diff<=0){['cd-days','cd-hours','cd-mins','cd-secs'].forEach(function(id){var e=document.getElementById(id);if(e)e.textContent='0';});return;}
+  var days=Math.floor(diff/86400000);
+  var hours=Math.floor((diff%86400000)/3600000);
+  var mins=Math.floor((diff%3600000)/60000);
+  var secs=Math.floor((diff%60000)/1000);
+  document.getElementById('cd-days').textContent=days;
+  document.getElementById('cd-hours').textContent=String(hours).padStart(2,'0');
+  document.getElementById('cd-mins').textContent=String(mins).padStart(2,'0');
+  document.getElementById('cd-secs').textContent=String(secs).padStart(2,'0');
+}
+
+/* ─── BACKUP & EXPORT ─── */
+function exportBackup(silent) {
+  var sk={}; var allK=Object.keys(SAVED_SKILLS);
+  allK.forEach(function(k){sk[k]=(state.skills||{})[k]||0;});
+  Object.keys(state.skills||{}).forEach(function(k){if(!sk.hasOwnProperty(k))sk[k]=state.skills[k]||0;});
+  var dh={};
+  Object.keys(state.daily||{}).forEach(function(date){
+    var r=state.daily[date];
+    dh[date]={applications:r.apps||0,learning_hours:r.hours||0,learning_topic:r.topic||'',interviews:r.interviews||0};
+  });
+  var blob=new Blob([JSON.stringify({
+    meta:{last_updated:TODAY_DATE,version:"1.0",note:"This file is read by the Daily Briefing scheduled task each morning. Replace it with the exported version from the Save Progress button to keep totals accurate. Only one file should ever exist — new saves overwrite this one."},
+    totals:{learning_hours:state.learn_hours||0,applications_sent:state.apps||0,interviews:state.interviews||0,learning_sessions_completed:state.sessions||0},
+    daily_history:dh, skills_sessions:sk
+  },null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a'); a.href=url; a.download='progress-tracker.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  if(!silent) showToast('✅ Saved! Replace Tracking Data/progress-tracker.json with this file.');
+}
+
+function importBackup(event) {
+  var file=event.target.files[0]; if(!file) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    try {
+      var data=JSON.parse(e.target.result);
+      if(data.totals){
+        state.learn_hours=Math.max(state.learn_hours||0,data.totals.learning_hours||0);
+        state.apps=Math.max(state.apps||0,data.totals.applications_sent||0);
+        state.interviews=Math.max(state.interviews||0,data.totals.interviews||0);
+        state.sessions=Math.max(state.sessions||0,data.totals.learning_sessions_completed||0);
+      }
+      if(data.skills_sessions) state.skills=mergeSkills(state.skills,data.skills_sessions);
+      if(data.daily_history){
+        Object.keys(data.daily_history).forEach(function(date){
+          var r=data.daily_history[date];
+          if(!state.daily[date]) state.daily[date]={apps:r.applications||0,hours:r.learning_hours||0,confirmed:false,topic:r.learning_topic||''};
+        });
+      }
+      saveState(); updateStats(); renderCharts();
+      showToast('✅ Progress imported successfully!');
+    } catch(err){ showToast('⚠️ Could not read that file — check it is a valid progress-tracker.json','warn'); }
+  };
+  reader.readAsText(file);
+  event.target.value='';
+}
+
+function resetStats() {
+  state.learn_hours = SAVED_LEARN_HOURS;
+  state.apps = SAVED_APPS;
+  state.interviews = SAVED_INTERVIEWS;
+  state.sessions = SAVED_SESSIONS;
+  state.skills = mergeSkills({}, SAVED_SKILLS);
+  saveState(); updateStats(); renderCharts();
+  showToast('🔄 Stats reset to saved JSON values.');
+}
+
+/* ─── INIT ─── */
+document.addEventListener('DOMContentLoaded', function(){
+  initState();
+  var confirmed=state.daily[TODAY_DATE]&&state.daily[TODAY_DATE].confirmed;
+  renderConfirmPill(confirmed||false);
+  if(confirmed){
+    var r=state.daily[TODAY_DATE];
+    state.pills={news:r.news||false,job:r.job||false,learn:r.learn||false,action:r.action||false};
+    if(state.pills.news&&state.pills.job&&state.pills.learn&&state.pills.action) rocketFired=true;
+  }
+  renderPills(); updateRing(); updateStats(); renderCharts();
+  fetchWeather(); updateShipBanner(); updateCountdown(); fetchTraffic(); renderRoadworks();
+  setInterval(updateCountdown, 1000);
+  setInterval(fetchTraffic, 300000);
+});
+</script>
+</body>
+</html>

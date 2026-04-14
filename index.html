@@ -3,149 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Steve's Daily Briefings — Job Coach &amp; Reskilling</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<title>Steve's Daily Briefings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: #0a1a0d;
-    color: #e8f5e9;
-    min-height: 100vh;
-    padding: 32px 16px 48px;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at 20% 20%, rgba(34,85,34,0.18) 0%, transparent 60%),
-      linear-gradient(135deg, #061008 0%, #0d1f0f 50%, #071210 100%);
-    z-index: -1;
-  }
-  .container { max-width: 700px; margin: 0 auto; }
-  h1 { font-size: 1.8rem; font-weight: 800; color: #4ade80; margin-bottom: 4px; }
-  .subtitle { font-size: 0.85rem; color: #a0b8a4; margin-bottom: 24px; }
-  .search-box {
-    width: 100%;
-    padding: 10px 16px;
-    border-radius: 20px;
-    border: 1.5px solid rgba(74,222,128,0.35);
-    background: rgba(8,22,13,0.7);
-    color: #e8f5e9;
-    font-size: 0.88rem;
-    font-family: 'Inter', sans-serif;
-    margin-bottom: 20px;
-    outline: none;
-  }
-  .search-box:focus { border-color: #4ade80; }
-  .latest-btn {
-    display: inline-block;
-    padding: 10px 22px;
-    background: linear-gradient(135deg, #16a34a, #4ade80);
-    color: #061008;
-    font-weight: 700;
-    font-size: 0.85rem;
-    border-radius: 20px;
-    text-decoration: none;
-    margin-bottom: 24px;
-  }
-  .latest-btn:hover { opacity: 0.85; }
-  .briefing-list { list-style: none; }
-  .briefing-item {
-    background: rgba(8,22,13,0.70);
-    border: 2px solid rgba(251,130,100,0.35);
-    border-radius: 14px;
-    padding: 14px 18px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .briefing-item:hover { border-color: rgba(74,222,128,0.55); }
-  .briefing-date { font-weight: 700; font-size: 0.95rem; }
-  .briefing-day { font-size: 0.75rem; color: #a0b8a4; margin-top: 2px; }
-  .open-btn {
-    padding: 6px 16px;
-    border-radius: 14px;
-    border: 1.5px solid rgba(74,222,128,0.5);
-    background: rgba(74,222,128,0.08);
-    color: #4ade80;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.2s;
-  }
-  .open-btn:hover { background: rgba(74,222,128,0.22); }
-  .footer { text-align: center; font-size: 0.72rem; color: #a0b8a4; margin-top: 32px; }
-  .hidden { display: none !important; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Inter',sans-serif;
+  background:linear-gradient(160deg,#0b3520 0%,#061c10 30%,#08241a 60%,#041208 100%);
+  min-height:100vh;color:#f0fdf4;padding:0 0 40px;
+}
+.hero{
+  background:rgba(8,22,13,0.82);backdrop-filter:blur(16px);
+  border-bottom:2px solid rgba(251,130,100,0.30);
+  padding:36px 24px 28px;text-align:center;margin-bottom:32px;
+}
+.hero h1{font-size:2rem;font-weight:800;color:#fbbf24;margin-bottom:6px;}
+.hero .sub{font-size:0.9rem;color:#86efac;margin-bottom:12px;}
+.hero .loc{font-size:0.78rem;color:rgba(255,255,255,0.45);}
+.hero-stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+.hstat{text-align:center;}
+.hstat-num{font-size:1.5rem;font-weight:800;color:#4ade80;}
+.hstat-lbl{font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:2px;}
+
+.wrapper{max-width:760px;margin:0 auto;padding:0 16px;}
+
+.today-btn{
+  display:block;width:100%;padding:16px 24px;margin-bottom:28px;
+  background:linear-gradient(135deg,rgba(251,191,36,0.18),rgba(251,191,36,0.08));
+  border:2px solid rgba(251,191,36,0.50);border-radius:14px;
+  color:#fbbf24;font-size:1rem;font-weight:700;text-align:center;
+  text-decoration:none;cursor:pointer;transition:all 0.2s;
+}
+.today-btn:hover{background:linear-gradient(135deg,rgba(251,191,36,0.28),rgba(251,191,36,0.14));transform:translateY(-2px);}
+
+.section-label{
+  font-size:0.72rem;font-weight:700;color:rgba(255,255,255,0.40);
+  text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;
+  padding-left:4px;
+}
+
+.briefing-list{display:flex;flex-direction:column;gap:12px;margin-bottom:32px;}
+
+.briefing-card{
+  background:rgba(8,22,13,0.72);backdrop-filter:blur(14px);
+  border:2px solid rgba(251,130,100,0.30);border-radius:14px;
+  padding:18px 20px;display:flex;align-items:center;gap:16px;
+  text-decoration:none;transition:all 0.2s;position:relative;overflow:hidden;
+}
+.briefing-card:hover{border-color:rgba(251,130,100,0.60);transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,0.35);}
+.briefing-card.is-today{border-color:rgba(251,191,36,0.55);background:rgba(251,191,36,0.06);}
+.briefing-card.is-today::before{
+  content:'TODAY';position:absolute;top:0;right:0;
+  background:#fbbf24;color:#041208;font-size:0.62rem;font-weight:800;
+  padding:3px 10px;border-radius:0 12px 0 8px;letter-spacing:0.06em;
+}
+
+.card-date-block{flex-shrink:0;text-align:center;width:52px;}
+.card-day-num{font-size:1.6rem;font-weight:800;color:#fbbf24;line-height:1;}
+.card-month{font-size:0.65rem;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.06em;margin-top:2px;}
+.card-weekday{font-size:0.7rem;color:#86efac;margin-top:2px;}
+
+.card-divider{width:1px;height:40px;background:rgba(134,239,172,0.15);flex-shrink:0;}
+
+.card-content{flex:1;min-width:0;}
+.card-title{font-size:0.95rem;font-weight:700;color:#f0fdf4;margin-bottom:4px;}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.tag{font-size:0.66rem;padding:2px 7px;border-radius:8px;background:rgba(74,222,128,0.10);color:#86efac;border:1px solid rgba(74,222,128,0.18);}
+
+.card-arrow{flex-shrink:0;font-size:1.1rem;color:rgba(255,255,255,0.30);}
+.briefing-card:hover .card-arrow{color:#fbbf24;}
+
+.no-briefings{text-align:center;padding:40px;color:rgba(255,255,255,0.35);font-size:0.9rem;}
+
+.back-link{display:block;text-align:center;color:rgba(255,255,255,0.35);font-size:0.8rem;text-decoration:none;margin-top:8px;}
+.back-link:hover{color:#86efac;}
+
+footer{text-align:center;color:rgba(255,255,255,0.25);font-size:0.75rem;padding-top:12px;}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>📋 Daily Briefings</h1>
-  <div class="subtitle">Steve's Job Coach &amp; Reskilling · Invergordon, Scottish Highlands</div>
 
-  <div id="latest-wrap"></div>
-
-  <input class="search-box" id="search" type="text" placeholder="🔍 Search by date (e.g. April, 14, 2026)…" oninput="filterBriefings()">
-
-  <ul class="briefing-list" id="briefing-list"></ul>
-
-  <div class="footer">Generated by Claude · Steve's Daily Briefing System</div>
+<div class="hero">
+  <h1>📰 Steve's Daily Briefings</h1>
+  <div class="sub">AI news · Remote job leads · Drone watch · Learning focus</div>
+  <div class="loc">📍 Invergordon, Scottish Highlands · 🚢 Port of Cromarty Firth Cruise Season 2026</div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-num" id="hs-briefings">—</div><div class="hstat-lbl">Briefings</div></div>
+    <div class="hstat"><div class="hstat-num" id="hs-apps">—</div><div class="hstat-lbl">Jobs Applied</div></div>
+    <div class="hstat"><div class="hstat-num" id="hs-hours">—</div><div class="hstat-lbl">Learning hrs</div></div>
+    <div class="hstat"><div class="hstat-num" id="hs-sessions">—</div><div class="hstat-lbl">Sessions</div></div>
+  </div>
 </div>
 
+<div class="wrapper">
+  <a class="today-btn" href="#" id="today-btn">📅 Open Today's Briefing →</a>
+  <div class="section-label" id="list-label">All Briefings — Newest First</div>
+  <div class="briefing-list" id="briefing-list"></div>
+  <a class="back-link" href="../📋 START HERE — Folder Index.html">← Back to Hub</a>
+</div>
+
+<footer>🌿 Invergordon, Scottish Highlands · Powered by Claude AI</footer>
+
 <script>
-// BRIEFINGS array — append new entries here (DO NOT REBUILD)
-// Format: ["DD", "MM", "YYYY", "filename.html"]
+// ── BRIEFING REGISTRY ──
+// Each entry: [DD, MM, YYYY, filename]
+// Add new entries here each time a new briefing is generated.
+// JavaScript will parse dates and sort newest-first automatically.
 var BRIEFINGS = [
-  ["14", "04", "2026", "Daily-Briefing_14-04-2026.html"]
+  [14, 4, 2026, "Daily-Briefing_14-04-2026.html"],
+  [13, 4, 2026, "Daily-Briefing_13-04-2026.html"],
+  [12, 4, 2026, "Daily-Briefing_12-04-2026.html"],
+  [11, 4, 2026, "Daily-Briefing_11-04-2026.html"],
+  [10, 4, 2026, "Daily-Briefing_10-04-2026.html"],
+  [9,  4, 2026, "Daily-Briefing_09-04-2026.html"],
+  [8,  4, 2026, "Daily-Briefing_08-04-2026.html"],
+  [7,  4, 2026, "Daily-Briefing_07-04-2026.html"],
+  [6,  4, 2026, "Daily-Briefing_06-04-2026.html"],
+  [5,  4, 2026, "Daily-Briefing_05-04-2026.html"],
+  [3,  4, 2026, "Daily-Briefing_03-04-2026.html"],
+  [2,  4, 2026, "Daily-Briefing_02-04-2026.html"],
+  [1,  4, 2026, "Daily-Briefing_01-04-2026.html"],
+  [31, 3, 2026, "Daily-Briefing_31-03-2026.html"],
+  [30, 3, 2026, "Daily-Briefing_30-03-2026.html"],
+  [29, 3, 2026, "Daily-Briefing_29-03-2026.html"],
+  [28, 3, 2026, "Daily-Briefing_28-03-2026.html"],
+  [27, 3, 2026, "Daily_Briefing_27-03-2026(3).html"]
 ];
 
-var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-var DAYS_OF_WEEK = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var MONTH_FULL  = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+var DAY_NAMES   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+var DAY_SHORT   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
-function getDateStr(dd, mm, yyyy) {
-  return DAYS_OF_WEEK[new Date(parseInt(yyyy), parseInt(mm)-1, parseInt(dd)).getDay()] + ', ' +
-    dd + ' ' + MONTHS[parseInt(mm)-1] + ' ' + yyyy;
+var TAGS = ["🤖 AI News","💼 Jobs","📚 Learning","🚁 Drone","🏴󠁧󠁢󠁳󠁣󠁴󠁿 Highlands"];
+
+function toDateObj(d,m,y){ return new Date(y, m-1, d); }
+function todayStr(){
+  var n = new Date();
+  return String(n.getDate()).padStart(2,'0') + '-' + String(n.getMonth()+1).padStart(2,'0') + '-' + n.getFullYear();
+}
+function todayFilename(){
+  var n = new Date();
+  var dd = String(n.getDate()).padStart(2,'0');
+  var mm = String(n.getMonth()+1).padStart(2,'0');
+  return "Daily-Briefing_" + dd + "-" + mm + "-" + n.getFullYear() + ".html";
 }
 
-function renderLatest() {
-  if (BRIEFINGS.length === 0) return;
-  var latest = BRIEFINGS[BRIEFINGS.length - 1];
-  var wrap = document.getElementById('latest-wrap');
-  wrap.innerHTML = '<a href="' + latest[3] + '" class="latest-btn">🚀 Latest Briefing — ' + getDateStr(latest[0], latest[1], latest[2]) + ' ↗</a>';
-}
+// Sort newest → oldest
+BRIEFINGS.sort(function(a,b){
+  return toDateObj(b[0],b[1],b[2]) - toDateObj(a[0],a[1],a[2]);
+});
 
-function renderList(filter) {
+// ── TODAY BUTTON ──
+document.getElementById('today-btn').addEventListener('click', function(e){
+  e.preventDefault();
+  window.location.href = todayFilename();
+});
+
+// ── RENDER LIST ──
+function render(){
   var list = document.getElementById('briefing-list');
-  list.innerHTML = '';
-  var sorted = BRIEFINGS.slice().reverse();
-  sorted.forEach(function(b) {
-    var dateStr = getDateStr(b[0], b[1], b[2]);
-    var displayDate = b[0] + ' ' + MONTHS[parseInt(b[1])-1] + ' ' + b[2];
-    if (filter) {
-      var f = filter.toLowerCase();
-      if (!dateStr.toLowerCase().includes(f) && !displayDate.toLowerCase().includes(f) && !b[3].includes(f)) return;
-    }
-    var li = document.createElement('li');
-    li.className = 'briefing-item';
-    li.innerHTML = '<div><div class="briefing-date">' + displayDate + '</div>' +
-      '<div class="briefing-day">' + DAYS_OF_WEEK[new Date(parseInt(b[2]), parseInt(b[1])-1, parseInt(b[0])).getDay()] + '</div></div>' +
-      '<a href="' + b[3] + '" class="open-btn">Open ↗</a>';
-    list.appendChild(li);
-  });
+  var todayFn = todayFilename();
+  var html = '';
+
+  if(BRIEFINGS.length === 0){
+    html = '<div class="no-briefings">No briefings yet. Check back tomorrow!</div>';
+    list.innerHTML = html;
+    return;
+  }
+
+  for(var i=0;i<BRIEFINGS.length;i++){
+    var b = BRIEFINGS[i];
+    var d = b[0], mo = b[1], y = b[2], fn = b[3];
+    var dateObj = toDateObj(d,mo,y);
+    var isToday = (fn === todayFn);
+    var weekday = DAY_SHORT[dateObj.getDay()];
+    var title   = DAY_NAMES[dateObj.getDay()] + ' ' + d + ' ' + MONTH_FULL[mo-1] + ' ' + y;
+    var cardClass = 'briefing-card' + (isToday ? ' is-today' : '');
+
+    html += '<a class="' + cardClass + '" href="' + fn + '">'
+          + '<div class="card-date-block">'
+          + '<div class="card-day-num">' + d + '</div>'
+          + '<div class="card-month">' + MONTH_NAMES[mo-1] + ' \'' + String(y).slice(2) + '</div>'
+          + '<div class="card-weekday">' + weekday + '</div>'
+          + '</div>'
+          + '<div class="card-divider"></div>'
+          + '<div class="card-content">'
+          + '<div class="card-title">' + title + (i===0?' <span style="font-size:0.7rem;color:#86efac;font-weight:500;">&nbsp;(Latest)</span>':'') + '</div>'
+          + '<div class="card-tags">'
+          + TAGS.map(function(t){return '<span class="tag">'+t+'</span>';}).join('')
+          + '</div>'
+          + '</div>'
+          + '<div class="card-arrow">→</div>'
+          + '</a>';
+  }
+  list.innerHTML = html;
+  document.getElementById('list-label').textContent =
+    'All Briefings — ' + BRIEFINGS.length + ' total · Newest First';
 }
 
-function filterBriefings() {
-  var f = document.getElementById('search').value.trim();
-  renderList(f || null);
+// ── STATS FROM localStorage ──
+function loadStats(){
+  try{
+    var raw = localStorage.getItem('steve_briefing_progress');
+    if(!raw) return;
+    var s = JSON.parse(raw);
+    document.getElementById('hs-apps').textContent     = s.apps || 0;
+    document.getElementById('hs-hours').textContent    = ((s.learn_hours)||0).toFixed(1);
+    document.getElementById('hs-sessions').textContent = s.sessions || 0;
+    var days = s.daily ? Object.keys(s.daily).length : 0;
+    document.getElementById('hs-briefings').textContent = days || BRIEFINGS.length;
+  }catch(e){}
 }
 
-renderLatest();
-renderList(null);
+render();
+loadStats();
 </script>
 </body>
 </html>

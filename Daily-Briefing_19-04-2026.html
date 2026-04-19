@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steve's Daily Briefing — 19 April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --green-bright: #4ade80;
+  --green-light: #86efac;
+  --text-primary: #f0fdf4;
+  --text-secondary: #d1fae5;
+  --text-muted: rgba(255,255,255,0.52);
+  --card-bg: rgba(8,22,13,0.70);
+  --bg-image: url('../Background Images/scotland_109.jpg');
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  color: var(--text-primary);
+  background: linear-gradient(160deg,#0b3520 0%,#061c10 30%,#08241a 60%,#041208 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.22;
+  z-index: 0;
+  animation: kenBurns 45s ease-in-out infinite alternate;
+}
+@keyframes kenBurns {
+  0%   { transform: scale(1.0) translate(0,0); }
+  50%  { transform: scale(1.08) translate(-1.5%,1%); }
+  100% { transform: scale(1.05) translate(1.5%,-0.5%); }
+}
+body > * { position: relative; z-index: 1; }
+#progress-bar {
+  position: sticky; top: 0; z-index: 900;
+  background: rgba(4,12,6,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(74,222,128,0.20);
+  padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; overflow: hidden;
+}
+#ring-wrap { flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+#ring-emoji { font-size: 1.3rem; }
+#ring-svg { width: 36px; height: 36px; flex-shrink: 0; }
+#ring-pct { font-size: 0.75rem; font-weight: 700; color: var(--green-bright); white-space: nowrap; }
+.pills-row { display: flex; gap: 7px; flex-wrap: wrap; flex: 1; }
+.pill { cursor: pointer; padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; border: 1.5px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.60); transition: all 0.2s; user-select: none; white-space: nowrap; }
+.pill:hover { border-color: rgba(255,255,255,0.40); color: rgba(255,255,255,0.85); }
+.pill.done { background: rgba(74,222,128,0.18); border-color: rgba(74,222,128,0.55); color: #4ade80; animation: pillPop 0.3s ease-out; }
+.pill.done-yellow { background: rgba(251,191,36,0.18); border-color: rgba(251,191,36,0.55); color: #fbbf24; animation: pillPop 0.3s ease-out; }
+@keyframes pillPop { 0%{transform:scale(0.90)} 60%{transform:scale(1.10)} 100%{transform:scale(1.00)} }
+.pill-confirm { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.40); color: #fca5a5; }
+.pill-confirm:hover { background: rgba(239,68,68,0.22); border-color: rgba(239,68,68,0.65); color: #fecaca; }
+.pill-confirm.confirmed { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.55); color: #4ade80; pointer-events: none; }
+@keyframes rocketFly { 0%{left:10%;opacity:0;transform:rotate(30deg)} 15%{opacity:1} 85%{opacity:1} 100%{left:94%;opacity:0;transform:rotate(30deg)} }
+@keyframes bangPop   { 0%{transform:scale(0.2);opacity:0} 40%{transform:scale(1.8);opacity:1} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1.0);opacity:0} }
+@keyframes popperPop { 0%{transform:scale(0) rotate(-20deg);opacity:1} 40%{transform:scale(1.3) rotate(10deg);opacity:1} 75%{transform:scale(1.0) rotate(0deg);opacity:1} 100%{transform:scale(1.0) rotate(0deg);opacity:0} }
+#rocket-wrap { position:absolute;top:8px;font-size:1.4rem;display:none;pointer-events:none; }
+#rocket-wrap.flying { display:block;animation:rocketFly 5s linear forwards; }
+.bang-pop { position:absolute;top:2px;font-size:1.5rem;display:none;pointer-events:none; }
+.bang-pop.show { display:block;animation:bangPop 0.9s ease-out forwards; }
+#bang-emoji  { position:absolute;top:4px;left:50%;font-size:1.6rem;display:none;pointer-events:none; }
+#bang-emoji.show { display:block;animation:bangPop 1s ease-out forwards; }
+#party-popper { position:absolute;top:4px;right:70px;font-size:1.6rem;display:none;pointer-events:none;transform:scale(0); }
+#party-popper.show { display:block;animation:popperPop 1.2s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+#toast-container { position:fixed; top:70px; right:16px; z-index:9999; display:flex; flex-direction:column; gap:8px; }
+.toast { background:rgba(8,22,13,0.96); backdrop-filter:blur(16px); border-radius:10px; padding:12px 16px; font-size:0.83rem; font-weight:500; max-width:320px; animation:toastIn 0.3s ease-out; border-left:4px solid #4ade80; }
+.toast.warn { border-left-color:#f97316; } .toast.info { border-left-color:#60a5fa; }
+@keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+.wrapper { max-width: 960px; margin: 0 auto; padding: 16px 16px 40px; }
+.card { background:var(--card-bg); backdrop-filter:blur(16px); border:2px solid rgba(251,130,100,0.45); border-radius:18px; padding:28px 32px; box-shadow:0 8px 40px rgba(0,0,0,0.35); margin-bottom:20px; animation:fadeInUp 0.5s ease-out; }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.card-title { font-size:1.05rem; font-weight:700; color:#fbbf24; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.weather-card { background:linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68)); backdrop-filter:blur(16px); border:2px solid rgba(251,130,100,0.45); position:relative; overflow:hidden; border-radius:18px; padding:28px 32px; box-shadow:0 8px 40px rgba(0,0,0,0.35); margin-bottom:20px; animation:fadeInUp 0.5s ease-out; }
+.weather-stats { display:flex; gap:16px; flex-wrap:wrap; margin:14px 0; }
+.wstat { text-align:center; flex:1; min-width:70px; }
+.wstat-val { font-size:1.1rem; font-weight:700; color:#fff; }
+.wstat-lbl { font-size:0.68rem; color:rgba(255,255,255,0.75); margin-top:2px; }
+.weather-7day { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:14px; }
+#weather-particles { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0; }
+.weather-card > * { position:relative; z-index:1; }
+@keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.85} 100%{transform:translateY(220px);opacity:0} }
+@keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.90} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
+@keyframes sunPulse { 0%,100%{opacity:0.45;transform:scale(1)} 50%{opacity:0.55;transform:scale(1.08)} }
+@keyframes sunRayPulse { 0%,100%{opacity:0.40;transform:scaleY(1)} 50%{opacity:0.60;transform:scaleY(1.4)} }
+@keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.45} 90%{opacity:0.45} to{transform:translateX(110%);opacity:0} }
+@keyframes lightningFlash { 0%,100%{opacity:0} 5%,7%{opacity:0.55} 6%{opacity:0} }
+.wday { background:rgba(255,255,255,0.15); border-radius:10px; padding:8px 4px; text-align:center; font-size:0.70rem; color:rgba(255,255,255,0.90); border:1px solid rgba(255,255,255,0.20); }
+.wday.today-day { background:rgba(255,255,255,0.30); border-color:rgba(255,255,255,0.55); color:#fff; font-weight:700; }
+.wday-name { font-weight:700; margin-bottom:4px; }
+.wday-icon { font-size:1.2rem; margin:4px 0; }
+.weather-loading { color:rgba(255,255,255,0.80); font-style:italic; }
+.header-card { background:linear-gradient(135deg,rgba(22,163,74,0.32),rgba(74,222,128,0.32)); backdrop-filter:blur(20px); border:2px solid rgba(251,130,100,0.45); border-radius:18px; padding:32px; margin-bottom:20px; text-align:center; animation:fadeInUp 0.5s ease-out; }
+.header-card h1 { font-size:2rem; font-weight:800; color:#fff; margin-bottom:10px; text-shadow:0 2px 8px rgba(0,0,0,0.25); }
+.date-badge { display:inline-block; background:rgba(255,255,255,0.25); color:#fff; font-weight:800; font-size:0.82rem; padding:5px 16px; border-radius:20px; margin-bottom:14px; letter-spacing:0.03em; }
+.header-desc { color:rgba(255,255,255,0.92); font-size:0.90rem; line-height:1.6; max-width:680px; margin:0 auto; }
+.traffic-box { background:rgba(185,28,28,0.12); border:1px solid rgba(251,191,36,0.55); border-radius:10px; color:#fff; font-size:0.83rem; margin-top:18px; padding:12px 16px; text-align:left; }
+.traffic-title { font-weight:700; margin-bottom:6px; font-size:0.82rem; }
+.quote-block { border-left:4px solid var(--green-bright); padding:12px 18px; font-style:italic; color:var(--text-secondary); margin-bottom:14px; font-size:0.92rem; line-height:1.6; }
+.tip-box { background:rgba(74,222,128,0.07); border:1px solid rgba(74,222,128,0.20); border-radius:10px; padding:12px 16px; font-size:0.85rem; color:var(--text-secondary); line-height:1.55; }
+.tip-box strong { color:var(--green-bright); }
+.ship-banner { border-radius:12px; padding:12px 18px; font-size:0.92rem; font-weight:600; margin-bottom:18px; text-align:center; }
+.ship-banner.in-port { background:rgba(74,222,128,0.14); border:1.5px solid rgba(74,222,128,0.40); color:#4ade80; }
+.ship-banner.next-ship { background:rgba(251,191,36,0.10); border:1.5px solid rgba(251,191,36,0.35); color:#fbbf24; }
+.ship-banner.season-over { background:rgba(96,165,250,0.10); border:1.5px solid rgba(96,165,250,0.30); color:#93c5fd; }
+.countdown-label { text-align:center; font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; }
+.countdown-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; text-align:center; }
+.cd-box { background:#fde68a; border:1.5px solid rgba(251,130,100,0.7); border-radius:12px; padding:14px 6px; color:#16a34a; }
+.cd-num { font-size:1.8rem; font-weight:800; color:#16a34a; line-height:1; }
+.cd-unit { font-size:0.65rem; color:#15803d; margin-top:4px; text-transform:uppercase; letter-spacing:0.06em; font-weight:700; }
+.news-badge { display:inline-block; background:rgba(251,130,100,0.18); color:#fb8264; font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+.news-badge.local { background:rgba(74,222,128,0.15); color:#4ade80; }
+.news-badge.drone { background:rgba(251,191,36,0.15); color:#fbbf24; }
+.news-badge.crypto { background:rgba(251,191,36,0.18); color:#fbbf24; }
+.news-item { margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.07); }
+.news-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.news-item h3 { font-size:0.97rem; font-weight:700; color:var(--text-primary); margin-bottom:6px; }
+.news-item p { font-size:0.84rem; color:var(--text-secondary); line-height:1.6; }
+.news-item a { color:var(--green-bright); text-decoration:none; font-size:0.80rem; }
+.news-item a:hover { text-decoration:underline; }
+.job-card { background:rgba(255,255,255,0.03); border:1px solid rgba(96,165,250,0.20); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+.job-card:last-child { margin-bottom:0; }
+.job-header { display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.job-title { font-size:0.95rem; font-weight:700; color:var(--text-primary); flex:1; }
+.job-badge { font-size:0.62rem; font-weight:700; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; white-space:nowrap; }
+.remote-badge { background:rgba(74,222,128,0.18); color:#4ade80; border:1px solid rgba(74,222,128,0.30); }
+.fit-perfect { background:rgba(74,222,128,0.22); color:#4ade80; border:1px solid rgba(74,222,128,0.45); }
+.fit-high { background:rgba(251,191,36,0.18); color:#fbbf24; border:1px solid rgba(251,191,36,0.40); }
+.fit-medium { background:rgba(251,130,100,0.18); color:#fb8264; border:1px solid rgba(251,130,100,0.35); }
+.job-company { font-size:0.78rem; color:var(--text-muted); margin-bottom:4px; }
+.job-salary { font-size:0.80rem; font-weight:600; color:#86efac; margin-bottom:8px; }
+.job-desc { font-size:0.83rem; color:var(--text-secondary); line-height:1.55; margin-bottom:10px; }
+.apply-btn { display:inline-block; background:rgba(96,165,250,0.15); border:1px solid rgba(96,165,250,0.35); color:#93c5fd; padding:5px 14px; border-radius:8px; font-size:0.78rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
+.apply-btn:hover { background:rgba(96,165,250,0.25); border-color:rgba(96,165,250,0.55); }
+.section-hint { font-size:0.78rem; color:var(--text-muted); font-style:italic; margin-bottom:14px; }
+.learn-intro { font-size:0.88rem; color:var(--text-secondary); margin-bottom:14px; line-height:1.6; }
+.learn-bullets { list-style:none; padding:0; margin:0 0 14px; }
+.learn-bullets li { font-size:0.85rem; color:var(--text-secondary); padding:7px 0 7px 22px; position:relative; border-bottom:1px solid rgba(255,255,255,0.05); line-height:1.55; }
+.learn-bullets li:last-child { border-bottom:none; }
+.learn-bullets li::before { content:'▶'; position:absolute; left:0; color:var(--green-bright); font-size:0.65rem; top:10px; }
+.resource-link { display:inline-block; background:rgba(74,222,128,0.10); border:1px solid rgba(74,222,128,0.25); color:var(--green-bright); padding:5px 14px; border-radius:8px; font-size:0.80rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
+.resource-link:hover { background:rgba(74,222,128,0.18); }
+.pill-hint { font-size:0.75rem; color:var(--text-muted); font-style:italic; margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); }
+.action-card { border-color:rgba(251,191,36,0.50) !important; }
+.action-title { font-size:1.05rem; font-weight:800; color:#fbbf24; margin-bottom:10px; }
+.action-desc { font-size:0.85rem; color:var(--text-secondary); line-height:1.6; margin-bottom:14px; }
+.action-desc ol { padding-left:18px; }
+.action-desc ol li { margin-bottom:6px; }
+.action-why { background:rgba(74,222,128,0.07); border:1px solid rgba(74,222,128,0.20); border-radius:10px; padding:12px 16px; font-size:0.83rem; color:var(--text-secondary); line-height:1.55; }
+.action-why strong { color:var(--green-bright); }
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.stat-box { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:12px; padding:16px 12px; text-align:center; }
+.stat-num { font-size:1.6rem; font-weight:800; color:var(--green-bright); line-height:1; }
+.stat-lbl { font-size:0.68rem; color:var(--text-muted); margin-top:5px; text-transform:uppercase; letter-spacing:0.05em; }
+.charts-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.chart-label { font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; }
+.chart-empty { font-size:0.80rem; color:var(--text-muted); font-style:italic; padding:20px; text-align:center; background:rgba(255,255,255,0.03); border-radius:10px; }
+.backup-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.backup-btn { padding:10px 18px; border-radius:10px; font-size:0.83rem; font-weight:700; cursor:pointer; border:1.5px solid; transition:all 0.2s; }
+.save-btn { background:rgba(74,222,128,0.12); border-color:rgba(74,222,128,0.40); color:#4ade80; }
+.save-btn:hover { background:rgba(74,222,128,0.22); }
+.import-btn { background:rgba(96,165,250,0.10); border-color:rgba(96,165,250,0.35); color:#93c5fd; }
+.import-btn:hover { background:rgba(96,165,250,0.20); }
+.reset-btn { background:rgba(251,130,100,0.10); border-color:rgba(251,130,100,0.35); color:#fb8264; }
+.reset-btn:hover { background:rgba(251,130,100,0.20); }
+.backup-note { font-size:0.78rem; color:var(--text-muted); line-height:1.6; }
+.backup-note a { color:var(--green-bright); }
+footer { text-align:center; padding:20px 16px 10px; font-size:0.72rem; color:var(--text-muted); position:relative; }
+.footer-hills { display:block; width:100%; margin-bottom:10px; }
+@media (max-width:600px) {
+  .card { padding:20px 16px; } .header-card { padding:22px 16px; } .header-card h1 { font-size:1.5rem; }
+  .countdown-grid { grid-template-columns:repeat(2,1fr); } .stats-grid { grid-template-columns:repeat(2,1fr); }
+  .charts-row { grid-template-columns:1fr; } .weather-7day { grid-template-columns:repeat(3,1fr); }
+  .pills-row { gap:5px; } .pill { padding:4px 9px; font-size:0.72rem; } .cd-num { font-size:1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<script>
+(function(){
+  var images=["scotland_001.jpg","scotland_008.jpg","scotland_009.jpg","scotland_010.jpg","scotland_011.jpg","scotland_012.jpg","scotland_013.jpg","scotland_014.jpg","scotland_016.jpg","scotland_017.jpg","scotland_019.jpg","scotland_020.jpg","scotland_032.jpg","scotland_036.jpg","scotland_039.jpg","scotland_041.jpg","scotland_060.jpg","scotland_061.jpg","scotland_064.jpg","scotland_072.jpg","scotland_073.jpg","scotland_077.jpg","scotland_101.jpg","scotland_103.jpg","scotland_104.jpg","scotland_109.jpg","scotland_115.jpg","scotland_116.jpg","scotland_117.jpg","scotland_121.jpg","scotland_122.jpg","scotland_123.jpg","scotland_124.jpg","scotland_125.jpg","scotland_126.jpg","scotland_127.jpg","scotland_128.jpg","scotland_130.jpg","scotland_132.jpg","scotland_133.jpg","scotland_135.jpg","scotland_136.jpg","scotland_138.jpg","scotland_139.jpg","scotland_141.jpg","scotland_145.jpg","scotland_146.jpg","scotland_147.jpg","scotland_149.jpg","scotland_150.jpg","scotland_151.jpg","scotland_152.jpg","scotland_155.jpg","scotland_156.jpg","scotland_157.jpg","scotland_159.jpg","scotland_161.jpg","scotland_162.jpg","scotland_163.jpg","scotland_164.jpg","scotland_165.jpg","scotland_166.jpg","scotland_167.jpg","scotland_169.jpg","scotland_171.jpg","scotland_172.jpg","scotland_173.jpg","scotland_174.jpg","scotland_177.jpg","scotland_180.jpg","scotland_183.jpg","scotland_185.jpg","scotland_186.jpg","scotland_187.jpg","scotland_188.jpg","scotland_190.jpg","scotland_191.jpg","scotland_192.jpg","scotland_194.jpg","scotland_196.jpg","scotland_198.jpg","scotland_199.jpg","scotland_200.jpg","scotland_201.jpg","scotland_202.jpg","scotland_203.jpg","scotland_204.jpg","scotland_205.jpg","scotland_206.jpg","scotland_207.jpg","scotland_208.jpg","scotland_209.jpg","scotland_210.jpg","scotland_211.jpg","scotland_212.jpg","scotland_213.jpg","scotland_214.jpg","scotland_217.jpg","scotland_219.jpg","scotland_221.jpg","scotland_223.jpg","scotland_224.jpg","scotland_225.jpg","scotland_228.jpg","scotland_229.jpg","scotland_230.jpg","scotland_232.jpg","scotland_233.jpg","scotland_234.jpg","scotland_235.jpg","scotland_237.jpg","scotland_239.jpg","scotland_240.jpg","scotland_241.jpg","scotland_244.jpg","scotland_246.jpg","scotland_247.jpg","scotland_248.jpg","scotland_249.jpg","scotland_253.jpg","scotland_254.jpg","scotland_255.jpg","scotland_257.jpg","scotland_258.jpg","scotland_259.jpg","scotland_260.jpg","scotland_262.jpg","scotland_263.jpg","scotland_264.jpg","scotland_266.jpg","scotland_267.jpg","scotland_268.jpg","scotland_269.jpg","scotland_270.jpg","scotland_271.jpg","scotland_272.jpg","scotland_273.jpg","scotland_276.jpg","scotland_277.jpg","scotland_279.jpg","scotland_281.jpg","scotland_283.jpg","scotland_284.jpg","scotland_290.jpg","scotland_297.jpg","scotland_299.jpg","scotland_302.jpg","scotland_304.jpg","scotland_305.jpg","scotland_306.jpg","scotland_308.jpg","scotland_309.jpg","scotland_310.jpg","scotland_311.jpg","scotland_312.jpg","scotland_313.jpg","scotland_314.jpg","scotland_317.jpg","scotland_319.jpg","scotland_322.jpg","scotland_323.jpg","scotland_324.jpg","scotland_327.jpg","scotland_328.jpg","scotland_329.jpg","scotland_330.jpg","scotland_332.jpg","scotland_335.jpg","scotland_336.jpg","scotland_339.jpg","scotland_345.jpg","scotland_346.jpg","scotland_347.jpg","scotland_351.jpg","scotland_352.jpg","scotland_355.jpg","scotland_357.jpg","scotland_360.jpg","scotland_361.jpg","scotland_362.jpg","scotland_363.jpg","scotland_364.jpg","scotland_367.jpg","scotland_368.jpg","scotland_370.jpg","scotland_371.jpg","scotland_372.jpg","scotland_373.jpg","scotland_374.jpg","scotland_375.jpg","scotland_377.jpg","scotland_378.jpg","scotland_381.jpg","scotland_384.jpg","scotland_385.jpg","scotland_386.jpg","scotland_387.jpg"];
+  var now=new Date(); var start=new Date(now.getFullYear(),0,0);
+  var dayOfYear=Math.floor((now-start)/86400000);
+  var img=images[dayOfYear%images.length];
+  var isGitHub=window.location.hostname.includes('github.io');
+  var imgPath=isGitHub?img:'../Background Images/'+img;
+  document.documentElement.style.setProperty('--bg-image','url("'+imgPath+'")');
+})();
+</script>
+
+<script>
+var SAVED_LEARN_HOURS=0; var SAVED_APPS=0; var SAVED_INTERVIEWS=0; var SAVED_SESSIONS=0;
+var SAVED_SKILLS={"Data Analysis":0,"Prompt Engineering":0,"Python":0,"AI Tools & Systems":0,"Drone & Regs":0,"Photography":0,"JavaScript":0,"LinkedIn":0,"Freelancing":0,"Freelancing Platforms":0};
+var SAVED_DAILY_HISTORY=[
+  {date:"2026-04-12",apps:0,hours:0},{date:"2026-04-13",apps:0,hours:0},
+  {date:"2026-04-14",apps:0,hours:0},{date:"2026-04-15",apps:0,hours:0},
+  {date:"2026-04-16",apps:0,hours:0},{date:"2026-04-17",apps:0,hours:0},
+  {date:"2026-04-18",apps:0,hours:0}
+];
+var TODAY_DATE="2026-04-19";
+var TODAY_TOPIC="Freelancing Platforms";
+var ROADWORKS=[
+  "A9 Cromarty Bridge \u2014 30mph speed restriction ends today (Sun 19 Apr); overnight surfacing works resume 6\u201310 May",
+  "A9 Roskeen to Tomich \u2014 STARTS TONIGHT Sun 19 Apr, overnight (7pm\u20136am) until Fri 8 May (no Fri/Sat nights or 3\u20134 May)",
+  "A9 Raigmore Interchange Inverness \u2014 overnight lane closures until Fri 1 May"
+];
+var CRUISE_SCHEDULE=[
+  {date:"2026-04-06",ships:["AIDAmar"]},{date:"2026-04-13",ships:["Ambience"]},{date:"2026-04-14",ships:["AIDAsol"]},
+  {date:"2026-04-15",ships:["Majestic Princess"]},{date:"2026-04-23",ships:["Renaissance"]},{date:"2026-04-24",ships:["Majestic Princess"]},{date:"2026-04-29",ships:["AIDAluna"]},
+  {date:"2026-05-04",ships:["Nieuw Statendam"]},{date:"2026-05-06",ships:["Majestic Princess"]},{date:"2026-05-11",ships:["Ocean Victory"]},{date:"2026-05-13",ships:["Norwegian Star"]},
+  {date:"2026-05-16",ships:["Mein Schiff 2"]},{date:"2026-05-18",ships:["MSC Preziosa"]},{date:"2026-05-19",ships:["Celebrity Eclipse"]},
+  {date:"2026-05-21",ships:["Costa Favolosa"]},{date:"2026-05-22",ships:["MSC Preziosa"]},{date:"2026-05-26",ships:["Mein Schiff 2"]},
+  {date:"2026-05-27",ships:["AIDAsol"]},{date:"2026-05-28",ships:["Norwegian Star"]},
+  {date:"2026-06-02",ships:["Norwegian Star"]},{date:"2026-06-03",ships:["Star Pride"]},{date:"2026-06-04",ships:["Silver Spirit"]},
+  {date:"2026-06-05",ships:["AIDAsol"]},{date:"2026-06-07",ships:["Mein Schiff 2"]},{date:"2026-06-09",ships:["Rotterdam"]},
+  {date:"2026-06-11",ships:["Seabourn Ovation"]},{date:"2026-06-12",ships:["Queen Anne"]},{date:"2026-06-13",ships:["MSC Preziosa"]},
+  {date:"2026-06-16",ships:["AIDAsol"]},{date:"2026-06-18",ships:["Norwegian Star"]},{date:"2026-06-19",ships:["Seven Seas Grandeur"]},
+  {date:"2026-06-21",ships:["Norwegian Sky"]},{date:"2026-06-23",ships:["Ambience","Star Pride"]},{date:"2026-06-24",ships:["Norwegian Star"]},
+  {date:"2026-06-27",ships:["Mein Schiff 2"]},{date:"2026-06-29",ships:["AIDAsol"]},{date:"2026-07-01",ships:["Mein Schiff 2"]},
+  {date:"2026-07-03",ships:["Norwegian Sky"]},{date:"2026-07-07",ships:["Oceania Sirena"]},{date:"2026-07-08",ships:["MSC Preziosa"]},
+  {date:"2026-07-09",ships:["Norwegian Star"]},{date:"2026-07-11",ships:["Mein Schiff 2"]},{date:"2026-07-12",ships:["Europa","Norwegian Sky"]},
+  {date:"2026-07-13",ships:["Celebrity Eclipse"]},{date:"2026-07-14",ships:["Nieuw Statendam"]},{date:"2026-07-15",ships:["Britannia"]},
+  {date:"2026-07-16",ships:["AIDAbella"]},{date:"2026-07-17",ships:["Majestic Princess"]},{date:"2026-07-20",ships:["Costa Favolosa"]},
+  {date:"2026-07-23",ships:["Mein Schiff 2"]},{date:"2026-07-24",ships:["Azamara Quest"]},{date:"2026-07-27",ships:["Borealis"]},
+  {date:"2026-07-29",ships:["Majestic Princess"]},{date:"2026-07-30",ships:["Norwegian Star"]},{date:"2026-07-31",ships:["Azamara Quest"]},
+  {date:"2026-08-02",ships:["Norwegian Sky"]},{date:"2026-08-03",ships:["Star Legend"]},{date:"2026-08-04",ships:["Majestic Princess"]},
+  {date:"2026-08-05",ships:["Oceania Marina"]},{date:"2026-08-06",ships:["Mein Schiff 3"]},{date:"2026-08-07",ships:["MSC Preziosa"]},
+  {date:"2026-08-11",ships:["Norwegian Sky"]},{date:"2026-08-12",ships:["Celebrity Eclipse"]},{date:"2026-08-15",ships:["Seven Seas Voyager"]},
+  {date:"2026-08-16",ships:["Mein Schiff 3"]},{date:"2026-08-17",ships:["Oceania Vista"]},{date:"2026-08-18",ships:["Nieuw Statendam"]},
+  {date:"2026-08-20",ships:["AIDAluna"]},{date:"2026-08-22",ships:["Majestic Princess"]},{date:"2026-08-24",ships:["Mein Schiff 2"]},
+  {date:"2026-08-25",ships:["MSC Preziosa"]},{date:"2026-08-26",ships:["Nieuw Statendam"]},{date:"2026-08-28",ships:["Mein Schiff 2"]},
+  {date:"2026-09-01",ships:["Valiant Lady"]},{date:"2026-09-04",ships:["Seven Seas Mariner"]},{date:"2026-09-07",ships:["Mein Schiff 2"]},
+  {date:"2026-09-09",ships:["Oceania Marina"]},{date:"2026-09-10",ships:["Norwegian Star"]},{date:"2026-09-11",ships:["MSC Preziosa"]},
+  {date:"2026-09-12",ships:["Spirit Of Adventure"]},{date:"2026-09-15",ships:["Majestic Princess"]},{date:"2026-09-16",ships:["Norwegian Star"]},
+  {date:"2026-09-24",ships:["Costa Favolosa"]},{date:"2026-10-06",ships:["AIDAsol"]},{date:"2026-10-14",ships:["AIDAsol"]}
+];
+</script>
+
+<div id="toast-container"></div>
+
+<div id="progress-bar">
+  <div id="rocket-wrap">&#x1F680;</div>
+  <div class="bang-pop" id="bang1" style="left:20%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang2" style="left:35%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang3" style="left:50%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang4" style="left:65%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang5" style="left:80%">&#x1F4A5;</div>
+  <div id="bang-emoji">&#x1F4A5;</div>
+  <div id="party-popper">&#x1F389;</div>
+  <div id="ring-wrap">
+    <span id="ring-emoji">&#x1F311;</span>
+    <svg id="ring-svg" viewBox="0 0 36 36">
+      <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="3"/>
+      <circle id="ring-circle" cx="18" cy="18" r="15" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 94.2" stroke-dashoffset="23.55" style="transform-origin:center;transform:rotate(-90deg);transition:stroke-dasharray 0.4s ease;"/>
+    </svg>
+    <span id="ring-pct">0%</span>
+  </div>
+  <div class="pills-row">
+    <div class="pill" id="pill-news" onclick="togglePill('news')">&#x1F5DE;&#xFE0F; News</div>
+    <div class="pill" id="pill-job" onclick="togglePill('job')">&#x1F4BC; Job Applied</div>
+    <div class="pill" id="pill-learn" onclick="togglePill('learn')">&#x1F4DA; Learning Done</div>
+    <div class="pill" id="pill-action" onclick="togglePill('action')">&#x26A1;&#xFE0F; Action Done</div>
+    <div class="pill pill-confirm" id="pill-confirm" onclick="confirmDay()" title="Lock in today's progress">&#x1F534; CONFIRM</div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- WEATHER -->
+  <div class="weather-card">
+    <div id="weather-particles"></div>
+    <div class="card-title" style="color:#fff;">&#x1F324;&#xFE0F; Invergordon Weather &mdash; Today &amp; 5-Day Outlook</div>
+    <div id="weather-content"><p class="weather-loading">Fetching live weather from Open-Meteo&hellip;</p></div>
+    <p style="font-size:0.70rem;color:rgba(255,255,255,0.65);margin-top:10px;">Sources: Open-Meteo &middot; wttr.in &middot; Met Office</p>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header-card">
+    <h1>Good Morning, Steve! &#x1F305; &#x2615;&#xFE0F;</h1>
+    <div class="date-badge">&#x1F4C5; Sunday, 19 April 2026 &middot; Week 16</div>
+    <p class="header-desc">
+      <strong>&#x1F310; FREELANCING PLATFORMS SUNDAY.</strong> Today is about owning your secret weapon: <strong>your crypto background</strong>. Most content creators and community managers don&rsquo;t have it. You do. BitcoinerJobs and CryptoJobs have dozens of PERFECT-fit remote roles &mdash; content writer, community manager, crypto educator &mdash; where your past experience isn&rsquo;t just useful, it&rsquo;s rare. <strong>&#x26A0;&#xFE0F; URGENT: Voter registration closes TOMORROW midnight (Mon 20 Apr)</strong> &mdash; if you haven&rsquo;t registered for the Scottish Parliament election (7 May), do it today at <a href="https://www.mygov.scot/electoral-registration" target="_blank" style="color:#fbbf24;">mygov.scot &rarr;</a>. <strong>Renaissance arrives in 4 days (Thursday 23 April)</strong> &mdash; plan your shoot positions today. <strong>A9 Roskeen to Tomich roadworks START TONIGHT (7pm)</strong> &mdash; plan any evening drives now. A9 Cromarty Bridge restriction ends today.
+    </p>
+    <div class="traffic-box">
+      <div class="traffic-title">&#x1F6A6; Traffic &mdash; A9 &middot; Invergordon &middot; Inverness &middot; Highlands</div>
+      <div id="traffic-content"><a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">&#x1F6A6; Check live incidents &rarr; Traffic Scotland &#x2197;</a></div>
+      <div id="roadworks-content" style="margin-top:8px;padding-top:7px;border-top:1px solid rgba(251,191,36,0.28);"></div>
+    </div>
+  </div>
+
+  <!-- THOUGHT & TIP -->
+  <div class="card">
+    <div class="card-title">&#x1F4AD; Today&rsquo;s Thought &amp; Tip &mdash; Freelancing Platforms</div>
+    <div class="quote-block">
+      &ldquo;Your skills don&rsquo;t belong to one platform. Upwork is where you hunt; Fiverr is where buyers find you; CryptoJobs is where your past becomes a superpower; DataAnnotation pays you this week while everything else builds momentum. The freelancers earning &pound;3,000&ndash;5,000 a month aren&rsquo;t more talented &mdash; they&rsquo;re more distributed. They earn &pound;800 here, &pound;700 there, &pound;600 in passive income, and &pound;900 from a regular client. Build the stack.&rdquo;<br><br>
+      You have been on Upwork for three days. That is channel one. Today is the day to map out channels two through five &mdash; and claim the one channel most freelancers will never have access to: <strong>your crypto and blockchain background</strong>. On BitcoinerJobs and CryptoJobs, that background turns you from a general applicant into a near-perfect match. The question isn&rsquo;t whether you should be on those platforms. It&rsquo;s why you aren&rsquo;t already.
+    </div>
+    <div class="tip-box">
+      <strong>Sunday Focus &mdash; The Platform Stack in 2026:</strong><br>
+      <strong>(1) Upwork (active &mdash; live since 16 Apr):</strong> Proposal-based. Sliding fees: 20% &rarr; 10% &rarr; 5% per client. Best for long-term client relationships and hourly work. Keep sending 3 proposals daily.
+      <strong>(2) CryptoJobs (register today &mdash; 20 min):</strong> cryptojobs.com &mdash; 861 active crypto/Web3 roles. Content writing, community management, education, customer success. Your crypto background = Tier 1 match. Most competitors lack it entirely.
+      <strong>(3) BitcoinerJobs (register today &mdash; 10 min):</strong> bitcoinerjobs.com &mdash; Bitcoin-specific remote roles. Media &amp; Events, Business Operations categories. Steve&rsquo;s customer service and event coordination = directly applicable.
+      <strong>(4) Fiverr (set up this week if not done):</strong> Flat 20% fee. Buyers come to you &mdash; passive discovery. Package your services once; earn from them indefinitely.
+      <strong>(5) DataAnnotation / Outlier (apply today &mdash; 30 min):</strong> Immediate income. Weekly pay. No portfolio required. Your bridge income while Upwork and crypto platforms warm up.
+      <strong>(6) Jobbers (explore):</strong> Newer platform, 0% commission &mdash; you keep 100% of your rate. Growing fast in 2026.
+      <strong>(7) Alamy / Getty (already started):</strong> Passive stock photography income. Ship season = content season. Every cruise photo is a potential earner for months.
+    </div>
+  </div>
+
+  <!-- CRUISE -->
+  <div class="card">
+    <div class="card-title">&#x1F6A2; Port of Cromarty Firth &mdash; 2026 Cruise Season</div>
+    <div id="ship-banner" class="ship-banner next-ship">Loading ship schedule&hellip;</div>
+    <div class="countdown-label">&#x23F3; Season ends in &mdash; 14 October 2026</div>
+    <div class="countdown-grid">
+      <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-unit">Days</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-unit">Hours</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-mins">--</div><div class="cd-unit">Minutes</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-unit">Seconds</div></div>
+    </div>
+    <p style="font-size:0.80rem;color:var(--text-secondary);margin-top:16px;line-height:1.6;">
+      <strong>Quiet Sunday &mdash; no ship in port today.</strong> Five ships called so far this season: AIDAmar (6 Apr), Ambience (13 Apr), AIDAsol (14 Apr), Majestic Princess (15 Apr), MSC Preziosa (18 Apr). <strong>Next: Renaissance on Thursday 23 April &mdash; 4 days away.</strong> Ambassador Cruise Line&rsquo;s Renaissance has a distinctive midnight-blue/teal hull and very few stock images from Scottish ports &mdash; that gap is your opportunity. After Renaissance: Majestic Princess again on 24 Apr, then AIDAluna on 29 Apr. Three ships in seven days. Today is your planning and prep day. Scout your pier positions, check the lighting angles for a Thursday morning arrival, and ensure your camera kit is ready.
+    </p>
+    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">Source: <a href="https://pocf.co.uk" style="color:var(--green-bright);" target="_blank">pocf.co.uk</a> &middot; <a href="https://www.ross-shirejournal.co.uk" style="color:var(--green-bright);" target="_blank">Ross-shire Journal</a></p>
+  </div>
+
+  <!-- DRONE & PHOTO TIP -->
+  <div class="card">
+    <div class="card-title">&#x1F4F8; Photography &amp; Drone Tip &mdash; Renaissance Prep + Sunday Scouting</div>
+    <div class="news-item">
+      <div class="news-badge drone">&#x1F4F7; 4 DAYS TO RENAISSANCE</div>
+      <h3>Scout Your Shoot Positions Today &mdash; Thursday 23 April is Your Best Opportunity</h3>
+      <p>Renaissance (Ambassador Cruise Line) arrives on Thursday with a distinctive midnight-blue/teal hull and classic ocean liner silhouette &mdash; one of the most photogenic ships of the season. Very few stock images of this ship exist from Scottish ports, meaning low competition and potentially strong sales. Use today to: <strong>(1)</strong> Walk the pier and identify the best vantage points for a morning arrival (the ship will likely be lit from the east, so west-facing shots will be well-exposed). <strong>(2)</strong> Check existing Alamy listings for &ldquo;Renaissance Ambassador Cruise&rdquo; to understand what gaps exist. <strong>(3)</strong> Charge all batteries, clear memory cards, clean your lens. The difference between 5 acceptable shots and 30 great ones is always preparation. <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank">Check Thursday forecast at Met Office &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge drone">&#x1F6F8; DRONE NOTE</div>
+      <h3>A9 Cromarty Bridge Restriction Ends Today &mdash; Clear Drive for Afternoon Scouting</h3>
+      <p>The A9 Cromarty Bridge 30mph speed restriction ends today (Sunday 19 April) &mdash; good news for any afternoon drive to scout locations. Note: overnight surfacing works will resume 6&ndash;10 May. If you&rsquo;re flying this afternoon, check wind conditions &mdash; CAA Open Category requires below Beaufort 5. April Sunday afternoons often offer stable conditions along the Firth. <strong>Drone opportunity: aerial shots from the Cromarty Firth with the spring light are strong Alamy sellers.</strong> Highland coastal landscape aerial imagery consistently ranks among the top-performing categories. Even a 15-minute flight before 5pm could yield 8&ndash;12 sellable frames.</p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge drone">&#x1F4B0; Fiverr</div>
+      <h3>Create a Fiverr Drone Gig This Weekend if You Haven&rsquo;t Already</h3>
+      <p>Fiverr&rsquo;s &ldquo;Drone &amp; Aerial Filming&rdquo; category has consistent demand for Scottish and coastal UK footage. A gig titled <strong>&ldquo;I will provide professional aerial drone footage of the Scottish Highlands and Cromarty Firth&rdquo;</strong> with three tiers (Basic 30s clip &pound;45 / Standard 90s + 10 photos &pound;90 / Premium 3-min reel + full photo set &pound;175) takes under 2 hours to set up. Your CAA Open Category certification is a genuine trust signal &mdash; include it in your gig description. Buyers from travel brands, tourism operators, and documentary producers search for this regularly. Set it up once and it earns passively.</p>
+      <a href="https://www.fiverr.com/seller_onboarding" target="_blank">Create a Fiverr Gig &rarr;</a>
+    </div>
+  </div>

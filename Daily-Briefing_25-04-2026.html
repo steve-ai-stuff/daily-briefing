@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steve's Daily Briefing &mdash; 25 April 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --green-bright: #4ade80;
+  --green-light: #86efac;
+  --text-primary: #f0fdf4;
+  --text-secondary: #d1fae5;
+  --text-muted: rgba(255,255,255,0.52);
+  --card-bg: rgba(8,22,13,0.70);
+  --bg-image: url('../Background Images/scotland_113.jpg');
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  color: var(--text-primary);
+  background: linear-gradient(160deg,#0b3520 0%,#061c10 30%,#08241a 60%,#041208 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.22;
+  z-index: 0;
+  animation: kenBurns 45s ease-in-out infinite alternate;
+}
+@keyframes kenBurns {
+  0%   { transform: scale(1.0) translate(0,0); }
+  50%  { transform: scale(1.08) translate(-1.5%,1%); }
+  100% { transform: scale(1.05) translate(1.5%,-0.5%); }
+}
+body > * { position: relative; z-index: 1; }
+#progress-bar {
+  position: sticky; top: 0; z-index: 900;
+  background: rgba(4,12,6,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(74,222,128,0.20);
+  padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; overflow: hidden;
+}
+#ring-wrap { flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+#ring-emoji { font-size: 1.3rem; }
+#ring-svg { width: 36px; height: 36px; flex-shrink: 0; }
+#ring-pct { font-size: 0.75rem; font-weight: 700; color: var(--green-bright); white-space: nowrap; }
+.pills-row { display: flex; gap: 7px; flex-wrap: wrap; flex: 1; }
+.pill { cursor: pointer; padding: 5px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; border: 1.5px solid rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.60); transition: all 0.2s; user-select: none; white-space: nowrap; }
+.pill:hover { border-color: rgba(255,255,255,0.40); color: rgba(255,255,255,0.85); }
+.pill.done { background: rgba(74,222,128,0.18); border-color: rgba(74,222,128,0.55); color: #4ade80; animation: pillPop 0.3s ease-out; }
+.pill.done-yellow { background: rgba(251,191,36,0.18); border-color: rgba(251,191,36,0.55); color: #fbbf24; animation: pillPop 0.3s ease-out; }
+@keyframes pillPop { 0%{transform:scale(0.90)} 60%{transform:scale(1.10)} 100%{transform:scale(1.00)} }
+.pill-confirm { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.40); color: #fca5a5; }
+.pill-confirm:hover { background: rgba(239,68,68,0.22); border-color: rgba(239,68,68,0.65); color: #fecaca; }
+.pill-confirm.confirmed { background: rgba(74,222,128,0.15); border-color: rgba(74,222,128,0.55); color: #4ade80; pointer-events: none; }
+@keyframes rocketFly { 0%{left:10%;opacity:0;transform:rotate(30deg)} 15%{opacity:1} 85%{opacity:1} 100%{left:94%;opacity:0;transform:rotate(30deg)} }
+@keyframes bangPop   { 0%{transform:scale(0.2);opacity:0} 40%{transform:scale(1.8);opacity:1} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1.0);opacity:0} }
+@keyframes popperPop { 0%{transform:scale(0) rotate(-20deg);opacity:1} 40%{transform:scale(1.3) rotate(10deg);opacity:1} 75%{transform:scale(1.0) rotate(0deg);opacity:1} 100%{transform:scale(1.0) rotate(0deg);opacity:0} }
+#rocket-wrap { position:absolute;top:8px;font-size:1.4rem;display:none;pointer-events:none; }
+#rocket-wrap.flying { display:block;animation:rocketFly 5s linear forwards; }
+.bang-pop { position:absolute;top:2px;font-size:1.5rem;display:none;pointer-events:none; }
+.bang-pop.show { display:block;animation:bangPop 0.9s ease-out forwards; }
+#bang-emoji  { position:absolute;top:4px;left:50%;font-size:1.6rem;display:none;pointer-events:none; }
+#bang-emoji.show { display:block;animation:bangPop 1s ease-out forwards; }
+#party-popper { position:absolute;top:4px;right:70px;font-size:1.6rem;display:none;pointer-events:none;transform:scale(0); }
+#party-popper.show { display:block;animation:popperPop 1.2s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+#toast-container { position:fixed; top:70px; right:16px; z-index:9999; display:flex; flex-direction:column; gap:8px; }
+.toast { background:rgba(8,22,13,0.96); backdrop-filter:blur(16px); border-radius:10px; padding:12px 16px; font-size:0.83rem; font-weight:500; max-width:320px; animation:toastIn 0.3s ease-out; border-left:4px solid #4ade80; }
+.toast.warn { border-left-color:#f97316; } .toast.info { border-left-color:#60a5fa; }
+@keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+.wrapper { max-width: 960px; margin: 0 auto; padding: 16px 16px 40px; }
+.card { background:var(--card-bg); backdrop-filter:blur(16px); border:2px solid rgba(251,130,100,0.45); border-radius:18px; padding:28px 32px; box-shadow:0 8px 40px rgba(0,0,0,0.35); margin-bottom:20px; animation:fadeInUp 0.5s ease-out; }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.card-title { font-size:1.05rem; font-weight:700; color:#fbbf24; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.weather-card { background:linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68)); backdrop-filter:blur(16px); border:2px solid rgba(251,130,100,0.45); position:relative; overflow:hidden; border-radius:18px; padding:28px 32px; box-shadow:0 8px 40px rgba(0,0,0,0.35); margin-bottom:20px; animation:fadeInUp 0.5s ease-out; }
+.weather-stats { display:flex; gap:16px; flex-wrap:wrap; margin:14px 0; }
+.wstat { text-align:center; flex:1; min-width:70px; }
+.wstat-val { font-size:1.1rem; font-weight:700; color:#fff; }
+.wstat-lbl { font-size:0.68rem; color:rgba(255,255,255,0.75); margin-top:2px; }
+.weather-7day { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:14px; }
+#weather-particles { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0; }
+.weather-card > * { position:relative; z-index:1; }
+@keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.85} 100%{transform:translateY(220px);opacity:0} }
+@keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.90} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
+@keyframes sunPulse { 0%,100%{opacity:0.45;transform:scale(1)} 50%{opacity:0.55;transform:scale(1.08)} }
+@keyframes sunRayPulse { 0%,100%{opacity:0.40;transform:scaleY(1)} 50%{opacity:0.60;transform:scaleY(1.4)} }
+@keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.45} 90%{opacity:0.45} to{transform:translateX(110%);opacity:0} }
+@keyframes lightningFlash { 0%,100%{opacity:0} 5%,7%{opacity:0.55} 6%{opacity:0} }
+.wday { background:rgba(255,255,255,0.15); border-radius:10px; padding:8px 4px; text-align:center; font-size:0.70rem; color:rgba(255,255,255,0.90); border:1px solid rgba(255,255,255,0.20); }
+.wday.today-day { background:rgba(255,255,255,0.30); border-color:rgba(255,255,255,0.55); color:#fff; font-weight:700; }
+.wday-name { font-weight:700; margin-bottom:4px; }
+.wday-icon { font-size:1.2rem; margin:4px 0; }
+.weather-loading { color:rgba(255,255,255,0.80); font-style:italic; }
+.header-card { background:linear-gradient(135deg,rgba(22,163,74,0.32),rgba(74,222,128,0.32)); backdrop-filter:blur(20px); border:2px solid rgba(251,130,100,0.45); border-radius:18px; padding:32px; margin-bottom:20px; text-align:center; animation:fadeInUp 0.5s ease-out; }
+.header-card h1 { font-size:2rem; font-weight:800; color:#fff; margin-bottom:10px; text-shadow:0 2px 8px rgba(0,0,0,0.25); }
+.date-badge { display:inline-block; background:rgba(255,255,255,0.25); color:#fff; font-weight:800; font-size:0.82rem; padding:5px 16px; border-radius:20px; margin-bottom:14px; letter-spacing:0.03em; }
+.header-desc { color:rgba(255,255,255,0.92); font-size:0.90rem; line-height:1.6; max-width:680px; margin:0 auto; }
+.traffic-box { background:rgba(185,28,28,0.12); border:1px solid rgba(251,191,36,0.55); border-radius:10px; color:#fff; font-size:0.83rem; margin-top:18px; padding:12px 16px; text-align:left; }
+.traffic-title { font-weight:700; margin-bottom:6px; font-size:0.82rem; }
+.quote-block { border-left:4px solid var(--green-bright); padding:12px 18px; font-style:italic; color:var(--text-secondary); margin-bottom:14px; font-size:0.92rem; line-height:1.6; }
+.tip-box { background:rgba(74,222,128,0.07); border:1px solid rgba(74,222,128,0.20); border-radius:10px; padding:12px 16px; font-size:0.85rem; color:var(--text-secondary); line-height:1.55; }
+.tip-box strong { color:var(--green-bright); }
+.ship-banner { border-radius:12px; padding:12px 18px; font-size:0.92rem; font-weight:600; margin-bottom:18px; text-align:center; }
+.ship-banner.in-port { background:rgba(74,222,128,0.14); border:1.5px solid rgba(74,222,128,0.40); color:#4ade80; }
+.ship-banner.next-ship { background:rgba(251,191,36,0.10); border:1.5px solid rgba(251,191,36,0.35); color:#fbbf24; }
+.ship-banner.season-over { background:rgba(96,165,250,0.10); border:1.5px solid rgba(96,165,250,0.30); color:#93c5fd; }
+.countdown-label { text-align:center; font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px; }
+.countdown-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; text-align:center; }
+.cd-box { background:#fde68a; border:1.5px solid rgba(251,130,100,0.7); border-radius:12px; padding:14px 6px; color:#16a34a; }
+.cd-num { font-size:1.8rem; font-weight:800; color:#16a34a; line-height:1; }
+.cd-unit { font-size:0.65rem; color:#15803d; margin-top:4px; text-transform:uppercase; letter-spacing:0.06em; font-weight:700; }
+.news-badge { display:inline-block; background:rgba(251,130,100,0.18); color:#fb8264; font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+.news-badge.local { background:rgba(74,222,128,0.15); color:#4ade80; }
+.news-badge.drone { background:rgba(251,191,36,0.15); color:#fbbf24; }
+.news-badge.crypto { background:rgba(251,191,36,0.18); color:#fbbf24; }
+.news-item { margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.07); }
+.news-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.news-item h3 { font-size:0.97rem; font-weight:700; color:var(--text-primary); margin-bottom:6px; }
+.news-item p { font-size:0.84rem; color:var(--text-secondary); line-height:1.6; }
+.news-item a { color:var(--green-bright); text-decoration:none; font-size:0.80rem; }
+.news-item a:hover { text-decoration:underline; }
+.job-card { background:rgba(255,255,255,0.03); border:1px solid rgba(96,165,250,0.20); border-radius:12px; padding:16px 18px; margin-bottom:12px; }
+.job-card:last-child { margin-bottom:0; }
+.job-header { display:flex; align-items:flex-start; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.job-title { font-size:0.95rem; font-weight:700; color:var(--text-primary); flex:1; }
+.job-badge { font-size:0.62rem; font-weight:700; padding:2px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.05em; white-space:nowrap; }
+.remote-badge { background:rgba(74,222,128,0.18); color:#4ade80; border:1px solid rgba(74,222,128,0.30); }
+.fit-perfect { background:rgba(74,222,128,0.22); color:#4ade80; border:1px solid rgba(74,222,128,0.45); }
+.fit-high { background:rgba(251,191,36,0.18); color:#fbbf24; border:1px solid rgba(251,191,36,0.40); }
+.fit-medium { background:rgba(251,130,100,0.18); color:#fb8264; border:1px solid rgba(251,130,100,0.35); }
+.job-company { font-size:0.78rem; color:var(--text-muted); margin-bottom:4px; }
+.job-salary { font-size:0.80rem; font-weight:600; color:#86efac; margin-bottom:8px; }
+.job-desc { font-size:0.83rem; color:var(--text-secondary); line-height:1.55; margin-bottom:10px; }
+.apply-btn { display:inline-block; background:rgba(96,165,250,0.15); border:1px solid rgba(96,165,250,0.35); color:#93c5fd; padding:5px 14px; border-radius:8px; font-size:0.78rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
+.apply-btn:hover { background:rgba(96,165,250,0.25); border-color:rgba(96,165,250,0.55); }
+.section-hint { font-size:0.78rem; color:var(--text-muted); font-style:italic; margin-bottom:14px; }
+.learn-intro { font-size:0.88rem; color:var(--text-secondary); margin-bottom:14px; line-height:1.6; }
+.learn-bullets { list-style:none; padding:0; margin:0 0 14px; }
+.learn-bullets li { font-size:0.85rem; color:var(--text-secondary); padding:7px 0 7px 22px; position:relative; border-bottom:1px solid rgba(255,255,255,0.05); line-height:1.55; }
+.learn-bullets li:last-child { border-bottom:none; }
+.learn-bullets li::before { content:'BA'; position:absolute; left:0; color:var(--green-bright); font-size:0.65rem; top:10px; }
+.resource-link { display:inline-block; background:rgba(74,222,128,0.10); border:1px solid rgba(74,222,128,0.25); color:var(--green-bright); padding:5px 14px; border-radius:8px; font-size:0.80rem; font-weight:600; text-decoration:none; transition:all 0.2s; }
+.resource-link:hover { background:rgba(74,222,128,0.18); }
+.pill-hint { font-size:0.75rem; color:var(--text-muted); font-style:italic; margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.06); }
+.action-card { border-color:rgba(251,191,36,0.50) !important; }
+.action-title { font-size:1.05rem; font-weight:800; color:#fbbf24; margin-bottom:10px; }
+.action-desc { font-size:0.85rem; color:var(--text-secondary); line-height:1.6; margin-bottom:14px; }
+.action-desc ol { padding-left:18px; }
+.action-desc ol li { margin-bottom:6px; }
+.action-why { background:rgba(74,222,128,0.07); border:1px solid rgba(74,222,128,0.20); border-radius:10px; padding:12px 16px; font-size:0.83rem; color:var(--text-secondary); line-height:1.55; }
+.action-why strong { color:var(--green-bright); }
+.stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.stat-box { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:12px; padding:16px 12px; text-align:center; }
+.stat-num { font-size:1.6rem; font-weight:800; color:var(--green-bright); line-height:1; }
+.stat-lbl { font-size:0.68rem; color:var(--text-muted); margin-top:5px; text-transform:uppercase; letter-spacing:0.05em; }
+.charts-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+.chart-label { font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px; }
+.chart-empty { font-size:0.80rem; color:var(--text-muted); font-style:italic; padding:20px; text-align:center; background:rgba(255,255,255,0.03); border-radius:10px; }
+.backup-btns { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.backup-btn { padding:10px 18px; border-radius:10px; font-size:0.83rem; font-weight:700; cursor:pointer; border:1.5px solid; transition:all 0.2s; }
+.save-btn { background:rgba(74,222,128,0.12); border-color:rgba(74,222,128,0.40); color:#4ade80; }
+.save-btn:hover { background:rgba(74,222,128,0.22); }
+.import-btn { background:rgba(96,165,250,0.10); border-color:rgba(96,165,250,0.35); color:#93c5fd; }
+.import-btn:hover { background:rgba(96,165,250,0.20); }
+.reset-btn { background:rgba(251,130,100,0.10); border-color:rgba(251,130,100,0.35); color:#fb8264; }
+.reset-btn:hover { background:rgba(251,130,100,0.20); }
+.backup-note { font-size:0.78rem; color:var(--text-muted); line-height:1.6; }
+.backup-note a { color:var(--green-bright); }
+footer { text-align:center; padding:20px 16px 10px; font-size:0.72rem; color:var(--text-muted); position:relative; }
+.footer-hills { display:block; width:100%; margin-bottom:10px; }
+@media (max-width:600px) {
+  .card { padding:20px 16px; } .header-card { padding:22px 16px; } .header-card h1 { font-size:1.5rem; }
+  .countdown-grid { grid-template-columns:repeat(2,1fr); } .stats-grid { grid-template-columns:repeat(2,1fr); }
+  .charts-row { grid-template-columns:1fr; } .weather-7day { grid-template-columns:repeat(3,1fr); }
+  .pills-row { gap:5px; } .pill { padding:4px 9px; font-size:0.72rem; } .cd-num { font-size:1.4rem; }
+}
+</style>
+</head>
+<body>
+
+<script>
+(function(){
+  var images=["scotland_001.jpg","scotland_008.jpg","scotland_009.jpg","scotland_010.jpg","scotland_011.jpg","scotland_012.jpg","scotland_013.jpg","scotland_014.jpg","scotland_016.jpg","scotland_017.jpg","scotland_019.jpg","scotland_020.jpg","scotland_032.jpg","scotland_036.jpg","scotland_039.jpg","scotland_041.jpg","scotland_060.jpg","scotland_061.jpg","scotland_064.jpg","scotland_072.jpg","scotland_073.jpg","scotland_077.jpg","scotland_101.jpg","scotland_103.jpg","scotland_104.jpg","scotland_109.jpg","scotland_115.jpg","scotland_116.jpg","scotland_117.jpg","scotland_121.jpg","scotland_122.jpg","scotland_123.jpg","scotland_124.jpg","scotland_125.jpg","scotland_126.jpg","scotland_127.jpg","scotland_128.jpg","scotland_130.jpg","scotland_132.jpg","scotland_133.jpg","scotland_135.jpg","scotland_136.jpg","scotland_138.jpg","scotland_139.jpg","scotland_141.jpg","scotland_145.jpg","scotland_146.jpg","scotland_147.jpg","scotland_149.jpg","scotland_150.jpg","scotland_151.jpg","scotland_152.jpg","scotland_155.jpg","scotland_156.jpg","scotland_157.jpg","scotland_159.jpg","scotland_161.jpg","scotland_162.jpg","scotland_163.jpg","scotland_164.jpg","scotland_165.jpg","scotland_166.jpg","scotland_167.jpg","scotland_169.jpg","scotland_171.jpg","scotland_172.jpg","scotland_173.jpg","scotland_174.jpg","scotland_177.jpg","scotland_180.jpg","scotland_183.jpg","scotland_185.jpg","scotland_186.jpg","scotland_187.jpg","scotland_188.jpg","scotland_190.jpg","scotland_191.jpg","scotland_192.jpg","scotland_194.jpg","scotland_196.jpg","scotland_198.jpg","scotland_199.jpg","scotland_200.jpg","scotland_201.jpg","scotland_202.jpg","scotland_203.jpg","scotland_204.jpg","scotland_205.jpg","scotland_206.jpg","scotland_207.jpg","scotland_208.jpg","scotland_209.jpg","scotland_210.jpg","scotland_211.jpg","scotland_212.jpg","scotland_213.jpg","scotland_214.jpg","scotland_217.jpg","scotland_219.jpg","scotland_221.jpg","scotland_223.jpg","scotland_224.jpg","scotland_225.jpg","scotland_228.jpg","scotland_229.jpg","scotland_230.jpg","scotland_232.jpg","scotland_233.jpg","scotland_234.jpg","scotland_235.jpg","scotland_237.jpg","scotland_239.jpg","scotland_240.jpg","scotland_241.jpg","scotland_244.jpg","scotland_246.jpg","scotland_247.jpg","scotland_248.jpg","scotland_249.jpg","scotland_253.jpg","scotland_254.jpg","scotland_255.jpg","scotland_257.jpg","scotland_258.jpg","scotland_259.jpg","scotland_260.jpg","scotland_262.jpg","scotland_263.jpg","scotland_264.jpg","scotland_266.jpg","scotland_267.jpg","scotland_268.jpg","scotland_269.jpg","scotland_270.jpg","scotland_271.jpg","scotland_272.jpg","scotland_273.jpg","scotland_276.jpg","scotland_277.jpg","scotland_279.jpg","scotland_281.jpg","scotland_283.jpg","scotland_284.jpg","scotland_290.jpg","scotland_297.jpg","scotland_299.jpg","scotland_302.jpg","scotland_304.jpg","scotland_305.jpg","scotland_306.jpg","scotland_308.jpg","scotland_309.jpg","scotland_310.jpg","scotland_311.jpg","scotland_312.jpg","scotland_313.jpg","scotland_314.jpg","scotland_317.jpg","scotland_319.jpg","scotland_322.jpg","scotland_323.jpg","scotland_324.jpg","scotland_327.jpg","scotland_328.jpg","scotland_329.jpg","scotland_330.jpg","scotland_332.jpg","scotland_335.jpg","scotland_336.jpg","scotland_339.jpg","scotland_345.jpg","scotland_346.jpg","scotland_347.jpg","scotland_351.jpg","scotland_352.jpg","scotland_355.jpg","scotland_357.jpg","scotland_360.jpg","scotland_361.jpg","scotland_362.jpg","scotland_363.jpg","scotland_364.jpg","scotland_367.jpg","scotland_368.jpg","scotland_370.jpg","scotland_371.jpg","scotland_372.jpg","scotland_373.jpg","scotland_374.jpg","scotland_375.jpg","scotland_377.jpg","scotland_378.jpg","scotland_381.jpg","scotland_384.jpg","scotland_385.jpg","scotland_386.jpg","scotland_387.jpg"];
+  var now=new Date(); var start=new Date(now.getFullYear(),0,0);
+  var dayOfYear=Math.floor((now-start)/86400000);
+  var img=images[dayOfYear%images.length];
+  var isGitHub=window.location.hostname.includes('github.io');
+  var imgPath=isGitHub?img:'../Background Images/'+img;
+  document.documentElement.style.setProperty('--bg-image','url("'+imgPath+'")');
+})();
+</script>
+
+<script>
+var SAVED_LEARN_HOURS=0; var SAVED_APPS=0; var SAVED_INTERVIEWS=0; var SAVED_SESSIONS=0;
+var SAVED_SKILLS={"Data Analysis":0,"Prompt Engineering":0,"Python":0,"AI Tools & Systems":0,"Drone & Regs":0,"Photography":0,"JavaScript":0,"LinkedIn":0,"Freelancing":0,"Freelancing Platforms":0};
+var SAVED_DAILY_HISTORY=[
+  {date:"2026-04-18",apps:0,hours:0},{date:"2026-04-19",apps:0,hours:0},
+  {date:"2026-04-20",apps:0,hours:0},{date:"2026-04-21",apps:0,hours:0},
+  {date:"2026-04-22",apps:0,hours:0},{date:"2026-04-23",apps:0,hours:0},
+  {date:"2026-04-24",apps:0,hours:0}
+];
+var TODAY_DATE="2026-04-25";
+var TODAY_TOPIC="Photography";
+var ROADWORKS=["A9 Cromarty Bridge overnight works — next batch 6–10 May (not currently active)"];
+var CRUISE_SCHEDULE=[
+  {date:"2026-04-29",ships:["AIDAluna"]},
+  {date:"2026-05-04",ships:["Nieuw Statendam"]},{date:"2026-05-06",ships:["Majestic Princess"]},{date:"2026-05-11",ships:["Ocean Victory"]},{date:"2026-05-13",ships:["Norwegian Star"]},
+  {date:"2026-05-16",ships:["Mein Schiff 2"]},{date:"2026-05-18",ships:["MSC Preziosa"]},{date:"2026-05-19",ships:["Celebrity Eclipse"]},
+  {date:"2026-05-21",ships:["Costa Favolosa"]},{date:"2026-05-22",ships:["MSC Preziosa"]},{date:"2026-05-26",ships:["Mein Schiff 2"]},
+  {date:"2026-05-27",ships:["AIDAsol"]},{date:"2026-05-28",ships:["Norwegian Star"]},
+  {date:"2026-06-02",ships:["Norwegian Star"]},{date:"2026-06-03",ships:["Star Pride"]},{date:"2026-06-04",ships:["Silver Spirit"]},
+  {date:"2026-06-05",ships:["AIDAsol"]},{date:"2026-06-07",ships:["Mein Schiff 2"]},{date:"2026-06-09",ships:["Rotterdam"]},
+  {date:"2026-06-11",ships:["Seabourn Ovation"]},{date:"2026-06-12",ships:["Queen Anne"]},{date:"2026-06-13",ships:["MSC Preziosa"]},
+  {date:"2026-06-16",ships:["AIDAsol"]},{date:"2026-06-18",ships:["Norwegian Star"]},{date:"2026-06-19",ships:["Seven Seas Grandeur"]},
+  {date:"2026-06-21",ships:["Norwegian Sky"]},{date:"2026-06-23",ships:["Ambience","Star Pride"]},{date:"2026-06-24",ships:["Norwegian Star"]},
+  {date:"2026-06-27",ships:["Mein Schiff 2"]},{date:"2026-06-29",ships:["AIDAsol"]},{date:"2026-07-01",ships:["Mein Schiff 2"]},
+  {date:"2026-07-03",ships:["Norwegian Sky"]},{date:"2026-07-07",ships:["Oceania Sirena"]},{date:"2026-07-08",ships:["MSC Preziosa"]},
+  {date:"2026-07-09",ships:["Norwegian Star"]},{date:"2026-07-11",ships:["Mein Schiff 2"]},{date:"2026-07-12",ships:["Europa","Norwegian Sky"]},
+  {date:"2026-07-13",ships:["Celebrity Eclipse"]},{date:"2026-07-14",ships:["Nieuw Statendam"]},{date:"2026-07-15",ships:["Britannia"]},
+  {date:"2026-07-16",ships:["AIDAbella"]},{date:"2026-07-17",ships:["Majestic Princess"]},{date:"2026-07-20",ships:["Costa Favolosa"]},
+  {date:"2026-07-23",ships:["Mein Schiff 2"]},{date:"2026-07-24",ships:["Azamara Quest"]},{date:"2026-07-27",ships:["Borealis"]},
+  {date:"2026-07-29",ships:["Majestic Princess"]},{date:"2026-07-30",ships:["Norwegian Star"]},{date:"2026-07-31",ships:["Azamara Quest"]},
+  {date:"2026-08-02",ships:["Norwegian Sky"]},{date:"2026-08-03",ships:["Star Legend"]},{date:"2026-08-04",ships:["Majestic Princess"]},
+  {date:"2026-08-05",ships:["Oceania Marina"]},{date:"2026-08-06",ships:["Mein Schiff 3"]},{date:"2026-08-07",ships:["MSC Preziosa"]},
+  {date:"2026-08-11",ships:["Norwegian Sky"]},{date:"2026-08-12",ships:["Celebrity Eclipse"]},{date:"2026-08-15",ships:["Seven Seas Voyager"]},
+  {date:"2026-08-16",ships:["Mein Schiff 3"]},{date:"2026-08-17",ships:["Oceania Vista"]},{date:"2026-08-18",ships:["Nieuw Statendam"]},
+  {date:"2026-08-20",ships:["AIDAluna"]},{date:"2026-08-22",ships:["Majestic Princess"]},{date:"2026-08-24",ships:["Mein Schiff 2"]},
+  {date:"2026-08-25",ships:["MSC Preziosa"]},{date:"2026-08-26",ships:["Nieuw Statendam"]},{date:"2026-08-28",ships:["Mein Schiff 2"]},
+  {date:"2026-09-01",ships:["Valiant Lady"]},{date:"2026-09-04",ships:["Seven Seas Mariner"]},{date:"2026-09-07",ships:["Mein Schiff 2"]},
+  {date:"2026-09-09",ships:["Oceania Marina"]},{date:"2026-09-10",ships:["Norwegian Star"]},{date:"2026-09-11",ships:["MSC Preziosa"]},
+  {date:"2026-09-12",ships:["Spirit Of Adventure"]},{date:"2026-09-15",ships:["Majestic Princess"]},{date:"2026-09-16",ships:["Norwegian Star"]},
+  {date:"2026-09-24",ships:["Costa Favolosa"]},{date:"2026-10-06",ships:["AIDAsol"]},{date:"2026-10-14",ships:["AIDAsol"]}
+];
+</script>
+
+<div id="toast-container"></div>
+
+<div id="progress-bar">
+  <div id="rocket-wrap">&#x1F680;</div>
+  <div class="bang-pop" id="bang1" style="left:20%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang2" style="left:35%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang3" style="left:50%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang4" style="left:65%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang5" style="left:80%">&#x1F4A5;</div>
+  <div id="bang-emoji">&#x1F4A5;</div>
+  <div id="party-popper">&#x1F389;</div>
+  <div id="ring-wrap">
+    <span id="ring-emoji">&#x1F311;</span>
+    <svg id="ring-svg" viewBox="0 0 36 36">
+      <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="3"/>
+      <circle id="ring-circle" cx="18" cy="18" r="15" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 94.2" stroke-dashoffset="23.55" style="transform-origin:center;transform:rotate(-90deg);transition:stroke-dasharray 0.4s ease;"/>
+    </svg>
+    <span id="ring-pct">0%</span>
+  </div>
+  <div class="pills-row">
+    <div class="pill" id="pill-news" onclick="togglePill('news')">&#x1F5DE;&#xFE0F; News</div>
+    <div class="pill" id="pill-job" onclick="togglePill('job')">&#x1F4BC; Job Applied</div>
+    <div class="pill" id="pill-learn" onclick="togglePill('learn')">&#x1F4DA; Learning Done</div>
+    <div class="pill" id="pill-action" onclick="togglePill('action')">&#x26A1;&#xFE0F; Action Done</div>
+    <div class="pill pill-confirm" id="pill-confirm" onclick="confirmDay()" title="Lock in today's progress">&#x1F534; CONFIRM</div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- WEATHER -->
+  <div class="weather-card">
+    <div id="weather-particles"></div>
+    <div class="card-title" style="color:#fff;">&#x1F324;&#xFE0F; Invergordon Weather &mdash; Today &amp; 5-Day Outlook</div>
+    <div id="weather-content"><p class="weather-loading">Fetching live weather from Open-Meteo&hellip;</p></div>
+    <p style="font-size:0.70rem;color:rgba(255,255,255,0.65);margin-top:10px;">Sources: Open-Meteo &middot; wttr.in &middot; Met Office</p>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header-card">
+    <h1>Good Morning, Steve! &#x1F305; &#x2615;&#xFE0F;</h1>
+    <div class="date-badge">&#x1F4C5; Saturday, 25 April 2026 &middot; Week 17</div>
+    <p class="header-desc">
+      <strong>&#x1F4F8; PHOTOGRAPHY SATURDAY &mdash; NO SHIP TODAY, BUT AIDALUNA ARRIVES IN 4 DAYS.</strong>
+      Saturday is your preparation day. The port is quiet &mdash; but AIDAluna (AIDA Cruises) arrives on Wednesday 29 April, bringing her iconic lip-print bow design, one of the most recognisable cruise ship liveries in Europe. The Cromarty Firth morning light on a late-April Wednesday is soft, directional, and perfect for hull photography. Today you build the shot list, edit the backlog, set up your Alamy keywords, and make sure your portfolio is working for you before the next ship call. There are 173 days left in the 2026 cruise season. Every ship call you miss is a photo set that someone else uploads. Every ship call you capture is a passive income stream that earns independently for years.
+    </p>
+    <div class="traffic-box">
+      <div class="traffic-title">&#x1F6A6; Traffic &mdash; A9 &middot; Invergordon &middot; Inverness &middot; Highlands</div>
+      <div id="traffic-content"><a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">&#x1F6A6; Check live incidents &rarr; Traffic Scotland &#x2197;</a></div>
+      <div id="roadworks-content" style="margin-top:8px;padding-top:7px;border-top:1px solid rgba(251,191,36,0.28);"></div>
+    </div>
+  </div>
+
+  <!-- THOUGHT & TIP -->
+  <div class="card">
+    <div class="card-title">&#x1F4AD; Today&rsquo;s Thought &amp; Tip &mdash; Photography</div>
+    <div class="quote-block">
+      &ldquo;The best camera is the one you have with you. The best photograph is taken by the photographer who prepared. The cruise season runs until 14 October. In that window, up to 95 ships will visit Invergordon &mdash; each one a unique subject with a different hull, different livery, different light. The photographers who will sell those images on Alamy for years ahead are not the ones who show up occasionally &mdash; they are the ones who have a shot list ready before the ship arrives, a Lightroom preset tuned to the Cromarty Firth&rsquo;s particular grey-blue morning light, and a keyword strategy that ensures buyers find their work before anyone else&rsquo;s. Saturday is not a day off. Saturday is the day you build the system that makes every ship day count.&rdquo;<br><br>
+      AIDAluna arrives Wednesday 29 April &mdash; 4 days from now. Today&rsquo;s Photography session gives you the workflow, the keywords, and the Alamy strategy to turn Wednesday&rsquo;s opportunity into a royalty stream that pays independently for years.
+    </div>
+    <div class="tip-box">
+      <strong>Photography Saturday &mdash; Building a Sustainable Stock Income from Invergordon&rsquo;s Cruise Season:</strong><br>
+      <strong>(1) The Alamy Contributor Model &mdash; Why It Works for Scotland:</strong> Alamy is the world&rsquo;s largest stock photography agency by image count, with 375 million images and buyers including Getty, BBC, The Guardian, and the New York Times. Contributors keep 40% of every sale. A well-keyworded cruise ship image can sell repeatedly over years &mdash; the same photo sold to a travel magazine in 2026, a cruise brochure in 2027, and a newspaper supplement in 2028. Your unique selling point: you are in Invergordon, 200 metres from one of Scotland&rsquo;s busiest cruise terminals. Most Alamy contributors photographing these ships are tourists with compact cameras. You have drone access, local knowledge of the light, and time to plan every shot.<br>
+      <strong>(2) The Shot List System &mdash; Prepare Before Every Ship:</strong> Before each ship arrival, build a 5-element shot list: (a) Hero drone aerial &mdash; ship against Cromarty Firth and Ben Wyvis, 80&ndash;100m altitude, 300m offset; (b) Broadside profile &mdash; north pier, diffuse morning light on the hull; (c) Bow detail &mdash; ship name and bow design; (d) Quayside activity &mdash; passengers disembarking (without identifiable faces if possible, or with consent); (e) Environmental context &mdash; ship framed against Highland landscape. AIDAluna&rsquo;s iconic feature: the full-length lip-print bow design on a white hull. Plan your morning-light broadside angle from the pier to capture the full length of the hull with the bow art clearly readable.<br>
+      <strong>(3) Lightroom Workflow for Cromarty Firth Morning Light:</strong> The Firth&rsquo;s morning light is characteristically cool and diffuse &mdash; overcast or hazy skies scatter the light evenly. Develop a preset: Highlights -20, Shadows +15, Whites +10, Temp shift +200K (warming), Dehaze +10, Clarity +8, HSL Saturation Blues -10 (prevents sky oversaturation). Save as a named preset: &ldquo;Cromarty Morning&rdquo;. Apply one-click to all morning ship images, then micro-adjust per frame. This system turns a 2-hour editing job into 20 minutes &mdash; critical when you have multiple ships per week at peak season.<br>
+      <strong>(4) Keyword Strategy &mdash; What Buyers Search For:</strong> The 15 keywords that drive cruise ship stock sales: ship name (e.g. AIDAluna), cruise line (e.g. AIDA Cruises), port name (Invergordon), region (Scottish Highlands, Scotland), water body (Cromarty Firth), ship type (cruise ship, passenger vessel), season/year (2026 cruise season), composition descriptor (aerial view, drone photography), mood/light (morning light, golden hour), and travel concept (cruise travel, luxury travel, ocean liner). Use ALL 15 in every submission. Alamy&rsquo;s algorithm rewards comprehensive, accurate keywording &mdash; under-keyworded images sell at a fraction of the rate of well-keyworded ones.<br>
+      <strong>(5) Your Pipeline After 95 Ships:</strong> 95 unique ship photo sets &times; average 5 sales/year &times; average &pound;15/sale = &pound;7,125 passive income per year &mdash; and that grows each year as the library compounds. The photographers earning &pound;20k+/year from stock started with one well-keyworded set in a unique location. You live in that location. The season is already underway. Every week you delay is ship calls that cannot be recovered.
+    </div>
+  </div>
+
+  <!-- CRUISE -->
+  <div class="card">
+    <div class="card-title">&#x1F6A2; Port of Cromarty Firth &mdash; 2026 Cruise Season</div>
+    <div id="ship-banner" class="ship-banner next-ship">Loading ship schedule&hellip;</div>
+    <div class="countdown-label">&#x23F3; Season ends in &mdash; 14 October 2026</div>
+    <div class="countdown-grid">
+      <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-unit">Days</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-unit">Hours</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-mins">--</div><div class="cd-unit">Minutes</div></div>
+      <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-unit">Seconds</div></div>
+    </div>
+    <p style="font-size:0.80rem;color:var(--text-secondary);margin-top:16px;line-height:1.6;">
+      <strong>&#x23F3; No ship in port today &mdash; NEXT: AIDAluna, Wednesday 29 April (4 days away).</strong> AIDAluna is AIDA Cruises&rsquo; distinctive vessel featuring the iconic AIDA lip-print bow design &mdash; two red lips painted across the entire bow of a white hull &mdash; one of the most recognised and photographed cruise ship designs in Europe. This is an exceptionally high-value photography target. Plan your position now: broadside from the north pier captures the full bow art; drone at 80m from 300m water side gives the complete ship against the Highland skyline. Nine ships have already visited in 2026: AIDAmar (6 Apr), Ambience (13 Apr), AIDAsol (14 Apr), Majestic Princess (15 Apr), MSC Preziosa (18 Apr), Celebrity Eclipse (19 Apr), Renaissance (23 Apr), Majestic Princess (24 Apr). The season is well underway. <strong>AIDAluna Wednesday 29 April &mdash; 4 days to prepare.</strong>
+    </p>
+    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">Source: <a href="https://pocf.co.uk/cruise/" style="color:var(--green-bright);" target="_blank">pocf.co.uk</a> &middot; Schedule cached 24 April 2026 &mdash; verify live before each ship call</p>
+  </div>
+
+  <!-- DRONE & PHOTO TIP -->
+  <div class="card">
+    <div class="card-title">&#x1F4F8; Photography Tip &mdash; AIDAluna Pre-Shoot Preparation</div>
+    <div class="news-item">
+      <div class="news-badge drone">&#x1F6A2; WEDNESDAY 29 APR &mdash; AIDALUNA ARRIVES</div>
+      <h3>AIDAluna Shot Plan &mdash; Build It Today, Execute It Wednesday</h3>
+      <p>AIDAluna&rsquo;s defining visual is her bow art: full-length red lips on a white hull, instantly recognisable and extremely popular with buyers of cruise and travel imagery. She typically arrives at Invergordon in the morning. Recommended positions: (1) Drone &mdash; Cromarty Firth water, 80&ndash;100m altitude, 300m from the vessel, morning light from the north-east giving a slight front-quarter angle that shows both the hull side AND the bow art; (2) Ground &mdash; north pier, low angle, shooting along the length of the hull to show the bow art reading left-to-right; (3) Shore elevation &mdash; castle mound or elevated ground behind the port for ship-against-hills composition. Check arrival time on pocf.co.uk the evening before. Golden light window: 06:00&ndash;09:00 BST.</p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge drone">&#x1F4BE; TODAY &mdash; EDIT &amp; UPLOAD BACKLOG</div>
+      <h3>Renaissance + Majestic Princess: Upload Both Sets to Alamy Today</h3>
+      <p>Yesterday&rsquo;s Majestic Princess call and Thursday&rsquo;s Renaissance call are in your backlog. Today is the day to edit, keyword, and upload both. Target: 8&ndash;12 images per ship, each with a full 15-keyword set. Renaissance keywords: &ldquo;Renaissance Ambassador Cruise Line Invergordon Scotland Cromarty Firth dark hull 2026 cruise ship Scottish Highlands drone aerial photography.&rdquo; Majestic Princess keywords: &ldquo;Majestic Princess Princess Cruises Invergordon Scotland Cromarty Firth white hull 2026 cruise ship aerial drone photography Scottish Highlands.&rdquo; Upload tonight at <a href="https://www.alamy.com/contributor/" target="_blank">Alamy Contributor Portal &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge drone">&#x1F3D4;&#xFE0F; LANDSCAPE &mdash; HIGHLANDS STOCK</div>
+      <h3>Saturday Bonus: Highland Landscape Photography &mdash; Ben Wyvis &amp; Cromarty Firth</h3>
+      <p>On non-ship days, the Cromarty Firth offers consistently saleable landscape subjects: Ben Wyvis from the south shore at golden hour, the Cromarty Bridge at blue hour, the Easter Ross farmland in late-April light. Highland landscape images sell to: (a) tourism boards &mdash; Visit Scotland, Highlands Council marketing; (b) editorial &mdash; travel supplements, Scottish newspapers; (c) commercial licensing &mdash; whisky brands, outdoor gear, property developers. A Saturday afternoon golden-hour session at the Firth (5:30&ndash;7:30pm BST in late April) can produce 5&ndash;10 saleable landscape images to supplement the ship portfolio. Keep a separate &ldquo;Highland Landscape&rdquo; set in Alamy and build it every week.</p>
+    </div>
+  </div>
+
+  <!-- HIGHLANDS NEWS -->
+  <div class="card">
+    <div class="card-title">&#x1F3F4; Invergordon &amp; Highlands News</div>
+    <div class="news-item">
+      <div class="news-badge local">&#x1F6A2; CRUISE SEASON</div>
+      <h3>Port of Cromarty Firth on Course for 200,000 Visitors &amp; 95 Ship Calls in 2026</h3>
+      <p>The 2026 cruise season at Invergordon is firmly underway and tracking toward one of the port&rsquo;s strongest years. Nine ships have already called in April alone, with 95 scheduled through to 14 October. The port has been flagging local attractions to arriving visitors and held a dedicated business workshop in March to help local organisations maximise the tourism opportunity. Around 200,000 cruise passengers are expected at the quay this season. <strong>For Steve:</strong> with 95 ship calls confirmed, the photographic opportunity is enormous. A consistent upload strategy of 10 images per ship would produce a 950-image Alamy portfolio from this season alone &mdash; a library that earns independently, year after year. The economic case for building this portfolio is stronger than it has ever been. <a href="https://www.ross-shirejournal.co.uk/news/easter-ross-port-to-flag-local-attractions-to-tens-of-thousa-430258/" target="_blank">Ross-shire Journal &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge local">&#x1F6D2; RETAIL &amp; LOCAL ECONOMY</div>
+      <h3>Cobbs Reappointed to Operate Invergordon Port Gift Shop for 2026&ndash;2028 Season</h3>
+      <p>Highland business Cobbs has been reappointed to run the retail outlet at the Invergordon Service Base, covering the 2026 and 2027 cruise seasons with an option to extend into 2028. The gift shop is the primary retail touchpoint for hundreds of thousands of cruise visitors arriving at the port &mdash; the first experience many visitors have of Highland retail. <strong>For Steve:</strong> Cobbs and similar Highland tourism businesses are the exact type of client that benefits from professional cruise day photography and content creation. Local tourism operators need high-quality images of the port and arriving ships to use in their own marketing. A day-rate offer to photograph Cobbs and the quayside experience on a busy ship day could open a client relationship with a business that operates for at least the next three years. <a href="https://www.inverness-courier.co.uk/news/cobbs-reappointed-to-run-port-of-cromarty-firth-gift-shop-427371/" target="_blank">Inverness Courier &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge local">&#x1F3DD;&#xFE0F; HIGHLANDS JOB</div>
+      <h3>Raasay Development Trust Seeks Community Development Officer &mdash; Closes 7 May</h3>
+      <p>Raasay Development Trust is looking for a motivated, experienced Community Development Officer to help deliver the Community Climate Action Plan for one of Scotland&rsquo;s most distinctive island communities. The role combines community engagement, project coordination, and stakeholder communication. Hybrid position, partly island-based, partly home-working. Salary: &pound;32,000. Closes 7 May. <strong>For Steve:</strong> a purpose-driven Highland community role that uses your coordination and communication strengths. Raasay is also exceptional drone photography territory &mdash; if the role involved a relocation, it would open a completely new visual subject library. Worth reading the JD this weekend. <a href="https://goodmoves.org/search?regions%5B%5D=highlands" target="_blank">GoodMoves Highlands roles &rarr;</a></p>
+    </div>
+  </div>
+
+  <!-- AI NEWS -->
+  <div class="card">
+    <div class="card-title">&#x1F916; AI &amp; Tech News &mdash; 25 April 2026</div>
+    <div class="news-item">
+      <div class="news-badge">DeepSeek</div>
+      <h3>DeepSeek Releases V4 Pro &amp; V4 Flash &mdash; &ldquo;Closes the Gap&rdquo; With Frontier Models, Now Open-Source</h3>
+      <p>Chinese AI startup DeepSeek released its long-awaited V4 model series on 24 April, unveiling both V4-Pro (for demanding tasks) and V4-Flash (faster, cheaper) as open-source. The models tout top-tier performance in coding benchmarks, a 1 million-token context window, and a proprietary Hybrid Attention Architecture that improves memory across long conversations. V4-Flash costs $0.14 per million input tokens &mdash; a fraction of comparable Western models. <strong>For Steve:</strong> open-source frontier models mean more free and low-cost AI tools becoming available every month. Understanding the landscape of available models &mdash; and which one to use for which task &mdash; is itself a marketable skill on Upwork. A &ldquo;Best AI Model for Your Task&rdquo; consultation service is something non-technical businesses will pay for in 2026. <a href="https://techcrunch.com/2026/04/24/deepseek-previews-new-ai-model-that-closes-the-gap-with-frontier-models/" target="_blank">TechCrunch: DeepSeek V4 &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge">OpenAI</div>
+      <h3>OpenAI&rsquo;s GPT-5.5 Now Rolling Out &mdash; Better Multi-Step Reasoning for Writing &amp; Research</h3>
+      <p>OpenAI released GPT-5.5 on 23 April, describing it as a sharper, faster thinker with meaningful gains in scientific and technical research workflows. The model is rolling out to Plus, Pro, Business, and Enterprise subscribers in ChatGPT immediately. Key practical improvement: longer, more complex prompts now deliver significantly more reliable results for writing, research, and multi-step content workflows &mdash; directly relevant to the kind of prompt engineering Steve is building toward. <strong>For Steve:</strong> GPT-5.5&rsquo;s improved multi-step reasoning makes AI-assisted content creation workflows more reliable. If you are using AI to help draft crypto explainers or community posts, this is the model to experiment with this weekend. Test it: give it a complex brief and see how the output compares to GPT-5. <a href="https://www.cnbc.com/2026/04/23/openai-announces-latest-artificial-intelligence-model.html" target="_blank">CNBC: OpenAI GPT-5.5 &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge">Stanford</div>
+      <h3>Stanford AI Index 2026: AI Adoption Faster Than PC or Internet &mdash; And Revenue Is Following</h3>
+      <p>Stanford&rsquo;s 2026 AI Index, released this month, finds that people are adopting AI faster than they adopted the personal computer or the internet. AI companies are generating revenue faster than any previous technology wave. The report also notes that as of March 2026, Anthropic leads frontier model evaluations, followed closely by xAI, Google, and OpenAI. <strong>For Steve:</strong> this is the macro signal that confirms the urgency of your reskilling. The gap between AI power users and everyone else is widening faster than in any previous technology transition. Reading a briefing like this every morning is how you stay in the first wave rather than the catch-up wave. <a href="https://spectrum.ieee.org/state-of-ai-index-2026" target="_blank">IEEE Spectrum: Stanford AI Index 2026 &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge">Enterprise AI</div>
+      <h3>Amazon Cuts 16,000 Corporate Jobs &mdash; Cites &ldquo;Agentic AI Workflows&rdquo; as the Driver</h3>
+      <p>Amazon has announced approximately 16,000 corporate layoffs, explicitly citing a strategic shift toward AI-driven automation and agentic workflows as the reason. The company says AI agents are now handling tasks that previously required multiple human roles, particularly in document processing, customer support, and research functions. <strong>For Steve:</strong> this is the clearest signal yet that the market for human workers who can design, configure, and monitor AI agent workflows is growing while the market for workers who can be replaced by those workflows is shrinking. Your reskilling path &mdash; AI tools, prompt engineering, content creation &mdash; puts you in the growing category. Stay on the right side of this transition. <a href="https://www.artificialintelligence-news.com/" target="_blank">AI News: Amazon AI-driven restructuring &rarr;</a></p>
+    </div>
+    <div class="news-item">
+      <div class="news-badge">MIT Tech Review</div>
+      <h3>MIT Technology Review: 10 Things That Matter in AI in 2026 &mdash; Agents, Cost Collapse, and the Skills Gap</h3>
+      <p>MIT Technology Review&rsquo;s April 2026 feature identifies the 10 most important AI trends this year. Key themes: the shift from AI tools to AI agent workers; the dramatic cost collapse of AI inference (making AI accessible to smaller businesses); and the widening skills gap between organisations that can deploy AI effectively and those that cannot. The review notes that AI literacy &mdash; understanding what AI can and cannot do &mdash; is now a foundational workplace skill across all industries. <strong>For Steve:</strong> AI literacy is the skill you are building every morning. The review notes this skill is most valuable at the interface between technical AI capability and non-technical stakeholder communication &mdash; exactly the niche your background and current reskilling put you in. <a href="https://www.technologyreview.com/2026/04/21/1135643/10-ai-artificial-intelligence-trends-technologies-research-2026/" target="_blank">MIT Tech Review: 10 AI Trends 2026 &rarr;</a></p>
+    </div>
+  </div>
+
+  <!-- JOBS -->
+  <div class="card">
+    <div class="card-title">&#x1F4BC; Remote Job Leads &mdash; 25 April 2026</div>
+    <p class="section-hint">7 roles ranked by fit &middot; CryptoJobsList, cryptojobs.com, web3.career, GoodMoves, Upwork &middot; Tap [APPLY] to open</p>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Web3 Community Manager &mdash; 31+ Live Openings</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; CryptoJobsList</span>
+      </div>
+      <div class="job-company">Various Web3 &amp; DeFi Projects &middot; Fully Remote &middot; Full-Time &amp; Contract &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; $50,000&ndash;$80,000/yr (&pound;39k&ndash;&pound;63k) &middot; Fully Remote</div>
+      <div class="job-desc">31+ active Web3 community manager roles on CryptoJobsList right now. Discord moderation, Twitter/X presence, AMA coordination, stakeholder communication. Your genuine crypto background &mdash; Bitcoin, blockchain terminology, DeFi familiarity &mdash; is the qualification most applicants cannot fake. <strong>This is Steve&rsquo;s highest-fit category on the board.</strong> Saturday is a good day to apply: hiring managers review weekend applications on Monday morning when their inbox is quieter. Apply to two today.</div>
+      <a class="apply-btn" href="https://cryptojobslist.com/community" target="_blank">[BROWSE 31+ Roles &rarr; CryptoJobsList]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Crypto Copywriter / Content Creator &mdash; 393 Active Openings</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; web3.career</span>
+      </div>
+      <div class="job-company">Binance, Bitfinex, Kraken &amp; DeFi Projects &middot; Fully Remote &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; $30&ndash;$73/hr (&pound;24&ndash;&pound;58/hr) &middot; 393 active openings</div>
+      <div class="job-desc">393 active crypto copywriting and content writing roles on web3.career. Whitepapers, newsletters, blog posts, social media, technical explainers for non-technical audiences. <strong>Photography Saturday bonus:</strong> visual content creators with crypto knowledge are in even higher demand as Web3 projects build visual-first social strategies. Mention your photography portfolio in your cover letter &mdash; it differentiates you from copywriters without visual production skills.</div>
+      <a class="apply-btn" href="https://web3.career/copywriting+crypto-jobs" target="_blank">[BROWSE Crypto Copywriting Jobs &rarr;]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Community Manager (Web3/Crypto) &mdash; Ramp Network</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; cryptojobs.com</span>
+      </div>
+      <div class="job-company">Ramp Network &middot; Fully Remote &middot; cryptojobs.com &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; Competitive &middot; Fully Remote &middot; Web3 fintech</div>
+      <div class="job-desc">Ramp Network is a leading Web3 payments infrastructure company, enabling crypto on-ramps and off-ramps for applications globally. They are hiring a Community Manager to grow and manage their Discord, Telegram, and social media communities. Your crypto background, communication skills, and customer service experience align directly with this role. <strong>Apply today: Saturday applications are reviewed Monday morning, ahead of the mid-week volume.</strong></div>
+      <a class="apply-btn" href="https://www.cryptojobs.com/community-management" target="_blank">[APPLY &rarr; cryptojobs.com Community Roles]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">AI Content Trainer / Evaluator &mdash; DataAnnotation Tech</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; Weekly Pay</span>
+      </div>
+      <div class="job-company">DataAnnotation Tech / Outlier AI &middot; Fully Remote &middot; Contract &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; &pound;18&ndash;45/hr &middot; Pays weekly &middot; Start this week</div>
+      <div class="job-desc">Evaluate AI model outputs &mdash; rating accuracy, writing sample responses, quality-checking AI-generated content. Strong English and attention to detail are the key qualifications. UK contractors accepted. <strong>This is your bridge income and it has appeared in every briefing this week. 30 minutes to apply. Income within 7 days. Do not defer it again.</strong></div>
+      <a class="apply-btn" href="https://www.dataannotation.tech/apply" target="_blank">[APPLY &rarr; DataAnnotation]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Remote Stock Photographer / Visual Content Creator &mdash; Upwork</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F4F8; Photography &middot; Scotland-based advantage</span>
+      </div>
+      <div class="job-company">Various Clients &middot; Upwork / Alamy &middot; Scotland-based &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; &pound;25&ndash;80/hr project-based &middot; Passive income from stock &middot; Scales with library size</div>
+      <div class="job-desc">Remote visual content creation &mdash; stock photography, travel imagery, event coverage. On Upwork: &ldquo;Scottish Highland location photographer for cruise, landscape, and tourism content.&rdquo; Your location at Invergordon cruise terminal is a unique selling point. <strong>Set up your Upwork photography service profile this weekend</strong> so it is live before AIDAluna arrives Wednesday. Add your cruise ship portfolio as the hero images.</div>
+      <a class="apply-btn" href="https://www.upwork.com/freelance-jobs/product-photography/" target="_blank">[FIND JOBS &rarr; Upwork Photography]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Community Development Officer &mdash; Raasay Development Trust</div>
+        <span class="job-badge fit-high">HIGH</span>
+        <span class="job-badge remote-badge">&#x1F3F4; Hybrid &middot; Raasay + Remote &middot; GoodMoves</span>
+      </div>
+      <div class="job-company">Raasay Development Trust &middot; Hybrid &middot; &pound;32,000 &middot; Closes 7 May</div>
+      <div class="job-salary">&#x1F4B7; &pound;32,000 &middot; Permanent &middot; Closes 7 May</div>
+      <div class="job-desc">Community Climate Action Plan delivery for Raasay island &mdash; engagement, coordination, communication. Combines Steve&rsquo;s core strengths from event coordination and customer service. Closes 7 May. <strong>If a purpose-driven Highland permanent salary appeals, read the JD this weekend. Raasay also offers outstanding drone photography territory &mdash; a role there would open an entirely new visual subject library.</strong></div>
+      <a class="apply-btn" href="https://goodmoves.org/search?regions%5B%5D=highlands" target="_blank">[APPLY &rarr; GoodMoves Highlands]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Remote Web3 Discord Moderator &mdash; Multiple Projects via cryptojobs.com</div>
+        <span class="job-badge fit-high">HIGH</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; cryptojobs.com</span>
+      </div>
+      <div class="job-company">Web3 / DeFi Projects &middot; Fully Remote &middot; cryptojobs.com &middot; Tier 2</div>
+      <div class="job-salary">&#x1F4B7; $30,000&ndash;$60,000/yr &middot; Fully Remote</div>
+      <div class="job-desc">Discord moderator roles &mdash; managing community channels, responding to holder queries, flagging scams, running AMAs. Lower salary ceiling than Community Manager but faster entry: many projects hire moderators on trial before promoting to full CM. <strong>Fastest route into a full Web3 CM position for candidates without a prior Web3 employment title.</strong> Your crypto literacy is immediately applicable.</div>
+      <a class="apply-btn" href="https://www.cryptojobs.com/skill/community-moderator" target="_blank">[BROWSE Web3 Moderator Jobs &rarr;]</a>
+    </div>
+  </div>
+
+  <!-- LEARNING FOCUS -->
+  <div class="card">
+    <div class="card-title">&#x1F4DA; Today&rsquo;s Learning Focus &mdash; Photography</div>
+    <p class="learn-intro">Photography is not just a creative skill &mdash; it is a commercial asset. The photographers earning consistent passive income from stock agencies are not necessarily the most technically gifted; they are the most systematic. They show up to the same locations repeatedly, keyword consistently, and understand what buyers need before buyers know they need it. You live 200 metres from one of the most photographically productive cruise ports in Scotland. Today&rsquo;s 30-minute session gives you the system: Alamy setup, Lightroom workflow, keyword strategy, and an upload pipeline that compounds over the 2026 cruise season and beyond.</p>
+    <ul class="learn-bullets">
+      <li><strong>Alamy Contributor Account &mdash; Set Up and Verified:</strong> If you do not yet have an Alamy contributor account, create one today at <a href="https://www.alamy.com/contributor/" target="_blank" style="color:var(--green-bright);">alamy.com/contributor</a>. The verification process takes 24&ndash;48 hours. Once verified, you can upload immediately. Alamy accepts JPEG files with minimum 6MP resolution. Your account is the pipeline that turns every ship visit into passive income. Account setup is 20 minutes. Do this today if not already done.</li>
+      <li><strong>The 15-Keyword System &mdash; Every Image, Every Time:</strong> Stock photography sales are won or lost on discoverability. Alamy&rsquo;s algorithm serves images to buyers based on keyword match, recency, and relevance score. The 15 keywords that drive cruise ship stock sales: (1) ship name, (2) cruise line, (3) port name, (4) port town, (5) country, (6) region, (7) water body, (8) ship type, (9) season/year, (10) angle/composition, (11) time of day/light quality, (12) commercial concept, (13) travel concept, (14) photography method, (15) emotion/mood. Apply all 15 to every image. Missing even 3&ndash;4 keywords reduces search visibility by 30&ndash;40%.</li>
+      <li><strong>Lightroom Preset &mdash; &ldquo;Cromarty Morning&rdquo;:</strong> Create a named preset for the Firth&rsquo;s characteristic morning light. Settings: Highlights -20, Shadows +15, Whites +10, Clarity +8, Dehaze +10, Temperature +200K (warming), Vibrance +8, HSL Aqua Saturation -15, HSL Blue Saturation -10 (prevents sky oversaturation against the pale Highland sky). Save as &ldquo;Cromarty Morning&rdquo;. Apply one-click to all new ship images, then micro-adjust per frame. This preset turns 3-hour editing sessions into 25-minute ones. At peak season with 5+ ships per week, this efficiency is the difference between keeping up and falling behind.</li>
+      <li><strong>30-Minute Exercise &mdash; AIDAluna Shot Planning:</strong> Open Google Maps and identify three positions at Invergordon for AIDAluna&rsquo;s arrival on Wednesday 29 April: (1) Drone position over the Cromarty Firth (mark a waypoint at 300m from the quay, 80&ndash;100m altitude, due east of the berth for morning light on the starboard side); (2) North pier ground position for full-length broadside profile; (3) Elevated viewpoint (castle mound or road elevation) for ship-against-Ben Wyvis composition. Note the exact GPS coordinates of each position in your phone. Set an alarm for Tuesday evening to check pocf.co.uk for arrival time, and a second alarm for 05:30 Wednesday morning. Planning a shoot is photography. Do it today.</li>
+    </ul>
+    <a class="resource-link" href="https://www.alamy.com/contributor/" target="_blank">&#x1F4D6; Alamy Contributor Portal &rarr;</a>
+    &nbsp;
+    <a class="resource-link" href="https://www.adobe.com/uk/products/photoshop-lightroom.html" target="_blank">&#x1F4D6; Adobe Lightroom &rarr;</a>
+    &nbsp;
+    <a class="resource-link" href="https://www.pocf.co.uk/cruise/" target="_blank">&#x1F6A2; POCF Cruise Timetable &rarr;</a>
+    <p class="pill-hint">Tap <strong>&#x1F4DA; Learning Done</strong> after your 30-minute session, and <strong>&#x1F4BC; Job Applied</strong> after submitting at least one application today.</p>
+  </div>
+
+  <!-- ONE ACTION -->
+  <div class="card action-card">
+    <div class="card-title">&#x26A1; Today&rsquo;s One Action</div>
+    <div class="action-title">Today: Edit &amp; Upload Renaissance + Majestic Princess &mdash; Then Apply to One Job</div>
+    <div class="action-desc">
+      <p style="margin-bottom:10px;">Saturday is preparation day. No ship to photograph &mdash; but two ship photo sets are sitting in your backlog unprocessed. Every day they sit unedited is a day they are not earning on Alamy. Do these three things today, in this order, and the week&rsquo;s work is fully complete before Monday.</p>
+      <ol>
+        <li><strong>Edit and upload Renaissance photos (60 min):</strong> Open Lightroom, apply your Cromarty Morning preset, select your best 8&ndash;12 frames from the Renaissance call (Thursday 23 April). Export at Alamy-required specs: JPEG, sRGB, max quality, minimum short side 2500px. Upload to Alamy with the full 15-keyword strategy. Set: &ldquo;Renaissance, Ambassador Cruise Line, Invergordon, Cromarty Firth, Scotland, Scottish Highlands, dark hull, cruise ship, 2026 cruise season, aerial view, drone photography, port of Invergordon, Easter Ross, harbour photography, April 2026.&rdquo;</li>
+        <li><strong>Edit and upload Majestic Princess photos (60 min):</strong> Same workflow. Keywords: &ldquo;Majestic Princess, Princess Cruises, Invergordon, Cromarty Firth, Scotland, Scottish Highlands, white hull, cruise ship, 2026 cruise season, aerial photography, drone, port of Invergordon, Highland port, ocean liner, April 2026.&rdquo; Two distinct sets, two separate uploads. Do not combine ship sets &mdash; buyers search by ship name.</li>
+        <li><strong>Build AIDAluna shot plan (20 min):</strong> Open Google Maps, identify your three shooting positions for Wednesday 29 April, save the GPS points, note them in your phone. Set your Tuesday-evening alarm to check pocf.co.uk for the arrival time, and your 05:30 Wednesday alarm.</li>
+        <li><strong>Apply to DataAnnotation (30 min):</strong> dataannotation.tech/apply. This is bridge income. Weekly pay. UK contractors accepted. It has appeared in this briefing every day this week. Apply today.</li>
+        <li>Tap <strong>&#x1F4BC; Job Applied</strong>, <strong>&#x1F4DA; Learning Done</strong>, <strong>&#x26A1;&#xFE0F; Action Done</strong>, then <strong>&#x1F534; CONFIRM</strong> before midnight.</li>
+      </ol>
+    </div>
+    <div class="action-why">
+      <strong>Why this today:</strong> Your photo backlog is your most immediate passive income pipeline. Every day Renaissance and Majestic Princess sit unedited is a day they are not selling on Alamy. AIDAluna arrives in 4 days &mdash; if your backlog is not cleared before she arrives, you&rsquo;ll have three unprocessed ship sets and the motivation to shoot the next one will drop. Clear the backlog today, plan the next ship today, apply to one job today. Saturday is not a rest day. Saturday is how Monday stays manageable.
+    </div>
+  </div>
+
+  <!-- PROGRESS TRACKER -->
+  <div class="card">
+    <div class="card-title">&#x1F4CA; Progress Tracker</div>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-num" id="stat-hours">0</div><div class="stat-lbl">Learning Hours</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-apps">0</div><div class="stat-lbl">Jobs Applied</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-interviews">0</div><div class="stat-lbl">Interviews</div></div>
+      <div class="stat-box"><div class="stat-num" id="stat-sessions">0</div><div class="stat-lbl">Sessions</div></div>
+    </div>
+    <div class="charts-row">
+      <div>
+        <div class="chart-label">Applications This Week</div>
+        <div id="bar-empty" class="chart-empty">No applications yet &mdash; tap &#x1F4BC; Job Applied above to start tracking!</div>
+        <canvas id="bar-chart" style="display:none;" height="140"></canvas>
+      </div>
+      <div>
+        <div class="chart-label">Learning Topics Breakdown</div>
+        <div id="doughnut-empty" class="chart-empty">No sessions yet &mdash; tap &#x1F4DA; Learning Done above to start tracking!</div>
+        <canvas id="doughnut-chart" style="display:none;" height="140"></canvas>
+      </div>
+    </div>
+    <div class="backup-btns" style="margin-top:20px;">
+      <button class="backup-btn save-btn" onclick="exportBackup()">&#x1F4BE; Save Progress</button>
+      <label class="backup-btn import-btn" style="cursor:pointer;">&#x1F4C2; Import Progress<input type="file" accept=".json" style="display:none;" onchange="importBackup(event)"></label>
+      <button class="backup-btn reset-btn" onclick="resetStatsToJSON()">&#x1F504; Reset Stats to JSON</button>
+    </div>
+    <p class="backup-note">
+      <strong>Save Progress</strong> downloads <code>progress-tracker.json</code> &mdash; replace the one in your <em>Tracking Data</em> folder to keep totals accurate.<br>
+      <strong>Import Progress</strong> loads a previously saved JSON back into this session.<br>
+      <strong>Reset Stats to JSON</strong> resets this session&rsquo;s stats to the saved JSON values, fixing localStorage drift.<br>
+      View all briefings online: <a href="https://steve-ai-stuff.github.io/daily-briefing/" target="_blank">steve-ai-stuff.github.io/daily-briefing</a>
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  <svg class="footer-hills" viewBox="0 0 960 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,80 L0,55 Q80,20 160,45 Q240,65 320,35 Q400,5 480,30 Q560,55 640,25 Q720,0 800,30 Q880,55 960,40 L960,80 Z" fill="rgba(22,101,52,0.35)"/>
+    <path d="M0,80 L0,65 Q100,40 200,58 Q300,72 400,50 Q500,28 600,52 Q700,72 800,55 Q880,42 960,60 L960,80 Z" fill="rgba(15,70,35,0.55)"/>
+  </svg>
+  Generated 25 April 2026 &nbsp;&middot;&nbsp; Powered by Claude AI &nbsp;&middot;&nbsp; &#x1F3F4;&#xE0067;&#xE0062;&#xE0073;&#xE0063;&#xE0074;&#xE007F; Invergordon, Scottish Highlands &nbsp;&middot;&nbsp; Next briefing: 26 April 2026
+</footer>
+
+<script>
+var OPENMETEO_URL="https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm";
+var WTTR_URL="https://wttr.in/Invergordon,Scotland?format=j1";
+function cToF(c){return Math.round(parseFloat(c)*9/5+32);}
+function wmoIcon(c){if(c===0)return"☀️";if(c<=2)return"⛅";if(c===3)return"☁️";if(c<=48)return"🌫️";if(c<=55)return"🌦️";if(c<=67)return"🌧️";if(c<=77)return"❄️";if(c<=82)return"🌦️";if(c<=86)return"🌨️";if(c>=95)return"⛈️";return"🌤️";}
+function wttrIcon(c){if(c===113)return"☀️";if(c===116)return"🌤️";if(c>=119&&c<=122)return"☁️";if(c===143||c===248||c===260)return"🌫️";if(c>=200&&c<=230)return"⛈️";if(c>=263&&c<=281)return"🌧️";if(c>=293&&c<=321)return"🌧️";if(c>=323&&c<=395)return"🌨️";return"🌡️";}
+function setWeatherAnimation(code){
+  var p=document.getElementById("weather-particles");if(!p)return;p.innerHTML="";
+  if(code>=51&&code<=82||code>=95){
+    for(var i=0;i<20;i++){var d=document.createElement("div");d.style.cssText="position:absolute;width:1.5px;height:14px;background:rgba(147,210,255,0.75);border-radius:2px;left:"+(Math.random()*100)+"%;"+"top:-10px;animation:rainFall "+(0.3+Math.random()*0.3)+"s linear "+(Math.random()*1.5)+"s infinite;";p.appendChild(d);}
+    if(code>=95){var l=document.createElement("div");l.style.cssText="position:absolute;width:3px;height:60px;background:rgba(255,255,200,0.55);top:20px;left:"+(30+Math.random()*40)+"%;animation:lightningFlash 5s linear "+(Math.random()*3)+"s infinite;";p.appendChild(l);}
+  } else if(code>=71&&code<=86){
+    var sf=["❄","❅","❆"];for(var j=0;j<15;j++){var s=document.createElement("div");s.textContent=sf[j%3];s.style.cssText="position:absolute;font-size:1.1rem;color:rgba(255,255,255,0.90);left:"+(Math.random()*100)+"%;"+"top:-10px;animation:snowFall "+(2+Math.random()*2)+"s ease-in-out "+(Math.random()*3)+"s infinite;";p.appendChild(s);}
+  } else if(code===0||code===1){
+    var g=document.createElement("div");g.style.cssText="position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,80,0.45) 0%,rgba(255,200,40,0.15) 60%,transparent 80%);animation:sunPulse 3s ease-in-out infinite;opacity:0.45;";p.appendChild(g);
+    for(var r=0;r<8;r++){var ray=document.createElement("div");var ang=r*45;ray.style.cssText="position:absolute;top:30px;right:30px;width:3px;height:30px;background:rgba(255,220,60,0.45);border-radius:3px;transform-origin:bottom center;transform:rotate("+ang+"deg) translateY(-50px);animation:sunRayPulse 3s ease-in-out "+(r*0.3)+"s infinite;opacity:0.45;";p.appendChild(ray);}
+  } else if(code===2||code===3){
+    var cl=["☁","☁","☁"];var cts=[12,10,14];for(var ci=0;ci<3;ci++){var cv=document.createElement("div");cv.textContent=cl[ci];cv.style.cssText="position:absolute;font-size:"+cts[ci]+"rem;top:"+(10+ci*18)+"%;"+"left:-180px;opacity:0.45;animation:cloudDrift "+(18+ci*7)+"s linear "+(ci*5)+"s infinite;";p.appendChild(cv);}
+  }
+}
+function renderWeatherOM(data){
+  var cur=data.current;var daily=data.daily;
+  var code=cur.weathercode;var icon=wmoIcon(code);
+  var tempF=Math.round(cur.temperature_2m);var feelF=Math.round(cur.apparent_temperature);
+  var wind=Math.round(cur.windspeed_10m);var precip=cur.precipitation;
+  var days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var html="<div style='font-size:2.8rem;margin-bottom:8px;'>"+icon+"</div>";
+  html+="<div style='font-size:2.2rem;font-weight:800;color:#fff;'>"+tempF+"&deg;F</div>";
+  html+="<div style='font-size:0.88rem;color:rgba(255,255,255,0.85);margin-bottom:4px;'>Feels like "+feelF+"&deg;F</div>";
+  html+="<div class='weather-stats'><div class='wstat'><div class='wstat-val'>"+wind+"mph</div><div class='wstat-lbl'>Wind</div></div><div class='wstat'><div class='wstat-val'>"+precip+"mm</div><div class='wstat-lbl'>Precip</div></div><div class='wstat'><div class='wstat-val'>"+cur.cloudcover+"%</div><div class='wstat-lbl'>Cloud</div></div></div>";
+  html+="<div class='weather-7day'>";
+  for(var i=0;i<5;i++){
+    var dt=new Date(daily.time[i]+"T12:00:00");var dayN=days[dt.getDay()];
+    var hiF=Math.round(daily.temperature_2m_max[i]);var loF=Math.round(daily.temperature_2m_min[i]);
+    var pop=daily.precipitation_probability_max[i];var ic=wmoIcon(daily.weathercode[i]);
+    var isTod=(i===0)?" today-day":"";
+    html+="<div class='wday"+isTod+"'><div class='wday-name'>"+dayN+"</div><div class='wday-icon'>"+ic+"</div><div>"+hiF+"&deg;/"+loF+"&deg;</div><div style='font-size:0.62rem;margin-top:2px;'>"+pop+"% rain</div></div>";
+  }
+  html+="</div>";
+  var el=document.getElementById("weather-content");if(el)el.innerHTML=html;
+  setWeatherAnimation(code);
+}
+function renderWeatherWttr(data){
+  try{
+    var cur=data.current_condition[0];
+    var code=parseInt(cur.weatherCode);var icon=wttrIcon(code);
+    var tempF=cToF(cur.temp_C);var feelF=cToF(cur.FeelsLikeC);
+    var wind=Math.round(parseFloat(cur.windspeedMiles));var precip=cur.precipMM;
+    var days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    var html="<div style='font-size:2.8rem;margin-bottom:8px;'>"+icon+"</div>";
+    html+="<div style='font-size:2.2rem;font-weight:800;color:#fff;'>"+tempF+"&deg;F</div>";
+    html+="<div style='font-size:0.88rem;color:rgba(255,255,255,0.85);margin-bottom:4px;'>Feels like "+feelF+"&deg;F</div>";
+    html+="<div class='weather-stats'><div class='wstat'><div class='wstat-val'>"+wind+"mph</div><div class='wstat-lbl'>Wind</div></div><div class='wstat'><div class='wstat-val'>"+precip+"mm</div><div class='wstat-lbl'>Precip</div></div></div>";
+    html+="<div class='weather-7day'>";
+    for(var i=0;i<Math.min(3,data.weather.length);i++){
+      var w=data.weather[i];var dt=new Date(w.date+"T12:00:00");var dayN=days[dt.getDay()];
+      var hiF=cToF(w.maxtempC);var loF=cToF(w.mintempC);
+      var ic2=wttrIcon(parseInt(w.hourly[4].weatherCode));
+      var isTod=(i===0)?" today-day":"";
+      html+="<div class='wday"+isTod+"'><div class='wday-name'>"+dayN+"</div><div class='wday-icon'>"+ic2+"</div><div>"+hiF+"&deg;/"+loF+"&deg;</div></div>";
+    }
+    html+="</div>";
+    var el=document.getElementById("weather-content");if(el)el.innerHTML=html;
+    setWeatherAnimation(code);
+  }catch(e){showWeatherFallback();}
+}
+function showWeatherFallback(){var el=document.getElementById("weather-content");if(el)el.innerHTML="<p style='color:rgba(255,255,255,0.80);'>Weather data unavailable. <a href='https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0' target='_blank' style='color:#fff;'>Check Met Office &rarr;</a></p>";}
+fetch(OPENMETEO_URL).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(renderWeatherOM).catch(function(){fetch(WTTR_URL).then(function(r){return r.json();}).then(renderWeatherWttr).catch(showWeatherFallback);});
+
+function renderRoadworks(){
+  var el=document.getElementById("roadworks-content");if(!el)return;
+  if(!ROADWORKS||ROADWORKS.length===0){el.style.display="none";return;}
+  var html="<div style='font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.75);margin-bottom:5px;'>&#x1F6A7; Active Roadworks Nearby</div>";
+  ROADWORKS.forEach(function(r){html+="<div style='font-size:0.80rem;color:rgba(255,255,255,0.82);margin-bottom:3px;'>&#x1F6A7; "+r+"</div>";});
+  el.innerHTML=html;
+}
+
+var LS_KEY="steve_briefing_progress"; var state={}; var rocketFired=false; var barChart=null; var doughnutChart=null;
+function showToast(msg,type){var cls="toast"+(type==="warn"?" warn":type==="info"?" info":"");var el=document.createElement("div");el.className=cls;el.textContent=msg;document.getElementById("toast-container").appendChild(el);setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},4000);}
+function mergeSkills(stored,saved){var out={};var s=stored||{};var v=saved||{};var keys=Object.keys(v);Object.keys(s).forEach(function(k){if(keys.indexOf(k)<0)keys.push(k);});keys.forEach(function(k){out[k]=Math.max(s[k]||0,v[k]||0);});return out;}
+function initState(){var raw=null;try{raw=localStorage.getItem(LS_KEY);}catch(e){}var stored={};if(raw){try{stored=JSON.parse(raw);}catch(e){}}var todayKey=TODAY_DATE;var todayData=(stored.days&&stored.days[todayKey])?stored.days[todayKey]:{};state={date:todayKey,news:todayData.news||false,job:todayData.job||false,learn:todayData.learn||false,action:todayData.action||false,confirmed:todayData.confirmed||false,apps:Math.max(todayData.apps||0,SAVED_APPS),learn_hours:Math.max(todayData.learn_hours||0,SAVED_LEARN_HOURS),sessions:Math.max(todayData.sessions||0,SAVED_SESSIONS),interviews:Math.max(todayData.interviews||0,SAVED_INTERVIEWS),skills:mergeSkills(stored.skills,SAVED_SKILLS)};renderPills();updateRing();renderStats();renderCharts();if(state.confirmed){var btn=document.getElementById("pill-confirm");btn.textContent="Confirmed";btn.classList.add("confirmed");}}
+function saveState(){var raw=null;try{raw=localStorage.getItem(LS_KEY);}catch(e){}var stored={};if(raw){try{stored=JSON.parse(raw);}catch(e){}}if(!stored.days)stored.days={};stored.days[TODAY_DATE]={news:state.news,job:state.job,learn:state.learn,action:state.action,confirmed:state.confirmed,apps:state.apps,learn_hours:state.learn_hours,sessions:state.sessions,interviews:state.interviews};stored.skills=state.skills;try{localStorage.setItem(LS_KEY,JSON.stringify(stored));}catch(e){}}
+function togglePill(id){if(state.confirmed){showToast("Day already confirmed. Open tomorrow's briefing to log more progress.","warn");return;}state[id]=!state[id];if(id==="job"&&state[id]){state.apps=(state.apps||0)+1;renderStats();}if(id==="learn"&&state[id]){state.learn_hours=parseFloat(((state.learn_hours||0)+0.5).toFixed(1));state.sessions=(state.sessions||0)+1;if(state.skills[TODAY_TOPIC]!==undefined)state.skills[TODAY_TOPIC]++;renderStats();renderCharts();}renderPills();updateRing();saveState();}
+function renderPills(){["news","job","learn","action"].forEach(function(id){var el=document.getElementById("pill-"+id);if(!el)return;el.classList.toggle("done",!!state[id]);});}
+function updateRing(){var total=4;var done=["news","job","learn","action"].filter(function(k){return state[k];}).length;var pct=Math.round((done/total)*100);var circ=94.2;var dashArr=(pct/100*circ).toFixed(1)+" "+circ;var circle=document.getElementById("ring-circle");if(circle)circle.setAttribute("stroke-dasharray",dashArr);var pctEl=document.getElementById("ring-pct");if(pctEl)pctEl.textContent=pct+"%";var emoji="&#x1F311;";if(pct>=100)emoji="&#x1F680;";else if(pct>=75)emoji="&#x2705;";else if(pct>=50)emoji="&#x1F314;";else if(pct>=25)emoji="&#x1F313;";else if(pct>0)emoji="&#x1F312;";var emojiEl=document.getElementById("ring-emoji");if(emojiEl)emojiEl.innerHTML=emoji;if(pct===100&&!rocketFired){rocketFired=true;var r=document.getElementById("rocket-wrap");r.classList.add("flying");setTimeout(function(){r.style.display="none";r.classList.remove("flying");},5300);[{id:"bang1",t:700},{id:"bang2",t:1600},{id:"bang3",t:2500},{id:"bang4",t:3400},{id:"bang5",t:4300}].forEach(function(b){setTimeout(function(){var el=document.getElementById(b.id);if(!el)return;el.classList.add("show");setTimeout(function(){el.classList.remove("show");el.style.display="none";},900);},b.t);});setTimeout(function(){var b=document.getElementById("bang-emoji");b.classList.add("show");setTimeout(function(){b.classList.remove("show");b.style.display="none";},1000);},1600);setTimeout(function(){var p=document.getElementById("party-popper");p.classList.add("show");setTimeout(function(){p.classList.remove("show");p.style.display="none";},1300);},4800);showToast("100%! You are on fire today, Steve! Do not forget to CONFIRM!");}}
+function renderStats(){var h=document.getElementById("stat-hours");if(h)h.textContent=state.learn_hours||0;var a=document.getElementById("stat-apps");if(a)a.textContent=state.apps||0;var i=document.getElementById("stat-interviews");if(i)i.textContent=state.interviews||0;var s=document.getElementById("stat-sessions");if(s)s.textContent=state.sessions||0;}
+function renderCharts(){var history=SAVED_DAILY_HISTORY.slice();var todayEntry=null;for(var k=0;k<history.length;k++){if(history[k].date===TODAY_DATE){todayEntry=history[k];break;}}if(!todayEntry){history.push({date:TODAY_DATE,apps:state.apps||0,hours:state.learn_hours||0});}else{todayEntry.apps=state.apps||0;todayEntry.hours=state.learn_hours||0;}history=history.slice(-7);var hasApps=history.some(function(d){return d.apps>0;});var barEmpty=document.getElementById("bar-empty");var barCanvas=document.getElementById("bar-chart");if(hasApps){if(barEmpty)barEmpty.style.display="none";if(barCanvas)barCanvas.style.display="block";var labels=history.map(function(d){return d.date.slice(5);});var vals=history.map(function(d){return d.apps||0;});if(barChart){barChart.data.labels=labels;barChart.data.datasets[0].data=vals;barChart.update();}else{var bctx=barCanvas?barCanvas.getContext("2d"):null;if(bctx)barChart=new Chart(bctx,{type:"bar",data:{labels:labels,datasets:[{label:"Applications",data:vals,backgroundColor:"rgba(74,222,128,0.55)",borderColor:"rgba(74,222,128,0.90)",borderWidth:1,borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:10}}},y:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:10}},beginAtZero:true,grid:{color:"rgba(255,255,255,0.06)"}}}}});}}else{if(barEmpty)barEmpty.style.display="";if(barCanvas)barCanvas.style.display="none";}var skills=state.skills||{};var skillKeys=Object.keys(skills).filter(function(k){return(skills[k]||0)>0;});var doughnutEmpty=document.getElementById("doughnut-empty");var doughnutCanvas=document.getElementById("doughnut-chart");if(skillKeys.length>0){if(doughnutEmpty)doughnutEmpty.style.display="none";if(doughnutCanvas)doughnutCanvas.style.display="block";var dLabels=skillKeys;var dVals=skillKeys.map(function(k){return skills[k];});var colours=["#4ade80","#fbbf24","#60a5fa","#f472b6","#a78bfa","#34d399","#fb923c","#38bdf8","#facc15","#86efac"];if(doughnutChart){doughnutChart.data.labels=dLabels;doughnutChart.data.datasets[0].data=dVals;doughnutChart.update();}else{var dctx=doughnutCanvas?doughnutCanvas.getContext("2d"):null;if(dctx)doughnutChart=new Chart(dctx,{type:"doughnut",data:{labels:dLabels,datasets:[{data:dVals,backgroundColor:colours.slice(0,dLabels.length),borderWidth:0}]},options:{responsive:true,plugins:{legend:{display:true,position:"bottom",labels:{color:"rgba(255,255,255,0.70)",font:{size:10},boxWidth:10}}}}});}}else{if(doughnutEmpty)doughnutEmpty.style.display="";if(doughnutCanvas)doughnutCanvas.style.display="none";}}
+function confirmDay(){if(state.confirmed)return;var done=["news","job","learn","action"].filter(function(k){return state[k];}).length;if(done===0){showToast("Tap at least one task pill before confirming!","warn");return;}state.confirmed=true;saveState();var btn=document.getElementById("pill-confirm");btn.textContent="Confirmed";btn.classList.add("confirmed");showToast("Day confirmed! Great work, Steve. See you tomorrow.");exportBackup(true);}
+function exportBackup(silent){var raw=null;try{raw=localStorage.getItem(LS_KEY);}catch(e){}var stored={};if(raw){try{stored=JSON.parse(raw);}catch(e){}}var allHistory={};SAVED_DAILY_HISTORY.forEach(function(d){allHistory[d.date]={apps:d.apps||0,hours:d.hours||0};});allHistory[TODAY_DATE]={apps:state.apps||0,hours:state.learn_hours||0,confirmed:state.confirmed||false,topic:TODAY_TOPIC,briefing_generated:true};var out={meta:{last_updated:TODAY_DATE,version:"1.0"},totals:{learning_hours:state.learn_hours||0,applications_sent:state.apps||0,interviews:state.interviews||0,learning_sessions_completed:state.sessions||0},daily_history:allHistory,skills_sessions:state.skills||{}};var blob=new Blob([JSON.stringify(out,null,2)],{type:"application/json"});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download="progress-tracker.json";document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);if(!silent)showToast("Progress saved! Replace your Tracking Data/progress-tracker.json with this file.","info");}
+function importBackup(evt){var file=evt.target.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(e){try{var data=JSON.parse(e.target.result);if(data.totals){state.apps=data.totals.applications_sent||0;state.learn_hours=data.totals.learning_hours||0;state.sessions=data.totals.learning_sessions_completed||0;state.interviews=data.totals.interviews||0;}if(data.skills_sessions)state.skills=data.skills_sessions;renderStats();renderCharts();saveState();showToast("Progress imported successfully!","info");}catch(err){showToast("Error reading file. Make sure it is a valid progress-tracker.json","warn");}};reader.readAsText(file);evt.target.value="";}
+function resetStatsToJSON(){state.apps=SAVED_APPS;state.learn_hours=SAVED_LEARN_HOURS;state.sessions=SAVED_SESSIONS;state.interviews=SAVED_INTERVIEWS;state.skills=JSON.parse(JSON.stringify(SAVED_SKILLS));state.news=false;state.job=false;state.learn=false;state.action=false;state.confirmed=false;renderPills();updateRing();renderStats();renderCharts();saveState();var btn=document.getElementById("pill-confirm");if(btn){btn.textContent="CONFIRM";btn.classList.remove("confirmed");}showToast("Stats reset to progress-tracker.json values.","info");}
+function updateCruise(){var now=new Date();var today=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0")+"-"+String(now.getDate()).padStart(2,"0");var banner=document.getElementById("ship-banner");var todayShips=null,nextEntry=null;for(var i=0;i<CRUISE_SCHEDULE.length;i++){var e=CRUISE_SCHEDULE[i];if(e.date===today){todayShips=e.ships;}if(e.date>today&&!nextEntry){nextEntry=e;}}if(banner){if(todayShips){banner.className="ship-banner in-port";banner.innerHTML="IN PORT TODAY: "+todayShips.join(" &amp; ");}else if(nextEntry){var nd=new Date(nextEntry.date+"T08:00:00");var diff=nd-now;var daysUntil=Math.ceil(diff/86400000);banner.className="ship-banner next-ship";banner.innerHTML="Next: <strong>"+nextEntry.ships.join(" &amp; ")+"</strong> &mdash; "+nextEntry.date+" ("+(daysUntil===1?"1 day":daysUntil+" days")+" away)";}else{banner.className="ship-banner season-over";banner.innerHTML="2026 Cruise Season Complete";}}var target=new Date("2026-10-14T23:59:00");var diff2=target-now;if(diff2>0){var d=Math.floor(diff2/86400000);var h=Math.floor((diff2%86400000)/3600000);var m=Math.floor((diff2%3600000)/60000);var s=Math.floor((diff2%60000)/1000);var pad=function(v){return String(v).padStart(2,"0");};var el=function(id,v){var e=document.getElementById(id);if(e)e.textContent=pad(v);};el("cd-days",d);el("cd-hours",h);el("cd-mins",m);el("cd-secs",s);}}
+setInterval(updateCruise,1000); updateCruise();
+document.addEventListener("DOMContentLoaded",function(){initState();renderRoadworks();});
+</script>
+</body>
+</html>

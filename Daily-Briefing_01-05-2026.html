@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steve&rsquo;s Daily Briefing &mdash; 1 May 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root {
+  --green-bright: #4ade80;
+  --green-light: #86efac;
+  --text-primary: #f0fdf4;
+  --text-secondary: #d1fae5;
+  --text-muted: rgba(255,255,255,0.52);
+  --card-bg: rgba(8,22,13,0.70);
+  --bg-image: url('../Background Images/scotland_254.jpg');
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  color: var(--text-primary);
+  background: linear-gradient(160deg,#0b3520 0%,#061c10 30%,#08241a 60%,#041208 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.22;
+  z-index: 0;
+  animation: kenBurns 45s ease-in-out infinite alternate;
+}
+@keyframes kenBurns {
+  0%   { transform: scale(1.0) translate(0,0); }
+  50%  { transform: scale(1.08) translate(-1.5%,1%); }
+  100% { transform: scale(1.05) translate(1.5%,-0.5%); }
+}
+body > * { position: relative; z-index: 1; }
+#progress-bar {
+  position: sticky; top: 0; z-index: 900;
+  background: rgba(4,12,6,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(74,222,128,0.20);
+  padding: 10px 16px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; overflow: hidden;
+}
+#ring-wrap { flex-shrink: 0; display: flex; align-items: center; gap: 6px; }
+#ring-svg { width: 38px; height: 38px; }
+#ring-circle { fill: none; stroke: var(--green-bright); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 0 94.2; transform: rotate(-90deg); transform-origin: 50% 50%;
+  transition: stroke-dasharray 0.4s ease; }
+#ring-bg { fill: none; stroke: rgba(74,222,128,0.15); stroke-width: 4; }
+#ring-emoji { font-size: 0.9rem; }
+#ring-pct { font-size: 0.75rem; font-weight: 700; color: var(--green-bright); min-width: 32px; }
+.pills-row { display: flex; gap: 8px; flex-wrap: wrap; flex: 1; }
+.pill { padding: 5px 13px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;
+  cursor: pointer; border: 1.5px solid rgba(74,222,128,0.35);
+  background: rgba(74,222,128,0.08); color: var(--text-secondary);
+  transition: all 0.2s; user-select: none; }
+.pill:hover { background: rgba(74,222,128,0.18); }
+.pill.done { background: rgba(74,222,128,0.28); border-color: var(--green-bright);
+  color: var(--green-bright); }
+.pill-confirm { background: rgba(251,191,36,0.10); border-color: rgba(251,191,36,0.45);
+  color: #fbbf24; }
+.pill-confirm.confirmed { background: rgba(251,191,36,0.25); border-color: #fbbf24; }
+@keyframes rocketFly { 0%{left:10%;opacity:0;transform:rotate(30deg)} 15%{opacity:1} 85%{opacity:1} 100%{left:94%;opacity:0;transform:rotate(30deg)} }
+@keyframes bangPop   { 0%{transform:scale(0.2);opacity:0} 40%{transform:scale(1.8);opacity:1} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1.0);opacity:0} }
+@keyframes popperPop { 0%{transform:scale(0) rotate(-20deg);opacity:1} 40%{transform:scale(1.3) rotate(10deg);opacity:1} 75%{transform:scale(1.0) rotate(0deg);opacity:1} 100%{transform:scale(1.0) rotate(0deg);opacity:0} }
+#rocket-wrap { position:absolute;top:8px;font-size:1.4rem;display:none;pointer-events:none; }
+#rocket-wrap.flying { display:block;animation:rocketFly 5s linear forwards; }
+.bang-pop { position:absolute;top:2px;font-size:1.5rem;display:none;pointer-events:none; }
+.bang-pop.show { display:block;animation:bangPop 0.9s ease-out forwards; }
+#bang-emoji  { position:absolute;top:4px;left:50%;font-size:1.6rem;display:none;pointer-events:none; }
+#bang-emoji.show { display:block;animation:bangPop 1s ease-out forwards; }
+#party-popper { position:absolute;top:4px;right:70px;font-size:1.6rem;display:none;pointer-events:none;transform:scale(0); }
+#party-popper.show { display:block;animation:popperPop 1.2s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+.toast { background: rgba(22,163,74,0.92); color: #fff; padding: 10px 16px; border-radius: 10px;
+  font-size: 0.82rem; font-weight: 600; backdrop-filter: blur(10px);
+  animation: toastIn 0.3s ease; max-width: 280px; }
+.toast.warn { background: rgba(234,179,8,0.92); color: #1c1917; }
+.toast.info { background: rgba(59,130,246,0.92); }
+@keyframes toastIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.wrapper { max-width: 860px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.card { background: var(--card-bg); border: 2px solid rgba(251,130,100,0.45); border-radius: 18px;
+  padding: 20px; backdrop-filter: blur(14px); }
+.card-title { font-size: 1.05rem; font-weight: 800; color: var(--green-bright);
+  margin-bottom: 14px; letter-spacing: 0.02em; }
+.header-card { background: linear-gradient(135deg,rgba(22,163,74,0.32),rgba(74,222,128,0.32));
+  backdrop-filter: blur(20px); }
+.date-line { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px; }
+.topic-badge { display: inline-block; background: rgba(74,222,128,0.18);
+  border: 1px solid rgba(74,222,128,0.45); border-radius: 20px;
+  padding: 3px 12px; font-size: 0.78rem; color: var(--green-bright); font-weight: 700; }
+.traffic-box { background: rgba(185,28,28,0.12); border: 1px solid rgba(251,191,36,0.55);
+  border-radius: 10px; padding: 10px 14px; margin-top: 14px;
+  color: #fff; font-size: 0.83rem; }
+.traffic-title { font-weight: 700; color: #fbbf24; margin-bottom: 6px; }
+.weather-card { background: linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68));
+  backdrop-filter: blur(16px); position: relative; overflow: hidden; }
+#weather-particles { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0; }
+.weather-card > * { position:relative; z-index:1; }
+.weather-7day { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 10px; }
+.wday { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 6px 4px;
+  text-align: center; font-size: 0.73rem; }
+.wday.today-day { background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.4); }
+.wday-name { font-weight: 700; margin-bottom: 3px; font-size: 0.70rem; }
+.wday-icon { font-size: 1.2rem; margin-bottom: 2px; }
+.thought-card { background: rgba(17,24,39,0.70); }
+.quote-text { font-size: 1.02rem; font-style: italic; color: var(--text-secondary);
+  line-height: 1.55; border-left: 3px solid var(--green-bright); padding-left: 14px; }
+.cruise-section { }
+.cd-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
+.cd-box { background: #fde68a; color: #16a34a; border: 1.5px solid rgba(251,130,100,0.7);
+  border-radius: 12px; padding: 10px 6px; text-align: center; }
+.cd-num { font-size: 1.9rem; font-weight: 800; line-height: 1; }
+.cd-lbl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; margin-top: 3px; }
+.ship-banner { padding: 10px 14px; border-radius: 10px; font-size: 0.88rem; font-weight: 600; }
+.ship-banner.in-port { background: rgba(74,222,128,0.18); border: 1px solid rgba(74,222,128,0.5); color: var(--green-bright); }
+.ship-banner.next-ship { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.4); color: #fde68a; }
+.ship-banner.season-over { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.4); color: #c7d2fe; }
+.news-list { display: flex; flex-direction: column; gap: 12px; }
+.news-item { padding: 12px 14px; background: rgba(255,255,255,0.04); border-radius: 10px;
+  border-left: 3px solid rgba(74,222,128,0.5); }
+.news-headline { font-weight: 700; font-size: 0.90rem; color: var(--text-primary); margin-bottom: 4px; }
+.news-meta { font-size: 0.73rem; color: var(--text-muted); margin-bottom: 5px; }
+.news-summary { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45; }
+.news-tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 0.68rem;
+  font-weight: 700; background: rgba(74,222,128,0.15); color: var(--green-bright); margin-right: 5px; }
+.job-grid { display: flex; flex-direction: column; gap: 14px; }
+.job-card { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px 16px;
+  border: 1px solid rgba(251,130,100,0.25); }
+.job-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.job-title { font-weight: 800; font-size: 0.93rem; color: var(--text-primary); flex: 1; }
+.job-company { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+.job-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.job-tag { padding: 2px 9px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; }
+.tag-perfect { background: rgba(74,222,128,0.22); color: #4ade80; border: 1px solid rgba(74,222,128,0.4); }
+.tag-high { background: rgba(251,191,36,0.18); color: #fde68a; border: 1px solid rgba(251,191,36,0.4); }
+.tag-medium { background: rgba(147,197,253,0.15); color: #bfdbfe; border: 1px solid rgba(147,197,253,0.3); }
+.tag-remote { background: rgba(167,139,250,0.15); color: #ddd6fe; border: 1px solid rgba(167,139,250,0.3); }
+.tag-salary { background: rgba(251,130,100,0.15); color: #fca5a5; border: 1px solid rgba(251,130,100,0.3); }
+.job-skills { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 8px; }
+.job-overlap { font-size: 0.75rem; color: rgba(74,222,128,0.8); margin-bottom: 8px; }
+.apply-btn { display: inline-block; padding: 6px 16px; background: rgba(74,222,128,0.18);
+  border: 1.5px solid rgba(74,222,128,0.5); border-radius: 8px; color: var(--green-bright);
+  font-weight: 700; font-size: 0.78rem; text-decoration: none; cursor: pointer; }
+.apply-btn:hover { background: rgba(74,222,128,0.28); }
+.learning-card { }
+.learn-topic { font-size: 1.05rem; font-weight: 800; color: var(--green-bright); margin-bottom: 10px; }
+.resource-link { display: inline-block; margin-top: 8px; padding: 5px 14px;
+  background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.35);
+  border-radius: 8px; color: var(--green-bright); font-size: 0.80rem; text-decoration: none; }
+.pill-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; }
+.action-card { background: linear-gradient(135deg,rgba(79,70,229,0.18),rgba(124,58,237,0.18)); }
+.action-title { font-size: 1.0rem; font-weight: 800; color: #c7d2fe; margin-bottom: 10px; }
+.action-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; }
+.action-desc ol, .action-desc ul { padding-left: 18px; }
+.action-desc li { margin-bottom: 8px; }
+.action-why { margin-top: 14px; padding: 10px 14px; background: rgba(255,255,255,0.04);
+  border-radius: 8px; font-size: 0.80rem; color: var(--text-muted); line-height: 1.5; }
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 16px; }
+.stat-box { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 8px;
+  text-align: center; border: 1px solid rgba(74,222,128,0.15); }
+.stat-num { font-size: 1.6rem; font-weight: 800; color: var(--green-bright); }
+.stat-lbl { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.chart-label { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; }
+.chart-empty { text-align: center; padding: 24px; color: var(--text-muted); font-size: 0.80rem; }
+.backup-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.backup-btn { padding: 7px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700;
+  cursor: pointer; border: 1.5px solid; }
+.save-btn { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.45); color: var(--green-bright); }
+.import-btn { background: rgba(96,165,250,0.12); border-color: rgba(96,165,250,0.45); color: #93c5fd; }
+.reset-btn { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.45); color: #fbbf24; }
+.backup-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 8px; }
+footer { text-align: center; padding: 20px 16px; font-size: 0.75rem; color: var(--text-muted);
+  position: relative; }
+.footer-hills { width: 100%; height: 40px; display: block; margin-bottom: 10px; }
+.drone-card { background: rgba(14,116,144,0.22); border: 2px solid rgba(34,211,238,0.30); }
+.drone-card .card-title { color: #67e8f9; }
+.drone-tip { font-size: 0.87rem; color: var(--text-secondary); line-height: 1.55; }
+.drone-callout { background: rgba(34,211,238,0.08); border-left: 3px solid rgba(34,211,238,0.5);
+  border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px;
+  font-size: 0.82rem; color: #a5f3fc; }
+@keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.85} 100%{transform:translateY(220px);opacity:0} }
+@keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.90} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
+@keyframes sunPulse { 0%,100%{opacity:0.35;transform:scale(1)} 50%{opacity:0.55;transform:scale(1.08)} }
+@keyframes sunRayPulse { 0%,100%{opacity:0.40;transform:scaleY(1)} 50%{opacity:0.60;transform:scaleY(1.4)} }
+@keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.45} 90%{opacity:0.45} to{transform:translateX(110%);opacity:0} }
+@keyframes lightningFlash { 0%,100%{opacity:0} 5%,7%{opacity:0.55} 6%{opacity:0} }
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .charts-row { grid-template-columns: 1fr; } .weather-7day { grid-template-columns:repeat(3,1fr); }
+  .pills-row { gap:5px; } .pill { padding:4px 9px; font-size:0.72rem; } .cd-num { font-size:1.4rem; }
+}
+</style>
+</head>
+<body>
+<script>
+(function(){
+  var images=["scotland_001.jpg","scotland_008.jpg","scotland_009.jpg","scotland_010.jpg","scotland_011.jpg","scotland_012.jpg","scotland_013.jpg","scotland_014.jpg","scotland_016.jpg","scotland_017.jpg","scotland_019.jpg","scotland_020.jpg","scotland_032.jpg","scotland_036.jpg","scotland_039.jpg","scotland_041.jpg","scotland_060.jpg","scotland_061.jpg","scotland_064.jpg","scotland_072.jpg","scotland_073.jpg","scotland_077.jpg","scotland_101.jpg","scotland_103.jpg","scotland_104.jpg","scotland_109.jpg","scotland_115.jpg","scotland_116.jpg","scotland_117.jpg","scotland_121.jpg","scotland_122.jpg","scotland_123.jpg","scotland_124.jpg","scotland_125.jpg","scotland_126.jpg","scotland_127.jpg","scotland_128.jpg","scotland_130.jpg","scotland_132.jpg","scotland_133.jpg","scotland_135.jpg","scotland_136.jpg","scotland_138.jpg","scotland_139.jpg","scotland_141.jpg","scotland_145.jpg","scotland_146.jpg","scotland_147.jpg","scotland_149.jpg","scotland_150.jpg","scotland_151.jpg","scotland_152.jpg","scotland_155.jpg","scotland_156.jpg","scotland_157.jpg","scotland_159.jpg","scotland_161.jpg","scotland_162.jpg","scotland_163.jpg","scotland_164.jpg","scotland_165.jpg","scotland_166.jpg","scotland_167.jpg","scotland_169.jpg","scotland_171.jpg","scotland_172.jpg","scotland_173.jpg","scotland_174.jpg","scotland_177.jpg","scotland_180.jpg","scotland_183.jpg","scotland_185.jpg","scotland_186.jpg","scotland_187.jpg","scotland_188.jpg","scotland_190.jpg","scotland_191.jpg","scotland_192.jpg","scotland_194.jpg","scotland_196.jpg","scotland_198.jpg","scotland_199.jpg","scotland_200.jpg","scotland_201.jpg","scotland_202.jpg","scotland_203.jpg","scotland_204.jpg","scotland_205.jpg","scotland_206.jpg","scotland_207.jpg","scotland_208.jpg","scotland_209.jpg","scotland_210.jpg","scotland_211.jpg","scotland_212.jpg","scotland_213.jpg","scotland_214.jpg","scotland_217.jpg","scotland_219.jpg","scotland_221.jpg","scotland_223.jpg","scotland_224.jpg","scotland_225.jpg","scotland_228.jpg","scotland_229.jpg","scotland_230.jpg","scotland_232.jpg","scotland_233.jpg","scotland_234.jpg","scotland_235.jpg","scotland_237.jpg","scotland_239.jpg","scotland_240.jpg","scotland_241.jpg","scotland_244.jpg","scotland_246.jpg","scotland_247.jpg","scotland_248.jpg","scotland_249.jpg","scotland_253.jpg","scotland_254.jpg","scotland_255.jpg","scotland_257.jpg","scotland_258.jpg","scotland_259.jpg","scotland_260.jpg","scotland_262.jpg","scotland_263.jpg","scotland_264.jpg","scotland_266.jpg","scotland_267.jpg","scotland_268.jpg","scotland_269.jpg","scotland_270.jpg","scotland_271.jpg","scotland_272.jpg","scotland_273.jpg","scotland_276.jpg","scotland_277.jpg","scotland_279.jpg","scotland_281.jpg","scotland_283.jpg","scotland_284.jpg","scotland_290.jpg","scotland_297.jpg","scotland_299.jpg","scotland_302.jpg","scotland_304.jpg","scotland_305.jpg","scotland_306.jpg","scotland_308.jpg","scotland_309.jpg","scotland_310.jpg","scotland_311.jpg","scotland_312.jpg","scotland_313.jpg","scotland_314.jpg","scotland_317.jpg","scotland_319.jpg","scotland_322.jpg","scotland_323.jpg","scotland_324.jpg","scotland_327.jpg","scotland_328.jpg","scotland_329.jpg","scotland_330.jpg","scotland_332.jpg","scotland_335.jpg","scotland_336.jpg","scotland_339.jpg","scotland_345.jpg","scotland_346.jpg","scotland_347.jpg","scotland_351.jpg","scotland_352.jpg","scotland_355.jpg","scotland_357.jpg","scotland_360.jpg","scotland_361.jpg","scotland_362.jpg","scotland_363.jpg","scotland_364.jpg","scotland_367.jpg","scotland_368.jpg","scotland_370.jpg","scotland_371.jpg","scotland_372.jpg","scotland_373.jpg","scotland_374.jpg","scotland_375.jpg","scotland_377.jpg","scotland_378.jpg","scotland_381.jpg","scotland_384.jpg","scotland_385.jpg","scotland_386.jpg","scotland_387.jpg"];
+  var now=new Date(); var start=new Date(now.getFullYear(),0,0);
+  var dayOfYear=Math.floor((now-start)/86400000);
+  var img=images[dayOfYear%images.length];
+  var isGitHub=window.location.hostname.includes("github.io");
+  var imgPath=isGitHub?img:"../Background Images/"+img;
+  document.documentElement.style.setProperty("--bg-image","url(\""+imgPath+"\")");
+})();
+</script>
+
+<script>
+var SAVED_LEARN_HOURS=0; var SAVED_APPS=0; var SAVED_INTERVIEWS=0; var SAVED_SESSIONS=0;
+var SAVED_DAILY_HISTORY=[{"date":"2026-04-24","apps":0,"hours":0},{"date":"2026-04-25","apps":0,"hours":0},{"date":"2026-04-26","apps":0,"hours":0},{"date":"2026-04-27","apps":0,"hours":0},{"date":"2026-04-28","apps":0,"hours":0},{"date":"2026-04-29","apps":0,"hours":0},{"date":"2026-04-30","apps":0,"hours":0}];
+var SAVED_SKILLS={"Data Analysis":0,"Prompt Engineering":0,"Python":0,"AI Tools & Systems":0,"Drone & Regs":0,"Photography":0,"JavaScript":0,"LinkedIn":0,"Freelancing":0,"Freelancing Platforms":0};
+var TODAY_DATE="2026-05-01";
+var TODAY_TOPIC="Python Basics";
+var ROADWORKS=["A9 Cromarty Bridge overnight works: 6-10 May 2026, 7pm-6am (bank holiday weekend clear)","A9 Easter Ross (Rosskeen-Tomich): works ongoing, check Traffic Scotland"];
+var CRUISE_SCHEDULE=[
+  {"date":"2026-05-04","ships":["Nieuw Statendam"],"arrival":"08:00","departure":"18:00"},
+  {"date":"2026-05-06","ships":["Majestic Princess"],"arrival":"07:00","departure":"18:00"},
+  {"date":"2026-05-11","ships":["Ocean Victory"],"arrival":"08:00","departure":"19:00"},
+  {"date":"2026-05-13","ships":["Norwegian Star"],"arrival":"07:00","departure":"17:00"},
+  {"date":"2026-05-16","ships":["Mein Schiff 2"],"arrival":"07:30","departure":"19:00"},
+  {"date":"2026-05-18","ships":["MSC Preziosa"],"arrival":"08:00","departure":"18:00"},
+  {"date":"2026-05-19","ships":["Celebrity Eclipse"],"arrival":"07:00","departure":"18:00"},
+  {"date":"2026-05-21","ships":["Costa Favolosa"],"arrival":"09:00","departure":"19:00"},
+  {"date":"2026-05-22","ships":["MSC Preziosa"],"arrival":"07:00","departure":"17:00"},
+  {"date":"2026-05-26","ships":["Mein Schiff 2"],"arrival":"07:30","departure":"19:00"},
+  {"date":"2026-05-27","ships":["AIDAsol"],"arrival":"09:00","departure":"19:00"},
+  {"date":"2026-05-28","ships":["Norwegian Star"],"arrival":"07:00","departure":"18:00"},
+  {"date":"2026-05-30","ships":["Majestic Princess"],"arrival":"07:00","departure":"18:00"},
+  {"date":"2026-06-02","ships":["Norwegian Star"],"arrival":"08:00","departure":"18:00"},
+  {"date":"2026-06-03","ships":["Star Pride"],"arrival":"08:00","departure":"21:00"},
+  {"date":"2026-06-04","ships":["Silver Spirit"],"arrival":"08:00","departure":"18:00"},
+  {"date":"2026-06-05","ships":["AIDAsol"],"arrival":"08:00","departure":"18:00"},
+  {"date":"2026-06-07","ships":["Mein Schiff 2"],"arrival":"07:30","departure":"19:00"},
+  {"date":"2026-06-08","ships":["Europa 2","Le Champlain"],"arrival":"10:00","departure":"19:00"},
+  {"date":"2026-06-09","ships":["Le Champlain","Rotterdam"],"arrival":"07:00","departure":"17:00"},
+  {"date":"2026-06-11","ships":["Seabourn Ovation"],"arrival":"08:00","departure":"18:00"},
+  {"date":"2026-06-12","ships":["Queen Anne"],"arrival":"09:00","departure":"18:00"},
+  {"date":"2026-06-13","ships":["MSC Preziosa"],"arrival":"07:00","departure":"17:00"},
+  {"date":"2026-06-16","ships":["AIDAsol"],"arrival":"07:00","departure":"16:00"},
+  {"date":"2026-06-18","ships":["Norwegian Star"],"arrival":"07:00","departure":"17:00"},
+  {"date":"2026-06-19","ships":["Seven Seas Grandeur"],"arrival":"09:00","departure":"19:00"},
+  {"date":"2026-06-21","ships":["Norwegian Sky"],"arrival":"07:00","departure":"18:00"},
+  {"date":"2026-06-23","ships":["Ambience","Star Pride"],"arrival":"09:00","departure":"23:00"},
+  {"date":"2026-06-24","ships":["Norwegian Star"],"arrival":"07:00","departure":"17:00"},
+  {"date":"2026-06-27","ships":["Mein Schiff 2"],"arrival":"07:30","departure":"19:00"},
+  {"date":"2026-06-29","ships":["AIDAsol"],"arrival":"09:00","departure":"19:00"},
+  {"date":"2026-07-01","ships":["Mein Schiff 2"],"arrival":"07:30","departure":"19:00"},
+  {"date":"2026-07-03","ships":["Norwegian Sky"],"arrival":"08:00","departure":"19:00"},
+  {"date":"2026-10-14","ships":["Season End"],"arrival":"00:00","departure":"23:59"}
+];
+</script>
+
+<div id="toast-container"></div>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar">
+  <div id="rocket-wrap">&#x1F680;</div>
+  <div class="bang-pop" id="bang1" style="left:20%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang2" style="left:35%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang3" style="left:50%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang4" style="left:65%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang5" style="left:80%">&#x1F4A5;</div>
+  <div id="bang-emoji">&#x1F4A5;</div>
+  <div id="party-popper">&#x1F389;</div>
+  <div id="ring-wrap">
+    <svg id="ring-svg" viewBox="0 0 34 34">
+      <circle id="ring-bg" cx="17" cy="17" r="15"/>
+      <circle id="ring-circle" cx="17" cy="17" r="15"/>
+    </svg>
+    <span id="ring-emoji">&#x1F311;</span>
+    <span id="ring-pct">0%</span>
+  </div>
+  <div class="pills-row">
+    <div class="pill" id="pill-news" onclick="togglePill('news')">&#x1F4F0; News Read</div>
+    <div class="pill" id="pill-job" onclick="togglePill('job')">&#x1F4BC; Job Applied</div>
+    <div class="pill" id="pill-learn" onclick="togglePill('learn')">&#x1F4DA; Learning Done</div>
+    <div class="pill" id="pill-action" onclick="togglePill('action')">&#x26A1; Action Done</div>
+    <div class="pill pill-confirm" id="pill-confirm" onclick="confirmDay()">&#x2705; CONFIRM</div>
+  </div>
+</div>
+
+<div class="wrapper">
+
+<!-- WEATHER CARD -->
+<div class="card weather-card">
+  <div id="weather-particles"></div>
+  <div class="card-title">&#x1F324;&#xFE0F; Invergordon Weather</div>
+  <div id="weather-content"><p style="color:rgba(255,255,255,0.80);">Fetching weather&hellip;</p></div>
+</div>
+
+<!-- HEADER CARD -->
+<div class="card header-card">
+  <div class="date-line">Friday, 1 May 2026 &middot; May Day Bank Holiday Weekend &middot; Invergordon, Scottish Highlands</div>
+  <h1 style="font-size:1.6rem;font-weight:800;margin-bottom:8px;">Good Morning, Steve! &#x1F40D;</h1>
+  <div style="margin-bottom:10px;">
+    <span class="topic-badge">&#x1F4DA; Today&rsquo;s Topic: Python Basics for AI Automation</span>
+  </div>
+  <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.55;">
+    It&rsquo;s May Day &mdash; bank holiday weekend, long days ahead, and the Cromarty Firth is quiet before the cruise season kicks into full gear. <strong>Nieuw Statendam</strong> (Holland America Line) arrives <strong>Monday 4 May</strong>. Today&rsquo;s focus: Python &mdash; the one language that runs the entire AI industry. Yesterday you ran JavaScript in the browser; today you learn the language that runs the models behind it.
+  </p>
+  <div class="traffic-box">
+    <div class="traffic-title">&#x1F6A6; Traffic &mdash; A9 &middot; Invergordon &middot; Highlands</div>
+    <div id="traffic-content"><a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">&#x1F6A6; Check live incidents &rarr; Traffic Scotland &#x2197;</a></div>
+    <div id="roadworks-content" style="margin-top:8px;padding-top:7px;border-top:1px solid rgba(251,191,36,0.28);"></div>
+  </div>
+</div>
+
+<!-- THOUGHT / TIP -->
+<div class="card thought-card">
+  <div class="card-title">&#x1F4A1; Today&rsquo;s Thought</div>
+  <p class="quote-text">&ldquo;JavaScript got you to the edge of automation &mdash; Python opens the door to the engine room. A single 10-line Python script can call Claude&rsquo;s API, process 100 documents, and return a summary. In 2026, that skill separates a &pound;20/hr freelancer from a &pound;50/hr one. You do not need to be a developer. You need one working script you can extend &mdash; and today you will write it.&rdquo;</p>
+  <p style="margin-top:10px;font-size:0.78rem;color:var(--text-muted);">&#x1F3AF; Daily focus: Python for AI automation &amp; Stage 5 reskilling milestone</p>
+</div>
+
+<!-- CRUISE COUNTDOWN -->
+<div class="card cruise-section">
+  <div class="card-title">&#x1F6A2; Cruise Season Countdown &mdash; End of Season: 14 Oct 2026</div>
+  <div class="cd-grid">
+    <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-lbl">Days</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-lbl">Hours</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-mins">--</div><div class="cd-lbl">Mins</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-lbl">Secs</div></div>
+  </div>
+  <div id="ship-banner" class="ship-banner next-ship">&#x23F3; Loading ship schedule&hellip;</div>
+  <p style="margin-top:10px;font-size:0.75rem;color:var(--text-muted);">&#x1F4CD; Source: Port of Cromarty Firth timetable (cached) &middot; ~95 ships &middot; ~200,000 passengers expected 2026</p>
+</div>
+
+<!-- DRONE / PHOTO TIP -->
+<div class="card drone-card">
+  <div class="card-title">&#x1F681; Drone &amp; Photography Tip</div>
+  <div class="drone-tip">
+    <p style="margin-bottom:10px;"><strong>Bank Holiday Golden Hour &mdash; Empty Port, Perfect Light</strong></p>
+    <p>Today is one of the best drone windows of the spring. The port is clear &mdash; no cruise ships until Nieuw Statendam arrives Monday morning. An empty Cromarty Firth at golden hour (19:30&ndash;20:50 BST) creates the kind of contrast stock buyers love: open water, dramatic Highland sky, the Nigg fabrication yard silhouetted to the west.</p>
+    <p style="margin-top:8px;"><strong>Shot list for tonight:</strong> (1) Wide angle from the north pier looking south-west toward Nigg &mdash; get the oil rig cradles in the frame. (2) Low-altitude pass along the shoreline toward the town hall clock. (3) If conditions allow, a vertical video clip (9:16 ratio) for TikTok and Instagram Reels &mdash; spring Highland content performs very well in May.</p>
+    <p style="margin-top:8px;"><strong>Practical note:</strong> CAA NOTAM check before launch &mdash; bank holidays occasionally bring helicopter traffic to the Nigg yard. Check the ATC app. Keep 150m from port infrastructure.</p>
+  </div>
+  <div class="drone-callout">
+    &#x1F4F8; <strong>Stock keywords for tonight:</strong> &ldquo;Cromarty Firth May bank holiday&rdquo;, &ldquo;Invergordon empty port spring&rdquo;, &ldquo;Scottish Highlands aerial bank holiday&rdquo;, &ldquo;Nigg Bay sunset golden hour&rdquo; &mdash; upload to Alamy + Shutterstock before midnight for weekend indexing.
+  </div>
+  <p style="margin-top:10px;font-size:0.75rem;color:var(--text-muted);">&#x26A0;&#xFE0F; Check CAA NOTAM before any drone flight &middot; Drone Code applies within 150m of Invergordon port infrastructure</p>
+</div>
+
+<!-- HIGHLANDS NEWS -->
+<div class="card">
+  <div class="card-title">&#x1F3F4;&#xFE0F; Highlands &amp; Invergordon News</div>
+  <div class="news-list">
+    <div class="news-item">
+      <div class="news-headline">Invergordon FC Accepted Into Highland Football League for 2026/27 Season</div>
+      <div class="news-meta"><span class="news-tag">Invergordon</span> Ross-shire Journal &middot; April 2026</div>
+      <div class="news-summary">Invergordon FC has been formally accepted into the Scottish Highland Football League for the 2026/27 season after fulfilling all criteria for entry to Tier 5 of Scottish football. The Highland Football League agreed no play-off was required &mdash; Invergordon earned direct progression. This is a major milestone for the community and will bring increased home-game traffic to the town throughout the season starting August 2026. Opportunity for local businesses and event photography.</div>
+      <a href="https://www.ross-shirejournal.co.uk/sport/new-club-accepted-into-highland-league-for-next-season-431568/" target="_blank" class="resource-link" style="margin-top:6px;">Read more &rarr;</a>
+    </div>
+    <div class="news-item">
+      <div class="news-headline">Inverness &amp; Cromarty Firth Green Freeport: &pound;2.1 Billion Highland Investment Plan Moves Forward</div>
+      <div class="news-meta"><span class="news-tag">Investment</span> New Civil Engineer &middot; April 2026</div>
+      <div class="news-summary">The Inverness and Cromarty Firth Green Freeport continues to drive large-scale investment in offshore wind, hydrogen infrastructure, digital connectivity, and grid reinforcement. The &pound;2.1 billion Highland Investment Plan &mdash; a 20-year programme &mdash; has appointed preferred contractors for its first phase. Three sectors are booming locally: energy, infrastructure, and defence. This creates sustained demand for technical communications, content, and community coordination roles in the Easter Ross area through 2030.</div>
+      <a href="https://www.newcivilengineer.com/latest/engineering-the-highlands-next-chapter-why-the-north-is-becoming-the-uks-new-powerhouse-27-04-2026/" target="_blank" class="resource-link" style="margin-top:6px;">Read more &rarr;</a>
+    </div>
+    <div class="news-item">
+      <div class="news-headline">Cruise Season Peaks in May &mdash; 95 Ships, 200,000 Passengers Expected at Invergordon</div>
+      <div class="news-meta"><span class="news-tag">Tourism</span> Port of Cromarty Firth &middot; 2026</div>
+      <div class="news-summary">The 2026 cruise season at Invergordon is the biggest yet, with approximately 95 ships and an estimated 200,000 passengers calling at the port. The season peaks May through September. The first big wave starts next week: Nieuw Statendam (4 May), Majestic Princess (6 May), and Ocean Victory (11 May) arrive in quick succession. The port and local businesses have been working together to improve the visitor experience &mdash; a significant opportunity for photography, guiding, and local digital content services.</div>
+      <a href="https://pocf.co.uk/cruise/" target="_blank" class="resource-link" style="margin-top:6px;">View cruise schedule &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- AI NEWS -->
+<div class="card">
+  <div class="card-title">&#x1F916; AI &amp; Tech News</div>
+  <div class="news-list">
+    <div class="news-item">
+      <div class="news-headline">Anthropic Launches Claude Managed Agents: Deploy AI Agents via Console &amp; CLI</div>
+      <div class="news-meta"><span class="news-tag">Anthropic</span> Blockchain.news / Anthropic &middot; 8 April 2026</div>
+      <div class="news-summary">Anthropic launched Managed Agents &mdash; a hosted Claude Platform service for long-horizon agentic tasks. Developers can now build and deploy AI agents through the Claude Console, Claude Code, or a new CLI. Key features: durable session state, safer tool access, and fast startup for reliable long-running tasks. This is the infrastructure layer that makes AI automation commercially viable at scale &mdash; and the exact kind of system you are learning to work with.</div>
+      <a href="https://blockchain.news/ainews/anthropic-launches-claude-managed-agents-build-and-deploy-via-console-claude-code-and-new-cli-2026-analysis" target="_blank" class="resource-link" style="margin-top:6px;">Read more &rarr;</a>
+    </div>
+    <div class="news-item">
+      <div class="news-headline">Claude Cowork Now Generally Available for All Paid Subscribers</div>
+      <div class="news-meta"><span class="news-tag">Anthropic</span> Anthropic &middot; 9 April 2026</div>
+      <div class="news-summary">Cowork &mdash; the desktop AI agent that manages workflows, summarises meetings, drafts documents, and executes multi-step tasks &mdash; graduated from research preview to general availability on 9 April 2026. Available on macOS and Windows for all paid Claude subscribers. You are already using it: this briefing was generated by a scheduled Cowork automation. That puts you ahead of the curve.</div>
+      <a href="https://www.anthropic.com/news" target="_blank" class="resource-link" style="margin-top:6px;">Read more &rarr;</a>
+    </div>
+    <div class="news-item">
+      <div class="news-headline">Claude Mythos Preview: Anthropic&rsquo;s Most Capable Model Yet &mdash; Cybersecurity Focus</div>
+      <div class="news-meta"><span class="news-tag">Frontier AI</span> InfoQ / CNN &middot; April 2026</div>
+      <div class="news-summary">Anthropic released Claude Mythos Preview &mdash; its most capable model to date &mdash; with dramatic gains in reasoning, coding, and cybersecurity. Access is restricted to a consortium of technology companies via Project Glasswing. Mythos autonomously identified and exploited a 17-year-old remote code execution vulnerability in FreeBSD. Anthropic chose not to make Mythos publicly available due to its offensive security capabilities &mdash; a sign of how seriously frontier labs are taking AI safety governance.</div>
+      <a href="https://www.infoq.com/news/2026/04/anthropic-claude-mythos/" target="_blank" class="resource-link" style="margin-top:6px;">Read more &rarr;</a>
+    </div>
+    <div class="news-item">
+      <div class="news-headline">Stanford AI Index 2026: AI Adoption Faster Than PC or Internet &mdash; 53% in Three Years</div>
+      <div class="news-meta"><span class="news-tag">Research</span> Stanford HAI &middot; April 2026</div>
+      <div class="news-summary">The Stanford AI Index 2026 confirms that generative AI has reached 53% population adoption in just three years &mdash; faster than the personal computer or the internet. Estimated consumer value of AI tools in the US alone reached $172 billion annually by early 2026. Anthropic leads model performance rankings as of March 2026. 12 key takeaways from the report include: AI is now everywhere, the US-China performance gap is narrowing, and the fastest-growing AI job category is not engineering &mdash; it is AI-enabled knowledge work.</div>
+      <a href="https://hai.stanford.edu/news/inside-the-ai-index-12-takeaways-from-the-2026-report" target="_blank" class="resource-link" style="margin-top:6px;">Read more &rarr;</a>
+    </div>
+    <div class="news-item">
+      <div class="news-headline">Novo Nordisk Partners with OpenAI to Run Entire Business on AI by End of 2026</div>
+      <div class="news-meta"><span class="news-tag">Enterprise AI</span> Crescendo.ai &middot; May 2026</div>
+      <div class="news-summary">Novo Nordisk announced a full strategic partnership with OpenAI to integrate AI across drug discovery, clinical trials, manufacturing, supply chains, and commercial operations &mdash; with complete deployment planned by end of 2026. This is the shape of enterprise AI adoption at scale. Companies hiring today for AI-adjacent roles (community, content, coordination) are building the human layer around these systems. That is the gap you can fill right now.</div>
+      <a href="https://www.crescendo.ai/news/latest-ai-news-and-updates" target="_blank" class="resource-link" style="margin-top:6px;">Read more &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<!-- JOB LEADS -->
+<div class="card">
+  <div class="card-title">&#x1F4BC; Today&rsquo;s Job Leads &mdash; 7 Best Matches</div>
+  <div class="job-grid">
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Access &amp; Engagement Worker &mdash; Highland Digital Support</div>
+      </div>
+      <div class="job-company">&#x1F3E2; We Are With You &middot; &#x1F4CD; Highland (remote-friendly) &middot; Full-Time</div>
+      <div class="job-tags">
+        <span class="job-tag tag-perfect">PERFECT</span>
+        <span class="job-tag tag-remote">Highland Remote</span>
+        <span class="job-tag tag-salary">Charity Scale</span>
+      </div>
+      <div class="job-skills"><strong>Skills needed:</strong> Community engagement, digital support, compassionate communication, outreach to hard-to-reach groups</div>
+      <div class="job-overlap">&#x2705; Your overlap: Customer service background, event coordination, community engagement &mdash; this role is a direct fit. Highland-based, immediate start possible.</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Learning curve: 0 weeks &mdash; your existing skills transfer directly. Apply today via GoodMoves.</p>
+      <a class="apply-btn" href="https://goodmoves.org/vacancy/a4sP10000012nthIAA/access-engagement-worker-highland-digital-support" target="_blank">[APPLY ON GOODMOVES]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Community Manager (Web3 / Crypto)</div>
+      </div>
+      <div class="job-company">&#x1F3E2; Multiple Companies &middot; &#x1F30D; Fully Remote &middot; Full-Time</div>
+      <div class="job-tags">
+        <span class="job-tag tag-perfect">PERFECT</span>
+        <span class="job-tag tag-remote">Fully Remote</span>
+        <span class="job-tag tag-salary">$50k&ndash;$80k</span>
+      </div>
+      <div class="job-skills"><strong>Skills needed:</strong> Community management, Discord/Telegram, Web3 ecosystem knowledge, content creation, direct outreach</div>
+      <div class="job-overlap">&#x2705; Your overlap: Crypto background is the #1 differentiator &mdash; most applicants lack it. Customer service + event coordination maps directly here.</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Learning curve: 0 weeks &mdash; your crypto knowledge eliminates 80% of the competition. 15,516 remote crypto jobs live right now.</p>
+      <a class="apply-btn" href="https://cryptojobslist.com/remote" target="_blank">[BROWSE CRYPTOJOBSLIST]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Content Writer &mdash; Crypto &amp; Web3</div>
+      </div>
+      <div class="job-company">&#x1F3E2; Various Web3 Companies &middot; &#x1F30D; Remote Contract</div>
+      <div class="job-tags">
+        <span class="job-tag tag-perfect">PERFECT</span>
+        <span class="job-tag tag-remote">Remote</span>
+        <span class="job-tag tag-salary">$30&ndash;$73/hr</span>
+      </div>
+      <div class="job-skills"><strong>Skills needed:</strong> Crypto/blockchain writing, SEO, engaging articles, trading knowledge, newsletter content</div>
+      <div class="job-overlap">&#x2705; Your overlap: Crypto background + strong written communication. Contract roles = income within 7 days of first accepted piece.</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">393 active copywriting crypto roles in April 2026. $30&ndash;$73/hr on ZipRecruiter. BeInCrypto Jobs Board has entry-level writer roles open now.</p>
+      <a class="apply-btn" href="https://beincrypto.com/jobs/writer/" target="_blank">[APPLY ON BEINCRYPTO]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Remote Bitcoin / Lightning Network Roles</div>
+      </div>
+      <div class="job-company">&#x1F3E2; Multiple Bitcoin Companies &middot; &#x1F30D; Fully Remote &middot; Bitcoiner Jobs</div>
+      <div class="job-tags">
+        <span class="job-tag tag-perfect">PERFECT</span>
+        <span class="job-tag tag-remote">Bitcoin-native</span>
+        <span class="job-tag tag-salary">$52k&ndash;$248k</span>
+      </div>
+      <div class="job-skills"><strong>Skills needed:</strong> Bitcoin ecosystem knowledge, community, education, content, customer success</div>
+      <div class="job-overlap">&#x2705; Your overlap: Bitcoin/crypto background is the entry ticket &mdash; most applicants lack real-world crypto experience. You have it.</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Bitcoin remote roles range $52k&ndash;$248k. Community and content roles on the lower end are genuinely accessible today. Browse and apply to 3 in 30 minutes.</p>
+      <a class="apply-btn" href="https://bitcoinerjobs.com/place/remote" target="_blank">[BROWSE BITCOINER JOBS]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">AI Data Annotator / Content Reviewer</div>
+      </div>
+      <div class="job-company">&#x1F3E2; DataAnnotation Tech &middot; &#x1F30D; Fully Remote &middot; Flexible Hours</div>
+      <div class="job-tags">
+        <span class="job-tag tag-high">HIGH</span>
+        <span class="job-tag tag-remote">Fully Remote</span>
+        <span class="job-tag tag-salary">&pound;15&ndash;25/hr</span>
+      </div>
+      <div class="job-skills"><strong>Skills needed:</strong> English fluency, attention to detail, basic AI familiarity, writing evaluation</div>
+      <div class="job-overlap">&#x2705; Your overlap: Communication background, no degree required &mdash; income within 7 days of approval. Fastest path to cash.</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Learning curve: 0 weeks. Apply at dataannotation.tech/apply &mdash; takes 15 minutes to submit.</p>
+      <a class="apply-btn" href="https://www.dataannotation.tech/apply" target="_blank">[APPLY]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Highland Community &amp; Engagement Roles</div>
+      </div>
+      <div class="job-company">&#x1F3E2; Various Charities &amp; Trusts &middot; &#x1F4CD; Highland Region &middot; Multiple Roles</div>
+      <div class="job-tags">
+        <span class="job-tag tag-high">HIGH</span>
+        <span class="job-tag tag-salary">Charity Scale</span>
+      </div>
+      <div class="job-skills"><strong>Skills needed:</strong> Community development, project coordination, stakeholder engagement, outreach</div>
+      <div class="job-overlap">&#x2705; Your overlap: Event coordination, customer service, local knowledge &mdash; 12 roles live in Highland on GoodMoves right now including hybrid and remote options.</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Check all 12 current Highland roles on GoodMoves. Closing dates vary &mdash; don't miss the Chief Executive at Gairloch closing 27 May.</p>
+      <a class="apply-btn" href="https://goodmoves.org/jobs-in/highland" target="_blank">[VIEW ALL ON GOODMOVES]</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Remote AI Tools &amp; Automation Specialist (Upwork)</div>
+      </div>
+      <div class="job-company">&#x1F3E2; Multiple Clients &middot; &#x1F30D; Fully Remote &middot; Freelance</div>
+      <div class="job-tags">
+        <span class="job-tag tag-high">HIGH</span>
+        <span class="job-tag tag-remote">Upwork</span>
+        <span class="job-tag tag-salary">&pound;28+/hr</span>
+      </div>
+      <div class="job-skills"><strong>Skills needed:</strong> AI tools (Claude, ChatGPT), workflow automation, prompt engineering, content creation</div>
+      <div class="job-overlap">&#x2705; Your overlap: Upwork profile is live at &pound;28/hr. Today&rsquo;s Python session adds your first API scripting skill &mdash; that alone justifies &pound;35+/hr in 4 weeks.</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Python API scripting from today&rsquo;s session = meaningful rate increase within a month. Bid on 2 jobs today to keep the pipeline warm.</p>
+      <a class="apply-btn" href="https://www.upwork.com/freelance-jobs/artificial-intelligence/" target="_blank">[BROWSE JOBS]</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- LEARNING FOCUS -->
+<div class="card learning-card">
+  <div class="card-title">&#x1F4DA; 30-Minute Learning Focus &mdash; Python Basics for AI Automation</div>
+  <div class="learn-topic">Today: Your First Python Script &mdash; Call a Live API in 10 Lines</div>
+  <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.55;margin-bottom:12px;">
+    Python is the language the entire AI industry runs on. Every Claude integration, every OpenAI API call, every data pipeline &mdash; Python. Today&rsquo;s goal is simple: write your first Python script that calls a real web API and prints a result. You do not need to install anything to start; the browser console approach from yesterday has a Python equivalent you can run right now.
+  </p>
+  <ul style="font-size:0.85rem;color:var(--text-secondary);line-height:1.55;padding-left:18px;margin-bottom:12px;">
+    <li><strong>Action A (Highest Impact &mdash; 30 min): DeepLearning.AI &ldquo;AI Python for Beginners&rdquo; Module 1.</strong> Go to learn.deeplearning.ai/courses/ai-python-for-beginners. Free, no account needed for Module 1. This course was built specifically for people in your position &mdash; professionals reskilling for AI, not computer science students. Module 1 covers: variables, print(), basic types, and your first API call. The platform runs Python in the browser &mdash; zero setup. Estimated time: 25&ndash;35 minutes. What you learn: the foundational mental model of Python that makes everything else click.</li>
+    <li><strong>Action B (High Impact &mdash; 20 min): Write the 10-Line Weather Script.</strong> Open any text editor. Paste this and save as weather.py: <code style="background:rgba(0,0,0,0.3);padding:2px 6px;border-radius:4px;font-size:0.75rem;">import urllib.request, json; url="https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m&timezone=Europe/London"; r=urllib.request.urlopen(url); d=json.loads(r.read()); print("Invergordon:",d["current"]["temperature_2m"],"C")</code> &mdash; Run it with: python3 weather.py. You just called a live API with Python. No dependencies, no pip install, runs on any Mac or PC out of the box. What you learn: HTTP requests, JSON parsing, print &mdash; the exact pattern used in every AI integration.</li>
+    <li><strong>Action C (Foundation &mdash; 30 min): Automate the Boring Stuff, Chapter 1.</strong> Go to automatetheboringstuff.com. Read Chapter 1 free online. Author Al Sweigart teaches Python through practical problems: renaming files, processing spreadsheets, scraping websites. No maths, no theory. Chapter 1 is 20 minutes and gives you a solid foundation for why Python is the automation language. What you learn: why Python matters and what you can build with it.</li>
+  </ul>
+  <p style="margin-bottom:14px;font-size:0.83rem;color:var(--text-secondary);">
+    <strong style="color:var(--green-bright);">Free Resources &mdash; zero cost, zero setup friction:</strong> DeepLearning.AI Python for AI Beginners (learn.deeplearning.ai) &mdash; runs in browser, no install. Automate the Boring Stuff (automatetheboringstuff.com) &mdash; free online book. Python.org tutorial (docs.python.org/3/tutorial) &mdash; official, comprehensive.
+  </p>
+  <a class="resource-link" href="https://learn.deeplearning.ai/courses/ai-python-for-beginners" target="_blank">&#x1F517; DeepLearning.AI Python (Free) &rarr;</a>
+  &nbsp;
+  <a class="resource-link" href="https://automatetheboringstuff.com" target="_blank">&#x1F517; Automate Boring Stuff (Free) &rarr;</a>
+  &nbsp;
+  <a class="resource-link" href="https://docs.python.org/3/tutorial/" target="_blank">&#x1F517; Python Official Docs &rarr;</a>
+  <p class="pill-hint">Tap &ldquo;&#x1F4DA; Learning Done&rdquo; above after completing your 30-minute session, then CONFIRM to save.</p>
+</div>
+
+<!-- TODAY'S ONE ACTION -->
+<div class="card action-card">
+  <div class="card-title">&#x26A1;&#xFE0F; Today&rsquo;s One Action</div>
+  <div class="action-title">Apply to Highland Role + Write Your First Python Script &mdash; Two Wins Before Noon</div>
+  <div class="action-desc">
+    <p style="margin-bottom:10px;">Bank holiday Friday &mdash; the port is quiet, the weekend is long, and you have the time. Two actions that compound:</p>
+    <ol>
+      <li><strong>Before 10:00 &mdash; Apply to We Are With You Access &amp; Engagement Worker:</strong> Go to <a href="https://goodmoves.org/vacancy/a4sP10000012nthIAA/access-engagement-worker-highland-digital-support" target="_blank" style="color:var(--green-bright);">GoodMoves</a>. This is a Highland-based role that maps directly to your customer service and community engagement background. Write a 5-sentence cover note: (1) Your experience in customer-facing roles. (2) One specific community engagement win. (3) Why you want to work in Highland digital support. (4) Your availability. (5) One question about their digital support model. Takes 20 minutes. It is a PERFECT skill match &mdash; apply today, not tomorrow.</li>
+      <li><strong>Before 11:00 &mdash; Write Your First Python Script:</strong> Open any text editor. Write the 10-line weather script from the Learning section above. Run it. Save a screenshot of the output. This is your first working Python program &mdash; the beginning of your Stage 5 portfolio. If it runs, you are officially a Python developer. If it errors, that is fine: errors are how you learn. Paste the error into Claude and ask what it means.</li>
+      <li><strong>Before noon &mdash; Start DeepLearning.AI Module 1:</strong> Go to learn.deeplearning.ai and open Module 1 of AI Python for Beginners. Complete it in the browser. No install, free, and gives you the mental model that makes everything else easier. Tick the &ldquo;Learning Done&rdquo; pill when finished.</li>
+      <li><strong>This evening (19:30&ndash;20:50 BST) &mdash; Golden Hour Drone Session:</strong> If conditions are right, head to the north pier. The port is empty &mdash; the best drone window before cruise season peak. Confirm your day when you return.</li>
+    </ol>
+  </div>
+  <div class="action-why">
+    <strong>Why these actions, today:</strong> The We Are With You role is local, immediate, and uses skills you already have &mdash; it could be your next income source within weeks. The Python script is about a threshold: the moment you run live code and see live data in Python, you stop being a user of AI tools and start being someone who can build with them. That shift is what separates Stage 4 from Stage 5. Two actions, one bank holiday morning, compounding returns for months. The drone session is a bonus &mdash; stock photography income that costs only your time and a walk to the pier.
+  </div>
+</div>
+
+<!-- PROGRESS TRACKER -->
+<div class="card">
+  <div class="card-title">&#x1F4CA; Progress Tracker &mdash; Reskilling Journey</div>
+  <div class="stats-grid">
+    <div class="stat-box"><div class="stat-num" id="stat-hours">0</div><div class="stat-lbl">Learning Hours</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-apps">0</div><div class="stat-lbl">Applications</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-interviews">0</div><div class="stat-lbl">Interviews</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-sessions">0</div><div class="stat-lbl">Sessions Done</div></div>
+  </div>
+  <div class="charts-row">
+    <div>
+      <div class="chart-label">&#x1F4C5; Daily Activity (Last 7 Days)</div>
+      <div id="daily-chart-wrap"><canvas id="dailyChart" height="160"></canvas></div>
+    </div>
+    <div>
+      <div class="chart-label">&#x1F9E0; Skills Progress</div>
+      <div id="skills-chart-wrap"><canvas id="skillsChart" height="160"></canvas></div>
+    </div>
+  </div>
+  <div class="backup-btns" style="margin-top:20px;">
+    <button class="backup-btn save-btn" onclick="exportBackup()">&#x1F4E4; Export Backup</button>
+    <button class="backup-btn import-btn" onclick="importBackup()">&#x1F4E5; Import Backup</button>
+    <button class="backup-btn reset-btn" onclick="resetStatsToJSON()">&#x1F504; Reset Stats to JSON</button>
+  </div>
+  <p class="backup-note">Export saves your progress-tracker.json to Downloads. Import restores from a saved backup. Reset Stats syncs the display back to the JSON values if localStorage has drifted.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <svg class="footer-hills" viewBox="0 0 960 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,60 Q120,10 240,40 Q360,70 480,30 Q600,0 720,35 Q840,60 960,25 L960,60 Z" fill="rgba(74,222,128,0.08)"/>
+  </svg>
+  <p>&#x1F331; Steve&rsquo;s Daily Briefing &middot; Generated 1 May 2026 &middot; Next briefing: 2 May 2026</p>
+  <p style="margin-top:4px;">Weather: Open-Meteo + wttr.in &middot; Jobs: CryptoJobsList, bitcoinerjobs.com, cryptojobs.com, GoodMoves, Upwork, DataAnnotation, BeInCrypto &middot; News: Ross-shire Journal, New Civil Engineer, Stanford HAI</p>
+  <p style="margin-top:4px;font-size:0.68rem;">&#x1F4CD; Invergordon, Scottish Highlands &middot; 57.69&deg;N 4.17&deg;W &middot; UTC+1 BST &middot; &#x1F6A2; No ships in port today &mdash; next: Nieuw Statendam 4 May</p>
+</footer>
+
+</div><!-- .wrapper -->
+
+<script>
+// STATE
+var state = { news:false, job:false, learn:false, action:false, confirmed:false,
+              apps: SAVED_APPS, learn_hours: SAVED_LEARN_HOURS, sessions: SAVED_SESSIONS };
+var rocketFired = false;
+
+function loadState() {
+  var key = "briefing_" + TODAY_DATE;
+  var saved = localStorage.getItem(key);
+  if (saved) {
+    try { var s = JSON.parse(saved); Object.assign(state, s); } catch(e){}
+  }
+  renderPills();
+  updateRing();
+  updateStats();
+}
+
+function saveState() {
+  var key = "briefing_" + TODAY_DATE;
+  localStorage.setItem(key, JSON.stringify(state));
+}
+
+function togglePill(id) {
+  if (state.confirmed) { showToast("Day already confirmed! Lock in place.", "warn"); return; }
+  state[id] = !state[id];
+  if (id === "learn" && state.learn) { state.sessions += 1; state.learn_hours += 0.5; }
+  if (id === "learn" && !state.learn) { state.sessions = Math.max(0, state.sessions-1); state.learn_hours = Math.max(0, state.learn_hours-0.5); }
+  if (id === "job" && state.job) { state.apps += 1; }
+  if (id === "job" && !state.job) { state.apps = Math.max(0, state.apps-1); }
+  saveState(); renderPills(); updateRing(); updateStats();
+}
+
+function renderPills() {
+  var ids = ["news","job","learn","action"];
+  ids.forEach(function(id) {
+    var el = document.getElementById("pill-"+id);
+    if (!el) return;
+    el.classList.toggle("done", !!state[id]);
+  });
+  var conf = document.getElementById("pill-confirm");
+  if (conf) conf.classList.toggle("confirmed", !!state.confirmed);
+}
+
+function confirmDay() {
+  if (state.confirmed) { showToast("Already confirmed for today!", "info"); return; }
+  var done = [state.news, state.job, state.learn, state.action].filter(Boolean).length;
+  if (done === 0) { showToast("Tap at least one pill first!", "warn"); return; }
+  state.confirmed = true;
+  saveState(); renderPills(); updateRing();
+  showToast("Day confirmed! Outstanding work, Steve!");
+}
+
+function updateRing() {
+  var pills = ["news","job","learn","action"];
+  var done = pills.filter(function(p){ return state[p]; }).length;
+  var pct = Math.round((done / pills.length) * 100);
+  var circ = 94.2;
+  var dash = (pct / 100) * circ;
+  var rc = document.getElementById("ring-circle");
+  var re = document.getElementById("ring-emoji");
+  var rp = document.getElementById("ring-pct");
+  if (rc) rc.setAttribute("stroke-dasharray", dash + " " + (circ - dash));
+  if (rp) rp.textContent = pct + "%";
+  var emoji = pct === 0 ? "🌑" : pct < 25 ? "🌒" : pct < 50 ? "🌓" : pct < 75 ? "🌔" : pct < 100 ? "✅" : "🚀";
+  if (re) re.textContent = emoji;
+  if (pct === 100 && !rocketFired) {
+    rocketFired = true;
+    var r = document.getElementById("rocket-wrap");
+    if (r) { r.classList.add("flying"); setTimeout(function(){ r.style.display="none"; r.classList.remove("flying"); }, 5300); }
+    [{id:"bang1",t:700},{id:"bang2",t:1600},{id:"bang3",t:2500},{id:"bang4",t:3400},{id:"bang5",t:4300}].forEach(function(b){
+      setTimeout(function(){ var el=document.getElementById(b.id); if(!el)return; el.classList.add("show"); setTimeout(function(){ el.classList.remove("show"); el.style.display="none"; },900); }, b.t);
+    });
+    setTimeout(function(){ var b=document.getElementById("bang-emoji"); if(b){ b.classList.add("show"); setTimeout(function(){ b.classList.remove("show"); b.style.display="none"; },1000); } },1600);
+    setTimeout(function(){ var p=document.getElementById("party-popper"); if(p){ p.classList.add("show"); setTimeout(function(){ p.classList.remove("show"); p.style.display="none"; },1300); } },4800);
+    showToast("100%! Outstanding work, Steve! Hit CONFIRM to lock it in!");
+  }
+}
+
+function updateStats() {
+  var sh = document.getElementById("stat-hours"); if(sh) sh.textContent = state.learn_hours.toFixed(1);
+  var sa = document.getElementById("stat-apps"); if(sa) sa.textContent = state.apps;
+  var si = document.getElementById("stat-interviews"); if(si) si.textContent = SAVED_INTERVIEWS;
+  var ss = document.getElementById("stat-sessions"); if(ss) ss.textContent = state.sessions;
+}
+
+function resetStatsToJSON() {
+  state.apps = SAVED_APPS;
+  state.learn_hours = SAVED_LEARN_HOURS;
+  state.sessions = SAVED_SESSIONS;
+  saveState(); updateStats();
+  showToast("Stats reset to JSON values", "info");
+}
+
+function buildCharts() {
+  var hist = SAVED_DAILY_HISTORY;
+  if (hist && hist.length > 0) {
+    var labels = hist.map(function(d){ return d.date.slice(5); });
+    var appsData = hist.map(function(d){ return d.apps || 0; });
+    var hoursData = hist.map(function(d){ return d.hours || 0; });
+    var dctx = document.getElementById("dailyChart");
+    if (dctx) {
+      new Chart(dctx, { type:"bar", data:{ labels:labels,
+        datasets:[
+          {label:"Apps",data:appsData,backgroundColor:"rgba(96,165,250,0.55)",borderColor:"rgba(96,165,250,0.9)",borderWidth:1},
+          {label:"Hours",data:hoursData,backgroundColor:"rgba(74,222,128,0.45)",borderColor:"rgba(74,222,128,0.9)",borderWidth:1}
+        ]},
+        options:{responsive:true,plugins:{legend:{labels:{color:"rgba(255,255,255,0.7)",font:{size:10}}}},
+          scales:{x:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:9}},grid:{color:"rgba(255,255,255,0.06)"}},
+                  y:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:9}},grid:{color:"rgba(255,255,255,0.06)"}}}}
+      });
+    }
+  } else {
+    var dw = document.getElementById("daily-chart-wrap");
+    if(dw) dw.innerHTML = "<div class=\"chart-empty\">No daily history yet &mdash; start tracking!</div>";
+  }
+  var skills = SAVED_SKILLS;
+  var sKeys = Object.keys(skills);
+  var sVals = sKeys.map(function(k){ return skills[k]; });
+  var hasSkills = sVals.some(function(v){ return v > 0; });
+  if (hasSkills) {
+    var sctx = document.getElementById("skillsChart");
+    if (sctx) {
+      new Chart(sctx, { type:"bar", data:{ labels:sKeys,
+        datasets:[{label:"Sessions",data:sVals,backgroundColor:"rgba(251,191,36,0.45)",borderColor:"rgba(251,191,36,0.9)",borderWidth:1}]},
+        options:{indexAxis:"y",responsive:true,plugins:{legend:{display:false}},
+          scales:{x:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:9}},grid:{color:"rgba(255,255,255,0.06)"}},
+                  y:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:9}},grid:{color:"rgba(255,255,255,0.06)"}}}}
+      });
+    }
+  } else {
+    var sw = document.getElementById("skills-chart-wrap");
+    if(sw) sw.innerHTML = "<div class=\"chart-empty\">Complete learning sessions to see skill progress!</div>";
+  }
+}
+
+function showToast(msg, type) {
+  var tc = document.getElementById("toast-container");
+  if (!tc) return;
+  var t = document.createElement("div");
+  t.className = "toast" + (type ? " " + type : "");
+  t.textContent = msg;
+  tc.appendChild(t);
+  setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 4000);
+}
+
+// WEATHER
+var OPENMETEO_URL = "https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17" +
+  "&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode" +
+  "&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+  "&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=celsius&windspeed_unit=mph&precipitation_unit=mm";
+var WTTR_URL = "https://wttr.in/Invergordon,Scotland?format=j1";
+
+function wmoIcon(c) {
+  if(c===0) return "☀️";
+  if(c<=2) return "⛅";
+  if(c===3) return "☁️";
+  if(c<=48) return "🌫️";
+  if(c<=55) return "🌦️";
+  if(c<=67) return "🌧️";
+  if(c<=77) return "❄️";
+  if(c<=82) return "🌦️";
+  if(c<=86) return "🌨️";
+  if(c>=95) return "⛈️";
+  return "🌤️";
+}
+
+function dayName(dateStr) {
+  var d = new Date(dateStr + "T12:00:00");
+  return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()];
+}
+
+function setWeatherAnimation(code) {
+  var wp = document.getElementById("weather-particles");
+  if (!wp) return;
+  wp.innerHTML = "";
+  if ((code >= 51 && code <= 82) || code >= 95) {
+    for (var i = 0; i < 20; i++) {
+      var drop = document.createElement("div");
+      drop.style.cssText = "position:absolute;width:1.5px;height:12px;background:rgba(147,210,255,0.75);border-radius:2px;left:" + Math.random()*100 + "%;animation:rainFall " + (0.3+Math.random()*0.3) + "s linear " + Math.random()*1.5 + "s infinite;opacity:0.85;";
+      wp.appendChild(drop);
+    }
+    if (code >= 95) {
+      var bolt = document.createElement("div");
+      bolt.style.cssText = "position:absolute;left:50%;top:0;width:3px;height:100%;background:rgba(255,255,180,0.55);animation:lightningFlash 5s infinite;opacity:0;";
+      wp.appendChild(bolt);
+    }
+  } else if (code >= 71 && code <= 86) {
+    var flakes = ["❄","❅","❆"];
+    for (var j = 0; j < 15; j++) {
+      var flake = document.createElement("div");
+      flake.textContent = flakes[j%3];
+      flake.style.cssText = "position:absolute;font-size:" + (0.8+Math.random()*0.6) + "rem;color:rgba(255,255,255,0.90);left:" + Math.random()*100 + "%;animation:snowFall " + (2+Math.random()*2) + "s linear " + Math.random()*2 + "s infinite;opacity:0.90;";
+      wp.appendChild(flake);
+    }
+  } else if (code <= 1) {
+    var sun = document.createElement("div");
+    sun.style.cssText = "position:absolute;top:10px;right:20px;width:60px;height:60px;background:radial-gradient(circle,rgba(255,220,50,0.55),transparent 70%);border-radius:50%;animation:sunPulse 3s ease-in-out infinite;opacity:0.45;";
+    wp.appendChild(sun);
+    for (var k = 0; k < 8; k++) {
+      var ray = document.createElement("div");
+      var angle = k * 45;
+      ray.style.cssText = "position:absolute;top:30px;right:45px;width:2px;height:18px;background:rgba(255,220,50,0.55);transform-origin:top center;transform:rotate(" + angle + "deg) translateY(-30px);animation:sunRayPulse 3s ease-in-out " + (k*0.15) + "s infinite;opacity:0.45;";
+      wp.appendChild(ray);
+    }
+  } else if (code <= 3) {
+    var cloudEmojis = ["☁️","⛅","☁️"];
+    var speeds = [18,25,14];
+    for (var m = 0; m < 3; m++) {
+      var cloud = document.createElement("div");
+      cloud.textContent = cloudEmojis[m];
+      cloud.style.cssText = "position:absolute;font-size:" + (1.8+m*0.5) + "rem;top:" + (20+m*25) + "%;animation:cloudDrift " + speeds[m] + "s linear " + (m*3) + "s infinite;opacity:0.45;";
+      wp.appendChild(cloud);
+    }
+  }
+}
+
+function renderWeatherOM(data) {
+  var c = data.current;
+  var d = data.daily;
+  var wc = c.weathercode;
+  var icon = wmoIcon(wc);
+  var temp = Math.round(c.temperature_2m);
+  var feel = Math.round(c.apparent_temperature);
+  var wind = Math.round(c.windspeed_10m);
+  var precip = c.precipitation;
+  var cloud = c.cloudcover;
+  var html = "<div style=\"display:flex;align-items:center;gap:12px;margin-bottom:8px;\">";
+  html += "<span style=\"font-size:2.2rem;\">" + icon + "</span>";
+  html += "<div><div style=\"font-size:1.8rem;font-weight:800;color:#fff;\">" + temp + "°C</div>";
+  html += "<div style=\"font-size:0.78rem;color:rgba(255,255,255,0.80);\">Feels " + feel + "°C &middot; Wind " + wind + " mph &middot; Cloud " + cloud + "%</div></div></div>";
+  if (precip > 0) html += "<div style=\"font-size:0.78rem;color:rgba(255,255,255,0.80);margin-bottom:8px;\">🌧️ Precipitation: " + precip + " mm</div>";
+  html += "<div class=\"weather-7day\">";
+  var days = d.time.slice(0,5);
+  days.forEach(function(dt, i) {
+    var isToday = (i === 0);
+    var hi = Math.round(d.temperature_2m_max[i]);
+    var lo = Math.round(d.temperature_2m_min[i]);
+    var di = wmoIcon(d.weathercode[i]);
+    var pp = d.precipitation_probability_max[i] || 0;
+    html += "<div class=\"wday" + (isToday ? " today-day" : "") + "\">";
+    html += "<div class=\"wday-name\">" + (isToday ? "Now" : dayName(dt)) + "</div>";
+    html += "<div class=\"wday-icon\">" + di + "</div>";
+    html += "<div style=\"font-size:0.72rem;font-weight:700;\">" + hi + "°/" + lo + "°</div>";
+    html += "<div style=\"font-size:0.65rem;color:rgba(255,255,255,0.70);\">" + pp + "% 🌧</div>";
+    html += "</div>";
+  });
+  html += "</div>";
+  var wc2 = document.getElementById("weather-content");
+  if (wc2) wc2.innerHTML = html;
+  setWeatherAnimation(wc);
+}
+
+function showWeatherFallback() {
+  var wc = document.getElementById("weather-content");
+  if (wc) wc.innerHTML = "<p style=\"color:rgba(255,255,255,0.80);\">Weather data unavailable. <a href=\"https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0\" target=\"_blank\" style=\"color:#fbbf24;\">Check Met Office ↗</a></p>";
+}
+
+function renderWeatherWttr(data) {
+  try {
+    var cur = data.current_condition[0];
+    var wc = parseInt(cur.weatherCode);
+    var icon = wmoIcon(wc);
+    var tempC = parseFloat(cur.temp_C);
+    var feelC = parseFloat(cur.FeelsLikeC);
+    var wind = Math.round(parseFloat(cur.windspeedKmph) * 0.621);
+    var html = "<div style=\"display:flex;align-items:center;gap:12px;margin-bottom:8px;\">";
+    html += "<span style=\"font-size:2.2rem;\">" + icon + "</span>";
+    html += "<div><div style=\"font-size:1.8rem;font-weight:800;color:#fff;\">" + Math.round(tempC) + "°C</div>";
+    html += "<div style=\"font-size:0.78rem;color:rgba(255,255,255,0.80);\">Feels " + Math.round(feelC) + "°C &middot; Wind " + wind + " mph</div></div></div>";
+    html += "<p style=\"font-size:0.70rem;color:rgba(255,255,255,0.60);margin-top:8px;\">Source: wttr.in (fallback)</p>";
+    var wc2 = document.getElementById("weather-content");
+    if (wc2) wc2.innerHTML = html;
+    setWeatherAnimation(wc);
+  } catch(e) { showWeatherFallback(); }
+}
+
+fetch(OPENMETEO_URL)
+  .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(renderWeatherOM)
+  .catch(function(){ fetch(WTTR_URL).then(function(r){ return r.json(); }).then(renderWeatherWttr).catch(showWeatherFallback); });
+
+// CRUISE
+function updateCruise() {
+  var now = new Date();
+  var todayStr = now.toISOString().slice(0,10);
+  var banner = document.getElementById("ship-banner");
+  var todayEntry = null, nextEntry = null;
+  CRUISE_SCHEDULE.forEach(function(e) {
+    if (e.date === todayStr && !todayEntry) todayEntry = e;
+    if (e.date > todayStr && !nextEntry) nextEntry = e;
+  });
+  if (banner) {
+    if (todayEntry) {
+      banner.className = "ship-banner in-port";
+      banner.innerHTML = "🚢 IN PORT TODAY: <strong>" + todayEntry.ships.join(" &amp; ") + "</strong> (" + todayEntry.arrival + "&ndash;" + todayEntry.departure + ")";
+    } else if (nextEntry) {
+      var nd = new Date(nextEntry.date + "T12:00:00");
+      var diff = Math.ceil((nd - now) / 86400000);
+      banner.className = "ship-banner next-ship";
+      banner.innerHTML = "⏳ Next ship: <strong>" + nextEntry.ships.join(" &amp; ") + "</strong> &mdash; " + nextEntry.date + " (" + diff + " day" + (diff===1?"":"s") + " away)";
+    } else {
+      banner.className = "ship-banner season-over";
+      banner.innerHTML = "🌊 Season complete for 2026 &mdash; see you next year!";
+    }
+  }
+  var endDate = new Date("2026-10-14T23:59:00");
+  function tick() {
+    var n = new Date();
+    var diff2 = endDate - n;
+    if (diff2 < 0) {
+      ["cd-days","cd-hours","cd-mins","cd-secs"].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent="0"; });
+      return;
+    }
+    var days2 = Math.floor(diff2/86400000);
+    var hours2 = Math.floor((diff2%86400000)/3600000);
+    var mins2 = Math.floor((diff2%3600000)/60000);
+    var secs2 = Math.floor((diff2%60000)/1000);
+    var dEl=document.getElementById("cd-days"); if(dEl) dEl.textContent=days2;
+    var hEl=document.getElementById("cd-hours"); if(hEl) hEl.textContent=hours2;
+    var mEl=document.getElementById("cd-mins"); if(mEl) mEl.textContent=mins2;
+    var sEl=document.getElementById("cd-secs"); if(sEl) sEl.textContent=secs2;
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+function renderRoadworks() {
+  var el = document.getElementById("roadworks-content");
+  if (!el) return;
+  if (!ROADWORKS || ROADWORKS.length === 0) { el.style.display = "none"; return; }
+  var html = "<div style=\"font-size:0.75rem;color:rgba(255,255,255,0.60);font-weight:700;margin-bottom:5px;\">🚧 Active Roadworks Nearby</div>";
+  ROADWORKS.forEach(function(r){ html += "<div style=\"font-size:0.80rem;margin-bottom:3px;\">🚧 " + r + "</div>"; });
+  el.innerHTML = html;
+}
+
+function exportBackup() {
+  var data = {
+    meta:{ last_updated: TODAY_DATE, version:"1.0" },
+    totals:{ learning_hours: state.learn_hours, applications_sent: state.apps, interviews: SAVED_INTERVIEWS, learning_sessions_completed: state.sessions },
+    daily_history: SAVED_DAILY_HISTORY,
+    skills_sessions: SAVED_SKILLS
+  };
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "progress-tracker.json";
+  a.click();
+  showToast("Backup exported to Downloads!", "info");
+}
+
+function importBackup() {
+  var input = document.createElement("input");
+  input.type = "file"; input.accept = ".json";
+  input.onchange = function(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        var d = JSON.parse(ev.target.result);
+        if (d.totals) {
+          state.learn_hours = d.totals.learning_hours || 0;
+          state.apps = d.totals.applications_sent || 0;
+          state.sessions = d.totals.learning_sessions_completed || 0;
+          saveState(); updateStats();
+          showToast("Backup imported successfully!", "info");
+        }
+      } catch(err){ showToast("Import failed: invalid JSON","warn"); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  loadState();
+  buildCharts();
+  updateCruise();
+  renderRoadworks();
+});
+</script>
+</body>
+</html>

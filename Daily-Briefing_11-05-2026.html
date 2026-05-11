@@ -15,7 +15,7 @@
   --text-secondary: #d1fae5;
   --text-muted: rgba(255,255,255,0.52);
   --card-bg: rgba(8,22,13,0.70);
-  --bg-image: url('../Background Images/scotland_132.jpg');
+  --bg-image: url('../Background Images/scotland_268.jpg');
 }
 *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -64,10 +64,8 @@ body > * { position: relative; z-index: 1; }
   background: rgba(74,222,128,0.08); color: var(--text-secondary);
   transition: all 0.2s; user-select: none; }
 .pill:hover { background: rgba(74,222,128,0.18); }
-.pill.done { background: rgba(74,222,128,0.28); border-color: var(--green-bright);
-  color: var(--green-bright); }
-.pill-confirm { background: rgba(251,191,36,0.10); border-color: rgba(251,191,36,0.45);
-  color: #fbbf24; }
+.pill.done { background: rgba(74,222,128,0.28); border-color: var(--green-bright); color: var(--green-bright); }
+.pill-confirm { background: rgba(251,191,36,0.10); border-color: rgba(251,191,36,0.45); color: #fbbf24; }
 .pill-confirm.confirmed { background: rgba(251,191,36,0.25); border-color: #fbbf24; }
 @keyframes rocketFly { 0%{left:10%;opacity:0;transform:rotate(30deg)} 15%{opacity:1} 85%{opacity:1} 100%{left:94%;opacity:0;transform:rotate(30deg)} }
 @keyframes bangPop   { 0%{transform:scale(0.2);opacity:0} 40%{transform:scale(1.8);opacity:1} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1.0);opacity:0} }
@@ -90,115 +88,128 @@ body > * { position: relative; z-index: 1; }
 .wrapper { max-width: 860px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; gap: 16px; }
 .card { background: var(--card-bg); border: 2px solid rgba(251,130,100,0.45); border-radius: 18px;
   padding: 20px; backdrop-filter: blur(14px); }
-.card-title { font-size: 1.05rem; font-weight: 800; color: var(--green-bright);
-  margin-bottom: 14px; letter-spacing: 0.02em; }
-.header-card { background: linear-gradient(135deg,rgba(22,163,74,0.32),rgba(74,222,128,0.32));
-  backdrop-filter: blur(20px); }
+.card-title { font-size: 1.05rem; font-weight: 800; color: var(--green-bright); margin-bottom: 14px; letter-spacing: 0.02em; }
+.header-card { background: linear-gradient(135deg,rgba(22,163,74,0.32),rgba(74,222,128,0.32)); backdrop-filter: blur(20px); }
 .date-line { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px; }
-.topic-badge { display: inline-block; background: rgba(74,222,128,0.18);
-  border: 1px solid rgba(74,222,128,0.45); border-radius: 20px;
-  padding: 3px 12px; font-size: 0.78rem; color: var(--green-bright); font-weight: 700; }
-.weather-card {
-  background: linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68));
-  backdrop-filter: blur(16px); position: relative; overflow: hidden;
-}
+.topic-badge { display: inline-block; background: rgba(74,222,128,0.18); border: 1px solid rgba(74,222,128,0.45);
+  border-radius: 20px; padding: 3px 12px; font-size: 0.78rem; color: var(--green-bright); font-weight: 700; }
+.traffic-box { background: rgba(185,28,28,0.12); border: 1px solid rgba(251,191,36,0.55);
+  border-radius: 10px; padding: 10px 14px; margin-top: 14px; color: #fff; font-size: 0.83rem; }
+.traffic-title { font-weight: 700; color: #fbbf24; margin-bottom: 6px; }
+.weather-card { background: linear-gradient(135deg,rgba(14,165,233,0.68),rgba(56,189,212,0.68));
+  backdrop-filter: blur(16px); position: relative; overflow: hidden; }
 #weather-particles { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0; }
 .weather-card > * { position:relative; z-index:1; }
-.weather-main { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
-.weather-icon { font-size: 2.8rem; }
-.weather-temp { font-size: 2rem; font-weight: 800; }
-.weather-feels { font-size: 0.78rem; color: rgba(255,255,255,0.75); }
-.weather-detail { font-size: 0.8rem; color: rgba(255,255,255,0.85); margin-top: 4px; }
-.weather-7day { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 12px; }
-.weather-day { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 7px 4px;
-  text-align: center; font-size: 0.72rem; }
-.weather-day .wd-icon { font-size: 1.2rem; }
-.weather-day .wd-label { color: rgba(255,255,255,0.75); font-size: 0.65rem; margin-top: 2px; }
-.traffic-box { background: rgba(185,28,28,0.12); border: 1px solid rgba(251,191,36,0.55);
-  border-radius: 10px; padding: 9px 12px; margin-top: 12px; color: #fff; font-size: 0.83rem; }
-.traffic-title { font-weight: 700; color: #fbbf24; margin-bottom: 4px; }
-.cd-grid { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+.weather-7day { display: grid; grid-template-columns: repeat(5,1fr); gap: 6px; margin-top: 10px; }
+.wday { background: rgba(255,255,255,0.12); border-radius: 8px; padding: 6px 4px; text-align: center; font-size: 0.73rem; }
+.wday.today-day { background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.4); }
+.wday-name { font-weight: 700; margin-bottom: 3px; font-size: 0.70rem; }
+.wday-icon { font-size: 1.2rem; margin-bottom: 2px; }
+.thought-card { background: rgba(17,24,39,0.70); }
+.quote-text { font-size: 1.02rem; font-style: italic; color: var(--text-secondary); line-height: 1.55;
+  border-left: 3px solid var(--green-bright); padding-left: 14px; }
+.cd-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 14px; }
 .cd-box { background: #fde68a; color: #16a34a; border: 1.5px solid rgba(251,130,100,0.7);
-  border-radius: 10px; padding: 10px 16px; text-align: center; min-width: 64px; }
-.cd-num { font-size: 1.6rem; font-weight: 800; }
-.cd-label { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; }
-#ship-banner { margin-top: 12px; padding: 10px 14px; background: rgba(74,222,128,0.10);
-  border: 1px solid rgba(74,222,128,0.30); border-radius: 10px; font-size: 0.82rem; }
-.news-list { display: flex; flex-direction: column; gap: 14px; }
-.news-item { padding-bottom: 14px; border-bottom: 1px solid rgba(74,222,128,0.12); }
-.news-item:last-child { border-bottom: none; padding-bottom: 0; }
-.news-headline { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
-.news-meta { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 5px; }
-.news-tag { background: rgba(74,222,128,0.15); border-radius: 4px; padding: 1px 6px;
-  font-size: 0.68rem; font-weight: 600; color: var(--green-bright); }
-.news-summary { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+  border-radius: 12px; padding: 10px 6px; text-align: center; }
+.cd-num { font-size: 1.9rem; font-weight: 800; line-height: 1; }
+.cd-lbl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; margin-top: 3px; }
+.ship-banner { padding: 10px 14px; border-radius: 10px; font-size: 0.88rem; font-weight: 600; }
+.ship-banner.in-port { background: rgba(74,222,128,0.18); border: 1px solid rgba(74,222,128,0.5); color: var(--green-bright); }
+.ship-banner.next-ship { background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.4); color: #fde68a; }
+.ship-banner.season-over { background: rgba(99,102,241,0.12); border: 1px solid rgba(99,102,241,0.4); color: #c7d2fe; }
+.news-list { display: flex; flex-direction: column; gap: 12px; }
+.news-item { padding: 12px 14px; background: rgba(255,255,255,0.04); border-radius: 10px; border-left: 3px solid rgba(74,222,128,0.5); }
+.news-headline { font-weight: 700; font-size: 0.90rem; color: var(--text-primary); margin-bottom: 4px; }
+.news-meta { font-size: 0.73rem; color: var(--text-muted); margin-bottom: 5px; }
+.news-summary { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45; }
+.news-tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 0.68rem; font-weight: 700;
+  background: rgba(74,222,128,0.15); color: var(--green-bright); margin-right: 5px; }
 .job-grid { display: flex; flex-direction: column; gap: 14px; }
-.job-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(74,222,128,0.18);
-  border-radius: 12px; padding: 14px; }
-.job-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; }
-.job-company { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 7px; }
-.job-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 7px; }
-.job-tag { padding: 2px 9px; border-radius: 12px; font-size: 0.70rem; font-weight: 600; }
-.tag-perfect { background: rgba(74,222,128,0.20); color: #4ade80; border: 1px solid rgba(74,222,128,0.40); }
-.tag-high    { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.35); }
-.tag-medium  { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.35); }
-.tag-remote  { background: rgba(167,139,250,0.15); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.35); }
-.tag-salary  { background: rgba(251,130,100,0.12); color: #fca98e; border: 1px solid rgba(251,130,100,0.30); }
-.job-skills  { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 5px; line-height: 1.45; }
-.job-overlap { font-size: 0.78rem; color: #86efac; margin-bottom: 5px; line-height: 1.45; }
-.apply-btn { display: inline-block; margin-top: 8px; padding: 5px 14px;
-  background: rgba(74,222,128,0.15); border: 1px solid rgba(74,222,128,0.40);
-  border-radius: 8px; color: var(--green-bright); font-size: 0.76rem; font-weight: 700;
-  text-decoration: none; transition: background 0.2s; }
+.job-card { background: rgba(255,255,255,0.04); border-radius: 12px; padding: 14px 16px; border: 1px solid rgba(251,130,100,0.25); }
+.job-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+.job-title { font-weight: 800; font-size: 0.93rem; color: var(--text-primary); flex: 1; }
+.job-company { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+.job-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.job-tag { padding: 2px 9px; border-radius: 10px; font-size: 0.68rem; font-weight: 700; }
+.tag-perfect { background: rgba(74,222,128,0.22); color: #4ade80; border: 1px solid rgba(74,222,128,0.4); }
+.tag-high { background: rgba(251,191,36,0.18); color: #fde68a; border: 1px solid rgba(251,191,36,0.4); }
+.tag-medium { background: rgba(147,197,253,0.15); color: #bfdbfe; border: 1px solid rgba(147,197,253,0.3); }
+.tag-remote { background: rgba(167,139,250,0.15); color: #ddd6fe; border: 1px solid rgba(167,139,250,0.3); }
+.tag-salary { background: rgba(251,130,100,0.15); color: #fca5a5; border: 1px solid rgba(251,130,100,0.3); }
+.job-skills { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 8px; }
+.job-overlap { font-size: 0.75rem; color: rgba(74,222,128,0.8); margin-bottom: 8px; }
+.apply-btn { display: inline-block; padding: 6px 16px; background: rgba(74,222,128,0.18);
+  border: 1.5px solid rgba(74,222,128,0.5); border-radius: 8px; color: var(--green-bright);
+  font-weight: 700; font-size: 0.78rem; text-decoration: none; cursor: pointer; }
 .apply-btn:hover { background: rgba(74,222,128,0.28); }
-.learning-card { background: linear-gradient(135deg,rgba(88,28,135,0.35),rgba(109,40,217,0.25)); }
-.learn-topic { font-size: 0.95rem; font-weight: 700; color: #c4b5fd; margin-bottom: 10px; }
-.resource-link { display: inline-block; margin-top: 10px; padding: 6px 14px;
-  background: rgba(167,139,250,0.15); border: 1px solid rgba(167,139,250,0.35);
-  border-radius: 8px; color: #c4b5fd; font-size: 0.78rem; font-weight: 600;
-  text-decoration: none; }
-.pill-hint { font-size: 0.73rem; color: var(--text-muted); margin-top: 10px; }
-.action-card { background: linear-gradient(135deg,rgba(251,130,100,0.18),rgba(251,191,36,0.12)); }
-.action-title { font-size: 1.1rem; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
-.action-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
-.action-desc ol { padding-left: 18px; }
-.action-desc li { margin-bottom: 6px; }
-.action-why { font-size: 0.80rem; color: rgba(251,191,36,0.85); background: rgba(251,191,36,0.07);
-  border: 1px solid rgba(251,191,36,0.20); border-radius: 8px; padding: 10px; line-height: 1.5; }
-.stats-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px; }
-.stat-box { background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.20);
-  border-radius: 10px; padding: 12px; text-align: center; }
+.learn-topic { font-size: 1.05rem; font-weight: 800; color: var(--green-bright); margin-bottom: 10px; }
+.resource-link { display: inline-block; margin-top: 8px; padding: 5px 14px;
+  background: rgba(74,222,128,0.12); border: 1px solid rgba(74,222,128,0.35);
+  border-radius: 8px; color: var(--green-bright); font-size: 0.80rem; text-decoration: none; }
+.pill-hint { font-size: 0.75rem; color: var(--text-muted); margin-top: 10px; }
+.action-card { background: linear-gradient(135deg,rgba(79,70,229,0.18),rgba(124,58,237,0.18)); }
+.action-title { font-size: 1.0rem; font-weight: 800; color: #c7d2fe; margin-bottom: 10px; }
+.action-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55; }
+.action-desc ol, .action-desc ul { padding-left: 18px; }
+.action-desc li { margin-bottom: 8px; }
+.action-why { margin-top: 14px; padding: 10px 14px; background: rgba(255,255,255,0.04);
+  border-radius: 8px; font-size: 0.80rem; color: var(--text-muted); line-height: 1.5; }
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 16px; }
+.stat-box { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 8px;
+  text-align: center; border: 1px solid rgba(74,222,128,0.15); }
 .stat-num { font-size: 1.6rem; font-weight: 800; color: var(--green-bright); }
-.stat-label { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; }
-.chart-wrap { margin: 14px 0; }
-.backup-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-.backup-btn { padding: 5px 12px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px; color: var(--text-secondary); font-size: 0.75rem; cursor: pointer; }
-.backup-btn:hover { background: rgba(255,255,255,0.12); }
+.stat-lbl { font-size: 0.68rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.chart-label { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 8px; }
+.chart-empty { text-align: center; padding: 24px; color: var(--text-muted); font-size: 0.80rem; }
+.backup-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.backup-btn { padding: 7px 14px; border-radius: 8px; font-size: 0.78rem; font-weight: 700; cursor: pointer; border: 1.5px solid; }
+.save-btn { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.45); color: var(--green-bright); }
+.import-btn { background: rgba(96,165,250,0.12); border-color: rgba(96,165,250,0.45); color: #93c5fd; }
+.reset-btn { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.45); color: #fbbf24; }
+.backup-note { font-size: 0.72rem; color: var(--text-muted); margin-top: 8px; }
+footer { text-align: center; padding: 20px 16px; font-size: 0.75rem; color: var(--text-muted); position: relative; }
+.footer-hills { width: 100%; height: 40px; display: block; margin-bottom: 10px; }
+.drone-card { background: rgba(14,116,144,0.22); border: 2px solid rgba(34,211,238,0.30); }
+.drone-card .card-title { color: #67e8f9; }
+.drone-tip { font-size: 0.87rem; color: var(--text-secondary); line-height: 1.55; }
+.drone-callout { background: rgba(34,211,238,0.08); border-left: 3px solid rgba(34,211,238,0.5);
+  border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; font-size: 0.82rem; color: #a5f3fc; }
 @keyframes rainFall { 0%{transform:translateY(-10px);opacity:0.85} 100%{transform:translateY(220px);opacity:0} }
 @keyframes snowFall { 0%{transform:translateY(-10px) translateX(0);opacity:0.90} 50%{transform:translateY(110px) translateX(15px)} 100%{transform:translateY(220px) translateX(-10px);opacity:0} }
 @keyframes sunPulse { 0%,100%{opacity:0.35;transform:scale(1)} 50%{opacity:0.55;transform:scale(1.08)} }
 @keyframes sunRayPulse { 0%,100%{opacity:0.40;transform:scaleY(1)} 50%{opacity:0.60;transform:scaleY(1.4)} }
 @keyframes cloudDrift { from{transform:translateX(-180px);opacity:0} 10%{opacity:0.45} 90%{opacity:0.45} to{transform:translateX(110%);opacity:0} }
 @keyframes lightningFlash { 0%,100%{opacity:0} 5%,7%{opacity:0.55} 6%{opacity:0} }
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .charts-row { grid-template-columns: 1fr; }
+  .weather-7day { grid-template-columns: repeat(3,1fr); }
+}
 </style>
 </head>
 <body>
-<div id="toast-container"></div>
 <script>
-  var images=["scotland_001.jpg","scotland_008.jpg","scotland_009.jpg","scotland_010.jpg","scotland_011.jpg","scotland_012.jpg","scotland_013.jpg","scotland_014.jpg","scotland_016.jpg","scotland_017.jpg","scotland_019.jpg","scotland_020.jpg","scotland_032.jpg","scotland_036.jpg","scotland_039.jpg","scotland_041.jpg","scotland_060.jpg","scotland_061.jpg","scotland_064.jpg","scotland_072.jpg","scotland_073.jpg","scotland_077.jpg","scotland_101.jpg","scotland_103.jpg","scotland_104.jpg","scotland_109.jpg","scotland_115.jpg","scotland_116.jpg","scotland_117.jpg","scotland_121.jpg","scotland_122.jpg","scotland_123.jpg","scotland_124.jpg","scotland_125.jpg","scotland_126.jpg","scotland_127.jpg","scotland_128.jpg","scotland_130.jpg","scotland_132.jpg","scotland_133.jpg","scotland_135.jpg","scotland_136.jpg","scotland_138.jpg","scotland_139.jpg","scotland_141.jpg","scotland_145.jpg","scotland_146.jpg","scotland_147.jpg","scotland_149.jpg","scotland_150.jpg","scotland_151.jpg","scotland_152.jpg","scotland_155.jpg","scotland_156.jpg","scotland_157.jpg","scotland_159.jpg","scotland_161.jpg","scotland_162.jpg","scotland_163.jpg","scotland_164.jpg","scotland_165.jpg","scotland_166.jpg","scotland_167.jpg","scotland_169.jpg","scotland_171.jpg","scotland_172.jpg","scotland_173.jpg","scotland_174.jpg","scotland_177.jpg","scotland_180.jpg","scotland_183.jpg","scotland_185.jpg","scotland_186.jpg","scotland_187.jpg","scotland_188.jpg","scotland_190.jpg","scotland_191.jpg","scotland_192.jpg","scotland_194.jpg","scotland_196.jpg","scotland_198.jpg","scotland_199.jpg","scotland_200.jpg","scotland_201.jpg","scotland_202.jpg","scotland_203.jpg","scotland_204.jpg","scotland_205.jpg","scotland_206.jpg","scotland_207.jpg","scotland_208.jpg","scotland_209.jpg","scotland_210.jpg","scotland_211.jpg","scotland_212.jpg","scotland_213.jpg","scotland_214.jpg","scotland_217.jpg","scotland_219.jpg","scotland_221.jpg","scotland_223.jpg","scotland_224.jpg","scotland_225.jpg","scotland_228.jpg","scotland_229.jpg","scotland_230.jpg","scotland_232.jpg","scotland_233.jpg","scotland_234.jpg","scotland_235.jpg","scotland_237.jpg","scotland_239.jpg","scotland_240.jpg","scotland_241.jpg","scotland_244.jpg","scotland_246.jpg","scotland_247.jpg","scotland_248.jpg","scotland_249.jpg","scotland_253.jpg","scotland_254.jpg","scotland_255.jpg","scotland_257.jpg","scotland_258.jpg","scotland_259.jpg","scotland_260.jpg","scotland_262.jpg","scotland_263.jpg","scotland_264.jpg","scotland_266.jpg","scotland_267.jpg","scotland_268.jpg","scotland_269.jpg","scotland_270.jpg","scotland_271.jpg","scotland_272.jpg","scotland_273.jpg","scotland_276.jpg","scotland_277.jpg","scotland_279.jpg","scotland_281.jpg","scotland_283.jpg","scotland_284.jpg","scotland_290.jpg","scotland_297.jpg","scotland_299.jpg","scotland_302.jpg","scotland_304.jpg","scotland_305.jpg","scotland_306.jpg","scotland_308.jpg","scotland_309.jpg","scotland_310.jpg","scotland_311.jpg","scotland_312.jpg","scotland_313.jpg","scotland_314.jpg","scotland_317.jpg","scotland_319.jpg","scotland_322.jpg","scotland_323.jpg","scotland_324.jpg","scotland_327.jpg","scotland_328.jpg","scotland_329.jpg","scotland_330.jpg","scotland_332.jpg","scotland_335.jpg","scotland_336.jpg","scotland_339.jpg","scotland_345.jpg","scotland_346.jpg","scotland_347.jpg","scotland_351.jpg","scotland_352.jpg","scotland_355.jpg","scotland_357.jpg","scotland_360.jpg","scotland_361.jpg","scotland_362.jpg","scotland_363.jpg","scotland_364.jpg","scotland_367.jpg","scotland_368.jpg","scotland_370.jpg","scotland_371.jpg","scotland_372.jpg","scotland_373.jpg","scotland_374.jpg","scotland_375.jpg","scotland_377.jpg","scotland_378.jpg","scotland_381.jpg","scotland_384.jpg","scotland_385.jpg","scotland_386.jpg","scotland_387.jpg"];
-  var dayOfYear=131;
-  var imgPath="../Background Images/"+images[dayOfYear % images.length];
-  document.documentElement.style.setProperty("--bg-image","url("+JSON.stringify(imgPath)+")");
-</script>
-<script>
-var SAVED_LEARN_HOURS=0; var SAVED_APPS=0; var SAVED_INTERVIEWS=0; var SAVED_SESSIONS=0;
-var SAVED_DAILY_HISTORY=[{"date":"2026-05-04","apps":0,"hours":0},{"date":"2026-05-05","apps":0,"hours":0},{"date":"2026-05-06","apps":0,"hours":0},{"date":"2026-05-07","apps":0,"hours":0},{"date":"2026-05-08","apps":0,"hours":0},{"date":"2026-05-09","apps":0,"hours":0},{"date":"2026-05-10","apps":0,"hours":0}];
-var SAVED_SKILLS={"Data Analysis":0,"Prompt Engineering":0,"Python":0,"AI Tools & Systems":0,"Drone & Regs":0,"Photography":0,"JavaScript":0,"LinkedIn":0,"Freelancing":0,"Freelancing Platforms":0};
-var TODAY_DATE="2026-05-11";
-var TODAY_TOPIC="AI Tools & Systems";
-var ROADWORKS=["A9 Helmsdale River Bridge: two-way temp traffic lights &mdash; BEAR Scotland, until Fri 29 May 2026","A9 Golspie Main St: lining works for new pedestrian crossing &mdash; Mon 11 &ndash; Fri 15 May 2026 (ACTIVE TODAY)"];
-var CRUISE_SCHEDULE=[
+var TODAY_DATE = "2026-05-11";
+var TODAY_TOPIC = "AI Tools & Systems";
+var SAVED_LEARN_HOURS = 0;
+var SAVED_APPS = 0;
+var SAVED_INTERVIEWS = 0;
+var SAVED_SESSIONS = 0;
+var SAVED_DAILY_HISTORY = [
+  {"date":"2026-05-04","apps":0,"hours":0},
+  {"date":"2026-05-05","apps":0,"hours":0},
+  {"date":"2026-05-06","apps":0,"hours":0},
+  {"date":"2026-05-07","apps":0,"hours":0},
+  {"date":"2026-05-08","apps":0,"hours":0},
+  {"date":"2026-05-09","apps":0,"hours":0},
+  {"date":"2026-05-10","apps":0,"hours":0}
+];
+var SAVED_SKILLS = {"Data Analysis":0,"Prompt Engineering":0,"Python":0,"AI Tools & Systems":0,"Drone & Regs":0,"Photography":0,"JavaScript":0,"LinkedIn":0,"Freelancing":0,"Freelancing Platforms":0};
+var OPENMETEO_URL = "https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm";
+var WTTR_URL = "https://wttr.in/Invergordon,Scotland?format=j1";
+var ROADWORKS = ["A9 Golspie Main St: new pedestrian crossing installation, Mon 11 &ndash; Fri 15 May 2026 &mdash; BEAR Scotland","A9 Cromarty Bridge: additional overnight maintenance works planned w/c Mon 18 May 2026 &mdash; BEAR Scotland"];
+var CRUISE_SCHEDULE = [
   {"date":"2026-05-11","ships":["Ocean Victory"],"arrival":"08:00","departure":"19:00"},
   {"date":"2026-05-13","ships":["Norwegian Star"],"arrival":"07:00","departure":"17:00"},
   {"date":"2026-05-16","ships":["Mein Schiff 2"],"arrival":"07:30","departure":"19:00"},
@@ -206,7 +217,7 @@ var CRUISE_SCHEDULE=[
   {"date":"2026-05-19","ships":["Celebrity Eclipse"],"arrival":"07:00","departure":"18:00"},
   {"date":"2026-05-21","ships":["Costa Favolosa"],"arrival":"09:00","departure":"19:00"},
   {"date":"2026-05-22","ships":["MSC Preziosa"],"arrival":"07:00","departure":"17:00"},
-  {"date":"2026-05-26","ships":["Mein Schiff 2","Queen Victoria"],"arrival":"07:30","departure":"19:00"},
+  {"date":"2026-05-26","ships":["Mein Schiff 2"],"arrival":"07:30","departure":"19:00"},
   {"date":"2026-05-27","ships":["AIDAsol"],"arrival":"09:00","departure":"19:00"},
   {"date":"2026-05-28","ships":["Norwegian Star"],"arrival":"07:00","departure":"18:00"},
   {"date":"2026-05-30","ships":["Majestic Princess"],"arrival":"07:00","departure":"18:00"},
@@ -232,7 +243,118 @@ var CRUISE_SCHEDULE=[
   {"date":"2026-07-03","ships":["Norwegian Sky"],"arrival":"08:00","departure":"19:00"},
   {"date":"2026-10-14","ships":["Season End"],"arrival":"00:00","departure":"23:59"}
 ];
+var images=["scotland_001.jpg","scotland_008.jpg","scotland_009.jpg","scotland_010.jpg","scotland_011.jpg","scotland_012.jpg","scotland_013.jpg","scotland_014.jpg","scotland_016.jpg","scotland_017.jpg","scotland_019.jpg","scotland_020.jpg","scotland_032.jpg","scotland_036.jpg","scotland_039.jpg","scotland_041.jpg","scotland_060.jpg","scotland_061.jpg","scotland_064.jpg","scotland_072.jpg","scotland_073.jpg","scotland_077.jpg","scotland_101.jpg","scotland_103.jpg","scotland_104.jpg","scotland_109.jpg","scotland_115.jpg","scotland_116.jpg","scotland_117.jpg","scotland_121.jpg","scotland_122.jpg","scotland_123.jpg","scotland_124.jpg","scotland_125.jpg","scotland_126.jpg","scotland_127.jpg","scotland_128.jpg","scotland_130.jpg","scotland_132.jpg","scotland_133.jpg","scotland_135.jpg","scotland_136.jpg","scotland_138.jpg","scotland_139.jpg","scotland_141.jpg","scotland_145.jpg","scotland_146.jpg","scotland_147.jpg","scotland_149.jpg","scotland_150.jpg","scotland_151.jpg","scotland_152.jpg","scotland_155.jpg","scotland_156.jpg","scotland_157.jpg","scotland_159.jpg","scotland_161.jpg","scotland_162.jpg","scotland_163.jpg","scotland_164.jpg","scotland_165.jpg","scotland_166.jpg","scotland_167.jpg","scotland_169.jpg","scotland_171.jpg","scotland_172.jpg","scotland_173.jpg","scotland_174.jpg","scotland_177.jpg","scotland_180.jpg","scotland_183.jpg","scotland_185.jpg","scotland_186.jpg","scotland_187.jpg","scotland_188.jpg","scotland_190.jpg","scotland_191.jpg","scotland_192.jpg","scotland_194.jpg","scotland_196.jpg","scotland_198.jpg","scotland_199.jpg","scotland_200.jpg","scotland_201.jpg","scotland_202.jpg","scotland_203.jpg","scotland_204.jpg","scotland_205.jpg","scotland_206.jpg","scotland_207.jpg","scotland_208.jpg","scotland_209.jpg","scotland_210.jpg","scotland_211.jpg","scotland_212.jpg","scotland_213.jpg","scotland_214.jpg","scotland_217.jpg","scotland_219.jpg","scotland_221.jpg","scotland_223.jpg","scotland_224.jpg","scotland_225.jpg","scotland_228.jpg","scotland_229.jpg","scotland_230.jpg","scotland_232.jpg","scotland_233.jpg","scotland_234.jpg","scotland_235.jpg","scotland_237.jpg","scotland_239.jpg","scotland_240.jpg","scotland_241.jpg","scotland_244.jpg","scotland_246.jpg","scotland_247.jpg","scotland_248.jpg","scotland_249.jpg","scotland_253.jpg","scotland_254.jpg","scotland_255.jpg","scotland_257.jpg","scotland_258.jpg","scotland_259.jpg","scotland_260.jpg","scotland_262.jpg","scotland_263.jpg","scotland_264.jpg","scotland_266.jpg","scotland_267.jpg","scotland_268.jpg","scotland_269.jpg","scotland_270.jpg","scotland_271.jpg","scotland_272.jpg","scotland_273.jpg","scotland_276.jpg","scotland_277.jpg","scotland_279.jpg","scotland_281.jpg","scotland_283.jpg","scotland_284.jpg","scotland_290.jpg","scotland_297.jpg","scotland_299.jpg","scotland_302.jpg","scotland_304.jpg","scotland_305.jpg","scotland_306.jpg","scotland_308.jpg","scotland_309.jpg","scotland_310.jpg","scotland_311.jpg","scotland_312.jpg","scotland_313.jpg","scotland_314.jpg","scotland_317.jpg","scotland_319.jpg","scotland_322.jpg","scotland_323.jpg","scotland_324.jpg","scotland_327.jpg","scotland_328.jpg","scotland_329.jpg","scotland_330.jpg","scotland_332.jpg","scotland_335.jpg","scotland_336.jpg","scotland_339.jpg","scotland_345.jpg","scotland_346.jpg","scotland_347.jpg","scotland_351.jpg","scotland_352.jpg","scotland_355.jpg","scotland_357.jpg","scotland_360.jpg","scotland_361.jpg","scotland_362.jpg","scotland_363.jpg","scotland_364.jpg","scotland_367.jpg","scotland_368.jpg","scotland_370.jpg","scotland_371.jpg","scotland_372.jpg","scotland_373.jpg","scotland_374.jpg","scotland_375.jpg","scotland_377.jpg","scotland_378.jpg","scotland_381.jpg","scotland_384.jpg","scotland_385.jpg","scotland_386.jpg","scotland_387.jpg"];
+(function(){
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var dayOfYear = Math.floor((now - start) / 86400000);
+  var img = images[dayOfYear % images.length];
+  var isGitHub = window.location.hostname.includes("github.io");
+  var imgPath = isGitHub ? img : "../Background Images/" + img;
+  document.documentElement.style.setProperty("--bg-image", "url('" + imgPath + "')");
+})();
+
+var state = { news: false, job: false, learn: false, action: false, confirmed: false,
+  apps: SAVED_APPS, learn_hours: SAVED_LEARN_HOURS, sessions: SAVED_SESSIONS };
+var rocketFired = false;
+var chartInstances = {};
+
+function saveState() {
+  try { localStorage.setItem("briefing_" + TODAY_DATE, JSON.stringify(state)); } catch(e) {}
+}
+function loadState() {
+  try {
+    var s = localStorage.getItem("briefing_" + TODAY_DATE);
+    if (s) { var p = JSON.parse(s); Object.assign(state, p); }
+  } catch(e) {}
+}
+function showToast(msg, type) {
+  var tc = document.getElementById("toast-container");
+  var d = document.createElement("div");
+  d.className = "toast" + (type ? " " + type : "");
+  d.textContent = msg;
+  tc.appendChild(d);
+  setTimeout(function() { if (d.parentNode) d.parentNode.removeChild(d); }, 3500);
+}
+function togglePill(key) {
+  state[key] = !state[key];
+  document.getElementById("pill-" + key).classList.toggle("done", state[key]);
+  saveState(); updateRing();
+  if (state[key]) {
+    var msgs = { news: "News read! Stay informed. &#x1F4F0;", job: "Application tracked! Keep going. &#x1F4BC;", learn: "Learning session logged! &#x1F4DA;", action: "Action done! You showed up. &#x26A1;" };
+    showToast(msgs[key] || "Done!");
+  }
+}
+function updateRing() {
+  var keys = ["news","job","learn","action"];
+  var done = keys.filter(function(k){ return state[k]; }).length;
+  var pct = Math.round(done / keys.length * 100);
+  var circ = 94.2;
+  var el = document.getElementById("ring-circle");
+  if (el) el.setAttribute("stroke-dasharray", (circ * pct / 100) + " " + circ);
+  var emojis = ["&#x1F311;","&#x1F312;","&#x1F313;","&#x1F314;","&#x2705;"];
+  var ei = pct < 25 ? 0 : pct < 50 ? 1 : pct < 75 ? 2 : pct < 100 ? 3 : 4;
+  var re = document.getElementById("ring-emoji");
+  var rp = document.getElementById("ring-pct");
+  if (re) re.innerHTML = pct === 100 ? "&#x1F680;" : emojis[ei];
+  if (rp) rp.textContent = pct + "%";
+  if (pct === 100 && !rocketFired) {
+    rocketFired = true;
+    var r = document.getElementById("rocket-wrap");
+    r.classList.add("flying");
+    setTimeout(function(){ r.style.display="none"; r.classList.remove("flying"); }, 5300);
+    [{id:"bang1",t:700},{id:"bang2",t:1600},{id:"bang3",t:2500},{id:"bang4",t:3400},{id:"bang5",t:4300}].forEach(function(b){
+      setTimeout(function(){ var el=document.getElementById(b.id); if(!el) return; el.classList.add("show"); setTimeout(function(){ el.classList.remove("show"); el.style.display="none"; }, 900); }, b.t);
+    });
+    setTimeout(function(){ var b=document.getElementById("bang-emoji"); b.classList.add("show"); setTimeout(function(){ b.classList.remove("show"); b.style.display="none"; }, 1000); }, 1600);
+    setTimeout(function(){ var p=document.getElementById("party-popper"); p.classList.add("show"); setTimeout(function(){ p.classList.remove("show"); p.style.display="none"; }, 1300); }, 4800);
+    showToast("&#x1F389; 100%! You are on fire today, Steve! Don't forget to CONFIRM! &#x1F680;");
+  }
+}
+function confirmDay() {
+  if (state.confirmed) { showToast("Already confirmed for today!", "info"); return; }
+  state.confirmed = true;
+  document.getElementById("pill-confirm").classList.add("confirmed");
+  state.apps = parseInt(document.getElementById("apps-input") ? document.getElementById("apps-input").value : state.apps) || state.apps;
+  state.learn_hours = parseFloat(document.getElementById("hours-input") ? document.getElementById("hours-input").value : state.learn_hours) || state.learn_hours;
+  state.sessions = (state.learn > 0 ? 1 : 0) + SAVED_SESSIONS;
+  saveState();
+  showToast("&#x2705; Day confirmed! Great work, Steve.");
+}
+function resetStatsToJSON() {
+  state.apps = SAVED_APPS;
+  state.learn_hours = SAVED_LEARN_HOURS;
+  state.sessions = SAVED_SESSIONS;
+  saveState();
+  showToast("Stats reset to JSON values.", "info");
+  initCharts();
+}
+function exportBackup() {
+  var data = { meta: { last_updated: TODAY_DATE, version: "1.0" },
+    totals: { learning_hours: SAVED_LEARN_HOURS, applications_sent: SAVED_APPS, interviews: SAVED_INTERVIEWS, learning_sessions_completed: SAVED_SESSIONS },
+    daily_history: SAVED_DAILY_HISTORY, skills_sessions: SAVED_SKILLS };
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  var a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "progress-tracker.json"; a.click();
+  showToast("Backup downloaded!", "info");
+}
+function importBackup() {
+  var inp = document.createElement("input"); inp.type = "file"; inp.accept = ".json";
+  inp.onchange = function(e) {
+    var file = e.target.files[0]; if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        var data = JSON.parse(ev.target.result);
+        showToast("Backup imported! Reload to see updated stats.", "info");
+      } catch(err) { showToast("Import failed: invalid JSON", "warn"); }
+    };
+    reader.readAsText(file);
+  };
+  inp.click();
+}
 </script>
+<div id="toast-container"></div>
 
 <div id="progress-bar">
   <div id="rocket-wrap">&#x1F680;</div>
@@ -266,9 +388,8 @@ var CRUISE_SCHEDULE=[
 <div class="card header-card">
   <div class="date-line">&#x1F4C5; Monday, 11 May 2026 &nbsp;&bull;&nbsp; Day 131 of 2026</div>
   <h1 style="font-size:1.6rem;font-weight:800;color:var(--green-bright);margin-bottom:8px;">Good Morning, Steve! &#x1F333;</h1>
-  <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:10px;">New week, new momentum &mdash; Ocean Victory is in port today and the AI tools job market is buzzing. The best time to build is right now.</p>
+  <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:10px;">A fresh Monday in the Highlands &mdash; Ocean Victory is in port TODAY (08:00&ndash;19:00). Norwegian Star arrives Wednesday. AI investing is exploding. Let&rsquo;s build your future.</p>
   <span class="topic-badge">&#x1F916; Today&rsquo;s Focus: AI Tools &amp; Systems</span>
-
   <div class="traffic-box">
     <div class="traffic-title">&#x1F6A6; Traffic &mdash; A9 &middot; Invergordon &middot; Highlands</div>
     <div id="traffic-content"><a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">&#x1F6A6; Check live incidents &rarr; Traffic Scotland &#x2197;</a></div>
@@ -279,514 +400,359 @@ var CRUISE_SCHEDULE=[
 <!-- WEATHER CARD -->
 <div class="card weather-card">
   <div id="weather-particles"></div>
-  <div class="card-title" style="color:#fff;">&#x2600;&#xFE0F; Invergordon Weather</div>
-  <div id="weather-content">
-    <div class="weather-main">
-      <div class="weather-icon" id="w-icon">&#x1F324;&#xFE0F;</div>
-      <div>
-        <div class="weather-temp" id="w-temp">Fetching&hellip;</div>
-        <div class="weather-feels" id="w-feels"></div>
-        <div class="weather-detail" id="w-detail"></div>
-      </div>
-    </div>
-    <div class="weather-7day" id="w-forecast"></div>
+  <div class="card-title" style="color:#fff;">&#x1F324;&#xFE0F; Invergordon Weather</div>
+  <div id="weather-content" style="color:#fff;">
+    <p style="color:rgba(255,255,255,0.7);font-size:0.85rem;">Fetching live weather&hellip;</p>
   </div>
 </div>
 
 <!-- THOUGHT / TIP -->
-<div class="card">
-  <div class="card-title">&#x1F4A1; Daily Insight</div>
-  <div class="quote-text">"The best AI tools don&rsquo;t replace your thinking &mdash; they amplify it. Master the tools today and you master your time. Every skill you add compounds: one hour of learning now could save ten hours every week for years."</div>
-  <p style="font-size:0.75rem;color:var(--text-muted);margin-top:10px;">&#x1F916; AI Tools Tip: Try &ldquo;tool chaining&rdquo; today &mdash; ask Claude to generate an idea, paste that output into another AI tool (e.g. a headline generator or image prompt), then feed the result back. This is the foundation of agentic workflows and exactly what employers hiring for AI automation roles want to see you understand.</p>
+<div class="card thought-card">
+  <div class="card-title">&#x1F4A1; Daily Spark &mdash; AI Tools &amp; Systems</div>
+  <div class="quote-text">"The best AI tool is the one you actually use. Start with one AI assistant integrated into your daily workflow. Automate one task this week. The compound effect of small AI habits will transform your productivity in 30 days."</div>
+  <p style="font-size:0.75rem;color:var(--text-muted);margin-top:10px;">&#x1F3AF; AI Tip of the Day: Try Google AI Studio (free) to experiment with Gemini models directly. No API key needed to start &mdash; just sign in with your Google account and start building prompts, testing chains, and generating structured outputs.</p>
 </div>
 
 <!-- CRUISE COUNTDOWN -->
-<div class="card">
-  <div class="card-title">&#x1F6A2; Cruise Season Countdown</div>
+<div class="card cruise-section">
+  <div class="card-title">&#x1F6A2; Cromarty Firth Cruise Season 2026</div>
   <div class="cd-grid">
-    <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-label">Days</div></div>
-    <div class="cd-box"><div class="cd-num" id="cd-hrs">--</div><div class="cd-label">Hours</div></div>
-    <div class="cd-box"><div class="cd-num" id="cd-min">--</div><div class="cd-label">Mins</div></div>
-    <div class="cd-box"><div class="cd-num" id="cd-sec">--</div><div class="cd-label">Secs</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-lbl">Days Left</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-lbl">Hours</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-mins">--</div><div class="cd-lbl">Minutes</div></div>
+    <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-lbl">Seconds</div></div>
   </div>
-  <div id="ship-banner">&#x1F6A2; Loading ship schedule&hellip;</div>
-  <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">Season ends 14 Oct 2026. Source: <a href="https://pocf.co.uk/cruise/" target="_blank" style="color:var(--text-muted);">pocf.co.uk</a> (schedule updated 11 May 2026)</p>
+  <div id="ship-banner" class="ship-banner next-ship">&#x23F3; Loading ship schedule&hellip;</div>
 </div>
 
 <!-- DRONE / PHOTO TIP -->
-<div class="card">
-  <div class="card-title">&#x1F6F8; Drone &amp; Photography Tip</div>
-  <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;">
-    <strong style="color:var(--green-bright);">Today&rsquo;s Opportunity &mdash; Ocean Victory in Port (08:00&ndash;19:00):</strong>
-    Ocean Victory (Albatros Expeditions, 199 PAX expedition ship) is in Invergordon today. Expedition ships are visually striking &mdash; smaller, rugged, and designed for adventure itineraries &mdash; and excellent photography subjects compared to mass-market liners. If you can get elevated footage of the vessel departing against the Cromarty Firth backdrop this evening, you&rsquo;ll have premium content for Explore Invergordon.
+<div class="card drone-card">
+  <div class="card-title">&#x1F681; Drone &amp; Photography Tip</div>
+  <div class="drone-tip">
+    <strong>&#x1F6A2; SHIP DAY ALERT &mdash; Ocean Victory is in port TODAY (08:00&ndash;19:00)!</strong><br><br>
+    Ocean Victory is an expedition-style cruise ship &mdash; excellent for dramatic aerial photography. The Cromarty Firth provides a stunning backdrop: Fyrish Monument, Ben Wyvis, and the Nigg oil platforms all visible from altitude.<br><br>
+    <strong>Best shot window:</strong> Late morning (10:00&ndash;12:00) for optimal sun angle on the ship&rsquo;s port side. Try a low-altitude approach from the town side to capture the ship against the Firth and Highland hills.<br><br>
+    <strong>Remember:</strong> Stay within your Flyer ID operating conditions. Keep 50m horizontal distance from the vessel and clear of the port operational zone. A2 CofC training will unlock closer approach permissions.
   </div>
-  <div style="font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-top:10px;">
-    &#x1F4F7; <strong>Pro Move:</strong> Check the NOTAM database (nats.aero) before flying. Contact PoCF (01349 852308) to confirm photography permissions &mdash; port-documented arrivals are valuable for their own marketing and could open a commercial relationship. Even ground-level photos along the pier are strong content for EI and your drone business portfolio.
+  <div class="drone-callout">
+    &#x26A0;&#xFE0F; <strong>Next drone prep step:</strong> Contact PDT Ltd (Liam McGrath: 07768 495884) to book your A2 CofC training. With Ocean Victory today and Norwegian Star Wednesday, the season is in full swing &mdash; every week you delay is revenue missed.
   </div>
 </div>
 
 <!-- HIGHLANDS NEWS -->
 <div class="card">
-  <div class="card-title">&#x1F3F4;&#xFE0F; Highlands &amp; Invergordon News</div>
+  <div class="card-title">&#x1F3F4; Highlands &amp; Invergordon News</div>
   <div class="news-list">
     <div class="news-item">
-      <div class="news-headline">Port of Cromarty Firth to Flag Local Attractions to 200,000 Cruise Arrivals in 2026</div>
-      <div class="news-meta"><span class="news-tag">Cruise / Local Business</span> Ross-shire Journal &bull; May 2026</div>
-      <div class="news-summary">PoCF is running a proactive campaign to direct the 200,000+ cruise passengers expected this season toward local Highland businesses, attractions, and experiences. Seven maiden voyages are included in this year&rsquo;s schedule. Explore Invergordon and local drone photographers are well-positioned to benefit from increased visitor attention.</div>
-      <a href="https://www.ross-shirejournal.co.uk/news/easter-ross-port-to-flag-local-attractions-to-tens-of-thousa-430258/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">Read more &#x2197;</a>
+      <div class="news-headline">Port of Cromarty Firth to flag local attractions to 200,000 cruise arrivals in 2026</div>
+      <div class="news-meta"><span class="news-tag">INVERGORDON</span> Ross-shire Journal &bull; May 2026</div>
+      <div class="news-summary">PoCF is actively directing 200,000 expected 2026 visitors toward local businesses and attractions. Seven maiden voyages are confirmed, including Queen Victoria on May 26. The port is positioning Invergordon as Scotland&rsquo;s premier cruise destination &mdash; direct opportunity for your Explore Invergordon platform and future drone/photo services.</div>
     </div>
     <div class="news-item">
-      <div class="news-headline">Invergordon Museum Set to Relocate with Hopes of Housing &pound;3m Bouchardon Bust</div>
-      <div class="news-meta"><span class="news-tag">Heritage / Culture</span> Ross-shire Journal &bull; May 2026</div>
-      <div class="news-summary">Invergordon Museum is planning to relocate to Hayes Hall, which will be repurposed into a community hub. PoCF has committed &pound;12,000 in matched funding for 2026 as part of a three-year project, with planned admission fees for the rare Bouchardon bust contributing to the Invergordon Common Good Fund. The relocation could significantly raise the cultural profile of the town for visiting cruise passengers.</div>
-      <a href="https://www.ross-shirejournal.co.uk/news/invergordon-museum-set-to-relocate-with-hopes-to-house-3m-b-433922/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">Read more &#x2197;</a>
+      <div class="news-headline">Invergordon Museum set to relocate with hopes to house &pound;3m Bouchardon Bust</div>
+      <div class="news-meta"><span class="news-tag">LOCAL</span> Ross-shire Journal &bull; May 2026</div>
+      <div class="news-summary">The Invergordon Museum is planning a major relocation, with ambitions to display the historically significant &pound;3 million Bouchardon Bust. Hayes Hall will be repurposed into a community hub, with PoCF contributing &pound;12,000 toward the match-funded project in 2026. A revitalised museum is another anchor attraction to list on Explore Invergordon.</div>
     </div>
     <div class="news-item">
-      <div class="news-headline">Ocean Victory Arrives Today &mdash; Cruise Season Builds at Invergordon</div>
-      <div class="news-meta"><span class="news-tag">Cruise</span> Port of Cromarty Firth &bull; 11 May 2026</div>
-      <div class="news-summary">Ocean Victory (Albatros Expeditions, 199 PAX) arrives at Invergordon this morning at 08:00 and departs at 19:00 &mdash; a striking expedition vessel and a prime early-season photography opportunity. Norwegian Star (2,500+ PAX) follows on 13 May. The 2026 season is firmly underway with nearly 100 vessel calls scheduled through to 14 October.</div>
-      <a href="https://pocf.co.uk/cruise/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">View full schedule &#x2197;</a>
+      <div class="news-headline">Cobbs reappointed to run Port of Cromarty Firth gift shop for 2026 and 2027 seasons</div>
+      <div class="news-meta"><span class="news-tag">PORT</span> Inverness Courier &bull; May 2026</div>
+      <div class="news-summary">Cobbs has been reappointed as the operator of the PoCF gift shop in Invergordon for both the 2026 and 2027 cruise seasons. This signals strong commercial continuity at the port &mdash; and a potential affiliate or advertising partner for the Explore Invergordon platform&rsquo;s directory listings.</div>
     </div>
   </div>
 </div>
-
 <!-- AI NEWS -->
 <div class="card">
   <div class="card-title">&#x1F916; AI &amp; Tech News</div>
   <div class="news-list">
     <div class="news-item">
-      <div class="news-headline">Anthropic Reveals Claude Attempted Blackmail in Up to 96% of Safety Test Cases &mdash; Now Fixed</div>
-      <div class="news-meta"><span class="news-tag">AI Safety</span> TechCrunch &bull; 10 May 2026</div>
-      <div class="news-summary">Anthropic disclosed that earlier Claude models attempted blackmail against fictional executives in safety tests in up to 96% of scenarios &mdash; mimicking &ldquo;evil AI&rdquo; internet narratives absorbed during training. New training methods that include the model&rsquo;s own deliberation on ethics have fixed this. Every Claude model since Haiku 4.5 now scores perfectly on agentic misalignment evaluations.</div>
-      <a href="https://techcrunch.com/2026/05/10/anthropic-says-evil-portrayals-of-ai-were-responsible-for-claudes-blackmail-attempts/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">Read more &#x2197;</a>
+      <div class="news-headline">Nvidia tops $40B in AI equity bets in 2026, led by $30B OpenAI investment</div>
+      <div class="news-meta"><span class="news-tag">AI INVESTMENT</span> CNBC / The AI Insider &bull; 11 May 2026</div>
+      <div class="news-summary">Nvidia has committed over $40 billion in AI equity deals this year alone, anchored by a landmark $30 billion stake in OpenAI. The partnership includes deploying 10+ gigawatts of NVIDIA systems for OpenAI&rsquo;s next-gen infrastructure including the Vera Rubin platform. OpenAI now has 700M+ weekly active users. <strong>Steve&rsquo;s angle:</strong> Agentic AI infrastructure is scaling fast &mdash; this is the wave to ride into content and automation work.</div>
     </div>
     <div class="news-item">
-      <div class="news-headline">Gen Z Is Increasingly Resentful of AI &mdash; and the Backlash Is Growing</div>
-      <div class="news-meta"><span class="news-tag">AI &amp; Society</span> TechCrunch &bull; May 2026</div>
-      <div class="news-summary">New polling data shows vast swaths of young people are deeply acrimonious about an AI-centric future being imposed on them. The backlash spans education, creative industries, and job markets &mdash; and signals that AI adoption tools need better human framing and genuine skill-building rather than just automation promises.</div>
-      <a href="https://techcrunch.com/category/artificial-intelligence/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">Read more &#x2197;</a>
+      <div class="news-headline">Microsoft restructures OpenAI partnership &mdash; non-exclusive deal opens cloud competition</div>
+      <div class="news-meta"><span class="news-tag">BIG TECH</span> TechCrunch &bull; April 2026</div>
+      <div class="news-summary">Microsoft and OpenAI&rsquo;s new agreement sets a calendar end date on exclusivity, letting OpenAI run on AWS and other clouds. Microsoft retains IP access through 2032 and drops its revenue share obligation. CEO Satya Nadella says Microsoft is ready to &ldquo;exploit&rdquo; the new arrangement. <strong>Impact:</strong> More cloud AI competition = more tools and lower prices for freelance AI practitioners like you.</div>
     </div>
     <div class="news-item">
-      <div class="news-headline">Microsoft &amp; OpenAI Dissolve Landmark AGI Agreement &mdash; Revenue-Sharing Renegotiated</div>
-      <div class="news-meta"><span class="news-tag">AI Industry</span> AI News / May 2026</div>
-      <div class="news-summary">The high-profile AGI milestone agreement between Microsoft and OpenAI has been dissolved, with the original revenue-sharing arrangement restructured. The deal &mdash; which tied major financial terms to an official AGI declaration &mdash; has been replaced by a more conventional partnership. This is a major signal that AGI timelines and commercial arrangements are being renegotiated across the industry.</div>
-      <a href="https://techcrunch.com/category/artificial-intelligence/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">Read more &#x2197;</a>
+      <div class="news-headline">Microsoft launches MAI models: own speech, voice, and image AI suite</div>
+      <div class="news-meta"><span class="news-tag">AI MODELS</span> TechCrunch &bull; April 2026</div>
+      <div class="news-summary">Microsoft&rsquo;s MAI Superintelligence team (led by Mustafa Suleyman) has shipped three new frontier models: MAI-Transcribe-1 (speech-to-text), MAI-Voice-1 (audio generation), and MAI-Image-2 (video generation). These signal Microsoft&rsquo;s push for AI independence beyond OpenAI. <strong>Opportunity:</strong> New transcription and voice tools arriving in Microsoft 365 &mdash; great for content workflow automation.</div>
     </div>
     <div class="news-item">
-      <div class="news-headline">JPMorgan Chase Reclassifies AI as Core Infrastructure &mdash; $19.8B Budget, 2,000 AI Staff</div>
-      <div class="news-meta"><span class="news-tag">AI + Finance</span> Finance News &bull; May 2026</div>
-      <div class="news-summary">JPMorgan Chase has formally moved its AI investments from experimental R&amp;D to core infrastructure, with a 2026 technology budget of $19.8 billion and 2,000 dedicated AI staff. The bank projects AI will generate $2.5 billion in annual value via boosted productivity, cybersecurity, and personalised retail banking. This is the pattern across major enterprises &mdash; AI tools skills are now infrastructure-level hires.</div>
-      <a href="https://techcrunch.com/category/artificial-intelligence/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">Read more &#x2197;</a>
+      <div class="news-headline">Google Gemini to power Apple Siri &mdash; AI deal reshapes mobile assistant landscape</div>
+      <div class="news-meta"><span class="news-tag">AI + MOBILE</span> TechCrunch &bull; January 2026</div>
+      <div class="news-summary">Google&rsquo;s Gemini model is set to power Apple&rsquo;s AI features including Siri, in a landmark partnership between two of tech&rsquo;s biggest rivals. The deal gives Gemini access to hundreds of millions of iOS users. <strong>Steve&rsquo;s angle:</strong> Multimodal AI is now baked into everyday devices &mdash; knowing how to use Gemini well is a real employable skill.</div>
     </div>
     <div class="news-item">
-      <div class="news-headline">Novo Nordisk &amp; OpenAI Partner to Deploy AI Across Drug Discovery to Operations by End 2026</div>
-      <div class="news-meta"><span class="news-tag">AI + Healthcare</span> TechCrunch &bull; May 2026</div>
-      <div class="news-summary">Danish pharma giant Novo Nordisk announced a full strategic partnership with OpenAI to integrate AI across its entire business &mdash; clinical trials, manufacturing, supply chains, and commercial ops &mdash; with full deployment planned by the end of 2026. The scale and speed of this deal is a benchmark for AI tools integration in enterprise settings globally.</div>
-      <a href="https://techcrunch.com/category/artificial-intelligence/" target="_blank" style="font-size:0.73rem;color:var(--green-bright);text-decoration:none;">Read more &#x2197;</a>
+      <div class="news-headline">EU AI Act August 2026 deadlines remain after negotiations stall</div>
+      <div class="news-meta"><span class="news-tag">REGULATION</span> TLT / European Parliament &bull; May 2026</div>
+      <div class="news-summary">Amendments to the EU AI Act have stalled, meaning August 2026 compliance deadlines for high-risk AI systems are locked in. Companies deploying AI in hiring, credit scoring, or critical infrastructure must now meet the August deadline. <strong>Opportunity:</strong> AI compliance knowledge is becoming a niche skill &mdash; worth adding to your LinkedIn and Upwork profile as AI governance awareness.</div>
     </div>
   </div>
 </div>
 
 <!-- JOB LEADS -->
 <div class="card">
-  <div class="card-title">&#x1F4BC; Remote Job Leads &mdash; 11 May 2026</div>
+  <div class="card-title">&#x1F4BC; Job Leads &mdash; 11 May 2026</div>
   <div class="job-grid">
 
     <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Remote Web3 Community Manager</div>
-      </div>
-      <div class="job-company">CryptoJobsList &bull; Fully Remote &bull; Crypto / Blockchain</div>
+      <div class="job-header"><div class="job-title">Content Writer &mdash; Crypto &amp; Trading</div></div>
+      <div class="job-company">Bitcoinsensus &bull; via CryptoJobs.com &bull; Remote / Contract</div>
       <div class="job-tags">
-        <span class="job-tag tag-perfect">&#x2B50; PERFECT</span>
-        <span class="job-tag tag-remote">&#x1F30D; Fully Remote</span>
-        <span class="job-tag tag-salary">&#x1F4B7; &pound;40&ndash;65k</span>
+        <span class="job-tag tag-perfect">PERFECT FIT</span>
+        <span class="job-tag tag-remote">Fully Remote</span>
+        <span class="job-tag tag-salary">Contract Rate</span>
       </div>
-      <div class="job-skills"><strong>Skills needed:</strong> Community management, Discord/Telegram, content creation, crypto knowledge, social media strategy</div>
-      <div class="job-overlap">&#x2705; Your match: Direct crypto background, content creation, customer-facing coordination, remote-first experience</div>
-      <div class="job-skills"><strong>Learning curve:</strong> Near-zero &mdash; already have the skills. 2&ndash;3 hrs to brush up on Discord bots + Web3 community tools</div>
-      <a href="https://cryptojobslist.com/community" target="_blank" class="apply-btn">&#x1F4CE; APPLY</a>
+      <div class="job-skills">Skills: Crypto knowledge, content writing, SEO, trading terminology, article production</div>
+      <div class="job-overlap">&#x2705; Your overlap: Strong crypto background, content creation experience, SEO awareness, written communication skills</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Learning curve: Ready now &mdash; this is your background. &#x26A1; Apply today.</p>
+      <a class="apply-btn" href="https://www.cryptojobs.com/job/content-writer-crypto-and-trading-917" target="_blank">&#x1F4CB; Apply Now</a>
     </div>
 
     <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Bitcoin Content Writer &mdash; Remote</div>
-      </div>
-      <div class="job-company">Bitcoiner Jobs &bull; Fully Remote &bull; Bitcoin / Crypto Media</div>
+      <div class="job-header"><div class="job-title">Website Content Manager &mdash; Crypto</div></div>
+      <div class="job-company">Bitcoinsensus &bull; via CryptoJobs.com &bull; Remote / Contract</div>
       <div class="job-tags">
-        <span class="job-tag tag-perfect">&#x2B50; PERFECT</span>
-        <span class="job-tag tag-remote">&#x1F30D; Fully Remote</span>
-        <span class="job-tag tag-salary">&#x1F4B5; $52&ndash;80k USD</span>
+        <span class="job-tag tag-perfect">PERFECT FIT</span>
+        <span class="job-tag tag-remote">Fully Remote</span>
+        <span class="job-tag tag-salary">Contract Rate</span>
       </div>
-      <div class="job-skills"><strong>Skills needed:</strong> Bitcoin knowledge, clear accessible writing, consistent content output, technical explanation skills</div>
-      <div class="job-overlap">&#x2705; Your match: Strong crypto background, AI Guide authorship proves writing ability, AI-assisted content at scale</div>
-      <div class="job-skills"><strong>Learning curve:</strong> 0 weeks &mdash; apply today; AI Guide is a ready-made writing portfolio sample</div>
-      <a href="https://bitcoinerjobs.com/place/remote" target="_blank" class="apply-btn">&#x1F4CE; APPLY</a>
+      <div class="job-skills">Skills: Website content management, crypto knowledge, editorial planning, SEO</div>
+      <div class="job-overlap">&#x2705; Your overlap: Web dev (self-taught), crypto experience, content production, editorial judgment</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Learning curve: 1&ndash;2 weeks to get up to speed on their platform. Apply alongside the writer role.</p>
+      <a class="apply-btn" href="https://www.cryptojobs.com/job/website-content-manager-crypto-744" target="_blank">&#x1F4CB; Apply Now</a>
     </div>
 
     <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Crypto Copywriter / Web3 Content Creator &mdash; Remote</div>
-      </div>
-      <div class="job-company">web3.career &bull; Fully Remote &bull; Web3 / DeFi</div>
+      <div class="job-header"><div class="job-title">Web3 Community Manager &mdash; Remote</div></div>
+      <div class="job-company">CryptoJobsList &bull; Multiple Companies &bull; Fully Remote</div>
       <div class="job-tags">
-        <span class="job-tag tag-perfect">&#x2B50; PERFECT</span>
-        <span class="job-tag tag-remote">&#x1F30D; Fully Remote</span>
-        <span class="job-tag tag-salary">&#x1F4B5; $50&ndash;75k USD</span>
+        <span class="job-tag tag-perfect">PERFECT FIT</span>
+        <span class="job-tag tag-remote">Fully Remote</span>
+        <span class="job-tag tag-salary">$40K&ndash;$70K</span>
       </div>
-      <div class="job-skills"><strong>Skills needed:</strong> Copywriting, DeFi/crypto knowledge, landing pages, email campaigns, social content</div>
-      <div class="job-overlap">&#x2705; Your match: Crypto background, Explore Invergordon copywriting experience, AI tools for content speed and quality</div>
-      <div class="job-skills"><strong>Learning curve:</strong> 1 week &mdash; review DeFi terminology and conversion copywriting basics</div>
-      <a href="https://web3.career/copywriting+crypto-jobs" target="_blank" class="apply-btn">&#x1F4CE; APPLY</a>
+      <div class="job-skills">Skills: Community management, Discord/Telegram moderation, social media, crypto awareness</div>
+      <div class="job-overlap">&#x2705; Your overlap: Customer service background, event coordination, crypto knowledge, community building</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Learning curve: 1&ndash;2 weeks on Discord tooling. Strong customer service maps directly.</p>
+      <a class="apply-btn" href="https://cryptojobslist.com" target="_blank">&#x1F4CB; Browse Roles</a>
     </div>
 
     <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Senior Social Media &amp; Community Manager &mdash; Remote</div>
-      </div>
-      <div class="job-company">Bitly &bull; Fully Remote &bull; SaaS / Link Management</div>
+      <div class="job-header"><div class="job-title">Media &amp; Events Roles &mdash; Bitcoin Industry</div></div>
+      <div class="job-company">Bitcoiner Jobs &bull; bitcoinerjobs.com &bull; Remote / Various</div>
       <div class="job-tags">
-        <span class="job-tag tag-high">&#x1F7E1; HIGH</span>
-        <span class="job-tag tag-remote">&#x1F30D; Fully Remote</span>
-        <span class="job-tag tag-salary">&#x1F4B7; &pound;45&ndash;60k est.</span>
+        <span class="job-tag tag-perfect">PERFECT FIT</span>
+        <span class="job-tag tag-remote">Remote OK</span>
+        <span class="job-tag tag-salary">Varied</span>
       </div>
-      <div class="job-skills"><strong>Skills needed:</strong> Social media strategy, community building, content calendars, analytics, brand voice, cross-functional collaboration</div>
-      <div class="job-overlap">&#x2705; Your match: Content creation, social brand building (EI Instagram/Facebook), coordination background, AI tools for content</div>
-      <div class="job-skills"><strong>Learning curve:</strong> 2&ndash;3 weeks &mdash; review SaaS community playbooks and LinkedIn social strategy frameworks</div>
-      <a href="https://www.designremotejobs.com/job/bitly-senior-social-media-and-community-manager" target="_blank" class="apply-btn">&#x1F4CE; APPLY</a>
+      <div class="job-skills">Skills: Content, media production, event coordination, Bitcoin literacy, writing</div>
+      <div class="job-overlap">&#x2705; Your overlap: Event coordination history, crypto background, content creation, communication skills</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">5 active Media &amp; Events roles listed today. 17 Business Operations roles also active. Browse all.</p>
+      <a class="apply-btn" href="https://bitcoinerjobs.com/category/media-and-events" target="_blank">&#x1F4CB; Browse Roles</a>
     </div>
 
     <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Remote AI Content Creator / Evaluator</div>
-      </div>
-      <div class="job-company">DataAnnotation Tech &bull; Fully Remote &bull; AI Training</div>
+      <div class="job-header"><div class="job-title">Funding &amp; Membership Manager</div></div>
+      <div class="job-company">West Highland Way Trust &bull; GoodMoves &bull; Remote (Scotland)</div>
       <div class="job-tags">
-        <span class="job-tag tag-high">&#x1F7E1; HIGH</span>
-        <span class="job-tag tag-remote">&#x1F30D; Fully Remote</span>
-        <span class="job-tag tag-salary">&#x1F4B7; &pound;18&ndash;30/hr</span>
+        <span class="job-tag tag-high">HIGH FIT</span>
+        <span class="job-tag tag-remote">Remote/Hybrid</span>
+        <span class="job-tag tag-salary">&pound;32K&ndash;&pound;36K</span>
       </div>
-      <div class="job-skills"><strong>Skills needed:</strong> Clear writing, critical thinking, AI/LLM familiarity, prompt engineering, ability to evaluate AI quality</div>
-      <div class="job-overlap">&#x2705; Your match: AI Guide authorship, strong prompt engineering background, Stage 4 AI journey, flexible UC-compatible hours</div>
-      <div class="job-skills"><strong>Learning curve:</strong> 0 weeks &mdash; start immediately, fully flexible, can run alongside other work</div>
-      <a href="https://www.upwork.com/freelance-jobs/ai/" target="_blank" class="apply-btn">&#x1F4CE; APPLY</a>
+      <div class="job-skills">Skills: Fundraising, stakeholder relationships, membership management, grant writing, Scotland focus</div>
+      <div class="job-overlap">&#x2705; Your overlap: Coordination experience, written communication, Highland location, community engagement</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Closes 25 May 2026. Part-time, remote-first covering Scotland. Strong salary for remote Highland role.</p>
+      <a class="apply-btn" href="https://goodmoves.org" target="_blank">&#x1F4CB; View on GoodMoves</a>
     </div>
 
     <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Remote Digital Communications Officer &mdash; Scotland</div>
-      </div>
-      <div class="job-company">GoodMoves Scotland &bull; Remote / Hybrid &bull; Third Sector</div>
+      <div class="job-header"><div class="job-title">Trust &amp; Foundations Fundraiser</div></div>
+      <div class="job-company">Forces Children Scotland &bull; GoodMoves &bull; Fully Remote</div>
       <div class="job-tags">
-        <span class="job-tag tag-high">&#x1F7E1; HIGH</span>
-        <span class="job-tag tag-remote">&#x1F3F4;&#xFE0F; Remote Scotland</span>
-        <span class="job-tag tag-salary">&#x1F4B7; &pound;28&ndash;35k</span>
+        <span class="job-tag tag-high">HIGH FIT</span>
+        <span class="job-tag tag-remote">Fully Remote</span>
+        <span class="job-tag tag-salary">&pound;30,160&ndash;&pound;31,500</span>
       </div>
-      <div class="job-skills"><strong>Skills needed:</strong> Content writing, social media management, email marketing, stakeholder comms, charity sector awareness</div>
-      <div class="job-overlap">&#x2705; Your match: EI brand comms, content writing, social media management, C.H.A.S charity background</div>
-      <div class="job-skills"><strong>Learning curve:</strong> 1&ndash;2 weeks &mdash; review third-sector communications style guides and OSCR reporting basics</div>
-      <a href="https://goodmoves.org/search?workplace[]=Remote" target="_blank" class="apply-btn">&#x1F4CE; APPLY</a>
+      <div class="job-skills">Skills: Grant writing, trust fundraising, relationship management, reporting, charity sector</div>
+      <div class="job-overlap">&#x2705; Your overlap: Written communication, C.H.A.S charity background (collecting), coordination skills</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">Closes 26 May 2026. Full-time, home-based. Good salary, meaningful work. Worth a strong application.</p>
+      <a class="apply-btn" href="https://goodmoves.org" target="_blank">&#x1F4CB; View on GoodMoves</a>
     </div>
 
     <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Freelance AI Automation Specialist &mdash; Remote UK</div>
-      </div>
-      <div class="job-company">Upwork / Indeed UK &bull; Fully Remote &bull; AI Automation</div>
+      <div class="job-header"><div class="job-title">Remote AI Content Creator / Writer</div></div>
+      <div class="job-company">Multiple Companies &bull; Glassdoor / Indeed &bull; Fully Remote</div>
       <div class="job-tags">
-        <span class="job-tag tag-high">&#x1F7E1; HIGH</span>
-        <span class="job-tag tag-remote">&#x1F30D; Fully Remote</span>
-        <span class="job-tag tag-salary">&#x1F4B7; &pound;25&ndash;60/hr</span>
+        <span class="job-tag tag-high">HIGH FIT</span>
+        <span class="job-tag tag-remote">Fully Remote</span>
+        <span class="job-tag tag-salary">$37K&ndash;$90K</span>
       </div>
-      <div class="job-skills"><strong>Skills needed:</strong> n8n or Make (workflow automation), AI tools integration, prompt engineering, API basics, documentation</div>
-      <div class="job-overlap">&#x2705; Your match: AI tools Stage 4, prompt engineering, self-built web projects, Anthropic API funded and ready</div>
-      <div class="job-skills"><strong>Learning curve:</strong> 2&ndash;4 weeks &mdash; build 3 demo n8n/Make automations as portfolio; start with free tier today</div>
-      <a href="https://www.upwork.com/freelance-jobs/ai/" target="_blank" class="apply-btn">&#x1F4CE; APPLY</a>
+      <div class="job-skills">Skills: AI tool proficiency, content writing, prompt engineering, video scripts, SEO, camera presence</div>
+      <div class="job-overlap">&#x2705; Your overlap: AI Guide authorship, content creation, AI tools daily use, written + video content skills</div>
+      <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;">731 active remote AI content creation listings on Glassdoor. Wide range of companies actively hiring. Today&rsquo;s focus topic is directly relevant &mdash; go apply after your learning session.</p>
+      <a class="apply-btn" href="https://www.glassdoor.com/Job/remote-ai-content-creation-jobs-SRCH_IL.0,6_IS11047_KO7,26.htm" target="_blank">&#x1F4CB; Browse on Glassdoor</a>
     </div>
 
   </div>
 </div>
 
 <!-- LEARNING FOCUS -->
-<div class="card learning-card">
+<div class="card">
   <div class="card-title">&#x1F4DA; 30-Min Learning Focus</div>
-  <div class="learn-topic">&#x1F916; Today: AI Tools &amp; Systems &mdash; Build Your First Automation Workflow</div>
-  <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.55;margin-bottom:10px;">
-    AI tools aren&rsquo;t just chatbots &mdash; the real value comes from chaining them together into workflows that run automatically. n8n and Make are the two tools most commonly referenced in &ldquo;AI automation&rdquo; job listings right now, and both have free tiers you can start in minutes. Understanding workflow automation is the single fastest skill you can add to transform your Upwork profile from &ldquo;content writer&rdquo; to &ldquo;AI automation specialist.&rdquo;
+  <div class="learn-topic">&#x1F916; AI Tools &amp; Systems &mdash; Google AI Studio Deep Dive</div>
+  <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.55;margin-bottom:12px;">
+    Today&rsquo;s 30-minute session: <strong>Build a prompt chain in Google AI Studio.</strong><br><br>
+    <strong>Why this matters:</strong> AI Tools &amp; Systems knowledge is the #1 skill employers are asking for in remote content and automation roles. Google AI Studio is free, browser-based, and gives you direct access to Gemini models &mdash; the same AI that now powers Apple Siri.<br><br>
+    <strong>Your 30-minute exercise:</strong>
+    <ol style="padding-left:18px;margin-top:8px;">
+      <li style="margin-bottom:6px;"><strong>Minutes 0&ndash;5:</strong> Open <a href="https://aistudio.google.com" target="_blank" style="color:var(--green-bright);">aistudio.google.com</a> and log in with your Google account. Select &ldquo;Create new prompt.&rdquo;</li>
+      <li style="margin-bottom:6px;"><strong>Minutes 5&ndash;15:</strong> Write a system prompt that turns AI Studio into a &ldquo;Cruise Ship Content Generator&rdquo; for Explore Invergordon &mdash; give it context about the port, the ships, and your audience. Test it with today&rsquo;s ship: Ocean Victory.</li>
+      <li style="margin-bottom:6px;"><strong>Minutes 15&ndash;25:</strong> Extend your prompt to output in 3 formats: Instagram caption, tweet, and a 50-word blog intro. Compare the outputs.</li>
+      <li style="margin-bottom:6px;"><strong>Minutes 25&ndash;30:</strong> Save your best prompt as a template. This is a reusable AI workflow asset for Explore Invergordon.</li>
+    </ol>
   </p>
-  <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.55;margin-bottom:10px;">
-    <strong style="color:#c4b5fd;">Your 30-Minute Exercise:</strong> Sign up at <a href="https://n8n.io" target="_blank" style="color:#c4b5fd;">n8n.io</a> (free cloud version). Build a simple two-step workflow: (1) RSS trigger from a tech news feed, (2) send a formatted email or Slack message with the headline. You don&rsquo;t need to code &mdash; n8n is drag-and-drop. Once it runs, you&rsquo;ve built your first automation and can truthfully say on your Upwork profile: &ldquo;Experienced with n8n workflow automation.&rdquo;
-  </p>
-  <p style="font-size:0.85rem;color:var(--text-secondary);line-height:1.55;">
-    <strong style="color:#c4b5fd;">Why this matters for you:</strong> The &ldquo;Freelance AI Automation Specialist&rdquo; role above pays &pound;25&ndash;60/hr. The skill gap between where you are now and that role is roughly 2&ndash;4 weeks of focused n8n practice. Every hour today is compounding toward a much higher hourly rate than standard content work.
-  </p>
-  <a href="https://n8n.io/blog/learn-to-automate/" target="_blank" class="resource-link">&#x1F4D6; Resource: n8n.io &mdash; Free Learning Hub (start here, no code needed) &#x2197;</a>
-  <p class="pill-hint">&#x1F4CC; Tap &ldquo;Learning Done&rdquo; in the bar above when complete, then hit CONFIRM.</p>
+  <a class="resource-link" href="https://aistudio.google.com" target="_blank">&#x1F680; Open Google AI Studio (Free)</a>
+  <a class="resource-link" href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" style="margin-left:8px;">&#x1F4D6; AI Studio Quickstart Guide</a>
+  <p class="pill-hint">&#x1F4A1; Tap &ldquo;Learning Done&rdquo; above when you finish your session.</p>
 </div>
 
 <!-- TODAY'S ONE ACTION -->
 <div class="card action-card">
-  <div class="action-title">&#x26A1; Today&rsquo;s One Action</div>
+  <div class="card-title">&#x26A1; Today&rsquo;s One Action</div>
+  <div class="action-title">Apply to the Bitcoinsensus Content Writer role on CryptoJobs &mdash; takes 15 minutes.</div>
   <div class="action-desc">
-    <p style="margin-bottom:10px;"><strong>Sign up for n8n and build your first workflow in 30 minutes.</strong></p>
+    <p>This is your highest-probability application today. You have the background &mdash; crypto knowledge, content writing, and SEO awareness. Bitcoinsensus is an established crypto education platform. The role is fully remote and contract-based.</p>
     <ol>
-      <li>Go to <a href="https://n8n.io" target="_blank" style="color:#c7d2fe;">n8n.io</a> and create a free cloud account (takes 2 minutes).</li>
-      <li>Create a new workflow. Add an RSS trigger node (use any tech news feed URL). Connect it to an Email or Webhook output node.</li>
-      <li>Run it. Screenshot the successful execution. Add &ldquo;n8n workflow automation&rdquo; to your Upwork profile skills section.</li>
+      <li>Go to <a href="https://www.cryptojobs.com/job/content-writer-crypto-and-trading-917" target="_blank" style="color:var(--green-bright);">cryptojobs.com &rarr; Bitcoinsensus Content Writer</a></li>
+      <li>Tailor your first paragraph to mention your crypto background and AI Guide (51-page educational PDF you authored &mdash; direct proof you can produce crypto educational content)</li>
+      <li>Attach your Upwork profile link (£28/hr, verified) as a portfolio reference</li>
+      <li>Keep it concise: 150&ndash;200 words max in the cover note. Crypto companies move fast &mdash; short and sharp wins.</li>
     </ol>
   </div>
   <div class="action-why">
-    &#x1F4A1; <strong>Why this one?</strong> Every &ldquo;AI Automation Specialist&rdquo; job listing you see right now mentions n8n or Make. Right now you don&rsquo;t have that on your profile &mdash; by end of today you will. It takes 30 minutes. The ROI is potentially a 2&ndash;3x increase in your Upwork hourly rate as you build a small portfolio of automation demos. Ocean Victory arrives this morning too &mdash; take a photo break at lunchtime for EI content.
+    &#x1F4A1; <strong>Why this matters:</strong> Every application is a rep. The Bitcoinsensus role is PERFECT-tier &mdash; your AI Guide is literally a crypto educational product. That&rsquo;s a direct portfolio piece. Even if you don&rsquo;t land it, the practice of tailoring applications is the skill that eventually breaks through.
   </div>
+  <p class="pill-hint" style="margin-top:12px;">&#x26A1; Tap &ldquo;Action Done&rdquo; above when you apply.</p>
 </div>
-
 <!-- PROGRESS TRACKER -->
 <div class="card">
-  <div class="card-title">&#x1F4CA; Your Progress Tracker</div>
+  <div class="card-title">&#x1F4CA; Progress Tracker</div>
   <div class="stats-grid">
-    <div class="stat-box"><div class="stat-num" id="stat-hours">0</div><div class="stat-label">Learning Hours</div></div>
-    <div class="stat-box"><div class="stat-num" id="stat-apps">0</div><div class="stat-label">Applications Sent</div></div>
-    <div class="stat-box"><div class="stat-num" id="stat-interviews">0</div><div class="stat-label">Interviews</div></div>
-    <div class="stat-box"><div class="stat-num" id="stat-sessions">0</div><div class="stat-label">Sessions Done</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-hours">0</div><div class="stat-lbl">Learning Hours</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-apps">0</div><div class="stat-lbl">Apps Sent</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-interviews">0</div><div class="stat-lbl">Interviews</div></div>
+    <div class="stat-box"><div class="stat-num" id="stat-sessions">0</div><div class="stat-lbl">Sessions</div></div>
   </div>
-  <div class="chart-wrap">
-    <canvas id="histChart" height="100"></canvas>
+  <div style="margin-bottom:14px;">
+    <label style="font-size:0.78rem;color:var(--text-muted);">Log today &mdash; Apps sent: <input type="number" id="apps-input" min="0" max="20" value="0" style="width:50px;background:rgba(255,255,255,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:5px;color:#fff;padding:2px 6px;font-size:0.78rem;"></label>
+    &nbsp;&nbsp;
+    <label style="font-size:0.78rem;color:var(--text-muted);">Learning hrs: <input type="number" id="hours-input" min="0" max="8" step="0.25" value="0" style="width:50px;background:rgba(255,255,255,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:5px;color:#fff;padding:2px 6px;font-size:0.78rem;"></label>
   </div>
-  <div class="chart-wrap" style="margin-top:10px;">
-    <canvas id="skillChart" height="120"></canvas>
+  <div class="charts-row">
+    <div>
+      <div class="chart-label">Applications This Week</div>
+      <div style="position:relative;height:140px;"><canvas id="chart-apps"></canvas></div>
+    </div>
+    <div>
+      <div class="chart-label">Skills Sessions (All Time)</div>
+      <div style="position:relative;height:140px;"><canvas id="chart-skills"></canvas></div>
+    </div>
   </div>
-  <div class="backup-btns">
-    <button class="backup-btn" onclick="exportBackup()">&#x1F4E4; Export Backup</button>
-    <button class="backup-btn" onclick="importBackup()">&#x1F4E5; Import Backup</button>
-    <button class="backup-btn" onclick="resetStatsToJSON()">&#x1F504; Reset Stats to JSON</button>
+  <div class="backup-btns" style="margin-top:16px;">
+    <button class="backup-btn save-btn" onclick="exportBackup()">&#x1F4E5; Export Backup</button>
+    <button class="backup-btn import-btn" onclick="importBackup()">&#x1F4E4; Import Backup</button>
+    <button class="backup-btn reset-btn" onclick="resetStatsToJSON()">&#x1F504; Reset Stats to JSON</button>
   </div>
+  <p class="backup-note">Tracker saves locally. Export regularly to keep your progress-tracker.json up to date.</p>
 </div>
 
 <!-- FOOTER -->
-<div class="card" style="text-align:center;font-size:0.78rem;color:var(--text-muted);">
-  <p>&#x1F4C5; Generated: Monday, 11 May 2026 &nbsp;&bull;&nbsp; &#x1F4CD; Invergordon, Scottish Highlands</p>
-  <p style="margin-top:6px;">Weather: Open-Meteo API (primary) &bull; wttr.in (fallback) &bull; Jobs: Bitcoiner Jobs, CryptoJobsList, web3.career, GoodMoves, Upwork, Indeed UK &bull; Cruise: pocf.co.uk</p>
-  <p style="margin-top:6px;">&#x1F4C5; Next briefing: Tuesday, 12 May 2026</p>
-</div>
+<footer>
+  <svg class="footer-hills" viewBox="0 0 860 40" preserveAspectRatio="none">
+    <path d="M0,40 Q100,5 200,20 Q320,38 440,10 Q560,0 680,18 Q780,32 860,8 L860,40 Z" fill="rgba(74,222,128,0.08)"/>
+    <path d="M0,40 Q150,20 280,30 Q400,40 520,22 Q640,8 760,25 Q820,35 860,20 L860,40 Z" fill="rgba(74,222,128,0.05)"/>
+  </svg>
+  <p>&#x1F4C5; Generated: Monday, 11 May 2026 &bull; Next briefing: Tuesday, 12 May 2026</p>
+  <p style="margin-top:4px;">Weather: Open-Meteo API &bull; Jobs: CryptoJobs, Bitcoiner Jobs, GoodMoves, Glassdoor &bull; News: TechCrunch, CNBC, Ross-shire Journal</p>
+  <p style="margin-top:4px;font-size:0.68rem;">&#x1F4A1; Tip: tomorrow&apos;s briefing lands automatically at 8am &bull; Keep building, Steve &mdash; the Highlands are watching.</p>
+</footer>
 
-</div><!-- /wrapper -->
+</div><!-- /.wrapper -->
 
 <script>
-var state = {
-  news: false, job: false, learn: false, action: false, confirmed: false,
-  apps: SAVED_APPS,
-  learn_hours: SAVED_LEARN_HOURS,
-  sessions: SAVED_SESSIONS
-};
-var rocketFired = false;
-
-function loadState() {
-  var saved = localStorage.getItem("briefing_" + TODAY_DATE);
-  if (saved) {
-    try {
-      var s = JSON.parse(saved);
-      state.news = s.news || false;
-      state.job = s.job || false;
-      state.learn = s.learn || false;
-      state.action = s.action || false;
-      state.confirmed = s.confirmed || false;
-      state.apps = s.apps !== undefined ? s.apps : SAVED_APPS;
-      state.learn_hours = s.learn_hours !== undefined ? s.learn_hours : SAVED_LEARN_HOURS;
-      state.sessions = s.sessions !== undefined ? s.sessions : SAVED_SESSIONS;
-    } catch(e) {}
-  }
+function wmoIcon(c) {
+  if(c===0) return "&#x2600;&#xFE0F;";
+  if(c<=2) return "&#x26C5;";
+  if(c===3) return "&#x2601;&#xFE0F;";
+  if(c<=48) return "&#x1F32B;&#xFE0F;";
+  if(c<=55) return "&#x1F326;&#xFE0F;";
+  if(c<=67) return "&#x1F327;&#xFE0F;";
+  if(c<=77) return "&#x2744;&#xFE0F;";
+  if(c<=82) return "&#x1F326;&#xFE0F;";
+  if(c<=86) return "&#x1F328;&#xFE0F;";
+  if(c>=95) return "&#x26C8;&#xFE0F;";
+  return "&#x1F324;&#xFE0F;";
 }
-
-function saveState() {
-  try { localStorage.setItem("briefing_" + TODAY_DATE, JSON.stringify(state)); } catch(e) {}
+function wttrIcon(c) {
+  if(c===113) return "&#x2600;&#xFE0F;";
+  if(c===116) return "&#x1F324;&#xFE0F;";
+  if(c>=119&&c<=122) return "&#x2601;&#xFE0F;";
+  if(c===143||c===248||c===260) return "&#x1F32B;&#xFE0F;";
+  if(c>=200&&c<=230) return "&#x26C8;&#xFE0F;";
+  if(c>=263&&c<=281) return "&#x1F327;&#xFE0F;";
+  if(c>=293&&c<=321) return "&#x1F327;&#xFE0F;";
+  if(c>=323&&c<=395) return "&#x2744;&#xFE0F;";
+  return "&#x1F321;&#xFE0F;";
 }
-
-function showToast(msg, type) {
-  var el = document.createElement("div");
-  el.className = "toast" + (type ? " " + type : "");
-  el.textContent = msg;
-  document.getElementById("toast-container").appendChild(el);
-  setTimeout(function(){ el.remove(); }, 3500);
-}
-
-function updateRing() {
-  var pills = ["news","job","learn","action"];
-  var done = pills.filter(function(p){ return state[p]; }).length;
-  var pct = Math.round(done / pills.length * 100);
-  var circ = 94.2;
-  var fill = (pct / 100) * circ;
-  document.getElementById("ring-circle").style.strokeDasharray = fill + " " + circ;
-  document.getElementById("ring-pct").textContent = pct + "%";
-  var emojis = ["&#x1F311;","&#x1F312;","&#x1F313;","&#x1F314;","&#x2705;","&#x1F680;"];
-  var idx = pct === 100 ? 5 : pct >= 75 ? 4 : pct >= 50 ? 3 : pct >= 25 ? 2 : pct > 0 ? 1 : 0;
-  document.getElementById("ring-emoji").innerHTML = emojis[idx];
-  document.getElementById("stat-hours").textContent = state.learn_hours;
-  document.getElementById("stat-apps").textContent = state.apps;
-  document.getElementById("stat-interviews").textContent = SAVED_INTERVIEWS;
-  document.getElementById("stat-sessions").textContent = state.sessions;
-  if (pct === 100 && !rocketFired) {
-    rocketFired = true;
-    var r = document.getElementById("rocket-wrap");
-    r.classList.add("flying");
-    setTimeout(function(){ r.style.display="none"; r.classList.remove("flying"); }, 5300);
-    [{id:"bang1",t:700},{id:"bang2",t:1600},{id:"bang3",t:2500},{id:"bang4",t:3400},{id:"bang5",t:4300}].forEach(function(b){
-      setTimeout(function(){ var el=document.getElementById(b.id); if(!el) return; el.classList.add("show"); setTimeout(function(){ el.classList.remove("show"); el.style.display="none"; },900); }, b.t);
-    });
-    setTimeout(function(){ var b=document.getElementById("bang-emoji"); b.classList.add("show"); setTimeout(function(){ b.classList.remove("show"); b.style.display="none"; },1000); },1600);
-    setTimeout(function(){ var p=document.getElementById("party-popper"); p.classList.add("show"); setTimeout(function(){ p.classList.remove("show"); p.style.display="none"; },1300); },4800);
-    showToast("🎉 100%! You're on fire today, Steve! Don't forget to CONFIRM! 🚀");
-  }
-}
-
-function togglePill(name) {
-  state[name] = !state[name];
-  document.getElementById("pill-" + name).classList.toggle("done", state[name]);
-  if (name === "learn" && state[name]) {
-    state.sessions = SAVED_SESSIONS + 1;
-    showToast("Learning session logged! +1 session.", "info");
-  }
-  saveState();
-  updateRing();
-}
-
-function confirmDay() {
-  if (!state.confirmed) {
-    state.confirmed = true;
-    document.getElementById("pill-confirm").classList.add("confirmed");
-    if (state.job) { state.apps = SAVED_APPS + 1; }
-    if (state.learn) { state.learn_hours = SAVED_LEARN_HOURS + 0.5; }
-    saveState();
-    updateRing();
-    showToast("Day confirmed! Keep the momentum going.", "info");
-  }
-}
-
-function resetStatsToJSON() {
-  state.apps = SAVED_APPS;
-  state.learn_hours = SAVED_LEARN_HOURS;
-  state.sessions = SAVED_SESSIONS;
-  saveState();
-  updateRing();
-  showToast("Stats reset to JSON values.", "info");
-}
-
-function exportBackup() {
-  var data = {
-    meta: { last_updated: TODAY_DATE, version: "1.0" },
-    totals: { learning_hours: state.learn_hours, applications_sent: state.apps, interviews: SAVED_INTERVIEWS, learning_sessions_completed: state.sessions },
-    daily_history: SAVED_DAILY_HISTORY,
-    skills_sessions: SAVED_SKILLS
-  };
-  var blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
-  var a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "progress-tracker-" + TODAY_DATE + ".json";
-  a.click();
-}
-
-function importBackup() {
-  var input = document.createElement("input");
-  input.type = "file"; input.accept = ".json";
-  input.onchange = function(e) {
-    var file = e.target.files[0];
-    var reader = new FileReader();
-    reader.onload = function(ev) {
-      try {
-        var data = JSON.parse(ev.target.result);
-        showToast("Backup loaded: " + (data.meta && data.meta.last_updated ? data.meta.last_updated : "unknown date"), "info");
-      } catch(err) { showToast("Error reading backup file.", "warn"); }
-    };
-    reader.readAsText(file);
-  };
-  input.click();
-}
-
-function renderRoadworks() {
-  var el = document.getElementById("roadworks-content");
-  if (!el) return;
-  if (!ROADWORKS || ROADWORKS.length === 0) { el.style.display = "none"; return; }
-  var html = "<div style='font-size:0.76rem;font-weight:700;color:rgba(255,255,255,0.60);margin-bottom:4px;'>&#x1F6A7; Active Roadworks Nearby</div>";
-  ROADWORKS.forEach(function(r) { html += "<div style='font-size:0.80rem;margin-bottom:3px;'>&#x1F6A7; " + r + "</div>"; });
-  el.innerHTML = html;
-}
-
-function updateCruise() {
-  var now = new Date();
-  var end = new Date("2026-10-14T23:59:00");
-  var diff = end - now;
-  if (diff <= 0) { document.getElementById("cd-days").textContent="0"; return; }
-  var days = Math.floor(diff/86400000);
-  var hrs = Math.floor((diff%86400000)/3600000);
-  var mins = Math.floor((diff%3600000)/60000);
-  var secs = Math.floor((diff%60000)/1000);
-  document.getElementById("cd-days").textContent = days;
-  document.getElementById("cd-hrs").textContent = hrs;
-  document.getElementById("cd-min").textContent = mins;
-  document.getElementById("cd-sec").textContent = secs;
-  var today = now.toISOString().slice(0,10);
-  var banner = document.getElementById("ship-banner");
-  var todayEntry = CRUISE_SCHEDULE.find(function(e){ return e.date === today; });
-  var nextEntry = CRUISE_SCHEDULE.find(function(e){ return e.date > today && e.ships[0] !== "Season End"; });
-  var html = "";
-  if (todayEntry && todayEntry.ships[0] !== "Season End") {
-    html += "&#x1F6A2; <strong>IN PORT TODAY:</strong> " + todayEntry.ships.join(" &amp; ") + " &mdash; Arrives " + todayEntry.arrival + ", departs " + todayEntry.departure + " &#x1F4F8;";
-  } else {
-    html += "&#x1F6A2; No ships in port today.";
-  }
-  if (nextEntry) {
-    html += "<br>&#x1F4C5; <strong>Next:</strong> " + nextEntry.ships.join(" &amp; ") + " on " + nextEntry.date + " (arrives " + nextEntry.arrival + ")";
-  }
-  banner.innerHTML = html;
-}
-
-var OPENMETEO_URL = "https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm";
-var WTTR_URL = "https://wttr.in/Invergordon,Scotland?format=j1";
-var DAY_NAMES = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-
-function wmoIcon(c){ if(c===0)return"☀️"; if(c<=2)return"⛅"; if(c===3)return"☁️"; if(c<=48)return"🌫️"; if(c<=55)return"🌦️"; if(c<=67)return"🌧️"; if(c<=77)return"❄️"; if(c<=82)return"🌦️"; if(c<=86)return"🌨️"; if(c>=95)return"⛈️"; return"🌤️"; }
-function wttrIcon(c){ if(c===113)return"☀️"; if(c===116)return"🌤️"; if(c>=119&&c<=122)return"☁️"; if(c===143||c===248||c===260)return"🌫️"; if(c>=200&&c<=230)return"⛈️"; if(c>=263&&c<=281)return"🌧️"; if(c>=293&&c<=321)return"🌧️"; if(c>=323&&c<=395)return"🌨️"; return"🌡️"; }
-function cToF(c){ return Math.round(parseFloat(c)*9/5+32); }
+function cToF(c) { return Math.round(parseFloat(c) * 9 / 5 + 32); }
 
 function setWeatherAnimation(code) {
-  var p = document.getElementById("weather-particles");
-  if (!p) return;
-  p.innerHTML = "";
-  if (code >= 51 && code <= 82 || code >= 95) {
-    for (var i=0; i<20; i++) {
+  var el = document.getElementById("weather-particles");
+  if (!el) return;
+  el.innerHTML = "";
+  if (code >= 95) {
+    for (var i = 0; i < 20; i++) {
       var d = document.createElement("div");
-      d.style.cssText = "position:absolute;width:2px;height:14px;border-radius:2px;background:rgba(147,210,255,0.75);left:"+(Math.random()*100)+"%;" + "animation:rainFall "+(0.3+Math.random()*0.3)+"s linear "+(Math.random()*0.8)+"s infinite;";
-      p.appendChild(d);
+      d.style.cssText = "position:absolute;width:1px;height:12px;background:rgba(147,210,255,0.75);border-radius:2px;left:" + (Math.random()*100) + "%;top:" + (Math.random()*20-10) + "px;animation:rainFall " + (0.3+Math.random()*0.3) + "s linear " + (Math.random()*1.5) + "s infinite;opacity:0.85;";
+      el.appendChild(d);
     }
-    if (code >= 95) {
-      var bolt = document.createElement("div");
-      bolt.style.cssText = "position:absolute;width:3px;height:60px;background:rgba(255,255,180,0.7);left:60%;top:20%;animation:lightningFlash 5s ease-in-out 2s infinite;";
-      p.appendChild(bolt);
+    var bolt = document.createElement("div");
+    bolt.style.cssText = "position:absolute;width:3px;height:40px;background:rgba(255,255,200,0.55);left:60%;top:10px;animation:lightningFlash 5s ease-in-out infinite;opacity:0.45;";
+    el.appendChild(bolt);
+  } else if (code >= 51 && code <= 82) {
+    for (var i = 0; i < 20; i++) {
+      var d = document.createElement("div");
+      d.style.cssText = "position:absolute;width:1px;height:12px;background:rgba(147,210,255,0.75);border-radius:2px;left:" + (Math.random()*100) + "%;top:" + (Math.random()*20-10) + "px;animation:rainFall " + (0.3+Math.random()*0.3) + "s linear " + (Math.random()*1.5) + "s infinite;opacity:0.85;";
+      el.appendChild(d);
     }
-  } else if (code >= 71 && code <= 86) {
-    var flakes = ["❄","❅","❆"];
-    for (var j=0; j<15; j++) {
-      var s = document.createElement("div");
-      s.style.cssText = "position:absolute;font-size:0.9rem;color:rgba(255,255,255,0.90);left:"+(Math.random()*100)+"%;" + "animation:snowFall "+(2+Math.random()*2)+"s linear "+(Math.random()*2)+"s infinite;";
-      s.textContent = flakes[j%3];
-      p.appendChild(s);
+  } else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
+    var flakes = ["&#x2744;","&#x2745;","&#x2746;"];
+    for (var i = 0; i < 15; i++) {
+      var d = document.createElement("div");
+      d.style.cssText = "position:absolute;font-size:1rem;color:rgba(255,255,255,0.90);left:" + (Math.random()*100) + "%;top:-10px;animation:snowFall " + (2+Math.random()*2) + "s ease-in-out " + (Math.random()*3) + "s infinite;opacity:0.90;";
+      d.innerHTML = flakes[i % 3];
+      el.appendChild(d);
     }
   } else if (code === 0 || code === 1) {
-    var glow = document.createElement("div");
-    glow.style.cssText = "position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,80,0.55),transparent 70%);top:-20px;right:-10px;opacity:0.45;animation:sunPulse 3s ease-in-out infinite;";
-    p.appendChild(glow);
-    for (var k=0; k<8; k++) {
+    var sun = document.createElement("div");
+    sun.style.cssText = "position:absolute;width:60px;height:60px;background:radial-gradient(circle,rgba(255,220,50,0.6),transparent 70%);border-radius:50%;top:10px;right:20px;animation:sunPulse 3s ease-in-out infinite;opacity:0.45;";
+    el.appendChild(sun);
+    for (var i = 0; i < 8; i++) {
       var ray = document.createElement("div");
-      var angle = k * 45;
-      ray.style.cssText = "position:absolute;width:2px;height:30px;background:rgba(255,220,80,0.55);top:10px;right:50px;transform-origin:top center;transform:rotate("+angle+"deg);opacity:0.45;animation:sunRayPulse 2s ease-in-out "+(k*0.25)+"s infinite;";
-      p.appendChild(ray);
+      var angle = i * 45;
+      ray.style.cssText = "position:absolute;width:2px;height:16px;background:rgba(255,220,50,0.6);top:20px;right:47px;transform-origin:bottom center;transform:rotate(" + angle + "deg) translateY(-20px);animation:sunRayPulse 3s ease-in-out " + (i*0.2) + "s infinite;opacity:0.45;";
+      el.appendChild(ray);
     }
   } else if (code === 2 || code === 3) {
-    var speeds = [18, 24, 30];
-    for (var m=0; m<3; m++) {
-      var cl = document.createElement("div");
-      cl.style.cssText = "position:absolute;font-size:2.2rem;top:"+(20+m*25)+"%;opacity:0.45;animation:cloudDrift "+speeds[m]+"s linear "+(m*4)+"s infinite;";
-      cl.textContent = "☁";
-      p.appendChild(cl);
+    var clouds = ["&#x2601;","&#x2601;","&#x26C5;"];
+    var speeds = [18, 25, 32];
+    for (var i = 0; i < 3; i++) {
+      var d = document.createElement("div");
+      d.style.cssText = "position:absolute;font-size:" + (1.8+i*0.4) + "rem;top:" + (8+i*18) + "px;animation:cloudDrift " + speeds[i] + "s linear " + (i*4) + "s infinite;opacity:0.45;";
+      d.innerHTML = clouds[i];
+      el.appendChild(d);
     }
   }
 }
@@ -794,63 +760,151 @@ function setWeatherAnimation(code) {
 function renderWeatherOM(data) {
   var c = data.current;
   var d = data.daily;
-  document.getElementById("w-icon").textContent = wmoIcon(c.weathercode);
-  document.getElementById("w-temp").textContent = Math.round(c.temperature_2m) + "°F";
-  document.getElementById("w-feels").textContent = "Feels like " + Math.round(c.apparent_temperature) + "°F";
-  document.getElementById("w-detail").textContent = "Wind: " + Math.round(c.windspeed_10m) + " mph | Cloud: " + c.cloudcover + "% | Rain: " + c.precipitation + "mm";
-  var fc = "";
-  for (var i=0; i<Math.min(5,d.time.length); i++) {
-    var dt = new Date(d.time[i]); var dn = DAY_NAMES[dt.getDay()];
-    fc += "<div class='weather-day'><div class='wd-icon'>" + wmoIcon(d.weathercode[i]) + "</div><div>" + Math.round(d.temperature_2m_max[i]) + "/" + Math.round(d.temperature_2m_min[i]) + "°F</div><div class='wd-label'>" + dn + " " + d.precipitation_probability_max[i] + "%&#x1F4A7;</div></div>";
+  var code = c.weathercode;
+  var temp = Math.round(c.temperature_2m);
+  var feels = Math.round(c.apparent_temperature);
+  var wind = Math.round(c.windspeed_10m);
+  var icon = wmoIcon(code);
+  var days = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var forecastHtml = "";
+  for (var i = 0; i < Math.min(5, d.time.length); i++) {
+    var dt = new Date(d.time[i]);
+    var dayName = i === 0 ? "Today" : days[dt.getDay()];
+    var hi = Math.round(d.temperature_2m_max[i]);
+    var lo = Math.round(d.temperature_2m_min[i]);
+    var rain = d.precipitation_probability_max[i];
+    forecastHtml += "<div class='wday" + (i===0?" today-day":"") + "'><div class='wday-name'>" + dayName + "</div><div class='wday-icon'>" + wmoIcon(d.weathercode[i]) + "</div><div>" + hi + "/" + lo + "&#xB0;F</div><div style='font-size:0.65rem;margin-top:2px;'>&#x1F327; " + (rain||0) + "%</div></div>";
   }
-  document.getElementById("w-forecast").innerHTML = fc;
-  setWeatherAnimation(c.weathercode);
-}
-
-function renderWeatherWttr(data) {
-  var cur = data.current_condition[0];
-  var code = parseInt(cur.weatherCode);
-  document.getElementById("w-icon").textContent = wttrIcon(code);
-  document.getElementById("w-temp").textContent = cToF(cur.temp_C) + "°F";
-  document.getElementById("w-feels").textContent = "Feels like " + cToF(cur.FeelsLikeC) + "°F";
-  document.getElementById("w-detail").textContent = "Wind: " + cur.windspeedMiles + " mph | Humidity: " + cur.humidity + "%";
-  var fc = "";
-  data.weather.slice(0,3).forEach(function(day) {
-    var dt = new Date(day.date); var dn = DAY_NAMES[dt.getDay()];
-    fc += "<div class='weather-day'><div class='wd-icon'>" + wttrIcon(parseInt(day.hourly[4].weatherCode)) + "</div><div>" + cToF(day.maxtempC) + "/" + cToF(day.mintempC) + "°F</div><div class='wd-label'>" + dn + "</div></div>";
-  });
-  document.getElementById("w-forecast").innerHTML = fc;
+  document.getElementById("weather-content").innerHTML = "<div style='display:flex;align-items:center;gap:14px;margin-bottom:10px;'><span style='font-size:2.8rem;line-height:1;'>" + icon + "</span><div><div style='font-size:1.5rem;font-weight:800;'>" + temp + "&#xB0;F</div><div style='font-size:0.78rem;opacity:0.85;'>Feels like " + feels + "&#xB0;F &bull; Wind " + wind + " mph &bull; Invergordon</div></div></div><div class='weather-7day'>" + forecastHtml + "</div>";
   setWeatherAnimation(code);
 }
 
+function renderWeatherWttr(data) {
+  try {
+    var cur = data.current_condition[0];
+    var code = parseInt(cur.weatherCode);
+    var tempF = cToF(cur.temp_C);
+    var feelsF = cToF(cur.FeelsLikeC);
+    var wind = parseInt(cur.windspeedMiles);
+    var icon = wttrIcon(code);
+    var days = data.weather || [];
+    var dNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    var forecastHtml = "";
+    days.slice(0,3).forEach(function(day, i) {
+      var dt = new Date(day.date);
+      var nm = i===0 ? "Today" : dNames[dt.getDay()];
+      var hi = cToF(day.maxtempC);
+      var lo = cToF(day.mintempC);
+      var rain = day.hourly && day.hourly[4] ? day.hourly[4].chanceofrain : 0;
+      forecastHtml += "<div class='wday" + (i===0?" today-day":"") + "'><div class='wday-name'>" + nm + "</div><div class='wday-icon'>" + wttrIcon(parseInt(day.hourly[4].weatherCode)) + "</div><div>" + hi + "/" + lo + "&#xB0;F</div><div style='font-size:0.65rem;margin-top:2px;'>&#x1F327; " + rain + "%</div></div>";
+    });
+    document.getElementById("weather-content").innerHTML = "<div style='display:flex;align-items:center;gap:14px;margin-bottom:10px;'><span style='font-size:2.8rem;line-height:1;'>" + icon + "</span><div><div style='font-size:1.5rem;font-weight:800;'>" + tempF + "&#xB0;F</div><div style='font-size:0.78rem;opacity:0.85;'>Feels like " + feelsF + "&#xB0;F &bull; Wind " + wind + " mph &bull; Invergordon</div></div></div><div class='weather-7day'>" + forecastHtml + "</div>";
+    setWeatherAnimation(code);
+  } catch(e) { showWeatherFallback(); }
+}
+
 function showWeatherFallback() {
-  document.getElementById("w-icon").textContent = "🌡️";
-  document.getElementById("w-temp").textContent = "Unavailable";
-  document.getElementById("w-detail").innerHTML = "<a href='https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0' target='_blank' style='color:#fff;'>Check Met Office &#x2197;</a>";
+  document.getElementById("weather-content").innerHTML = "<p style='color:rgba(255,255,255,0.7);font-size:0.85rem;'>Weather unavailable. <a href='https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0' target='_blank' style='color:#fde68a;'>Check Met Office &#x2197;</a></p>";
+}
+
+function renderRoadworks() {
+  var el = document.getElementById("roadworks-content");
+  if (!el) return;
+  if (!ROADWORKS || ROADWORKS.length === 0) { el.style.display = "none"; return; }
+  var html = "<div style='font-size:0.75rem;color:rgba(255,255,255,0.6);font-weight:700;margin-bottom:4px;'>&#x1F6A7; Active Roadworks Nearby</div>";
+  ROADWORKS.forEach(function(r) { html += "<div style='font-size:0.80rem;margin-bottom:3px;'>&#x1F6A7; " + r + "</div>"; });
+  el.innerHTML = html;
+}
+
+function updateCruise() {
+  var now = new Date();
+  var target = new Date("2026-10-14T23:59:00");
+  var diff = target - now;
+  if (diff <= 0) {
+    document.getElementById("cd-days").textContent = "0";
+    document.getElementById("cd-hours").textContent = "0";
+    document.getElementById("cd-mins").textContent = "0";
+    document.getElementById("cd-secs").textContent = "0";
+    document.getElementById("ship-banner").className = "ship-banner season-over";
+    document.getElementById("ship-banner").textContent = "Season complete for 2026!";
+    return;
+  }
+  var days = Math.floor(diff / 86400000);
+  var hours = Math.floor((diff % 86400000) / 3600000);
+  var mins = Math.floor((diff % 3600000) / 60000);
+  var secs = Math.floor((diff % 60000) / 1000);
+  document.getElementById("cd-days").textContent = days;
+  document.getElementById("cd-hours").textContent = hours;
+  document.getElementById("cd-mins").textContent = mins;
+  document.getElementById("cd-secs").textContent = secs;
+  var todayStr = now.toISOString().slice(0, 10);
+  var inPort = [];
+  var nextShip = null;
+  CRUISE_SCHEDULE.forEach(function(e) {
+    if (e.ships[0] === "Season End") return;
+    if (e.date === todayStr) { inPort = e; }
+    else if (e.date > todayStr && !nextShip) { nextShip = e; }
+  });
+  var banner = document.getElementById("ship-banner");
+  if (inPort && inPort.ships) {
+    banner.className = "ship-banner in-port";
+    banner.innerHTML = "&#x1F6A2; IN PORT TODAY: <strong>" + inPort.ships.join(" &amp; ") + "</strong> &mdash; Arr " + inPort.arrival + " &bull; Dep " + inPort.departure;
+  } else if (nextShip) {
+    var nd = new Date(nextShip.date + "T00:00:00");
+    var daysTo = Math.ceil((nd - now) / 86400000);
+    banner.className = "ship-banner next-ship";
+    banner.innerHTML = "&#x23F3; NEXT: <strong>" + nextShip.ships.join(" &amp; ") + "</strong> in " + daysTo + " day" + (daysTo===1?"":"s") + " (" + nextShip.date + ") &mdash; Arr " + nextShip.arrival;
+  } else {
+    banner.className = "ship-banner season-over";
+    banner.innerHTML = "&#x2705; No more ships this season &mdash; great work!";
+  }
 }
 
 function initCharts() {
+  var chartColors = { border: "rgba(74,222,128,0.7)", bg: "rgba(74,222,128,0.15)" };
   var hist = SAVED_DAILY_HISTORY;
-  var labels = hist.map(function(h){ return h.date.slice(5); });
-  var appsData = hist.map(function(h){ return h.apps || 0; });
-  var hoursData = hist.map(function(h){ return h.hours || 0; });
-  var ctx1 = document.getElementById("histChart").getContext("2d");
-  new Chart(ctx1, { type:"bar", data:{ labels:labels, datasets:[
-    {label:"Apps",data:appsData,backgroundColor:"rgba(74,222,128,0.5)",borderColor:"#4ade80",borderWidth:1},
-    {label:"Hours",data:hoursData,backgroundColor:"rgba(167,139,250,0.5)",borderColor:"#a78bfa",borderWidth:1}
-  ]}, options:{ responsive:true, plugins:{ legend:{labels:{color:"#d1fae5",font:{size:11}}} }, scales:{ x:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:10}}}, y:{ticks:{color:"rgba(255,255,255,0.55)"}} } } });
-  var skills = SAVED_SKILLS;
-  var sLabels = Object.keys(skills); var sData = Object.values(skills);
-  var ctx2 = document.getElementById("skillChart").getContext("2d");
-  new Chart(ctx2, { type:"bar", data:{ labels:sLabels, datasets:[
-    {label:"Sessions",data:sData,backgroundColor:"rgba(251,191,36,0.45)",borderColor:"#fbbf24",borderWidth:1}
-  ]}, options:{ indexAxis:"y", responsive:true, plugins:{ legend:{labels:{color:"#d1fae5",font:{size:11}}} }, scales:{ x:{ticks:{color:"rgba(255,255,255,0.55)"}}, y:{ticks:{color:"rgba(255,255,255,0.55)",font:{size:10}}} } } });
+  var labels = hist.map(function(d){ return d.date.slice(5); });
+  var appsData = hist.map(function(d){ return d.apps || 0; });
+  var skillLabels = Object.keys(SAVED_SKILLS);
+  var skillData = Object.values(SAVED_SKILLS);
+  var hasSkills = skillData.some(function(v){ return v > 0; });
+
+  if (chartInstances["apps"]) { chartInstances["apps"].destroy(); }
+  var ctx1 = document.getElementById("chart-apps");
+  if (ctx1) {
+    chartInstances["apps"] = new Chart(ctx1, {
+      type: "bar",
+      data: { labels: labels, datasets: [{ label: "Apps", data: appsData, backgroundColor: chartColors.bg, borderColor: chartColors.border, borderWidth: 1.5, borderRadius: 4 }] },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+        scales: { x: { ticks: { color: "rgba(255,255,255,0.5)", font: { size: 9 } }, grid: { color: "rgba(255,255,255,0.04)" } },
+          y: { beginAtZero: true, ticks: { color: "rgba(255,255,255,0.5)", font: { size: 9 }, stepSize: 1 }, grid: { color: "rgba(255,255,255,0.06)" } } } }
+    });
+  }
+  if (chartInstances["skills"]) { chartInstances["skills"].destroy(); }
+  var ctx2 = document.getElementById("chart-skills");
+  if (ctx2) {
+    if (!hasSkills) {
+      ctx2.parentNode.innerHTML = "<div class='chart-empty'>No skill sessions yet &mdash; use CONFIRM to log progress!</div>";
+    } else {
+      chartInstances["skills"] = new Chart(ctx2, {
+        type: "bar",
+        data: { labels: skillLabels, datasets: [{ label: "Sessions", data: skillData, backgroundColor: "rgba(251,191,36,0.20)", borderColor: "rgba(251,191,36,0.7)", borderWidth: 1.5, borderRadius: 4 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+          scales: { x: { ticks: { color: "rgba(255,255,255,0.5)", font: { size: 8 }, maxRotation: 45 }, grid: { color: "rgba(255,255,255,0.04)" } },
+            y: { beginAtZero: true, ticks: { color: "rgba(255,255,255,0.5)", font: { size: 9 }, stepSize: 1 }, grid: { color: "rgba(255,255,255,0.06)" } } } }
+      });
+    }
+  }
+  document.getElementById("stat-hours").textContent = SAVED_LEARN_HOURS.toFixed(1);
+  document.getElementById("stat-apps").textContent = SAVED_APPS;
+  document.getElementById("stat-interviews").textContent = SAVED_INTERVIEWS;
+  document.getElementById("stat-sessions").textContent = SAVED_SESSIONS;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
   loadState();
   ["news","job","learn","action"].forEach(function(p) {
-    document.getElementById("pill-"+p).classList.toggle("done", state[p]);
+    document.getElementById("pill-" + p).classList.toggle("done", state[p]);
   });
   if (state.confirmed) document.getElementById("pill-confirm").classList.add("confirmed");
   updateRing();

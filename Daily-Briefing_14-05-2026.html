@@ -850,5 +850,181 @@ document.addEventListener("DOMContentLoaded", function() {
   initCharts();
 });
 </script>
+
+<script>
+
+function wmoIcon(c){if(c===0)return"☀️";if(c<=2)return"⛅";if(c===3)return"☁️";if(c<=48)return"🌫️";if(c<=55)return"🌦️";if(c<=67)return"🌧️";if(c<=77)return"❄️";if(c<=82)return"🌦️";if(c<=86)return"🇸";if(c>=95)return"⛈️";return"🌤️";}
+function cToF(c){return Math.round(parseFloat(c)*9/5+32);}
+function wttrIcon(c){if(c===113)return"☀️";if(c===116)return"🌤️";if(c>=119&&c<=122)return"☁️";if(c===143||c===248||c===260)return"🌫️";if(c>=200&&c<=230)return"⛈️";if(c>=263&&c<=281)return"🌧️";if(c>=293&&c<=321)return"🌧️";if(c>=323&&c<=395)return"🇸";return"🌡️";}
+
+function setWeatherAnimation(code){
+  var container=document.getElementById("weather-particles");
+  if(!container)return;
+  container.innerHTML="";
+  if((code>=51&&code<=67)||(code>=80&&code<=82)||code>=95){
+    for(var i=0;i<20;i++){var d=document.createElement("div");d.style.cssText="position:absolute;width:1px;height:14px;background:rgba(147,210,255,0.75);left:"+Math.random()*100+"%;animation:rainFall "+(0.3+Math.random()*0.3)+"s linear "+Math.random()*2+"s infinite";container.appendChild(d);}
+    if(code>=95){var bolt=document.createElement("div");bolt.style.cssText="position:absolute;width:2px;height:60px;background:rgba(255,255,200,0.8);left:50%;animation:lightningFlash 5s "+Math.random()*3+"s infinite";container.appendChild(bolt);}
+  }else if((code>=71&&code<=77)||(code>=85&&code<=86)){
+    var sc=["&#10052;","&#10053;","&#10054;"];
+    for(var i=0;i<15;i++){var d=document.createElement("div");d.style.cssText="position:absolute;color:rgba(255,255,255,0.90);left:"+Math.random()*100+"%;font-size:"+(10+Math.random()*8)+"px;animation:snowFall "+(2+Math.random()*2)+"s linear "+Math.random()*3+"s infinite";d.innerHTML=sc[Math.floor(Math.random()*3)];container.appendChild(d);}
+  }else if(code===0||code===1){
+    var glow=document.createElement("div");glow.style.cssText="position:absolute;top:-20px;right:-20px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,220,100,0.45),transparent 70%);animation:sunPulse 4s ease-in-out infinite;opacity:0.45";container.appendChild(glow);
+    for(var i=0;i<8;i++){var ray=document.createElement("div");ray.style.cssText="position:absolute;top:10px;right:30px;width:2px;height:20px;background:rgba(255,220,100,0.6);transform-origin:bottom center;transform:rotate("+(i*45)+"deg) translateY(-30px);animation:sunRayPulse 4s ease-in-out "+(i*0.2)+"s infinite;opacity:0.45";container.appendChild(ray);}
+  }else if(code===2||code===3){
+    for(var i=0;i<3;i++){var d=document.createElement("div");d.style.cssText="position:absolute;top:"+(10+i*15)+"%;font-size:2rem;animation:cloudDrift "+(8+i*3)+"s linear "+(i*2)+"s infinite;opacity:0.45";d.innerHTML="&#x2601;";container.appendChild(d);}
+  }
+}
+
+function renderWeatherOM(data){
+  try{
+    var cur=data.current;
+    var code=cur.weathercode;
+    var tempF=Math.round(cur.temperature_2m);
+    var feelsF=Math.round(cur.apparent_temperature);
+    var wind=Math.round(cur.windspeed_10m);
+    var icon=wmoIcon(code);
+    var days=data.daily;
+    var dNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    var forecastHtml="";
+    days.time.forEach(function(dateStr,i){
+      var dt=new Date(dateStr+"T00:00:00");
+      var nm=i===0?"Today":dNames[dt.getDay()];
+      var hi=Math.round(days.temperature_2m_max[i]);
+      var lo=Math.round(days.temperature_2m_min[i]);
+      var rain=days.precipitation_probability_max[i]||0;
+      var wc=days.weathercode[i];
+      forecastHtml+="<div class='wday"+(i===0?" today-day":"")+"'><div class='wday-name'>"+nm+"</div><div class='wday-icon'>"+wmoIcon(wc)+"</div><div>"+hi+"/"+lo+"&#xB0;F</div><div style='font-size:0.65rem;margin-top:2px;'>&#x1F327; "+rain+"%</div></div>";
+    });
+    document.getElementById("weather-content").innerHTML="<div style='display:flex;align-items:center;gap:14px;margin-bottom:10px;'><span style='font-size:2.8rem;line-height:1;'>"+icon+"</span><div><div style='font-size:1.5rem;font-weight:800;'>"+tempF+"&#xB0;F</div><div style='font-size:0.78rem;opacity:0.85;'>Feels like "+feelsF+"&#xB0;F &bull; Wind "+wind+" mph &bull; Invergordon</div></div></div><div class='weather-7day'>"+forecastHtml+"</div>";
+    setWeatherAnimation(code);
+  }catch(e){showWeatherFallback();}
+}
+
+function renderWeatherWttr(data){
+  try{
+    var cur=data.current_condition[0];
+    var code=parseInt(cur.weatherCode);
+    var tempF=cToF(cur.temp_C);
+    var feelsF=cToF(cur.FeelsLikeC);
+    var wind=parseInt(cur.windspeedMiles);
+    var icon=wttrIcon(code);
+    var days=data.weather||[];
+    var dNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    var forecastHtml="";
+    days.slice(0,3).forEach(function(day,i){
+      var dt=new Date(day.date);
+      var nm=i===0?"Today":dNames[dt.getDay()];
+      var hi=cToF(day.maxtempC);
+      var lo=cToF(day.mintempC);
+      var rain=day.hourly&&day.hourly[4]?day.hourly[4].chanceofrain:0;
+      forecastHtml+="<div class='wday"+(i===0?" today-day":"")+"'><div class='wday-name'>"+nm+"</div><div class='wday-icon'>"+wttrIcon(parseInt(day.hourly[4].weatherCode))+"</div><div>"+hi+"/"+lo+"&#xB0;F</div><div style='font-size:0.65rem;margin-top:2px;'>&#x1F327; "+rain+"%</div></div>";
+    });
+    document.getElementById("weather-content").innerHTML="<div style='display:flex;align-items:center;gap:14px;margin-bottom:10px;'><span style='font-size:2.8rem;line-height:1;'>"+icon+"</span><div><div style='font-size:1.5rem;font-weight:800;'>"+tempF+"&#xB0;F</div><div style='font-size:0.78rem;opacity:0.85;'>Feels like "+feelsF+"&#xB0;F &bull; Wind "+wind+" mph &bull; Invergordon</div></div></div><div class='weather-7day'>"+forecastHtml+"</div>";
+    setWeatherAnimation(code);
+  }catch(e){showWeatherFallback();}
+}
+
+function showWeatherFallback(){
+  document.getElementById("weather-content").innerHTML="<p style='color:rgba(255,255,255,0.7);font-size:0.85rem;'>Weather unavailable. <a href='https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0' target='_blank' style='color:#fde68a;'>Check Met Office &#x2197;</a></p>";
+}
+
+function renderRoadworks(){
+  var el=document.getElementById("roadworks-content");
+  if(!el)return;
+  if(!ROADWORKS||ROADWORKS.length===0){el.style.display="none";return;}
+  var html="<div style='font-size:0.75rem;color:rgba(255,255,255,0.6);font-weight:700;margin-bottom:4px;'>&#x1F6A7; Active Roadworks Nearby</div>";
+  ROADWORKS.forEach(function(r){html+="<div style='font-size:0.80rem;margin-bottom:3px;'>&#x1F6A7; "+r+"</div>";});
+  el.innerHTML=html;
+}
+
+function updateCruise(){
+  var now=new Date();
+  var target=new Date("2026-10-14T23:59:00");
+  var diff=target-now;
+  if(diff<=0){
+    document.getElementById("cd-days").textContent="0";
+    document.getElementById("cd-hours").textContent="0";
+    document.getElementById("cd-mins").textContent="0";
+    document.getElementById("cd-secs").textContent="0";
+    document.getElementById("ship-banner").className="ship-banner season-over";
+    document.getElementById("ship-banner").textContent="Season complete for 2026!";
+    return;
+  }
+  var days=Math.floor(diff/86400000);
+  var hours=Math.floor((diff%86400000)/3600000);
+  var mins=Math.floor((diff%3600000)/60000);
+  var secs=Math.floor((diff%60000)/1000);
+  document.getElementById("cd-days").textContent=days;
+  document.getElementById("cd-hours").textContent=hours;
+  document.getElementById("cd-mins").textContent=mins;
+  document.getElementById("cd-secs").textContent=secs;
+  var todayStr=now.toISOString().slice(0,10);
+  var inPort=null,nextShip=null;
+  CRUISE_SCHEDULE.forEach(function(e){
+    if(e.ships[0]==="Season End")return;
+    if(e.date===todayStr){inPort=e;}
+    else if(e.date>todayStr&&!nextShip){nextShip=e;}
+  });
+  var banner=document.getElementById("ship-banner");
+  if(inPort&&inPort.ships){
+    banner.className="ship-banner in-port";
+    banner.innerHTML="&#x1F6A2; IN PORT TODAY: <strong>"+inPort.ships.join(" &amp; ")+"</strong> &mdash; Arr "+inPort.arrival+" &bull; Dep "+inPort.departure;
+  }else if(nextShip){
+    var nd=new Date(nextShip.date+"T00:00:00");
+    var daysTo=Math.ceil((nd-now)/86400000);
+    banner.className="ship-banner next-ship";
+    banner.innerHTML="&#x23F3; NEXT: <strong>"+nextShip.ships.join(" &amp; ")+"</strong> in "+daysTo+" day"+(daysTo===1?"":"s")+" ("+nextShip.date+") &mdash; Arr "+nextShip.arrival;
+  }else{
+    banner.className="ship-banner season-over";
+    banner.innerHTML="&#x2705; No more ships this season &mdash; great work!";
+  }
+}
+
+function initCharts(){
+  var hist=SAVED_DAILY_HISTORY;
+  var labels=hist.map(function(d){return d.date.slice(5);});
+  var appsData=hist.map(function(d){return d.apps||0;});
+  var skillLabels=Object.keys(SAVED_SKILLS);
+  var skillData=Object.values(SAVED_SKILLS);
+  var hasSkills=skillData.some(function(v){return v>0;});
+  if(window.chartInstances&&window.chartInstances["apps"]){window.chartInstances["apps"].destroy();}
+  if(!window.chartInstances)window.chartInstances={};
+  var ctx1=document.getElementById("chart-apps");
+  if(ctx1){
+    window.chartInstances["apps"]=new Chart(ctx1,{type:"bar",data:{labels:labels,datasets:[{label:"Apps",data:appsData,backgroundColor:"rgba(74,222,128,0.15)",borderColor:"rgba(74,222,128,0.7)",borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"rgba(255,255,255,0.5)",font:{size:9}},grid:{color:"rgba(255,255,255,0.04)"}},y:{beginAtZero:true,ticks:{color:"rgba(255,255,255,0.5)",font:{size:9},stepSize:1},grid:{color:"rgba(255,255,255,0.06)"}}}}});
+  }
+  if(window.chartInstances&&window.chartInstances["skills"]){window.chartInstances["skills"].destroy();}
+  var ctx2=document.getElementById("chart-skills");
+  if(ctx2){
+    if(!hasSkills){
+      ctx2.parentNode.innerHTML="<div class='chart-empty'>No skill sessions yet &mdash; use CONFIRM to log progress!</div>";
+    }else{
+      window.chartInstances["skills"]=new Chart(ctx2,{type:"bar",data:{labels:skillLabels,datasets:[{label:"Sessions",data:skillData,backgroundColor:"rgba(251,191,36,0.20)",borderColor:"rgba(251,191,36,0.7)",borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"rgba(255,255,255,0.5)",font:{size:8},maxRotation:45},grid:{color:"rgba(255,255,255,0.04)"}},y:{beginAtZero:true,ticks:{color:"rgba(255,255,255,0.5)",font:{size:9},stepSize:1},grid:{color:"rgba(255,255,255,0.06)"}}}}});
+    }
+  }
+  document.getElementById("stat-hours").textContent=SAVED_LEARN_HOURS.toFixed(1);
+  document.getElementById("stat-apps").textContent=SAVED_APPS;
+  document.getElementById("stat-interviews").textContent=SAVED_INTERVIEWS;
+  document.getElementById("stat-sessions").textContent=SAVED_SESSIONS;
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+  loadState();
+  ["news","job","learn","action"].forEach(function(p){
+    document.getElementById("pill-"+p).classList.toggle("done",state[p]);
+  });
+  if(state.confirmed)document.getElementById("pill-confirm").classList.add("confirmed");
+  updateRing();
+  renderRoadworks();
+  updateCruise();
+  setInterval(updateCruise,1000);
+  fetch(OPENMETEO_URL)
+    .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
+    .then(renderWeatherOM)
+    .catch(function(){fetch(WTTR_URL).then(function(r){return r.json();}).then(renderWeatherWttr).catch(showWeatherFallback);});
+  initCharts();
+});
+
+</script>
 </body>
 </html>

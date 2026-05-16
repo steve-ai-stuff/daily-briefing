@@ -34,7 +34,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.22;
+  opacity: 1;
   z-index: 0;
   animation: kenBurns 45s ease-in-out infinite alternate;
 }
@@ -211,13 +211,12 @@ var SAVED_DAILY_HISTORY=[
 var TODAY_DATE="2026-04-18";
 var TODAY_TOPIC="Freelancing";
 var ROADWORKS=[
-  "A9 Raigmore Interchange Inverness — overnight lane closures (7pm–6am) continue until Fri 1 May",
-  "A9 Roskeen to Tomich — STARTS TONIGHT Sun 19 Apr (7pm), overnight until Fri 8 May (no Fri/Sat nights or 3–4 May)"
+  "A9 Raigmore Interchange Inverness — overnight lane closures (7pm\u20136am) until Fri 1 May",
+  "A9 Roskeen to Tomich — STARTS TOMORROW Sun 19 Apr, overnight (7pm\u20136am) until Fri 8 May (no works Fri/Sat nights or 3\u20134 May)"
 ];
 var CRUISE_SCHEDULE=[
   {date:"2026-04-06",ships:["AIDAmar"]},{date:"2026-04-13",ships:["Ambience"]},{date:"2026-04-14",ships:["AIDAsol"]},
-  {date:"2026-04-15",ships:["Majestic Princess"]},{date:"2026-04-18",ships:["MSC Preziosa"]},{date:"2026-04-19",ships:["Celebrity Eclipse"]},
-  {date:"2026-04-23",ships:["Renaissance"]},{date:"2026-04-24",ships:["Majestic Princess"]},{date:"2026-04-29",ships:["AIDAluna"]},
+  {date:"2026-04-15",ships:["Majestic Princess"]},{date:"2026-04-23",ships:["Renaissance"]},{date:"2026-04-24",ships:["Majestic Princess"]},{date:"2026-04-29",ships:["AIDAluna"]},
   {date:"2026-05-04",ships:["Nieuw Statendam"]},{date:"2026-05-06",ships:["Majestic Princess"]},{date:"2026-05-13",ships:["Norwegian Star"]},
   {date:"2026-05-16",ships:["Mein Schiff 2"]},{date:"2026-05-18",ships:["MSC Preziosa"]},{date:"2026-05-19",ships:["Celebrity Eclipse"]},
   {date:"2026-05-21",ships:["Costa Favolosa"]},{date:"2026-05-22",ships:["MSC Preziosa"]},{date:"2026-05-26",ships:["Mein Schiff 2"]},
@@ -250,16 +249,16 @@ var CRUISE_SCHEDULE=[
 <div id="toast-container"></div>
 
 <div id="progress-bar">
-  <div id="rocket-wrap">🚀</div>
-  <div class="bang-pop" id="bang1" style="left:20%">💥</div>
-  <div class="bang-pop" id="bang2" style="left:35%">💥</div>
-  <div class="bang-pop" id="bang3" style="left:50%">💥</div>
-  <div class="bang-pop" id="bang4" style="left:65%">💥</div>
-  <div class="bang-pop" id="bang5" style="left:80%">💥</div>
-  <div id="bang-emoji">💥</div>
-  <div id="party-popper">🎉</div>
+  <div id="rocket-wrap">&#x1F680;</div>
+  <div class="bang-pop" id="bang1" style="left:20%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang2" style="left:35%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang3" style="left:50%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang4" style="left:65%">&#x1F4A5;</div>
+  <div class="bang-pop" id="bang5" style="left:80%">&#x1F4A5;</div>
+  <div id="bang-emoji">&#x1F4A5;</div>
+  <div id="party-popper">&#x1F389;</div>
   <div id="ring-wrap">
-    <span id="ring-emoji">🌑</span>
+    <span id="ring-emoji">&#x1F311;</span>
     <svg id="ring-svg" viewBox="0 0 36 36">
       <circle cx="18" cy="18" r="15" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="3"/>
       <circle id="ring-circle" cx="18" cy="18" r="15" fill="none" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-dasharray="0 94.2" stroke-dashoffset="23.55" style="transform-origin:center;transform:rotate(-90deg);transition:stroke-dasharray 0.4s ease;"/>
@@ -267,11 +266,11 @@ var CRUISE_SCHEDULE=[
     <span id="ring-pct">0%</span>
   </div>
   <div class="pills-row">
-    <div class="pill" id="pill-news" onclick="togglePill('news')">🗞️ News</div>
-    <div class="pill" id="pill-job" onclick="togglePill('job')">💼 Job Applied</div>
-    <div class="pill" id="pill-learn" onclick="togglePill('learn')">📚 Learning Done</div>
-    <div class="pill" id="pill-action" onclick="togglePill('action')">⚡️ Action Done</div>
-    <div class="pill pill-confirm" id="pill-confirm" onclick="confirmDay()" title="Lock in today's progress">🔴 CONFIRM</div>
+    <div class="pill" id="pill-news" onclick="togglePill('news')">&#x1F5DE;&#xFE0F; News</div>
+    <div class="pill" id="pill-job" onclick="togglePill('job')">&#x1F4BC; Job Applied</div>
+    <div class="pill" id="pill-learn" onclick="togglePill('learn')">&#x1F4DA; Learning Done</div>
+    <div class="pill" id="pill-action" onclick="togglePill('action')">&#x26A1;&#xFE0F; Action Done</div>
+    <div class="pill pill-confirm" id="pill-confirm" onclick="confirmDay()" title="Lock in today's progress">&#x1F534; CONFIRM</div>
   </div>
 </div>
 
@@ -280,43 +279,43 @@ var CRUISE_SCHEDULE=[
   <!-- WEATHER -->
   <div class="weather-card">
     <div id="weather-particles"></div>
-    <div class="card-title" style="color:#fff;">🌤️ Invergordon Weather — Today &amp; 5-Day Outlook</div>
-    <div id="weather-content"><p class="weather-loading">Fetching live weather from Open-Meteo…</p></div>
-    <p style="font-size:0.70rem;color:rgba(255,255,255,0.65);margin-top:10px;">Sources: Open-Meteo · wttr.in · Met Office</p>
+    <div class="card-title" style="color:#fff;">&#x1F324;&#xFE0F; Invergordon Weather &mdash; Today &amp; 5-Day Outlook</div>
+    <div id="weather-content"><p class="weather-loading">Fetching live weather from Open-Meteo&hellip;</p></div>
+    <p style="font-size:0.70rem;color:rgba(255,255,255,0.65);margin-top:10px;">Sources: Open-Meteo &middot; wttr.in &middot; Met Office</p>
   </div>
 
   <!-- HEADER -->
   <div class="header-card">
-    <h1>Good Morning, Steve! 🌅 ☕️</h1>
-    <div class="date-badge">📅 Saturday, 18 April 2026 · Week 16</div>
+    <h1>Good Morning, Steve! &#x1F305; &#x2615;&#xFE0F;</h1>
+    <div class="date-badge">&#x1F4C5; Saturday, 18 April 2026 &middot; Week 16</div>
     <p class="header-desc">
-      <strong>🚢 MSC PREZIOSA IS IN PORT RIGHT NOW — 3,502 passengers, departs 6pm!</strong> Get to the port this morning for your best photography opportunity of the week. <strong>🚢 Celebrity Eclipse arrives tomorrow (2,852 passengers)</strong> — two back-to-back ship days! <strong>⚠️ VOTER REGISTRATION CLOSES MONDAY 20 APRIL — just 2 days away.</strong> Do it today if you haven't. It's Saturday — your weekend double-ship weekend, your freelancing deep-work day, and a voter registration reminder all in one. Today's focus: port photography this morning, then freelancing platform research and Upwork proposals this afternoon.
+      <strong>&#x1F3AF; FREELANCING STRATEGY SATURDAY.</strong> Your Upwork profile is live &mdash; now it&rsquo;s time to think bigger. Today&rsquo;s focus: building your multi-platform freelancing strategy. Upwork is one channel; Fiverr is another; AI data annotation and stock photography are passive income streams that compound over time. <strong>Renaissance arrives in just 5 days (Thursday 23 Apr)</strong> &mdash; your next big photography opportunity. Stanford&rsquo;s 2026 AI Index dropped this week: AI adoption hit 88% in organisations and generative AI reached 53% of consumers faster than the PC or internet. You are entering this field at exactly the right moment. <strong>A9 Roskeen to Tomich roadworks START TOMORROW (Sun 19 Apr, 7pm&ndash;6am) &mdash; plan evening drives accordingly.</strong> Weekend energy: one Fiverr gig set up, Alamy library growing, Renaissance researched.
     </p>
     <div class="traffic-box">
-      <div class="traffic-title">🚦 Live Traffic — A9 · Invergordon · Inverness · Highlands</div>
-      <div id="traffic-content"><span style="color:rgba(255,255,255,0.65);">Loading live traffic from MFR…</span></div>
+      <div class="traffic-title">&#x1F6A6; Live Traffic &mdash; A9 &middot; Invergordon &middot; Inverness &middot; Highlands</div>
+      <div id="traffic-content"><span style="color:rgba(255,255,255,0.65);">Loading live traffic from MFR&hellip;</span></div>
       <div id="roadworks-content" style="margin-top:8px;padding-top:7px;border-top:1px solid rgba(251,191,36,0.28);"></div>
     </div>
   </div>
 
   <!-- THOUGHT & TIP -->
   <div class="card">
-    <div class="card-title">💭 Today's Thought &amp; Tip — Freelancing</div>
+    <div class="card-title">&#x1F4AD; Today&rsquo;s Thought &amp; Tip &mdash; Freelancing</div>
     <div class="quote-block">
-      "A freelancer is not someone between jobs — they are someone who runs a business. The difference is mindset: an employee waits to be assigned work; a freelancer creates the conditions where work finds them. Multiple income streams are not a fallback plan — they are the business model. Your Alamy library earns while you sleep. Your DataAnnotation contract earns while you learn. Your Upwork proposals earn while you build. Stack all three and Saturday becomes the most powerful day of your week — because you built something on Friday that works for you on Sunday."<br><br>
-      You are now two days into your freelance career. The mistake most people make is treating freelancing as one thing: one platform, one type of work. The people who succeed fastest build multiple streams simultaneously — even tiny ones. A £15 stock photo sale proves the model. A £20/hr DataAnnotation shift builds AI skills while paying rent. One Upwork review changes your profile search ranking. Stack them.
+      &ldquo;Don&rsquo;t put all your eggs in one platform. The freelancers who build sustainable income treat each platform as a channel &mdash; Upwork for long-term client relationships, Fiverr for packaged quick-win services, stock sites for passive revenue, and annotation platforms for immediate cash flow. Your skill set is your product. A product sold in one shop has one chance of being found. A product in five shops has five.&rdquo;<br><br>
+      You launched Upwork this week &mdash; that&rsquo;s channel one. Today is the day to think about channels two, three, and four. Fiverr takes less than two hours to set up a gig. DataAnnotation and Outlier pay weekly. Alamy commissions arrive monthly. None of these requires you to stop doing anything else &mdash; they stack. The freelancer who earns &pound;3,000/month rarely earns it all from one source. They earn &pound;800 here, &pound;700 there, &pound;600 in passive stock income, and &pound;900 from a regular client. Build the stack.
     </div>
     <div class="tip-box">
-      <strong>Saturday Focus — The Freelancing Ecosystem (Multiple Income Streams):</strong>
-      <strong>(1) Alamy = passive income.</strong> Each ship photo you submit is a permanent asset. A 3,502-passenger ship call today means 3,502 potential future searchers for "MSC Preziosa Invergordon." Submit today's shots tonight. <strong>(2) DataAnnotation = active income NOW.</strong> £18–45/hr, no portfolio needed, apply this weekend — fastest route to cash while Upwork warms up. <strong>(3) Upwork = growing income.</strong> 3 proposals today. Every proposal you skip is a compounding opportunity cost. <strong>(4) Mindrift = AI-specific freelancing.</strong> Mindrift recruits UK-based annotators and trainers — register at mindrift.ai alongside DataAnnotation for double coverage. <strong>(5) The rule:</strong> Never rely on a single freelance stream in your first 90 days. Diversification is not hedging — it is the strategy.
+      <strong>Saturday Focus &mdash; The Multi-Platform Freelancing Stack:</strong>
+      <strong>(1) Upwork (active &mdash; already live):</strong> Long-term client relationships, hourly and project contracts. Your primary platform. Keep sending proposals daily. <strong>(2) Fiverr (set up today &mdash; 2 hours):</strong> Package your services as fixed-price &ldquo;gigs.&rdquo; Think: &ldquo;I will write a 500-word blog post about Scottish travel for &pound;25&rdquo; or &ldquo;I will create 5 AI-tool content ideas for your brand for &pound;15.&rdquo; Buyers come to you &mdash; no proposals needed. Opposite of Upwork. <strong>(3) DataAnnotation / Outlier / Scale AI (apply today &mdash; 30 min):</strong> Evaluate AI-generated text and images. Pays &pound;18&ndash;45/hr, no portfolio required, starts fast. Your immediate bridge income while Upwork warms up. <strong>(4) Alamy (ongoing &mdash; already started):</strong> Stock photography passive income. Ship season = content season. Every Renaissance image is a potential earner for months. <strong>(5) GoodMoves / Third Sector (1&ndash;2 apps per week):</strong> Traditional employment safety net alongside freelancing. Part-time charity roles with remote flexibility pair perfectly with freelance income. Build the stack &mdash; don&rsquo;t rely on one plank.
     </div>
   </div>
 
   <!-- CRUISE -->
   <div class="card">
-    <div class="card-title">🚢 Port of Cromarty Firth — 2026 Cruise Season</div>
-    <div id="ship-banner" class="ship-banner next-ship">Loading ship schedule…</div>
-    <div class="countdown-label">⏳ Season ends in — 14 October 2026</div>
+    <div class="card-title">&#x1F6A2; Port of Cromarty Firth &mdash; 2026 Cruise Season</div>
+    <div id="ship-banner" class="ship-banner next-ship">Loading ship schedule&hellip;</div>
+    <div class="countdown-label">&#x23F3; Season ends in &mdash; 14 October 2026</div>
     <div class="countdown-grid">
       <div class="cd-box"><div class="cd-num" id="cd-days">--</div><div class="cd-unit">Days</div></div>
       <div class="cd-box"><div class="cd-num" id="cd-hours">--</div><div class="cd-unit">Hours</div></div>
@@ -324,223 +323,220 @@ var CRUISE_SCHEDULE=[
       <div class="cd-box"><div class="cd-num" id="cd-secs">--</div><div class="cd-unit">Seconds</div></div>
     </div>
     <p style="font-size:0.80rem;color:var(--text-secondary);margin-top:16px;line-height:1.6;">
-      <strong>🚢 MSC PREZIOSA IN PORT TODAY — 0800 to 1800!</strong> One of the largest vessels to call this season (3,502 passengers). This is an MSC Mediterranean-class ship — striking white hull, modern design, excellent silhouette against the Cromarty Firth hills. <strong>TOMORROW: Celebrity Eclipse (0700–1800, 2,852 passengers)</strong> — two back-to-back ship days, a rare and lucrative photography weekend. Seven ships so far this season: AIDAmar (6 Apr), Ambience (13 Apr), AIDAsol (14 Apr), Majestic Princess (15 Apr), MSC Preziosa (today), Celebrity Eclipse (tomorrow). <strong>Next after this weekend: Renaissance on Thursday 23 April.</strong> After Renaissance, Majestic Princess returns on 24 Apr and AIDAluna on 29 Apr — four ships in eleven days. The season is now in full swing. Total: 95 ship calls expected, ~200,000 passengers. Season ends <strong>14 October</strong>.
+      <strong>Quiet Saturday &mdash; no ship in port today.</strong> Five ships called so far this season: AIDAmar (6 Apr), Ambience (13 Apr), AIDAsol (14 Apr), Majestic Princess (15 Apr). <strong>Next: Renaissance on Thursday 23 April &mdash; 5 days away.</strong> Renaissance is operated by Ambassador Cruise Line &mdash; distinctive midnight-blue/teal hull, classic silhouette, very few stock images from Scottish ports. Your window to own this niche is this week. Weekend is your prep and editing time: process this week&rsquo;s shots, research Renaissance angles, and ensure your Alamy library is growing before the ship arrives. After Renaissance: Majestic Princess again on 24 Apr, then AIDAluna on 29 Apr &mdash; three ships in seven days. Establish your workflow this weekend.
     </p>
-    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">Source: <a href="https://www.cruisetimetables.com/invergordon-scotland-cruise-ship-schedule-2026.html" style="color:var(--green-bright);" target="_blank">CruiseTimetables 2026</a> · <a href="https://pocf.co.uk" style="color:var(--green-bright);" target="_blank">pocf.co.uk</a></p>
+    <p style="font-size:0.72rem;color:var(--text-muted);margin-top:8px;">Source: <a href="https://pocf.co.uk" style="color:var(--green-bright);" target="_blank">pocf.co.uk</a> &middot; <a href="https://www.ross-shirejournal.co.uk" style="color:var(--green-bright);" target="_blank">Ross-shire Journal</a></p>
   </div>
 
   <!-- DRONE & PHOTO TIP -->
   <div class="card">
-    <div class="card-title">📸 Photography &amp; Drone Tip — MSC Preziosa Now + Celebrity Eclipse Tomorrow</div>
+    <div class="card-title">&#x1F4F8; Photography &amp; Drone Tip &mdash; Weekend Golden Hour + Fiverr Drone Gigs</div>
     <div class="news-item">
-      <div class="news-badge drone">🚢 IN PORT NOW</div>
-      <h3>MSC Preziosa Is In Port Until 6pm — Get There This Morning</h3>
-      <p>MSC Preziosa is one of MSC's Fantasia-class ships — 333 metres long, striking white hull with MSC's signature ocean-blue livery stripe. At 3,502 passengers, the pier will be busy from 9am onwards. <strong>Best photography windows:</strong> Early morning (8–10am) for golden light on the hull with hills behind; mid-morning (10am–12pm) for passenger activity on the pier and tender boats; late afternoon (4–5:30pm) for the departure shot as she pulls away — the departure is often the cleanest image with the ship fully lit and clear of pier clutter. Check whether you can use your drone today — CAA Open Category permits operations in the port area but check for active NOTAMs. <strong>Two ships this weekend = twice the Alamy submissions = twice the passive income potential.</strong> Prioritise the departure shot if you can only make one trip today.</p>
-      <a href="https://www.alamy.com/contributor" target="_blank">Alamy Contributor → submit tonight</a>
+      <div class="news-badge drone">&#x1F305; WEEKEND SHOOT</div>
+      <h3>Saturday Golden Hour &mdash; Best Light of the Week for Cromarty Firth Drone Footage</h3>
+      <p>April Saturday mornings in the Scottish Highlands offer some of the cleanest golden-hour light of the season &mdash; low sun angle, long shadows across the Firth, and often a morning mist that lifts by 8am. If conditions allow, this morning (or tomorrow) is prime time for an Alamy stock shoot. Target shots that Fiverr buyers specifically search for: drone views over harbours, coastal settlements, highland hills with water in frame, and &ldquo;aerial Scotland&rdquo; keywords. Even 15 minutes of flying before 9am in good light can yield 10&ndash;15 Alamy-worthy frames. Check wind &mdash; CAA Open Category requires under Beaufort 5 for safe operations. Check <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank">Met Office Invergordon &rarr;</a> before flying.</p>
     </div>
     <div class="news-item">
-      <div class="news-badge drone">🌅 TOMORROW 7AM</div>
-      <h3>Celebrity Eclipse Arrives 7am Tomorrow — Plan Your Angles Now</h3>
-      <p>Celebrity Eclipse is a Celebrity Solstice-class ship — 317 metres, distinctive Celebrity "X" logo on the funnel, midnight blue hull with white superstructure. 2,852 passengers. She arrives at 0700, meaning the golden hour light will be perfect for bow or port-side shots. <strong>Action tonight:</strong> Google "Celebrity Eclipse" and check Alamy's existing library for Invergordon shots. If the library is thin, your images from tomorrow morning could become the reference images for years. Plan to be at the pier for 7:15am — bring a telephoto for detail shots of the funnel logo, a wide lens for the full silhouette against the Cromarty hills, and your drone if conditions permit. Two back-to-back shooting days means two days of stock submissions this weekend.</p>
+      <div class="news-badge drone">&#x1F4BC; Fiverr Gig Idea</div>
+      <h3>Set Up a Fiverr Drone Photography Gig Today &mdash; Scottish Aerial Footage Sells</h3>
+      <p>Fiverr&rsquo;s &ldquo;Drone &amp; Aerial Filming&rdquo; category consistently shows demand for Scottish and coastal UK footage. Create a gig today: <strong>&ldquo;I will provide professional drone aerial footage of the Scottish Highlands and Cromarty Firth.&rdquo;</strong> Package it in three tiers: Basic (30s edited clip, &pound;45), Standard (90s clip + 10 photos, &pound;90), Premium (3-min reel + full photo set, &pound;175). Your CAA Open Category certification is a trust signal &mdash; include it in the gig description. Buyers from travel brands, tourism operators, and documentary producers regularly search for this. It takes under 2 hours to set up. Start there &mdash; you can always refine later.</p>
+      <a href="https://www.fiverr.com/seller_onboarding" target="_blank">Create a Fiverr Gig &rarr;</a>
     </div>
     <div class="news-item">
-      <div class="news-badge drone">📤 Workflow</div>
-      <h3>The Weekend Photo-to-Alamy Pipeline</h3>
-      <p>MSC Preziosa today + Celebrity Eclipse tomorrow = your first full back-to-back ship weekend. Here's the pipeline: (1) Shoot this morning + departure tonight. (2) Edit tonight — aim for 10–15 selects. (3) Submit to Alamy before midnight with keywords: ship name, Invergordon, Cromarty Firth, Scottish Highlands, cruise ship, port. (4) Repeat tomorrow. By Sunday night you should have 20–30 new images live on Alamy. This is the compound interest effect of living next to a cruise port — each upload earns royalties indefinitely. <strong>Even £5 in Alamy royalties next month proves the model and keeps your motivation high.</strong></p>
+      <div class="news-badge drone">&#x1F4F7; Renaissance Prep</div>
+      <h3>5 Days to Renaissance &mdash; Research the Ship&rsquo;s Profile This Weekend</h3>
+      <p>Renaissance (Ambassador Cruise Line) has a very distinctive visual identity: deep midnight-blue/teal hull, white superstructure, classic ocean liner silhouette. Google &ldquo;Renaissance Ambassador Cruise Line&rdquo; and check Alamy for existing images &mdash; you&rsquo;ll find very few from Scottish ports, which means low competition for your shots. Plan your pier position for 23 April: morning arrival means the ship will likely be lit from the east, making a west-facing shot optimal. <strong>Write down two or three specific angles you want to capture before you arrive.</strong> The difference between 5 good shots and 30 great ones is always pre-shoot planning.</p>
     </div>
   </div>
 
   <!-- HIGHLANDS NEWS -->
   <div class="card">
-    <div class="card-title">🏴 Invergordon &amp; Highlands News</div>
+    <div class="card-title">&#x1F3F4; Invergordon &amp; Highlands News</div>
     <div class="news-item">
-      <div class="news-badge local">🗳️ URGENT — 2 DAYS</div>
-      <h3>Scottish Parliament Voter Registration Closes MONDAY — Final Weekend to Act</h3>
-      <p>Scotland's Parliament election is Thursday 7 May 2026. Voter registration closes this Monday 20 April — 2 days from today. If you're not registered, or if your address has changed, you need to act this weekend. Check your status and register at <strong>gov.uk/register-to-vote</strong> — it takes 5 minutes. Highland constituencies include Caithness, Sutherland &amp; Ross; Inverness &amp; Nairn; and Skye, Lochaber &amp; Badenoch. Postal vote applications also close soon — check the Highland Council elections page. <strong>Don't sleep on this — do it today after your morning port shoot, before you forget.</strong></p>
-      <a href="https://www.gov.uk/register-to-vote" target="_blank">Register to Vote — gov.uk →</a>
+      <div class="news-badge local">&#x26BD; LOCAL</div>
+      <h3>Historic: Invergordon FC Accepted into Highland League for 2026/27 Season</h3>
+      <p>Invergordon FC have been formally accepted into the Scottish Highland Football League for next season &mdash; a landmark moment for the club and the town. Invergordon are the North Caledonian League champions and will enter the Highland League without a play-off. They become the first Ross-shire club to compete at this level since Ross County joined the SPFL in 1994. For Steve: Highland League matches are a photography opportunity (action sports, community events) and could be a niche on Alamy or as a local client for match photography. Worth watching.</p>
+      <a href="https://www.ross-shirejournal.co.uk/sport/new-club-accepted-into-highland-league-for-next-season-431568/" target="_blank">Ross-shire Journal: Invergordon FC &rarr;</a>
     </div>
     <div class="news-item">
-      <div class="news-badge local">🚢 Port</div>
-      <h3>Double Ship Weekend Confirms Season Is in Full Swing — Two More Calls Before Renaissance</h3>
-      <p>MSC Preziosa today and Celebrity Eclipse tomorrow represent back-to-back ship calls not in the originally publicised 2026 schedule — confirming that the Port of Cromarty Firth is operating at or above capacity compared to planning projections. With 95 total calls expected across the season and 200,000 passengers, this weekend's double-header puts the season on track for a record year. For Steve: the photographic and freelance opportunity this weekend is significant — two large ships means two full Alamy submissions and two more lines of evidence that your port-side content niche has real commercial depth.</p>
-      <a href="https://pocf.co.uk" target="_blank">Port of Cromarty Firth →</a>
+      <div class="news-badge local">&#x1F68C; Transport</div>
+      <h3>200,000 Cruise Passengers Could Drain Scotland&rsquo;s &pound;2 Bus Fare Scheme Early</h3>
+      <p>Highland Council and transport operators are raising concerns that the Scottish Government&rsquo;s popular &pound;2 bus fare pilot may run out of funding earlier than planned due to the unexpectedly high number of cruise passengers using local buses from Invergordon this season. With ~95 ships and 200,000 passengers expected at Port of Cromarty Firth, even a fraction using the &pound;2 bus to Inverness adds up to hundreds of thousands in scheme costs. For Steve: this story reinforces the scale of the cruise season impact on the local economy &mdash; and potentially the value of your Invergordon-based content and photography for travel brands trying to understand the Highland cruise market.</p>
+      <a href="https://latecruisenews.com/2026/04/17/expected-200000-highland-cruise-ship-passengers-could-drain-funding-for-2-bus-fare-pilot-forcing-the-popular-scottish-government-scheme-to-end-early/" target="_blank">Late Cruise News: Bus Fare Impact &rarr;</a>
     </div>
     <div class="news-item">
-      <div class="news-badge local">🛣️ Roads</div>
-      <h3>A9 Roskeen to Tomich Works Start Tomorrow Night — Plan Weekend Drives Accordingly</h3>
-      <p>BEAR Scotland's 19-day overnight resurfacing programme on the A9 Roskeen to Tomich section (south of Invergordon toward Alness) begins tomorrow, Sunday 19 April at 7pm, running until Friday 8 May. A convoy system at 10mph will be in place during overnight windows (7pm–6am). No works on Friday/Saturday nights or the May Day weekend (3–4 May). The A9 Raigmore Interchange in Inverness also has ongoing overnight works until 1 May. If you're driving south this evening before the works start, the road is clear. From tomorrow evening, add 15–20 minutes for any Inverness journeys made after 7pm.</p>
-      <a href="https://www.bearscot.com/news/" target="_blank">BEAR Scotland News →</a>
+      <div class="news-badge local">&#x26A1; Energy</div>
+      <h3>Inverness Chamber: Invest in Highlands or Risk Scotland&rsquo;s Green Energy Future</h3>
+      <p>The Inverness Chamber of Commerce has issued a public call for greater investment in Highlands infrastructure and skills, warning that without it Scotland risks missing its green energy transition targets. The Highlands has significant renewable energy capacity (offshore wind, tidal, hydro) but lacks the skilled workforce and connectivity to fully capitalise on it. For Steve: this signals that the Highland region is entering a period of economic transformation. Sectors like tech, remote work, and green industry support are all expanding &mdash; your timing entering remote freelancing and AI tools from Invergordon is well-placed within this broader regional shift.</p>
+      <a href="https://www.inverness-courier.co.uk/news/inverness-chamber-of-commerce-invest-in-the-highlands-or-ri-432458/" target="_blank">Inverness Courier: Chamber of Commerce &rarr;</a>
     </div>
   </div>
 
   <!-- AI NEWS -->
   <div class="card">
-    <div class="card-title">🤖 AI &amp; Tech News — 18 April 2026</div>
+    <div class="card-title">&#x1F916; AI &amp; Tech News &mdash; 18 April 2026</div>
     <div class="news-item">
-      <div class="news-badge">Netflix</div>
-      <h3>Netflix Launches TikTok-Style Vertical Feed and Acquires Ben Affleck's AI Filmmaking Company</h3>
-      <p>Netflix is rolling out a TikTok-like vertical video feed this month, with new AI recommendation systems using "next-generation model architectures" to improve personalisation. Simultaneously, Netflix acquired InterPositive — Ben Affleck's AI-powered filmmaking company — to develop proprietary AI tools for creators. The platform is also integrating AI more deeply into its ad suite for content customisation. For Steve: Netflix's move signals that AI-assisted content production is becoming mainstream even at the highest professional level. Content creators who understand AI tools are being sought at every tier — from indie creators on Upwork to major studio productions. The AI content creation economy you are entering is expanding, not contracting.</p>
-      <a href="https://techcrunch.com/2026/04/17/netflix-plans-to-add-a-vertical-video-feed-use-ai-for-recommendations/" target="_blank">TechCrunch: Netflix AI →</a>
+      <div class="news-badge">Stanford AI Index</div>
+      <h3>Stanford 2026 AI Index: AI is &ldquo;Racing Ahead of Its Guardrails&rdquo; &mdash; Key Findings Released</h3>
+      <p>Stanford&rsquo;s Human-Centred AI Institute released its flagship 2026 AI Index this week &mdash; the most comprehensive annual snapshot of where AI actually stands. Key findings: generative AI reached 53% consumer adoption in just 3 years (faster than the PC or internet); organisational adoption hit 88%; the estimated value to US consumers reached $172 billion annually; and AI now meets or exceeds human performance on PhD-level science questions. However: responsible AI is not keeping pace &mdash; documented AI incidents rose to 362 in 2025 (up from 233 in 2024). For Steve: the 88% organisational adoption figure is your sales pitch. Every company you approach is already using or evaluating AI tools &mdash; the question is whether they have someone who understands how to use them well.</p>
+      <a href="https://hai.stanford.edu/ai-index/2026-ai-index-report" target="_blank">Stanford HAI: 2026 AI Index &rarr;</a>
     </div>
     <div class="news-item">
-      <div class="news-badge">Canva</div>
-      <h3>Canva AI Assistant Now Builds Designs From Natural Language — Editable Layers Included</h3>
-      <p>Canva has upgraded its AI assistant so users can describe what they want in plain English and the system generates complete, editable designs — not flat images. The assistant builds with layers, allowing users to modify individual elements rather than being locked into the result. This is a significant leap beyond simple text-to-image: the output is a full working design file. For Steve: Canva is a tool worth mastering for your content creator and freelancing work. AI-generated design templates with your cruise ship photography embedded could become a quick service offering on Upwork — "Scottish Highlands travel content creation" combining your photography with AI-assisted layout is a niche with very few direct competitors at your price point.</p>
-      <a href="https://techcrunch.com/2026/04/" target="_blank">TechCrunch: Canva AI →</a>
-    </div>
-    <div class="news-item">
-      <div class="news-badge">Physical AI</div>
-      <h3>Physical Intelligence's π0.7 — A Robot Brain That Learns Tasks It Was Never Trained On</h3>
-      <p>San Francisco robotics startup Physical Intelligence published research showing their latest model π0.7 can direct robots to perform tasks they were never explicitly trained on — coached through unfamiliar work in plain language. Separately, simulation startup Antioch is being called "the Cursor for physical AI," allowing robot developers to spin up multiple digital instances of hardware and simulate real-world sensor data for testing. For Steve: physical AI (robots, drones, autonomous systems) is moving from research labs into the real world in 2026. Drone operations, which you're certified for, sit right at this intersection. The skills gap between drone operators who understand AI-assisted flight systems and those who don't is growing — and you are on the right side of it.</p>
-      <a href="https://techcrunch.com/2026/04/16/physical-intelligence-a-hot-robotics-startup-says-its-new-robot-brain-can-figure-out-tasks-it-was-never-taught/" target="_blank">TechCrunch: Physical Intelligence →</a>
+      <div class="news-badge">OpenAI</div>
+      <h3>OpenAI Surpasses $25B Annualized Revenue &mdash; Early IPO Steps Begin</h3>
+      <p>OpenAI has crossed $25 billion in annualized revenue and is reportedly taking early preparatory steps toward a public listing, potentially as soon as late 2026. Rival Anthropic (which powers this briefing) is approaching $19 billion in annualized revenue. GPT-5.4 &ldquo;Thinking&rdquo; now scores 83% on GDPVal &mdash; matching human experts in financial modelling, legal drafting, and software engineering. OpenAI also released GPT-Rosalind, a specialized frontier model for drug discovery. For Steve: these revenue figures tell a clear story &mdash; AI is not a research experiment. It&rsquo;s a $40B+ industry growing at speed. Getting in early, even at the content and tools level, puts you ahead of the curve by years.</p>
+      <a href="https://openai.com/news/" target="_blank">OpenAI News &rarr;</a>
     </div>
     <div class="news-item">
       <div class="news-badge">Google</div>
-      <h3>Google Photos + Gemini Integration — AI Now Generates Images Using Your Real Photos</h3>
-      <p>Google is rolling out an opt-in feature connecting Google Photos to Gemini and Nano, letting paid subscribers generate AI images featuring their real-life people and scenes — without manual uploads. The system learns from your existing photo library to produce personalised AI-generated content. For Steve: this points to where AI image tools are heading in 2026 — personalisation at scale. For your freelancing work, AI image generation tools are becoming a core skill. As a photographer, you have a unique advantage: you understand composition, light, and what makes an image work — which makes you a better director of AI image tools than someone who has only ever seen AI art. That is a competitive differentiator on Upwork proposals.</p>
-      <a href="https://techcrunch.com/2026/04/" target="_blank">TechCrunch: Google Photos AI →</a>
+      <h3>Google Releases Gemini 3.1 Flash-Lite &mdash; 2.5&times; Faster, Dramatically Cheaper</h3>
+      <p>Google released Gemini 3.1 Flash-Lite this week, delivering 2.5&times; faster response times and 45% faster output generation at just $0.25 per million input tokens &mdash; among the cheapest frontier model pricing available. Flash-Lite targets businesses building high-volume AI applications. Gemini 3.1 Pro now scores above 50% on Humanity&rsquo;s Last Exam. For Steve: as AI tools get faster and cheaper, the barrier for businesses building AI-powered workflows drops further &mdash; increasing demand for people who can design, test, and manage those workflows without writing code. That&rsquo;s a role you can step into.</p>
+      <a href="https://ai.google.dev/gemini-api/docs" target="_blank">Google Gemini Docs &rarr;</a>
     </div>
     <div class="news-item">
-      <div class="news-badge">MIT Tech Review</div>
-      <h3>"10 Things That Matter in AI Right Now" — Drops This Tuesday 21 April</h3>
-      <p>MIT Technology Review's landmark new series "10 Things That Matter in AI Right Now" publishes this Tuesday — just 3 days away. The list covers agentic AI, hardware competition, AI in science, frontier model developments, and AI regulation. For Steve: reading this on Tuesday and referencing a specific insight in one Upwork proposal or job application this week is a zero-cost credibility signal. It takes 20 minutes and signals that you are professionally engaged with AI developments — not just using AI tools, but understanding where the field is going. Set a reminder for Tuesday morning. <strong>This is the kind of thing that makes a hiring manager or Upwork client think: this person knows what they're talking about.</strong></p>
-      <a href="https://www.technologyreview.com/2026/04/13/1135675/want-to-understand-the-current-state-of-ai-check-out-these-charts/" target="_blank">MIT Tech Review: State of AI →</a>
+      <div class="news-badge">Freelance Market</div>
+      <h3>AI Skills Demand on Freelancing Platforms Up 109% Year-Over-Year</h3>
+      <p>Across major freelancing platforms, demand for AI-related skills grew 109% year-over-year &mdash; the fastest-growing skills category by a wide margin. Full-time freelancers on Upwork report a 2026 median income of $85,000, and 75% of freelancers now earn as much or more than equivalent full-time employment. Platform fees worth knowing: Upwork charges 20% on first $500 per client (drops to 10% then 5%); Fiverr takes a flat 20%; newer platform Jobbers charges 0% commission. For Steve: you are entering this market at its steepest upward inflection point. Diversifying platforms means diversifying your effective take-home rate.</p>
+      <a href="https://bestjobsearchapps.com/articles/en/best-freelancing-platforms-in-2026-compare-upwork-jobbers-fiverr-flexjobs-and-indeed-for-high-earnings" target="_blank">Best Freelancing Platforms 2026 &rarr;</a>
+    </div>
+    <div class="news-item">
+      <div class="news-badge">US-China AI</div>
+      <h3>US-China AI Race Tightens &mdash; Anthropic Leads by Just 2.7% as of March 2026</h3>
+      <p>Stanford&rsquo;s AI Index reveals the US-China AI performance gap has nearly closed &mdash; Chinese models (DeepSeek, Alibaba) and US models have traded positions at the top of performance rankings multiple times since early 2025. As of March 2026, Anthropic&rsquo;s leading model edges ahead by just 2.7% on composite benchmarks. This intensifying competition benefits users through faster innovation and lower costs. For Steve: more model competition means more AI tool options at better prices &mdash; increasing demand for people who can operate and oversee AI-powered workflows. The demand signal is pointing directly at your reskilling path.</p>
+      <a href="https://spectrum.ieee.org/state-of-ai-index-2026" target="_blank">IEEE Spectrum: Stanford AI Index &rarr;</a>
     </div>
   </div>
 
   <!-- JOBS -->
   <div class="card">
-    <div class="card-title">💼 Remote Job Leads — 18 April 2026</div>
-    <p class="section-hint">7 roles ranked by fit · Freelance &amp; Remote focus · Fully remote or Scotland-based · Tap [APPLY] to open</p>
+    <div class="card-title">&#x1F4BC; Remote Job Leads &mdash; 18 April 2026</div>
+    <p class="section-hint">7 roles ranked by fit &middot; Upwork, GoodMoves &amp; Freelance platforms &middot; Fully remote or Scotland-based &middot; Tap [APPLY] to open</p>
 
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Freelance AI Content Creator / Trainer — Upwork Active Profile</div>
-        <span class="job-badge fit-perfect">⭐ PERFECT</span>
-        <span class="job-badge remote-badge">🌍 Remote · Upwork</span>
+        <div class="job-title">Freelance Content Creator &mdash; AI Tools, Travel &amp; Drone Writing</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; Upwork</span>
       </div>
-      <div class="job-company">Various Clients · Upwork Platform · Your Profile Is Live · Tier 1</div>
-      <div class="job-salary">💷 £20–45/hr · Project-based · Start immediately</div>
-      <div class="job-desc">Your profile launched 2 days ago. Today's mission: search Upwork for "travel content writer," "AI content creator," "Highland Scotland," "drone footage blog." Use the 3-line proposal formula: (1) show you read the brief, (2) prove one specific relevant skill, (3) make it easy to say yes. Send 3 proposals this afternoon after your morning port shoot. <strong>The algorithm rewards consistent activity — every day without proposals is a day the algorithm down-ranks your visibility.</strong></div>
-      <a class="apply-btn" href="https://www.upwork.com/jobs/" target="_blank">[BROWSE JOBS on Upwork] →</a>
+      <div class="job-company">Various Clients &middot; Upwork Platform &middot; Profile Live &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; &pound;20&ndash;45/hr &middot; Project-based &middot; Start immediately</div>
+      <div class="job-desc">Your Upwork profile is live and this is your primary active job lead pipeline. Today: search for &ldquo;travel blog writer,&rdquo; &ldquo;AI content,&rdquo; &ldquo;Scottish Highlands,&rdquo; &ldquo;drone photography blog.&rdquo; Send 3 proposals using the 3-line formula: quote their need, prove you can do it, propose a next step. Keep proposals under 150 words. <strong>Consider bidding &pound;20&ndash;22/hr for first 2&ndash;3 jobs to win reviews quickly &mdash; one 5-star review changes your search ranking dramatically.</strong></div>
+      <a class="apply-btn" href="https://www.upwork.com/jobs/" target="_blank">[FIND JOBS on Upwork] &rarr;</a>
     </div>
 
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">AI Trainer / Data Annotator — DataAnnotation Tech</div>
-        <span class="job-badge fit-perfect">⭐ PERFECT</span>
-        <span class="job-badge remote-badge">🌍 Remote · Flexible</span>
+        <div class="job-title">Freelance Reading Schools Accreditation Officer</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; GoodMoves</span>
       </div>
-      <div class="job-company">DataAnnotation Tech · Fully Remote · Flexible Hours · Tier 1</div>
-      <div class="job-salary">💷 £18–45/hr · Contract / Freelance · Start within 1–2 weeks</div>
-      <div class="job-desc">Evaluate and improve AI model outputs — rating accuracy, checking quality, content assessment. Communication and analytical thinking are the primary qualifications. Zero technical barrier to entry. <strong>This is the fastest route to paid income while Upwork is warming up. Apply today — application takes 20 minutes.</strong> Pairs perfectly with your Upwork profile and Alamy submissions as Stream 2 of your freelance portfolio.</div>
-      <a class="apply-btn" href="https://www.dataannotation.tech/apply" target="_blank">[APPLY at DataAnnotation] →</a>
+      <div class="job-company">Scottish Book Trust &middot; Fully Remote &middot; Sessional &middot; &#x26A0;&#xFE0F; Closes 20 April 2026 &mdash; 2 DAYS</div>
+      <div class="job-salary">&#x1F4B7; Sessional rate &middot; Flexible hours &middot; Scotland-wide</div>
+      <div class="job-desc">Visit schools across Scotland to assess and support Reading Schools accreditation. Community engagement, assessment, report writing, and relationship management with teachers and school leaders. Steve&rsquo;s customer-facing and coordination background maps directly. Sessional (flexible hours) &mdash; works alongside Upwork. <strong>DEADLINE IN 2 DAYS &mdash; apply today if interested.</strong></div>
+      <a class="apply-btn" href="https://goodmoves.org/search?workplace%5B%5D=Remote" target="_blank">[APPLY via GoodMoves] &rarr;</a>
     </div>
 
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">AI Content Annotator — Mindrift</div>
-        <span class="job-badge fit-perfect">⭐ PERFECT</span>
-        <span class="job-badge remote-badge">🌍 Remote · UK</span>
+        <div class="job-title">AI Trainer / Data Quality Analyst</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; Fully Flexible</span>
       </div>
-      <div class="job-company">Mindrift · Fully Remote · UK-based · Tier 1</div>
-      <div class="job-salary">💷 £15–35/hr · Freelance · Apply now</div>
-      <div class="job-desc">Mindrift recruits UK-based contributors for AI training tasks — writing, annotation, evaluation, and creative tasks. Expanding UK operations in 2026. Register on their platform this weekend alongside DataAnnotation — having both active means you work whichever is busiest each week. <strong>Register at mindrift.ai — takes 15 minutes, starts earning within days once approved.</strong></div>
-      <a class="apply-btn" href="https://mindrift.ai/" target="_blank">[REGISTER at Mindrift] →</a>
+      <div class="job-company">DataAnnotation Tech / Outlier AI &middot; Fully Remote &middot; Weekly Pay &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; &pound;18&ndash;45/hr &middot; Contract / Freelance &middot; Start within 1 week</div>
+      <div class="job-desc">Evaluate and improve AI model outputs &mdash; rating accuracy, checking content quality, writing sample responses. Communication and analytical thinking are the primary requirements. Zero technical barrier to entry. Pays weekly. <strong>This is your fastest route to immediate income while Upwork warms up &mdash; apply this weekend at both DataAnnotation and Outlier.</strong> AI skills demand up 109% YoY means these platforms are actively hiring.</div>
+      <a class="apply-btn" href="https://www.dataannotation.tech/apply" target="_blank">[APPLY at DataAnnotation] &rarr;</a>
     </div>
 
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">AI Visual Content Evaluator — Photography Specialist</div>
-        <span class="job-badge fit-perfect">⭐ PERFECT</span>
-        <span class="job-badge remote-badge">🌍 Remote</span>
+        <div class="job-title">AI Visual Content Evaluator &mdash; Photography Specialist</div>
+        <span class="job-badge fit-perfect">&#x2B50; PERFECT</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote</span>
       </div>
-      <div class="job-company">Mercor / AI Labs · Fully Remote · Project-Based · Tier 1</div>
-      <div class="job-salary">💷 £25–40/hr · Freelance · Ongoing applications</div>
-      <div class="job-desc">Evaluate AI-generated images for photographic quality, accuracy, and realism. Your photography background and cruise ship portfolio are the exact qualification. Register at mercor.com to join the talent pool. <strong>Complements all other streams: same skills, different platform. This weekend's ship photos are literally your Mercor portfolio.</strong></div>
-      <a class="apply-btn" href="https://mercor.com" target="_blank">[REGISTER at Mercor] →</a>
-    </div>
-
-    <div class="job-card">
-      <div class="job-header">
-        <div class="job-title">Fundraising &amp; Corporate Partnerships Manager</div>
-        <span class="job-badge fit-perfect">⭐ PERFECT</span>
-        <span class="job-badge remote-badge">🏴 Remote Scotland</span>
-      </div>
-      <div class="job-company">Calum's Cabin · Remote (occasional Rothesay visits) · GoodMoves · Closes 1 May 2026</div>
-      <div class="job-salary">💷 £30,000–£35,000/yr · Permanent</div>
-      <div class="job-desc">Scottish charity supporting cancer-affected families. Stakeholder engagement, corporate partnerships, event coordination, fundraising strategy. Steve's coordination and customer relationships background is near-perfect. <strong>Deadline 13 days — this weekend is ideal to draft and submit your application. Strongest traditional employment lead on the list.</strong></div>
-      <a class="apply-btn" href="https://goodmoves.org/vacancy/a4sP1000001bkzNIAQ/fundraising-and-corporate-partnerships-manager" target="_blank">[APPLY via GoodMoves] →</a>
+      <div class="job-company">Mercor / AI Labs &middot; Fully Remote &middot; Project-Based &middot; Tier 1</div>
+      <div class="job-salary">&#x1F4B7; &pound;25&ndash;40/hr &middot; Freelance &middot; Start within 1&ndash;2 weeks</div>
+      <div class="job-desc">Evaluate AI-generated images for photographic quality, realism, and accuracy. Your photography background and cruise ship portfolio are the exact qualification &mdash; this role actively prefers people with photography experience over technical AI knowledge. Register at mercor.com to join their talent pool. <strong>Complements Upwork perfectly: same skills, different platform, more income streams.</strong></div>
+      <a class="apply-btn" href="https://mercor.com" target="_blank">[APPLY at Mercor] &rarr;</a>
     </div>
 
     <div class="job-card">
       <div class="job-header">
         <div class="job-title">Fundraising Manager Scotland (Part-Time)</div>
         <span class="job-badge fit-high">HIGH</span>
-        <span class="job-badge remote-badge">🌍 Remote Scotland</span>
+        <span class="job-badge remote-badge">&#x1F30D; Remote &middot; Scotland</span>
       </div>
-      <div class="job-company">Dogs for Good · Fully Remote (Scotland) · GoodMoves · Closes 1 May 2026</div>
-      <div class="job-salary">💷 £35,000 pro-rata · 21 hrs/wk · 18-month fixed term</div>
-      <div class="job-desc">Lead Scotland fundraising — events, corporate, individual giving. Event coordination background maps directly. Part-time hours work alongside Upwork freelancing. <strong>Strong second application alongside Calum's Cabin — deadline 13 days. Part-time hours make this especially compatible with your growing freelance portfolio.</strong></div>
-      <a class="apply-btn" href="https://goodmoves.org/search?workplace%5B%5D=Remote" target="_blank">[BROWSE GoodMoves Remote] →</a>
+      <div class="job-company">Dogs for Good &middot; Fully Remote (Scotland) &middot; GoodMoves &middot; Closes 1 May 2026</div>
+      <div class="job-salary">&#x1F4B7; &pound;35,000 pro-rata &middot; 21 hrs/wk &middot; 18-month fixed term</div>
+      <div class="job-desc">Lead Scotland fundraising &mdash; events, corporate relationships, individual giving campaigns. Event coordination background maps directly. Part-time hours (21hrs/wk) work perfectly alongside Upwork freelancing &mdash; this could be your &ldquo;floor&rdquo; income while freelancing grows. Deadline 13 days. <strong>Strong application target this weekend.</strong></div>
+      <a class="apply-btn" href="https://goodmoves.org/search?workplace%5B%5D=Remote" target="_blank">[APPLY via GoodMoves] &rarr;</a>
     </div>
 
     <div class="job-card">
       <div class="job-header">
-        <div class="job-title">Participation &amp; Rights Worker (North) — Home-Based Highland</div>
-        <span class="job-badge fit-medium">MEDIUM</span>
-        <span class="job-badge remote-badge">🏴 Highland / Remote</span>
+        <div class="job-title">Lead Practitioner (Highlands)</div>
+        <span class="job-badge fit-high">HIGH</span>
+        <span class="job-badge remote-badge">&#x1F3F4; Remote / Field-Based Highlands</span>
       </div>
-      <div class="job-company">Forces Children Scotland · Remote (home-based North Scotland) · GoodMoves · Closes 29 Apr 2026</div>
-      <div class="job-salary">💷 £27,885–£29,000 pro-rata · Part-time</div>
-      <div class="job-desc">Child participation, community engagement, coordination in the North of Scotland. Customer service and community background transfers. Deadline 11 days. <strong>Fully remote, Highland-based, immediate employment path. Worth a Saturday application.</strong></div>
-      <a class="apply-btn" href="https://goodmoves.org/search?regions%5B%5D=highlands" target="_blank">[BROWSE GoodMoves Highlands] →</a>
+      <div class="job-company">Apex Scotland &middot; Remote (field-based) &middot; GoodMoves &middot; Closes 26 April 2026</div>
+      <div class="job-salary">&#x1F4B7; &pound;28,500&ndash;&pound;30,000 &middot; Permanent</div>
+      <div class="job-desc">Community justice and support work across the Highlands. Home-based with some field travel. Customer engagement and stakeholder relationship experience is central. Closes in 8 days. <strong>Apply this week &mdash; Highland-based remote role, permanent employment, your community engagement background is a genuine asset.</strong></div>
+      <a class="apply-btn" href="https://goodmoves.org/search?regions%5B%5D=highlands" target="_blank">[APPLY via GoodMoves Highlands] &rarr;</a>
+    </div>
+
+    <div class="job-card">
+      <div class="job-header">
+        <div class="job-title">Participation &amp; Rights Worker (North)</div>
+        <span class="job-badge fit-medium">MEDIUM</span>
+        <span class="job-badge remote-badge">&#x1F3F4; Remote / Moray-based</span>
+      </div>
+      <div class="job-company">Forces Children Scotland &middot; Remote (home-based North) &middot; GoodMoves &middot; Closes 29 April 2026</div>
+      <div class="job-salary">&#x1F4B7; &pound;27,885&ndash;&pound;29,000 pro-rata &middot; Part-time</div>
+      <div class="job-desc">Child participation and community engagement work across the North of Scotland. Home-based with some travel. Customer service and community background transfers. Closes 11 days. Worth applying as part of a job application blitz &mdash; remote, Highland-friendly, immediate path to employment income alongside freelancing.</div>
+      <a class="apply-btn" href="https://goodmoves.org/search?regions%5B%5D=highlands" target="_blank">[APPLY via GoodMoves] &rarr;</a>
     </div>
   </div>
 
   <!-- LEARNING FOCUS -->
   <div class="card">
-    <div class="card-title">📚 Today's Learning Focus — Freelancing</div>
-    <p class="learn-intro">Today's topic is Freelancing — the strategic and practical side of building a multi-stream freelance income. You launched Upwork two days ago. Now the question is: how do you build a freelancing <em>business</em>, not just a freelancing <em>job</em>? The difference is systems: multiple income streams, a clear weekly rhythm, and compounding assets (your Alamy library, your Upwork reviews, your DataAnnotation profile). This 30-minute session is about architecture — how do you structure your freelancing week so that every day moves the whole portfolio forward?</p>
+    <div class="card-title">&#x1F4DA; Today&rsquo;s Learning Focus &mdash; Freelancing</div>
+    <p class="learn-intro">Today&rsquo;s learning topic is freelancing &mdash; specifically the platform ecosystem and income stack strategy. You are three days into your Upwork profile being live. The learning question today isn&rsquo;t &ldquo;how does Upwork work&rdquo; &mdash; it&rsquo;s &ldquo;how do I build a freelancing income that doesn&rsquo;t depend on one platform?&rdquo; The answer is platform diversification, and it&rsquo;s directly actionable this weekend. The 2026 freelancing data is clear: median income on major platforms is $85,000 for full-time freelancers, AI skills are the fastest-growing category by 109%, and the platforms with the lowest fees give you the highest effective hourly rate. Study the stack. Build the stack.</p>
     <ul class="learn-bullets">
-      <li><strong>Stream 1 — Active Freelancing (Upwork, DataAnnotation, Mindrift):</strong> These platforms pay you directly for your time and skills. Upwork: proposals every weekday, project delivery, building reviews. DataAnnotation + Mindrift: shift-style AI annotation work, consistent hourly pay, no ramp-up needed. Rule: allocate 2–3 hours every weekday to active freelancing. This is your "salary replacement" stream while you build longer-term assets. <strong>Apply to DataAnnotation and register on Mindrift this weekend — then you have three active income funnels running from Monday.</strong></li>
-      <li><strong>Stream 2 — Passive Assets (Alamy Stock Photography):</strong> Every ship photo you submit is a permanent earning asset. Alamy pays 50% royalty on each sale. A library of 500 well-keyworded images earns meaningful passive income. You have 7 ship calls so far this season — if you averaged 10 submitted images per call, that is 70 assets already. <strong>This weekend's double-ship event should add 20–30 more. Set a target: 200 Alamy images by end of May.</strong></li>
-      <li><strong>Stream 3 — Employment Applications (GoodMoves, LinkedIn):</strong> Calum's Cabin and Dogs for Good close May 1. Forces Children Scotland closes April 29. These are your "floor" — a permanent or part-time employed role gives you a stable base while freelancing grows. <strong>Saturday afternoon is the ideal time to write one application — after the port shoot, before the evening.</strong></li>
-      <li><strong>30-Min Exercise — Map Your Freelancing Week:</strong> On paper or in a notes app, write out Monday–Sunday. Assign each day: (a) Morning: which platform do you work on first? (b) Afternoon: proposals, editing, or applications? (c) Weekend: port shoots and batch Alamy uploads. Having a written weekly schedule — even a rough one — increases follow-through by 40% versus improvising each morning. <strong>Tap 📚 Learning Done when you've mapped your week.</strong></li>
+      <li><strong>Platform Comparison &mdash; Where to Be in 2026 (the five-channel stack):</strong> <em>Upwork</em> (already live): sliding fee 20%&rarr;10%&rarr;5%; best for longer client relationships and hourly work. <em>Fiverr</em> (set up today): flat 20% fee; best for packaged quick-win services where buyers come to you. <em>Jobbers</em> (explore): newer platform, 0% commission &mdash; you keep 100% of earnings; growing fast in 2026. <em>DataAnnotation/Outlier/Appen</em>: immediate income, weekly pay, no portfolio required. <em>Alamy/Getty</em> (already started): passive stock income, compounding over time. <strong>Today&rsquo;s action: set up at least one Fiverr gig AND apply to DataAnnotation.</strong></li>
+      <li><strong>Fiverr Gig Setup &mdash; The 2-Hour Blueprint:</strong> Go to fiverr.com &rarr; &ldquo;Become a Seller.&rdquo; Create your profile (reuse your Upwork bio). Create Gig 1: Writing &amp; Translation &rarr; Blog Writing. Title: &ldquo;I will write an engaging blog post about Scottish travel, drones, or AI tools.&rdquo; Three tiers: Basic 500 words (&pound;25), Standard 1000 words (&pound;45), Premium 2000 words + SEO keywords (&pound;85). Add your portfolio samples. Set delivery time: 3 days. Use tags: &ldquo;travel writing,&rdquo; &ldquo;blog post,&rdquo; &ldquo;Scottish Highlands,&rdquo; &ldquo;AI content,&rdquo; &ldquo;drone.&rdquo; Publish. <strong>Gig 2 (if time): &ldquo;I will provide aerial drone footage and photography of the Scottish Highlands&rdquo; &mdash; genuinely rare on Fiverr.</strong></li>
+      <li><strong>Understanding Platform Fees and Effective Hourly Rates:</strong> Your Upwork rate is &pound;28/hr. After the 20% new-client fee, you net &pound;22.40/hr on new clients. On Fiverr at 20%, a &pound;45 Standard blog post earns you &pound;36. On Jobbers at 0%, you keep the full rate. On DataAnnotation at &pound;25/hr, you keep the full rate (direct contractor). <strong>Key insight:</strong> diversifying platforms doesn&rsquo;t just increase opportunities &mdash; it improves your blended effective rate. Upwork (relationship value) + Fiverr (volume/passive) + DataAnnotation (reliable floor income) = a resilient income stack.</li>
+      <li><strong>30-Min Exercise &mdash; Platform Stack Builder:</strong> Step 1 (10 min): Go to fiverr.com and start your seller profile. Use your Upwork bio text as a base. Step 2 (10 min): Sketch out 3 gig ideas using your skills &mdash; one writing, one photography/drone, one AI tools. Step 3 (10 min): Go to dataannotation.tech/apply and submit your application. It asks for basic English writing skills and attention to detail &mdash; no coding, no technical knowledge. <strong>Tap &#x1F4DA; Learning Done when complete.</strong></li>
     </ul>
-    <a class="resource-link" href="https://www.upwork.com/resources/guide-to-upwork" target="_blank">📖 Upwork Freelancer Guide →</a>
+    <a class="resource-link" href="https://www.fiverr.com/seller_onboarding" target="_blank">&#x1F4D6; Fiverr Seller Setup &rarr;</a>
     &nbsp;
-    <a class="resource-link" href="https://www.dataannotation.tech/apply" target="_blank">📖 DataAnnotation Apply →</a>
+    <a class="resource-link" href="https://bestjobsearchapps.com/articles/en/best-freelancing-platforms-in-2026-compare-upwork-jobbers-fiverr-flexjobs-and-indeed-for-high-earnings" target="_blank">&#x1F4D6; Platform Comparison 2026 &rarr;</a>
     &nbsp;
-    <a class="resource-link" href="https://mindrift.ai/" target="_blank">📖 Mindrift Register →</a>
-    <p class="pill-hint">Tap <strong>📚 Learning Done</strong> after mapping your weekly schedule, and <strong>💼 Job Applied</strong> after applying to DataAnnotation or sending Upwork proposals.</p>
+    <a class="resource-link" href="https://www.dataannotation.tech/apply" target="_blank">&#x1F4D6; Apply DataAnnotation &rarr;</a>
+    <p class="pill-hint">Tap <strong>&#x1F4DA; Learning Done</strong> after reading, and <strong>&#x1F4BC; Job Applied</strong> after submitting at least one application today.</p>
   </div>
 
   <!-- ONE ACTION -->
   <div class="card action-card">
-    <div class="card-title">⚡ Today's One Action</div>
-    <div class="action-title">Morning: MSC Preziosa port shoot. Afternoon: apply to DataAnnotation + register Mindrift + 3 Upwork proposals.</div>
+    <div class="card-title">&#x26A1; Today&rsquo;s One Action</div>
+    <div class="action-title">Set up your Fiverr seller profile and publish your first gig today</div>
     <div class="action-desc">
-      <p style="margin-bottom:10px;">A back-to-back ship weekend with a Saturday afternoon for deep work. Execute in this order:</p>
+      <p style="margin-bottom:10px;">Upwork is your active hunting ground. Fiverr is your passive storefront. Both take the same skills. You only need to set Fiverr up once &mdash; after that, buyers find you. Today is that once.</p>
       <ol>
-        <li><strong>Port shoot this morning — MSC Preziosa (departs 6pm):</strong> Get to the pier by 9am for the best morning light. Aim for 30 frames minimum — wide hull shots, passengers on the pier, detail of the ship's funnel and livery, and the departure shot at 5:30–6pm. These images go to Alamy tonight. If conditions allow and no active NOTAMs, drone footage of the departure would be exceptional stock content.</li>
-        <li><strong>Register to vote (5 min — do this NOW if you haven't):</strong> Deadline is Monday 20 April. Go to gov.uk/register-to-vote. Two days. Don't let it slip.</li>
-        <li><strong>Apply to DataAnnotation (20 min):</strong> dataannotation.tech/apply — complete the application this afternoon. This is your fastest route to active paid income. The application takes 20 minutes and you can start earning within a week.</li>
-        <li><strong>Register on Mindrift (15 min):</strong> mindrift.ai — register alongside DataAnnotation this afternoon. Having both active means you work whichever has shifts available. Stack the income streams.</li>
-        <li><strong>Send 3 Upwork proposals (45 min — afternoon):</strong> After your port shoot, use the 3-line formula. Search: "travel content," "Scottish photography," "AI writing," "drone footage." Three proposals is today's non-negotiable.</li>
-        <li><strong>Apply to Calum's Cabin if not done (20 min — evening):</strong> Closes 1 May. Strongest traditional employment lead. Tonight is a good evening application window.</li>
-        <li>Edit and submit today's ship photos to Alamy before midnight. Tag with: MSC Preziosa, Invergordon, Cromarty Firth, cruise ship, Scottish Highlands.</li>
-        <li>Tap <strong>💼 Job Applied</strong>, <strong>📚 Learning Done</strong>, <strong>⚡️ Action Done</strong>, then <strong>🔴 CONFIRM</strong>.</li>
+        <li><strong>Create your Fiverr seller profile (30 min):</strong> Go to fiverr.com &rarr; &ldquo;Become a Seller.&rdquo; Copy your Upwork bio (or adapt it). Upload your professional headshot. Add your skills: content writing, travel writing, drone photography, AI tools. Link your portfolio if possible.</li>
+        <li><strong>Publish Gig 1 &mdash; Blog Writing (20 min):</strong> Title: &ldquo;I will write a professional blog post about Scottish travel, drones, or AI tools.&rdquo; Three tiers at &pound;25/&pound;45/&pound;85. Delivery: 3 days. Tags: travel writing, blog post, Scottish Highlands, AI content, drone photography. Publish it.</li>
+        <li><strong>Apply to DataAnnotation (15 min):</strong> dataannotation.tech/apply. Fill in the basic form &mdash; English proficiency, attention to detail, availability. This is your income bridge while Upwork and Fiverr warm up. Weekly pay, no portfolio needed.</li>
+        <li><strong>Send 2 more Upwork proposals (20 min):</strong> Keep the momentum going &mdash; search &ldquo;travel writer,&rdquo; &ldquo;content creator UK,&rdquo; and &ldquo;drone footage.&rdquo; Use the 3-line formula. Two today, three tomorrow.</li>
+        <li>Tap <strong>&#x1F4BC; Job Applied</strong>, <strong>&#x1F4DA; Learning Done</strong>, <strong>&#x26A1;&#xFE0F; Action Done</strong>, then <strong>&#x1F534; CONFIRM</strong> before midnight.</li>
       </ol>
     </div>
     <div class="action-why">
-      <strong>Why today matters:</strong> MSC Preziosa is a 3,502-passenger ship — one of the season's largest. Missing the morning light means missing the best images. The afternoon gives you 4–5 hours of focused work time for applications and proposals. DataAnnotation and Mindrift together could have you earning £18–35/hr within 10 days — that is your income bridge while Upwork builds. <strong>Saturday is the best day of the freelancing week: no meetings, no distractions, real time to build. Use every hour of it.</strong>
+      <strong>Why Fiverr today specifically:</strong> Saturday is when Fiverr&rsquo;s search algorithm gets the highest buyer traffic &mdash; setting up your gig today means it gets indexed over the weekend when buyers are actively browsing. Every day your Fiverr gig isn&rsquo;t live is a day you&rsquo;re leaving passive discovery on the table. Upwork requires you to find clients. Fiverr lets clients find you. You need both working in parallel. <strong>One Saturday morning. One gig. A passive income channel that runs 24/7 from this point forward.</strong>
     </div>
   </div>
 
   <!-- PROGRESS TRACKER -->
   <div class="card">
-    <div class="card-title">📊 Progress Tracker</div>
+    <div class="card-title">&#x1F4CA; Progress Tracker</div>
     <div class="stats-grid">
       <div class="stat-box"><div class="stat-num" id="stat-hours">0</div><div class="stat-lbl">Learning Hours</div></div>
       <div class="stat-box"><div class="stat-num" id="stat-apps">0</div><div class="stat-lbl">Jobs Applied</div></div>
@@ -550,24 +546,24 @@ var CRUISE_SCHEDULE=[
     <div class="charts-row">
       <div>
         <div class="chart-label">Applications This Week</div>
-        <div id="bar-empty" class="chart-empty">No applications yet — tap 💼 Job Applied above to start tracking!</div>
+        <div id="bar-empty" class="chart-empty">No applications yet &mdash; tap &#x1F4BC; Job Applied above to start tracking!</div>
         <canvas id="bar-chart" style="display:none;" height="140"></canvas>
       </div>
       <div>
         <div class="chart-label">Learning Topics Breakdown</div>
-        <div id="doughnut-empty" class="chart-empty">No sessions yet — tap 📚 Learning Done above to start tracking!</div>
+        <div id="doughnut-empty" class="chart-empty">No sessions yet &mdash; tap &#x1F4DA; Learning Done above to start tracking!</div>
         <canvas id="doughnut-chart" style="display:none;" height="140"></canvas>
       </div>
     </div>
     <div class="backup-btns" style="margin-top:20px;">
-      <button class="backup-btn save-btn" onclick="exportBackup()">💾 Save Progress</button>
-      <label class="backup-btn import-btn" style="cursor:pointer;">📂 Import Progress<input type="file" accept=".json" style="display:none;" onchange="importBackup(event)"></label>
-      <button class="backup-btn reset-btn" onclick="resetStatsToJSON()">🔄 Reset Stats to JSON</button>
+      <button class="backup-btn save-btn" onclick="exportBackup()">&#x1F4BE; Save Progress</button>
+      <label class="backup-btn import-btn" style="cursor:pointer;">&#x1F4C2; Import Progress<input type="file" accept=".json" style="display:none;" onchange="importBackup(event)"></label>
+      <button class="backup-btn reset-btn" onclick="resetStatsToJSON()">&#x1F504; Reset Stats to JSON</button>
     </div>
     <p class="backup-note">
-      <strong>Save Progress</strong> downloads <code>progress-tracker.json</code> — replace the one in your <em>Tracking Data</em> folder to keep totals accurate.<br>
+      <strong>Save Progress</strong> downloads <code>progress-tracker.json</code> &mdash; replace the one in your <em>Tracking Data</em> folder to keep totals accurate.<br>
       <strong>Import Progress</strong> loads a previously saved JSON back into this session.<br>
-      <strong>Reset Stats to JSON</strong> resets this session's stats to the saved JSON values, fixing localStorage drift.<br>
+      <strong>Reset Stats to JSON</strong> resets this session&rsquo;s stats to the saved JSON values, fixing localStorage drift.<br>
       View all briefings online: <a href="https://steve-ai-stuff.github.io/daily-briefing/" target="_blank">steve-ai-stuff.github.io/daily-briefing</a>
     </p>
   </div>
@@ -579,43 +575,43 @@ var CRUISE_SCHEDULE=[
     <path d="M0,80 L0,55 Q80,20 160,45 Q240,65 320,35 Q400,5 480,30 Q560,55 640,25 Q720,0 800,30 Q880,55 960,40 L960,80 Z" fill="rgba(22,101,52,0.35)"/>
     <path d="M0,80 L0,65 Q100,40 200,58 Q300,72 400,50 Q500,28 600,52 Q700,72 800,55 Q880,42 960,60 L960,80 Z" fill="rgba(15,70,35,0.55)"/>
   </svg>
-  Generated 18 April 2026 &nbsp;·&nbsp; Powered by Claude AI &nbsp;·&nbsp; 🏴󠁧󠁢󠁳󠁣󠁴󠁿 Invergordon, Scottish Highlands &nbsp;·&nbsp; Next briefing: 19 April 2026
+  Generated 18 April 2026 &nbsp;&middot;&nbsp; Powered by Claude AI &nbsp;&middot;&nbsp; &#x1F3F4;&#xE0067;&#xE0062;&#xE0073;&#xE0063;&#xE0074;&#xE007F; Invergordon, Scottish Highlands &nbsp;&middot;&nbsp; Next briefing: 19 April 2026
 </footer>
 
 <script>
 var LS_KEY="steve_briefing_progress"; var state={}; var rocketFired=false; var barChart=null; var doughnutChart=null;
 function showToast(msg,type){var cls='toast'+(type==='warn'?' warn':type==='info'?' info':'');var el=document.createElement('div');el.className=cls;el.textContent=msg;document.getElementById('toast-container').appendChild(el);setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},4000);}
 function mergeSkills(stored,saved){var out={};var s=stored||{};var v=saved||{};var keys=Object.keys(v);Object.keys(s).forEach(function(k){if(keys.indexOf(k)<0)keys.push(k);});keys.forEach(function(k){out[k]=Math.max(s[k]||0,v[k]||0);});return out;}
-function initState(){var raw=null;try{raw=localStorage.getItem(LS_KEY);}catch(e){}var stored={};if(raw){try{stored=JSON.parse(raw);}catch(e){}}var todayKey=TODAY_DATE;var todayData=(stored.days&&stored.days[todayKey])?stored.days[todayKey]:{};state={date:todayKey,news:todayData.news||false,job:todayData.job||false,learn:todayData.learn||false,action:todayData.action||false,confirmed:todayData.confirmed||false,apps:Math.max(todayData.apps||0,SAVED_APPS),learn_hours:Math.max(todayData.learn_hours||0,SAVED_LEARN_HOURS),sessions:Math.max(todayData.sessions||0,SAVED_SESSIONS),interviews:Math.max(todayData.interviews||0,SAVED_INTERVIEWS),skills:mergeSkills(stored.skills,SAVED_SKILLS)};renderPills();updateRing();renderStats();renderCharts();if(state.confirmed){var btn=document.getElementById('pill-confirm');btn.textContent='✅ CONFIRMED';btn.classList.add('confirmed');}}
+function initState(){var raw=null;try{raw=localStorage.getItem(LS_KEY);}catch(e){}var stored={};if(raw){try{stored=JSON.parse(raw);}catch(e){}}var todayKey=TODAY_DATE;var todayData=(stored.days&&stored.days[todayKey])?stored.days[todayKey]:{};state={date:todayKey,news:todayData.news||false,job:todayData.job||false,learn:todayData.learn||false,action:todayData.action||false,confirmed:todayData.confirmed||false,apps:Math.max(todayData.apps||0,SAVED_APPS),learn_hours:Math.max(todayData.learn_hours||0,SAVED_LEARN_HOURS),sessions:Math.max(todayData.sessions||0,SAVED_SESSIONS),interviews:Math.max(todayData.interviews||0,SAVED_INTERVIEWS),skills:mergeSkills(stored.skills,SAVED_SKILLS)};renderPills();updateRing();renderStats();renderCharts();if(state.confirmed){var btn=document.getElementById('pill-confirm');btn.textContent='Confirmed';btn.classList.add('confirmed');}}
 function saveState(){var raw=null;try{raw=localStorage.getItem(LS_KEY);}catch(e){}var stored={};if(raw){try{stored=JSON.parse(raw);}catch(e){}}if(!stored.days)stored.days={};stored.days[TODAY_DATE]={news:state.news,job:state.job,learn:state.learn,action:state.action,confirmed:state.confirmed,apps:state.apps,learn_hours:state.learn_hours,sessions:state.sessions,interviews:state.interviews};stored.skills=state.skills;try{localStorage.setItem(LS_KEY,JSON.stringify(stored));}catch(e){}}
 function togglePill(id){if(state.confirmed){showToast('Day already confirmed — open tomorrow\'s briefing to log more progress.','warn');return;}state[id]=!state[id];if(id==='job'&&state[id]){state.apps=(state.apps||0)+1;renderStats();}if(id==='learn'&&state[id]){state.learn_hours=parseFloat(((state.learn_hours||0)+0.5).toFixed(1));state.sessions=(state.sessions||0)+1;if(state.skills[TODAY_TOPIC]!==undefined)state.skills[TODAY_TOPIC]++;renderStats();renderCharts();}renderPills();updateRing();saveState();}
 function renderPills(){['news','job','learn','action'].forEach(function(id){var el=document.getElementById('pill-'+id);if(!el)return;el.classList.toggle('done',!!state[id]);});}
-function updateRing(){var total=4;var done=['news','job','learn','action'].filter(function(k){return state[k];}).length;var pct=Math.round((done/total)*100);var circ=94.2;var dashArr=(pct/100*circ).toFixed(1)+' '+circ;var circle=document.getElementById('ring-circle');if(circle)circle.setAttribute('stroke-dasharray',dashArr);var pctEl=document.getElementById('ring-pct');if(pctEl)pctEl.textContent=pct+'%';var emoji='🌑';if(pct>=100)emoji='🚀';else if(pct>=75)emoji='✅';else if(pct>=50)emoji='🌔';else if(pct>=25)emoji='🌓';else if(pct>0)emoji='🌒';var emojiEl=document.getElementById('ring-emoji');if(emojiEl)emojiEl.textContent=emoji;if(pct===100&&!rocketFired){rocketFired=true;var r=document.getElementById('rocket-wrap');r.classList.add('flying');setTimeout(function(){r.style.display='none';r.classList.remove('flying');},5300);[{id:'bang1',t:700},{id:'bang2',t:1600},{id:'bang3',t:2500},{id:'bang4',t:3400},{id:'bang5',t:4300}].forEach(function(b){setTimeout(function(){var el=document.getElementById(b.id);if(!el)return;el.classList.add('show');setTimeout(function(){el.classList.remove('show');el.style.display='none';},900);},b.t);});setTimeout(function(){var b=document.getElementById('bang-emoji');b.classList.add('show');setTimeout(function(){b.classList.remove('show');b.style.display='none';},1000);},1600);setTimeout(function(){var p=document.getElementById('party-popper');p.classList.add('show');setTimeout(function(){p.classList.remove('show');p.style.display='none';},1300);},4800);showToast("🎉 100%! You're on fire today, Steve! Don't forget to CONFIRM! 🚀");}}
+function updateRing(){var total=4;var done=['news','job','learn','action'].filter(function(k){return state[k];}).length;var pct=Math.round((done/total)*100);var circ=94.2;var dashArr=(pct/100*circ).toFixed(1)+' '+circ;var circle=document.getElementById('ring-circle');if(circle)circle.setAttribute('stroke-dasharray',dashArr);var pctEl=document.getElementById('ring-pct');if(pctEl)pctEl.textContent=pct+'%';var emoji='\u{1F311}';if(pct>=100)emoji='\u{1F680}';else if(pct>=75)emoji='\u2705';else if(pct>=50)emoji='\u{1F314}';else if(pct>=25)emoji='\u{1F313}';else if(pct>0)emoji='\u{1F312}';var emojiEl=document.getElementById('ring-emoji');if(emojiEl)emojiEl.textContent=emoji;if(pct===100&&!rocketFired){rocketFired=true;var r=document.getElementById('rocket-wrap');r.classList.add('flying');setTimeout(function(){r.style.display='none';r.classList.remove('flying');},5300);[{id:'bang1',t:700},{id:'bang2',t:1600},{id:'bang3',t:2500},{id:'bang4',t:3400},{id:'bang5',t:4300}].forEach(function(b){setTimeout(function(){var el=document.getElementById(b.id);if(!el)return;el.classList.add('show');setTimeout(function(){el.classList.remove('show');el.style.display='none';},900);},b.t);});setTimeout(function(){var b=document.getElementById('bang-emoji');b.classList.add('show');setTimeout(function(){b.classList.remove('show');b.style.display='none';},1000);},1600);setTimeout(function(){var p=document.getElementById('party-popper');p.classList.add('show');setTimeout(function(){p.classList.remove('show');p.style.display='none';},1300);},4800);showToast("100%! You're on fire today, Steve! Don't forget to CONFIRM!");}}
 function renderStats(){var h=document.getElementById('stat-hours');if(h)h.textContent=state.learn_hours||0;var a=document.getElementById('stat-apps');if(a)a.textContent=state.apps||0;var i=document.getElementById('stat-interviews');if(i)i.textContent=state.interviews||0;var s=document.getElementById('stat-sessions');if(s)s.textContent=state.sessions||0;}
 function renderCharts(){var history=SAVED_DAILY_HISTORY.slice();var todayEntry=null;for(var k=0;k<history.length;k++){if(history[k].date===TODAY_DATE){todayEntry=history[k];break;}}if(!todayEntry){history.push({date:TODAY_DATE,apps:state.apps||0,hours:state.learn_hours||0});}else{todayEntry.apps=state.apps||0;todayEntry.hours=state.learn_hours||0;}history=history.slice(-7);var hasApps=history.some(function(d){return d.apps>0;});var barEmpty=document.getElementById('bar-empty');var barCanvas=document.getElementById('bar-chart');if(hasApps){if(barEmpty)barEmpty.style.display='none';if(barCanvas)barCanvas.style.display='block';var labels=history.map(function(d){return d.date.slice(5);});var vals=history.map(function(d){return d.apps||0;});if(barChart){barChart.data.labels=labels;barChart.data.datasets[0].data=vals;barChart.update();}else{var bctx=barCanvas?barCanvas.getContext('2d'):null;if(bctx)barChart=new Chart(bctx,{type:'bar',data:{labels:labels,datasets:[{label:'Applications',data:vals,backgroundColor:'rgba(74,222,128,0.55)',borderColor:'rgba(74,222,128,0.90)',borderWidth:1,borderRadius:4}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'rgba(255,255,255,0.55)',font:{size:10}}},y:{ticks:{color:'rgba(255,255,255,0.55)',font:{size:10}},beginAtZero:true,grid:{color:'rgba(255,255,255,0.06)'}}}}});}}else{if(barEmpty)barEmpty.style.display='';if(barCanvas)barCanvas.style.display='none';}var skills=state.skills||{};var skillKeys=Object.keys(skills).filter(function(k){return(skills[k]||0)>0;});var doughnutEmpty=document.getElementById('doughnut-empty');var doughnutCanvas=document.getElementById('doughnut-chart');if(skillKeys.length>0){if(doughnutEmpty)doughnutEmpty.style.display='none';if(doughnutCanvas)doughnutCanvas.style.display='block';var dLabels=skillKeys;var dVals=skillKeys.map(function(k){return skills[k];});var colours=['#4ade80','#fbbf24','#60a5fa','#f472b6','#a78bfa','#34d399','#fb923c','#38bdf8','#facc15','#86efac'];if(doughnutChart){doughnutChart.data.labels=dLabels;doughnutChart.data.datasets[0].data=dVals;doughnutChart.update();}else{var dctx=doughnutCanvas?doughnutCanvas.getContext('2d'):null;if(dctx)doughnutChart=new Chart(dctx,{type:'doughnut',data:{labels:dLabels,datasets:[{data:dVals,backgroundColor:colours.slice(0,dLabels.length),borderWidth:0}]},options:{responsive:true,plugins:{legend:{display:true,position:'bottom',labels:{color:'rgba(255,255,255,0.70)',font:{size:10},boxWidth:10}}}}});}}else{if(doughnutEmpty)doughnutEmpty.style.display='';if(doughnutCanvas)doughnutCanvas.style.display='none';}}
-function confirmDay(){if(state.confirmed)return;var done=['news','job','learn','action'].filter(function(k){return state[k];}).length;if(done===0){showToast('Tap at least one task pill before confirming!','warn');return;}state.confirmed=true;saveState();var btn=document.getElementById('pill-confirm');btn.textContent='✅ CONFIRMED';btn.classList.add('confirmed');showToast('🎉 Day confirmed! Great work, Steve. See you tomorrow.');exportBackup(true);}
+function confirmDay(){if(state.confirmed)return;var done=['news','job','learn','action'].filter(function(k){return state[k];}).length;if(done===0){showToast('Tap at least one task pill before confirming!','warn');return;}state.confirmed=true;saveState();var btn=document.getElementById('pill-confirm');btn.textContent='Confirmed';btn.classList.add('confirmed');showToast('Day confirmed! Great work, Steve. See you tomorrow.');exportBackup(true);}
 function exportBackup(silent){var raw=null;try{raw=localStorage.getItem(LS_KEY);}catch(e){}var stored={};if(raw){try{stored=JSON.parse(raw);}catch(e){}}var allHistory={};SAVED_DAILY_HISTORY.forEach(function(d){allHistory[d.date]={apps:d.apps||0,hours:d.hours||0};});allHistory[TODAY_DATE]={apps:state.apps||0,hours:state.learn_hours||0,confirmed:state.confirmed||false,topic:TODAY_TOPIC,briefing_generated:true};var out={meta:{last_updated:TODAY_DATE,version:"1.0"},totals:{learning_hours:state.learn_hours||0,applications_sent:state.apps||0,interviews:state.interviews||0,learning_sessions_completed:state.sessions||0},daily_history:allHistory,skills_sessions:state.skills||{}};var blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='progress-tracker.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);if(!silent)showToast('Progress saved! Replace your Tracking Data/progress-tracker.json with this file.','info');}
 function importBackup(evt){var file=evt.target.files[0];if(!file)return;var reader=new FileReader();reader.onload=function(e){try{var data=JSON.parse(e.target.result);if(data.totals){state.apps=data.totals.applications_sent||0;state.learn_hours=data.totals.learning_hours||0;state.sessions=data.totals.learning_sessions_completed||0;state.interviews=data.totals.interviews||0;}if(data.skills_sessions)state.skills=data.skills_sessions;renderStats();renderCharts();saveState();showToast('Progress imported successfully!','info');}catch(err){showToast('Error reading file — make sure it is a valid progress-tracker.json','warn');}};reader.readAsText(file);evt.target.value='';}
-function resetStatsToJSON(){state.apps=SAVED_APPS;state.learn_hours=SAVED_LEARN_HOURS;state.sessions=SAVED_SESSIONS;state.interviews=SAVED_INTERVIEWS;state.skills=JSON.parse(JSON.stringify(SAVED_SKILLS));state.news=false;state.job=false;state.learn=false;state.action=false;state.confirmed=false;renderPills();updateRing();renderStats();renderCharts();saveState();var btn=document.getElementById('pill-confirm');if(btn){btn.textContent='🔴 CONFIRM';btn.classList.remove('confirmed');}showToast('Stats reset to progress-tracker.json values.','info');}
+function resetStatsToJSON(){state.apps=SAVED_APPS;state.learn_hours=SAVED_LEARN_HOURS;state.sessions=SAVED_SESSIONS;state.interviews=SAVED_INTERVIEWS;state.skills=JSON.parse(JSON.stringify(SAVED_SKILLS));state.news=false;state.job=false;state.learn=false;state.action=false;state.confirmed=false;renderPills();updateRing();renderStats();renderCharts();saveState();var btn=document.getElementById('pill-confirm');if(btn){btn.textContent='CONFIRM';btn.classList.remove('confirmed');}showToast('Stats reset to progress-tracker.json values.','info');}
 
-function updateCruise(){var now=new Date();var today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');var banner=document.getElementById('ship-banner');var todayShips=null,nextEntry=null;for(var i=0;i<CRUISE_SCHEDULE.length;i++){var e=CRUISE_SCHEDULE[i];if(e.date===today){todayShips=e.ships;}if(e.date>today&&!nextEntry){nextEntry=e;}}if(banner){if(todayShips){banner.className='ship-banner in-port';banner.innerHTML='🚢 IN PORT TODAY: '+todayShips.join(' &amp; ');}else if(nextEntry){var nd=new Date(nextEntry.date+'T08:00:00');var diff=nd-now;var daysUntil=Math.ceil(diff/86400000);banner.className='ship-banner next-ship';banner.innerHTML='⚓ Next: <strong>'+nextEntry.ships.join(' &amp; ')+'</strong> — '+nextEntry.date+' ('+daysUntil+' day'+(daysUntil===1?'':'s')+' away)';}else{banner.className='ship-banner season-over';banner.innerHTML='🏁 2026 Cruise Season Complete';}}var target=new Date('2026-10-14T23:59:00');var diff2=target-now;if(diff2>0){var d=Math.floor(diff2/86400000);var h=Math.floor((diff2%86400000)/3600000);var m=Math.floor((diff2%3600000)/60000);var s=Math.floor((diff2%60000)/1000);var el=function(id,v){var e=document.getElementById(id);if(e)e.textContent=String(v).padStart(2,'0');};el('cd-days',d);el('cd-hours',h);el('cd-mins',m);el('cd-secs',s);}}
+function updateCruise(){var now=new Date();var today=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');var banner=document.getElementById('ship-banner');var todayShips=null,nextEntry=null;for(var i=0;i<CRUISE_SCHEDULE.length;i++){var e=CRUISE_SCHEDULE[i];if(e.date===today){todayShips=e.ships;}if(e.date>today&&!nextEntry){nextEntry=e;}}if(banner){if(todayShips){banner.className='ship-banner in-port';banner.innerHTML='IN PORT TODAY: '+todayShips.join(' &amp; ');}else if(nextEntry){var nd=new Date(nextEntry.date+'T08:00:00');var diff=nd-now;var daysUntil=Math.ceil(diff/86400000);banner.className='ship-banner next-ship';banner.innerHTML='Next: <strong>'+nextEntry.ships.join(' &amp; ')+'</strong> &mdash; '+nextEntry.date+' ('+daysUntil+' day'+(daysUntil===1?'':'s')+' away)';}else{banner.className='ship-banner season-over';banner.innerHTML='2026 Cruise Season Complete';}}var target=new Date('2026-10-14T23:59:00');var diff2=target-now;if(diff2>0){var d=Math.floor(diff2/86400000);var h=Math.floor((diff2%86400000)/3600000);var m=Math.floor((diff2%3600000)/60000);var s=Math.floor((diff2%60000)/1000);var el=function(id,v){var e=document.getElementById(id);if(e)e.textContent=String(v).padStart(2,'0');};el('cd-days',d);el('cd-hours',h);el('cd-mins',m);el('cd-secs',s);}}
 setInterval(updateCruise,1000); updateCruise();
 
 var OPENMETEO_URL='https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm';
 var WTTR_URL='https://wttr.in/Invergordon,Scotland?format=j1';
-function wmoIcon(c){if(c===0)return'☀️';if(c<=2)return'⛅';if(c===3)return'☁️';if(c<=48)return'🌫️';if(c<=55)return'🌦️';if(c<=67)return'🌧️';if(c<=77)return'❄️';if(c<=82)return'🌦️';if(c<=86)return'🌨️';if(c>=95)return'⛈️';return'🌤️';}
-function wttrIcon(c){if(c===113)return'☀️';if(c===116)return'🌤️';if(c>=119&&c<=122)return'☁️';if(c===143||c===248||c===260)return'🌫️';if(c>=200&&c<=230)return'⛈️';if(c>=263&&c<=281)return'🌧️';if(c>=293&&c<=321)return'🌧️';if(c>=323&&c<=395)return'🌨️';return'🌡️';}
+function wmoIcon(c){if(c===0)return'\u2600\uFE0F';if(c<=2)return'\u26C5';if(c===3)return'\u2601\uFE0F';if(c<=48)return'\uD83C\uDF2B\uFE0F';if(c<=55)return'\uD83C\uDF26\uFE0F';if(c<=67)return'\uD83C\uDF27\uFE0F';if(c<=77)return'\u2744\uFE0F';if(c<=82)return'\uD83C\uDF26\uFE0F';if(c<=86)return'\uD83C\uDF28\uFE0F';if(c>=95)return'\u26C8\uFE0F';return'\uD83C\uDF24\uFE0F';}
+function wttrIcon(c){if(c===113)return'\u2600\uFE0F';if(c===116)return'\uD83C\uDF24\uFE0F';if(c>=119&&c<=122)return'\u2601\uFE0F';if(c===143||c===248||c===260)return'\uD83C\uDF2B\uFE0F';if(c>=200&&c<=230)return'\u26C8\uFE0F';if(c>=263&&c<=281)return'\uD83C\uDF27\uFE0F';if(c>=293&&c<=321)return'\uD83C\uDF27\uFE0F';if(c>=323&&c<=395)return'\u2744\uFE0F';return'\uD83C\uDF21\uFE0F';}
 function wmoCondition(c){if(c===0)return'Clear sky';if(c<=2)return'Partly cloudy';if(c===3)return'Overcast';if(c<=48)return'Foggy';if(c<=55)return'Drizzle';if(c<=67)return'Rain';if(c<=77)return'Snow';if(c<=82)return'Showers';if(c<=86)return'Snow showers';if(c>=95)return'Thunderstorm';return'Variable';}
-function setWeatherAnimation(code){var container=document.getElementById('weather-particles');if(!container)return;container.innerHTML='';if(code>=95){for(var i=0;i<20;i++){var d=document.createElement('div');d.style.cssText='position:absolute;width:1.5px;height:16px;background:rgba(147,210,255,0.75);border-radius:2px;left:'+(Math.random()*100)+'%;top:-20px;animation:rainFall '+(0.3+Math.random()*0.3)+'s linear '+(Math.random()*2)+'s infinite;';container.appendChild(d);}var bolt=document.createElement('div');bolt.style.cssText='position:absolute;width:3px;height:60px;background:rgba(255,255,180,0.55);left:50%;top:30%;animation:lightningFlash 5s ease-in-out infinite;';container.appendChild(bolt);}else if((code>=51&&code<=67)||(code>=80&&code<=82)){for(var i=0;i<20;i++){var d=document.createElement('div');d.style.cssText='position:absolute;width:1.5px;height:16px;background:rgba(147,210,255,0.75);border-radius:2px;left:'+(Math.random()*100)+'%;top:-20px;animation:rainFall '+(0.3+Math.random()*0.4)+'s linear '+(Math.random()*2)+'s infinite;';container.appendChild(d);}}else if((code>=71&&code<=77)||(code>=85&&code<=86)){var flakes=['❄','❅','❆'];for(var i=0;i<15;i++){var d=document.createElement('div');d.textContent=flakes[i%3];d.style.cssText='position:absolute;font-size:'+(0.8+Math.random()*0.7)+'rem;color:rgba(255,255,255,0.90);left:'+(Math.random()*100)+'%;top:-20px;animation:snowFall '+(2+Math.random()*2)+'s ease-in-out '+(Math.random()*3)+'s infinite;';container.appendChild(d);}}else if(code<=1){var glow=document.createElement('div');glow.style.cssText='position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,220,100,0.55),transparent 70%);border-radius:50%;opacity:0.45;animation:sunPulse 3s ease-in-out infinite;';container.appendChild(glow);for(var i=0;i<8;i++){var ray=document.createElement('div');var angle=i*45;ray.style.cssText='position:absolute;top:10px;right:10px;width:2px;height:35px;background:rgba(255,220,100,0.55);transform-origin:bottom center;transform:rotate('+angle+'deg) translateY(-50px);opacity:0.45;animation:sunRayPulse '+(2+Math.random())+'s ease-in-out '+(i*0.2)+'s infinite;';container.appendChild(ray);}}else if(code<=3){var cloudEmojis=['☁️','☁️','☁️'];var speeds=[18,24,30];var tops=[20,45,65];for(var i=0;i<3;i++){var d=document.createElement('div');d.textContent=cloudEmojis[i];d.style.cssText='position:absolute;font-size:'+(1.5+i*0.3)+'rem;top:'+tops[i]+'%;left:-180px;opacity:0.45;animation:cloudDrift '+speeds[i]+'s linear '+(i*4)+'s infinite;';container.appendChild(d);}}}
-function renderWeatherOM(data){var c=data.current;var d=data.daily;var code=c.weathercode;var temp=Math.round(c.temperature_2m);var feels=Math.round(c.apparent_temperature);var wind=Math.round(c.windspeed_10m);var precip=c.precipitation;var cloud=c.cloudcover;var html='<div style="font-size:2.2rem;margin-bottom:4px;">'+wmoIcon(code)+'</div>';html+='<div style="font-size:1.6rem;font-weight:800;color:#fff;">'+temp+'°F</div>';html+='<div style="color:rgba(255,255,255,0.85);font-size:0.85rem;margin-bottom:6px;">'+wmoCondition(code)+'</div>';html+='<div class="weather-stats">';html+='<div class="wstat"><div class="wstat-val">'+feels+'°F</div><div class="wstat-lbl">Feels Like</div></div>';html+='<div class="wstat"><div class="wstat-val">'+wind+' mph</div><div class="wstat-lbl">Wind</div></div>';html+='<div class="wstat"><div class="wstat-val">'+precip+' mm</div><div class="wstat-lbl">Precip</div></div>';html+='<div class="wstat"><div class="wstat-val">'+cloud+'%</div><div class="wstat-lbl">Cloud</div></div>';html+='</div>';var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];html+='<div class="weather-7day">';for(var i=0;i<Math.min(5,d.time.length);i++){var dt=new Date(d.time[i]+'T12:00:00');var dn=dayNames[dt.getDay()];var isToday=(i===0);html+='<div class="wday'+(isToday?' today-day':'')+'">';html+='<div class="wday-name">'+(isToday?'Today':dn)+'</div>';html+='<div class="wday-icon">'+wmoIcon(d.weathercode[i])+'</div>';html+='<div>'+Math.round(d.temperature_2m_max[i])+'°</div>';html+='<div style="font-size:0.62rem;color:rgba(255,255,255,0.65);">'+Math.round(d.temperature_2m_min[i])+'°</div>';if(d.precipitation_probability_max&&d.precipitation_probability_max[i]>0){html+='<div style="font-size:0.60rem;color:rgba(147,210,255,0.90);">💧'+d.precipitation_probability_max[i]+'%</div>';}html+='</div>';}html+='</div>';document.getElementById('weather-content').innerHTML=html;setWeatherAnimation(code);}
+function setWeatherAnimation(code){var container=document.getElementById('weather-particles');if(!container)return;container.innerHTML='';if(code>=95){for(var i=0;i<20;i++){var d=document.createElement('div');d.style.cssText='position:absolute;width:1.5px;height:16px;background:rgba(147,210,255,0.75);border-radius:2px;left:'+(Math.random()*100)+'%;top:-20px;animation:rainFall '+(0.3+Math.random()*0.3)+'s linear '+(Math.random()*2)+'s infinite;';container.appendChild(d);}var bolt=document.createElement('div');bolt.style.cssText='position:absolute;width:3px;height:60px;background:rgba(255,255,180,0.55);left:50%;top:30%;animation:lightningFlash 5s ease-in-out infinite;';container.appendChild(bolt);}else if((code>=51&&code<=67)||(code>=80&&code<=82)){for(var i=0;i<20;i++){var d=document.createElement('div');d.style.cssText='position:absolute;width:1.5px;height:16px;background:rgba(147,210,255,0.75);border-radius:2px;left:'+(Math.random()*100)+'%;top:-20px;animation:rainFall '+(0.3+Math.random()*0.4)+'s linear '+(Math.random()*2)+'s infinite;';container.appendChild(d);}}else if((code>=71&&code<=77)||(code>=85&&code<=86)){var flakes=['\u2744','\u2745','\u2746'];for(var i=0;i<15;i++){var d=document.createElement('div');d.textContent=flakes[i%3];d.style.cssText='position:absolute;font-size:'+(0.8+Math.random()*0.7)+'rem;color:rgba(255,255,255,0.90);left:'+(Math.random()*100)+'%;top:-20px;animation:snowFall '+(2+Math.random()*2)+'s ease-in-out '+(Math.random()*3)+'s infinite;';container.appendChild(d);}}else if(code<=1){var glow=document.createElement('div');glow.style.cssText='position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,220,100,0.55),transparent 70%);border-radius:50%;opacity:0.45;animation:sunPulse 3s ease-in-out infinite;';container.appendChild(glow);for(var i=0;i<8;i++){var ray=document.createElement('div');var angle=i*45;ray.style.cssText='position:absolute;top:10px;right:10px;width:2px;height:35px;background:rgba(255,220,100,0.55);transform-origin:bottom center;transform:rotate('+angle+'deg) translateY(-50px);opacity:0.45;animation:sunRayPulse '+(2+Math.random())+'s ease-in-out '+(i*0.2)+'s infinite;';container.appendChild(ray);}}else if(code<=3){var speeds=[18,24,30];var tops=[20,45,65];for(var i=0;i<3;i++){var d=document.createElement('div');d.textContent='\u2601\uFE0F';d.style.cssText='position:absolute;font-size:'+(1.5+i*0.3)+'rem;top:'+tops[i]+'%;left:-180px;opacity:0.45;animation:cloudDrift '+speeds[i]+'s linear '+(i*4)+'s infinite;';container.appendChild(d);}}}
+function renderWeatherOM(data){var c=data.current;var d=data.daily;var code=c.weathercode;var temp=Math.round(c.temperature_2m);var feels=Math.round(c.apparent_temperature);var wind=Math.round(c.windspeed_10m);var precip=c.precipitation;var cloud=c.cloudcover;var html='<div style="font-size:2.2rem;margin-bottom:4px;">'+wmoIcon(code)+'</div>';html+='<div style="font-size:1.6rem;font-weight:800;color:#fff;">'+temp+'&deg;F</div>';html+='<div style="color:rgba(255,255,255,0.85);font-size:0.85rem;margin-bottom:6px;">'+wmoCondition(code)+'</div>';html+='<div class="weather-stats">';html+='<div class="wstat"><div class="wstat-val">'+feels+'&deg;F</div><div class="wstat-lbl">Feels Like</div></div>';html+='<div class="wstat"><div class="wstat-val">'+wind+' mph</div><div class="wstat-lbl">Wind</div></div>';html+='<div class="wstat"><div class="wstat-val">'+precip+' mm</div><div class="wstat-lbl">Precip</div></div>';html+='<div class="wstat"><div class="wstat-val">'+cloud+'%</div><div class="wstat-lbl">Cloud</div></div>';html+='</div>';var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];html+='<div class="weather-7day">';for(var i=0;i<Math.min(5,d.time.length);i++){var dt=new Date(d.time[i]+'T12:00:00');var dn=dayNames[dt.getDay()];var isToday=(i===0);html+='<div class="wday'+(isToday?' today-day':'')+'">';html+='<div class="wday-name">'+(isToday?'Today':dn)+'</div>';html+='<div class="wday-icon">'+wmoIcon(d.weathercode[i])+'</div>';html+='<div>'+Math.round(d.temperature_2m_max[i])+'&deg;</div>';html+='<div style="font-size:0.62rem;color:rgba(255,255,255,0.65);">'+Math.round(d.temperature_2m_min[i])+'&deg;</div>';if(d.precipitation_probability_max&&d.precipitation_probability_max[i]>0){html+='<div style="font-size:0.60rem;color:rgba(147,210,255,0.90);">\uD83D\uDCA7'+d.precipitation_probability_max[i]+'%</div>';}html+='</div>';}html+='</div>';document.getElementById('weather-content').innerHTML=html;setWeatherAnimation(code);}
 function cToF(c){return Math.round(parseFloat(c)*9/5+32);}
-function renderWeatherWttr(data){var cc=data.current_condition[0];var code=parseInt(cc.weatherCode);var temp=cToF(cc.temp_C);var feels=cToF(cc.FeelsLikeC);var wind=Math.round(parseFloat(cc.windspeedMiles));var precip=parseFloat(cc.precipMM);var cloud=parseInt(cc.cloudcover);var html='<div style="font-size:2.2rem;margin-bottom:4px;">'+wttrIcon(code)+'</div>';html+='<div style="font-size:1.6rem;font-weight:800;color:#fff;">'+temp+'°F</div>';html+='<div style="color:rgba(255,255,255,0.85);font-size:0.85rem;margin-bottom:6px;">'+cc.weatherDesc[0].value+'</div>';html+='<div class="weather-stats">';html+='<div class="wstat"><div class="wstat-val">'+feels+'°F</div><div class="wstat-lbl">Feels Like</div></div>';html+='<div class="wstat"><div class="wstat-val">'+wind+' mph</div><div class="wstat-lbl">Wind</div></div>';html+='<div class="wstat"><div class="wstat-val">'+precip+' mm</div><div class="wstat-lbl">Precip</div></div>';html+='<div class="wstat"><div class="wstat-val">'+cloud+'%</div><div class="wstat-lbl">Cloud</div></div>';html+='</div>';var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];html+='<div class="weather-7day">';for(var i=0;i<Math.min(3,data.weather.length);i++){var wd=data.weather[i];var dt=new Date(wd.date+'T12:00:00');var dn=dayNames[dt.getDay()];var wcode=parseInt(wd.hourly[4].weatherCode);html+='<div class="wday'+(i===0?' today-day':'')+'">';html+='<div class="wday-name">'+(i===0?'Today':dn)+'</div>';html+='<div class="wday-icon">'+wttrIcon(wcode)+'</div>';html+='<div>'+cToF(wd.maxtempC)+'°</div>';html+='<div style="font-size:0.62rem;color:rgba(255,255,255,0.65);">'+cToF(wd.mintempC)+'°</div>';html+='</div>';}html+='</div>';document.getElementById('weather-content').innerHTML=html;setWeatherAnimation(code);}
-function showWeatherFallback(){document.getElementById('weather-content').innerHTML='<p style="color:rgba(255,255,255,0.80);">Weather data unavailable — <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank" style="color:#fbbf24;">Met Office Invergordon →</a></p>';}
+function renderWeatherWttr(data){var cc=data.current_condition[0];var code=parseInt(cc.weatherCode);var temp=cToF(cc.temp_C);var feels=cToF(cc.FeelsLikeC);var wind=Math.round(parseFloat(cc.windspeedMiles));var precip=parseFloat(cc.precipMM);var cloud=parseInt(cc.cloudcover);var html='<div style="font-size:2.2rem;margin-bottom:4px;">'+wttrIcon(code)+'</div>';html+='<div style="font-size:1.6rem;font-weight:800;color:#fff;">'+temp+'&deg;F</div>';html+='<div style="color:rgba(255,255,255,0.85);font-size:0.85rem;margin-bottom:6px;">'+cc.weatherDesc[0].value+'</div>';html+='<div class="weather-stats">';html+='<div class="wstat"><div class="wstat-val">'+feels+'&deg;F</div><div class="wstat-lbl">Feels Like</div></div>';html+='<div class="wstat"><div class="wstat-val">'+wind+' mph</div><div class="wstat-lbl">Wind</div></div>';html+='<div class="wstat"><div class="wstat-val">'+precip+' mm</div><div class="wstat-lbl">Precip</div></div>';html+='<div class="wstat"><div class="wstat-val">'+cloud+'%</div><div class="wstat-lbl">Cloud</div></div>';html+='</div>';var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];html+='<div class="weather-7day">';for(var i=0;i<Math.min(3,data.weather.length);i++){var wd=data.weather[i];var dt=new Date(wd.date+'T12:00:00');var dn=dayNames[dt.getDay()];var wcode=parseInt(wd.hourly[4].weatherCode);html+='<div class="wday'+(i===0?' today-day':'')+'">';html+='<div class="wday-name">'+(i===0?'Today':dn)+'</div>';html+='<div class="wday-icon">'+wttrIcon(wcode)+'</div>';html+='<div>'+cToF(wd.maxtempC)+'&deg;</div>';html+='<div style="font-size:0.62rem;color:rgba(255,255,255,0.65);">'+cToF(wd.mintempC)+'&deg;</div>';html+='</div>';}html+='</div>';document.getElementById('weather-content').innerHTML=html;setWeatherAnimation(code);}
+function showWeatherFallback(){document.getElementById('weather-content').innerHTML='<p style="color:rgba(255,255,255,0.80);">Weather data unavailable &mdash; <a href="https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0" target="_blank" style="color:#fbbf24;">Met Office Invergordon &rarr;</a></p>';}
 fetch(OPENMETEO_URL).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(renderWeatherOM).catch(function(){fetch(WTTR_URL).then(function(r){return r.json();}).then(renderWeatherWttr).catch(showWeatherFallback);});
 
-function fetchTraffic(){var el=document.getElementById('traffic-content');if(!el)return;fetch('https://api.allorigins.win/raw?url='+encodeURIComponent('https://www.mfr.co.uk/news/traffic/')).then(function(r){if(!r.ok)throw new Error(r.status);return r.text();}).then(function(html){var parser=new DOMParser();var doc=parser.parseFromString(html,'text/html');var items=doc.querySelectorAll('p, li, h2, h3, [class*="article"], [class*="content"], [class*="traffic"]');var keywords=['invergordon','tain','dingwall','inverness','kessock','a9','a96','a835','a862','cromarty','alness','muir of ord','strathpeffer','black isle','conon bridge','evanton','fearn','nigg','fort george','loch ness','drumnadrochit'];var found=[];items.forEach(function(item){var text=item.textContent.trim();if(text.length<10)return;var lower=text.toLowerCase();var match=keywords.some(function(kw){return lower.indexOf(kw)>=0;});if(match&&found.length<5){var snippet=text.slice(0,150);var emoji='🚦';if(/accident|crash|collision/i.test(text))emoji='🚗💥';else if(/police|closure|closed/i.test(text))emoji='🚔';else if(/roadwork|road work/i.test(text))emoji='🚧';else if(/animal|livestock|deer/i.test(text))emoji='🐄⚠️';else if(/flood/i.test(text))emoji='🌊⚠️';else if(/snow|ice|frost/i.test(text))emoji='❄️🚧';else if(/congestion|queue|delay|slow/i.test(text))emoji='🚗🐌';else if(/breakdown/i.test(text))emoji='🚗🔧';found.push(emoji+' '+snippet+(text.length>150?'…':''));}});if(found.length>0){el.innerHTML=found.map(function(f){return'<div style="margin-bottom:4px;font-size:0.81rem;">'+f+'</div>';}).join('');}else{el.innerHTML='<div style="color:rgba(255,255,255,0.70);">✅ No local incidents reported on MFR</div><div style="margin-top:5px;font-size:0.78rem;"><a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;">MFR Traffic ↗</a> &nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">Traffic Scotland ↗</a></div>';}}).catch(function(){el.innerHTML='<div style="font-size:0.80rem;"><a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;">MFR Traffic ↗</a> &nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">Traffic Scotland ↗</a></div>';});}
+function fetchTraffic(){var el=document.getElementById('traffic-content');if(!el)return;fetch('https://api.allorigins.win/raw?url='+encodeURIComponent('https://www.mfr.co.uk/news/traffic/')).then(function(r){if(!r.ok)throw new Error(r.status);return r.text();}).then(function(html){var parser=new DOMParser();var doc=parser.parseFromString(html,'text/html');var items=doc.querySelectorAll('p, li, h2, h3, [class*="article"], [class*="content"], [class*="traffic"]');var keywords=['invergordon','tain','dingwall','inverness','kessock','a9','a96','a835','a862','cromarty','alness','muir of ord','strathpeffer','black isle','conon bridge','evanton','fearn','nigg','fort george','loch ness','drumnadrochit'];var found=[];items.forEach(function(item){var text=item.textContent.trim();if(text.length<10)return;var lower=text.toLowerCase();var match=keywords.some(function(kw){return lower.indexOf(kw)>=0;});if(match&&found.length<5){var snippet=text.slice(0,150);var emoji='\uD83D\uDEA6';if(/accident|crash|collision/i.test(text))emoji='\uD83D\uDE97\uD83D\uDCA5';else if(/police|closure|closed/i.test(text))emoji='\uD83D\uDE94';else if(/roadwork|road work/i.test(text))emoji='\uD83D\uDEA7';else if(/animal|livestock|deer/i.test(text))emoji='\uD83D\uDC04\u26A0\uFE0F';else if(/flood/i.test(text))emoji='\uD83C\uDF0A\u26A0\uFE0F';else if(/snow|ice|frost/i.test(text))emoji='\u2744\uFE0F\uD83D\uDEA7';else if(/congestion|queue|delay|slow/i.test(text))emoji='\uD83D\uDE97\uD83D\uDC0C';else if(/breakdown/i.test(text))emoji='\uD83D\uDE97\uD83D\uDD27';found.push(emoji+' '+snippet+(text.length>150?'\u2026':''));}});if(found.length>0){el.innerHTML=found.map(function(f){return'<div style="margin-bottom:4px;font-size:0.81rem;">'+f+'</div>';}).join('');}else{el.innerHTML='<div style="color:rgba(255,255,255,0.70);">\u2705 No local incidents reported on MFR</div><div style="margin-top:5px;font-size:0.78rem;"><a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;">MFR Traffic \u2197</a> &nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">Traffic Scotland \u2197</a></div>';}}).catch(function(){el.innerHTML='<div style="font-size:0.80rem;"><a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;">MFR Traffic \u2197</a> &nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">Traffic Scotland \u2197</a></div>';});}
 
-function renderRoadworks(){var el=document.getElementById('roadworks-content');if(!el)return;if(!ROADWORKS||ROADWORKS.length===0){el.style.display='none';return;}var html='<div style="font-size:0.75rem;color:rgba(255,255,255,0.55);font-weight:700;margin-bottom:4px;">🚧 Active Roadworks Nearby</div>';ROADWORKS.forEach(function(r){html+='<div style="font-size:0.80rem;margin-bottom:3px;">🚧 '+r+'</div>';});el.innerHTML=html;}
+function renderRoadworks(){var el=document.getElementById('roadworks-content');if(!el)return;if(!ROADWORKS||ROADWORKS.length===0){el.style.display='none';return;}var html='<div style="font-size:0.75rem;color:rgba(255,255,255,0.55);font-weight:700;margin-bottom:4px;">\uD83D\uDEA7 Active Roadworks Nearby</div>';ROADWORKS.forEach(function(r){html+='<div style="font-size:0.80rem;margin-bottom:3px;">\uD83D\uDEA7 '+r+'</div>';});el.innerHTML=html;}
 
 document.addEventListener('DOMContentLoaded',function(){initState();renderRoadworks();fetchTraffic();setInterval(fetchTraffic,300000);});
 </script>

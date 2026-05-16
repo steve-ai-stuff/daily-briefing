@@ -874,7 +874,7 @@ function initCharts(){
     if(!hasSkills){
       ctx2.parentNode.innerHTML="<div class='chart-empty'>No skill sessions yet &mdash; use CONFIRM to log progress!</div>";
     }else{
-      window.chartInstances["skills"]=new Chart(ctx2,{type:"bar",data:{labels:skillLabels,datasets:[{label:"Sessions",data:skillData,backgroundColor:"rgba(251,191,36,0.20)",borderColor:"rgba(251,191,36,0.7)",borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"rgba(255,255,255,0.5)",font:{size:8},maxRotation:45},grid:{color:"rgba(255,255,255,0.04)"}},y:{beginAtZero:true,ticks:{color:"rgba(255,255,255,0.5)",font:{size:9},stepSize:1},grid:{color:"rgba(255,255,255,0.06)"}}}}}});
+      window.chartInstances["skills"]=new Chart(ctx2,{type:"bar",data:{labels:skillLabels,datasets:[{label:"Sessions",data:skillData,backgroundColor:"rgba(251,191,36,0.20)",borderColor:"rgba(251,191,36,0.7)",borderWidth:1.5,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:"rgba(255,255,255,0.5)",font:{size:8},maxRotation:45},grid:{color:"rgba(255,255,255,0.04)"}},y:{beginAtZero:true,ticks:{color:"rgba(255,255,255,0.5)",font:{size:9},stepSize:1},grid:{color:"rgba(255,255,255,0.06)"}}}}});
     }
   }
   document.getElementById("stat-hours").textContent=SAVED_LEARN_HOURS.toFixed(1);

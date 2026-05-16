@@ -35,7 +35,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.22;
+  opacity: 1;
   z-index: 0;
   animation: kenBurns 45s ease-in-out infinite alternate;
 }
@@ -1345,46 +1345,73 @@ function renderWeatherWttr(data) {
 
 /* ─── TRAFFIC ─── */
 function fetchTraffic() {
-  var trafficUrl = 'https://www.trafficscotland.org/rss/feeds/currentincidents.aspx';
   var el = document.getElementById('traffic-content');
-  fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(trafficUrl))
-    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
+  var BBC_RSS = 'https://feeds.bbci.co.uk/news/scotland/rss.xml';
+  var PROXY   = 'https://api.codetabs.com/v1/proxy?quest=';
+  var FALLBACK_HTML = '<span style="color:rgba(255,255,255,0.70);">Live traffic unavailable</span>'
+    + ' &nbsp;·&nbsp; <a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;font-size:0.78rem;">MFR Traffic ↗</a>'
+    + ' &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">Traffic Scotland ↗</a>';
+
+  fetch(PROXY + encodeURIComponent(BBC_RSS))
+    .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
     .then(function(xml){
       var parser = new DOMParser();
       var doc = parser.parseFromString(xml, 'text/xml');
-      if(!doc.querySelector('channel')) throw new Error('Not RSS');
-      var items = doc.querySelectorAll('item');
-      var keywords = ['a9','invergordon','inverness','highland','dingwall','tain','alness','cromarty','perth','aviemore','dalwhinnie','pitlochry','strathpeffer','muir of ord'];
+      var items = Array.prototype.slice.call(doc.querySelectorAll('item'));
+
+      // Local Highlands/Invergordon place names
+      var localKw = ['a9','invergordon','inverness','highland','dingwall','tain',
+        'alness','cromarty','a96','a835','kessock','black isle','conon','evanton',
+        'ross-shire','ross shire','fearn','nigg','strathpeffer'];
+
+      // Road incident phrases — specific enough to avoid false matches
+      var roadKw = ['crash','accident','collision','road closure','lane closure',
+        'breakdown','diversion','roadworks','road works','flooding','traffic delay',
+        'road reopened','trunk road','traffic incident','road closed'];
+
+      // Short ambiguous words — only match as whole words to avoid
+      // "violence" matching "ice", "service" matching "ice", etc.
+      var weatherRoadRe = /\b(icy|ice road|snow on|snowfall|frost on|frozen road)\b/;
+
       var found = [];
       items.forEach(function(item){
-        var title = (item.querySelector('title')||{}).textContent||'';
-        var desc = (item.querySelector('description')||{}).textContent||'';
-        var combined = (title+' '+desc).toLowerCase();
-        var match = keywords.some(function(k){return combined.indexOf(k)>=0;});
-        if(match) {
-          var t = title.toLowerCase();
+        var title = (item.querySelector('title')||{textContent:''}).textContent || '';
+        var desc  = (item.querySelector('description')||{textContent:''}).textContent || '';
+        var combined = (title + ' ' + desc).toLowerCase();
+
+        var isLocal = localKw.some(function(k){ return combined.indexOf(k) >= 0; });
+        var isRoad  = roadKw.some(function(k){ return combined.indexOf(k) >= 0; })
+                   || weatherRoadRe.test(combined);
+
+        // MUST match BOTH a local place AND a road/traffic keyword
+        if(isLocal && isRoad && found.length < 5) {
           var emoji = '🚦';
-          if(/accident|crash|collision/.test(t)) emoji='🚗💥';
-          else if(/police|closure/.test(t)) emoji='🚔';
-          else if(/roadwork|road work/.test(t)) emoji='🚧';
-          else if(/animal|livestock|deer/.test(t)) emoji='🐄⚠️';
-          else if(/flood/.test(t)) emoji='🌊⚠️';
-          else if(/snow|ice|gate/.test(t)) emoji='❄️🚧';
-          else if(/congestion|queue|delay/.test(t)) emoji='🚗🐌';
-          else if(/breakdown/.test(t)) emoji='🚗🔧';
-          found.push(emoji+' '+title);
+          if(/crash|accident|collision/.test(combined))      emoji = '🚗💥';
+          else if(/closure|closed|diversion/.test(combined)) emoji = '🚔';
+          else if(/roadwork|road work/.test(combined))        emoji = '🚧';
+          else if(/flood/.test(combined))                     emoji = '🌊⚠️';
+          else if(weatherRoadRe.test(combined))               emoji = '❄️🚧';
+          else if(/delay|slow|congestion/.test(combined))     emoji = '🚗🐌';
+          else if(/breakdown/.test(combined))                 emoji = '🚗🔧';
+          var headline = title.replace(/<[^>]+>/g,'').trim().slice(0, 120);
+          if(headline) found.push(emoji + ' ' + headline);
         }
       });
+
       if(!el) return;
-      if(found.length===0) {
-        el.innerHTML='<span style="color:#4ade80;">✅ No incidents — all clear on A9 and Highland routes.</span>';
+      if(found.length === 0) {
+        el.innerHTML = '<span style="color:#4ade80;">✅ No road incidents in BBC Scotland news right now</span>'
+          + ' &nbsp;·&nbsp; <a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;font-size:0.78rem;">MFR Traffic ↗</a>'
+          + ' &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">Traffic Scotland ↗</a>';
       } else {
-        el.innerHTML = found.map(function(f){return '<div style="margin-bottom:4px;">'+f+'</div>';}).join('');
+        el.innerHTML = found.map(function(f){
+          return '<div style="margin-bottom:4px;font-size:0.82rem;">' + f + '</div>';
+        }).join('') + '<div style="margin-top:6px;font-size:0.72rem;color:rgba(255,255,255,0.45);">Source: BBC Scotland News · <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">Traffic Scotland ↗</a></div>';
       }
     })
-    .catch(function(){
-      if(!el) return;
-      el.innerHTML='<span style="color:#4ade80;">✅ No incidents reported</span> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;font-size:0.78rem;">check live map ↗</a>';
+    .catch(function(err){
+      console.warn('Traffic fetch failed:', err);
+      if(el) el.innerHTML = FALLBACK_HTML;
     });
 }
 

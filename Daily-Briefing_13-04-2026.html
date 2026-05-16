@@ -34,7 +34,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.22;
+  opacity: 1;
   z-index: 0;
   animation: kenBurns 45s ease-in-out infinite alternate;
 }
@@ -532,7 +532,7 @@ var CRUISE_SCHEDULE = [
     </p>
     <div class="traffic-box">
       <div class="traffic-title">🚦 Live Traffic — A9 · Invergordon · Inverness · Highlands</div>
-      <div id="traffic-content">Loading…</div>
+      <div id="traffic-content"><a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">🚦 Check live incidents → Traffic Scotland ↗</a></div>
       <div id="roadworks-content" style="margin-top:8px;padding-top:7px;border-top:1px solid rgba(251,191,36,0.28);"></div>
     </div>
   </div>
@@ -1328,51 +1328,9 @@ function renderRoadworks() {
   el.innerHTML = html;
 }
 
-function fetchTraffic() {
-  var el = document.getElementById('traffic-content');
-  if (!el) return;
-  var keywords = ['invergordon','tain','dingwall','inverness','kessock','a9','a96','a835','a862','cromarty','alness','muir of ord','strathpeffer','black isle','conon bridge','evanton','fearn','nigg','fort george','loch ness','drumnadrochit'];
-  fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://www.mfr.co.uk/news/traffic/'))
-    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.text(); })
-    .then(function(html){
-      var parser = new DOMParser();
-      var doc = parser.parseFromString(html,'text/html');
-      var nodes = doc.querySelectorAll('p, li, h2, h3, [class*="article"], [class*="content"], [class*="traffic"]');
-      var matches = [];
-      nodes.forEach(function(n){
-        var t = (n.textContent||'').trim();
-        if (!t || t.length < 10) return;
-        var tl = t.toLowerCase();
-        var hit = keywords.some(function(k){ return tl.indexOf(k) >= 0; });
-        if (hit) {
-          var emoji = '🚦';
-          if (/accident|crash|collision/i.test(t)) emoji='🚗💥';
-          else if (/police|closure|closed/i.test(t)) emoji='🚔';
-          else if (/roadwork|road work/i.test(t)) emoji='🚧';
-          else if (/animal|livestock|deer/i.test(t)) emoji='🐄⚠️';
-          else if (/flood/i.test(t)) emoji='🌊⚠️';
-          else if (/snow|ice|frost/i.test(t)) emoji='❄️🚧';
-          else if (/congestion|queue|delay|slow/i.test(t)) emoji='🚗🐌';
-          else if (/breakdown/i.test(t)) emoji='🚗🔧';
-          matches.push(emoji + ' ' + t.slice(0,150));
-        }
-      });
-      if (matches.length > 0) {
-        el.innerHTML = matches.slice(0,5).map(function(m){ return '<div style="margin-bottom:4px;">'+m+'</div>'; }).join('');
-      } else {
-        el.innerHTML = '✅ No local incidents reported on MFR &nbsp;·&nbsp; <a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;">MFR Traffic ↗</a> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">Traffic Scotland ↗</a>';
-      }
-    })
-    .catch(function(){
-      el.innerHTML = 'Traffic data unavailable &nbsp;·&nbsp; <a href="https://www.mfr.co.uk/news/traffic/" target="_blank" style="color:#fbbf24;">MFR Traffic ↗</a> &nbsp;·&nbsp; <a href="https://www.traffic.gov.scot/traffic-information/incidents" target="_blank" style="color:#fbbf24;">Traffic Scotland ↗</a>';
-    });
-}
-
 document.addEventListener('DOMContentLoaded', function(){
   initState();
-  fetchTraffic();
   renderRoadworks();
-  setInterval(fetchTraffic, 300000);
 });
 </script>
 </body>

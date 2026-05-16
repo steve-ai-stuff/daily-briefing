@@ -175,23 +175,27 @@ footer { text-align: center; padding: 20px 16px; font-size: 0.75rem; color: var(
 .drone-tip { font-size: 0.87rem; color: var(--text-secondary); line-height: 1.55; }
 .drone-callout { background: rgba(34,211,238,0.08); border-left: 3px solid rgba(34,211,238,0.5);
   border-radius: 0 8px 8px 0; padding: 10px 14px; margin-top: 10px; font-size: 0.82rem; color: #a5f3fc; }
-@keyframes rainFall{0%{transform:translateY(-20px) translateX(0);opacity:0}8%{opacity:0.9}100%{transform:translateY(290px) translateX(-18px);opacity:0}}
-        @keyframes snowDrift{0%{transform:translateY(-20px) translateX(0) rotate(0deg);opacity:0}8%{opacity:0.92}50%{transform:translateY(130px) translateX(20px) rotate(180deg)}100%{transform:translateY(290px) translateX(-14px) rotate(360deg);opacity:0}}
-        @keyframes sunGlow{0%,100%{opacity:0.48;transform:scale(1)}50%{opacity:0.72;transform:scale(1.13)}}
-        @keyframes sunShimmer{0%,100%{opacity:0;transform:scale(0.4)}50%{opacity:0.85;transform:scale(1.3)}}
+@keyframes rainFall{0%{transform:translate(0,-12px) rotate(12deg);opacity:0}7%{opacity:0.90}93%{opacity:0.90}100%{transform:translate(-78px,305px) rotate(12deg);opacity:0}}
+        @keyframes snowDrift{0%{transform:translateY(-20px) translateX(0) rotate(0deg);opacity:0}8%{opacity:0.92}38%{transform:translateY(108px) translateX(18px) rotate(128deg)}68%{transform:translateY(202px) translateX(-12px) rotate(252deg)}100%{transform:translateY(308px) translateX(7px) rotate(360deg);opacity:0}}
+        @keyframes sunGlow{0%,100%{opacity:0.54;transform:scale(1)}38%{opacity:0.84;transform:scale(1.12)}72%{opacity:0.46;transform:scale(0.95)}}
+        @keyframes sunShimmer{0%,100%{opacity:0;transform:scale(0.28) rotate(0deg)}50%{opacity:0.84;transform:scale(1.28) rotate(22deg)}}
         @keyframes rayRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-        @keyframes cloudDrift{from{transform:translateX(-320px);opacity:0}7%{opacity:1}93%{opacity:1}to{transform:translateX(calc(100vw + 320px));opacity:0}}
+        @keyframes cloudDrift{from{transform:translateX(-380px);opacity:0}7%{opacity:1}93%{opacity:1}to{transform:translateX(calc(100% + 380px));opacity:0}}
         @keyframes cloudBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-        @keyframes fogDrift{0%{transform:translateX(-55%);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateX(55%);opacity:0}}
-        @keyframes hailFall{0%{transform:translateY(-10px) scale(1);opacity:0}7%{opacity:0.88}88%{opacity:0.88}100%{transform:translateY(290px) scale(0.7);opacity:0}}
-        @keyframes lightningFlash{0%,100%{opacity:0}2%,4%{opacity:0.9}3%{opacity:0}7%,9%{opacity:0.65}8%{opacity:0}}
-        @keyframes windStreak{0%{transform:translateX(-110%) scaleX(0.4);opacity:0}12%{opacity:0.48;transform:translateX(-70%) scaleX(1)} 6%{opacity:0} }
+        @keyframes fogDrift{0%{transform:translateX(-64%);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateX(64%);opacity:0}}
+        @keyframes hailFall{0%{transform:translateY(-10px) scale(1.05);opacity:0}7%{opacity:0.92}84%{opacity:0.92;transform:translateY(272px) scale(0.82)}100%{transform:translateY(298px) scale(0.60);opacity:0}}
+        @keyframes lightningFlash{0%,100%{opacity:0}2%{opacity:1}2.6%{opacity:0.08}3.8%{opacity:0.92}4.2%{opacity:0}8.5%{opacity:0.68}9%{opacity:0}}
+        @keyframes windStreak{0%{transform:translateX(-118%) scaleX(0.45);opacity:0}10%{opacity:0.52}88%{opacity:0.52}100%{transform:translateX(118%) scaleX(0.45);opacity:0}}
 @media (max-width: 600px) {
   .stats-grid { grid-template-columns: repeat(2,1fr); }
   .charts-row { grid-template-columns: 1fr; }
   .weather-7day { grid-template-columns: repeat(3,1fr); }
 }
-</style>
+    @keyframes sunCorona{0%,100%{opacity:0.36;transform:scale(1) rotate(0deg)}33%{opacity:0.66;transform:scale(1.11) rotate(4deg)}66%{opacity:0.30;transform:scale(0.93) rotate(-3deg)}}
+        @keyframes lensFlare{0%,100%{opacity:0;transform:scaleX(0.25)}50%{opacity:0.60;transform:scaleX(1)}}
+        @keyframes stormFlash{0%,100%{background:transparent}3%{background:rgba(255,255,255,0.22)}3.5%{background:transparent}4.4%{background:rgba(255,255,255,0.12)}4.8%{background:transparent}}
+        @keyframes stormCloud{from{transform:translateX(-440px);opacity:0}6%{opacity:0.54}94%{opacity:0.54}to{transform:translateX(calc(100vw + 440px));opacity:0}}
+    </style>
 </head>
 <body>
 <script>
@@ -866,93 +870,207 @@ function setWeatherAnimation(code){
   var el=document.getElementById("weather-particles");
   if(!el)return;
   var h="";
+  var card=el.parentElement;
 
+  // Dynamic sky — card background changes per condition for full atmospheric depth
+  var SKY={
+    clear:   "linear-gradient(175deg,rgba(8,72,188,0.90) 0%,rgba(14,142,224,0.84) 42%,rgba(36,194,208,0.76) 100%)",
+    partCld: "linear-gradient(175deg,rgba(18,90,194,0.86) 0%,rgba(36,150,220,0.80) 46%,rgba(62,190,208,0.72) 100%)",
+    overcast:"linear-gradient(175deg,rgba(50,60,78,0.94) 0%,rgba(70,84,102,0.88) 50%,rgba(90,106,122,0.82) 100%)",
+    fog:     "linear-gradient(175deg,rgba(128,144,162,0.94) 0%,rgba(162,174,188,0.88) 50%,rgba(186,195,208,0.84) 100%)",
+    rain:    "linear-gradient(175deg,rgba(16,36,66,0.96) 0%,rgba(30,56,90,0.90) 50%,rgba(46,74,108,0.86) 100%)",
+    snow:    "linear-gradient(175deg,rgba(122,146,186,0.90) 0%,rgba(162,182,214,0.84) 50%,rgba(196,212,234,0.79) 100%)",
+    hail:    "linear-gradient(175deg,rgba(40,46,60,0.96) 0%,rgba(56,64,82,0.90) 50%,rgba(72,82,98,0.86) 100%)",
+    storm:   "linear-gradient(175deg,rgba(10,13,24,0.98) 0%,rgba(22,26,44,0.96) 50%,rgba(36,42,60,0.94) 100%)"
+  };
+  function setSky(k){ if(card&&SKY[k]) card.style.background=SKY[k]; }
+
+  // ── CLEAR / MOSTLY CLEAR ─────────────────────────────────────────────────
   if(code===0||code===1){
-    // ── CLEAR / MOSTLY CLEAR — big sun, rotating rays, shimmer ──────────────
-    h+='<div style="position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,50,0.52) 0%,rgba(255,160,0,0.22) 45%,transparent 70%);animation:sunGlow 3.5s ease-in-out infinite;pointer-events:none;"></div>';
-    h+='<div style="position:absolute;top:6px;right:6px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(255,230,90,0.80) 0%,rgba(255,190,40,0.50) 55%,transparent 100%);animation:sunGlow 2.8s ease-in-out infinite;"></div>';
-    h+='<div style="position:absolute;top:6px;right:6px;width:90px;height:90px;animation:rayRotate 14s linear infinite;">';
-    var angles=[0,45,90,135,180,225,270,315];
-    angles.forEach(function(a){h+='<div style="position:absolute;top:50%;left:50%;width:3px;height:42px;margin-left:-1.5px;background:linear-gradient(to bottom,rgba(255,225,80,0.65),transparent);transform-origin:top center;transform:rotate('+a+'deg) translateY(-52px);border-radius:3px;"></div>';});
-    h+='</div>';
-    for(var p=0;p<8;p++){
-      var px=55+Math.random()*38,py=3+Math.random()*30,ps=2+Math.random()*3,pd=Math.random()*3.5,pdd=(1.2+Math.random()*1.2).toFixed(1);
-      h+='<div style="position:absolute;right:'+px+'%;top:'+py+'%;width:'+ps+'px;height:'+ps+'px;border-radius:50%;background:rgba(255,230,80,0.80);animation:sunShimmer '+pdd+'s '+pd.toFixed(1)+'s ease-in-out infinite;"></div>';
+    setSky("clear");
+    // Outer corona — large, slow organic pulse, offset top-right
+    h+='<div style="position:absolute;top:-110px;right:-100px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,212,65,0.50) 0%,rgba(255,168,22,0.20) 46%,transparent 68%);animation:sunCorona 7.5s ease-in-out infinite;pointer-events:none;"></div>';
+    // Inner warm glow ring
+    h+='<div style="position:absolute;top:-32px;right:-22px;width:172px;height:172px;border-radius:50%;background:radial-gradient(circle,rgba(255,232,105,0.40) 0%,rgba(255,185,45,0.16) 54%,transparent 76%);animation:sunGlow 4.8s ease-in-out infinite;animation-delay:0.7s;pointer-events:none;"></div>';
+    // Sun disc — crisp, brilliant
+    h+='<div style="position:absolute;top:6px;right:10px;width:86px;height:86px;border-radius:50%;background:radial-gradient(circle,rgba(255,252,145,1.0) 0%,rgba(255,222,65,0.92) 40%,rgba(255,178,32,0.68) 70%,transparent 100%);box-shadow:0 0 40px 20px rgba(255,215,55,0.42),0 0 80px 40px rgba(255,168,22,0.20);animation:sunGlow 3.4s ease-in-out infinite;pointer-events:none;"></div>';
+    // Rotating ray wheel (8 rays, varied lengths)
+    var rayLens=[38,28,44,30,40,26,42,32];
+    var raysHTML="";
+    for(var r=0;r<8;r++){ raysHTML+='<div style="position:absolute;top:50%;left:50%;width:1.8px;height:'+rayLens[r]+'px;background:linear-gradient(to bottom,rgba(255,235,85,0.80),transparent);transform-origin:0 0;transform:rotate('+r*45+'deg) translateX(-50%);border-radius:2px;"></div>'; }
+    h+='<div style="position:absolute;top:35px;right:52px;width:58px;height:58px;animation:rayRotate 24s linear infinite;pointer-events:none;">'+raysHTML+'</div>';
+    // Lens flare diagonal streak
+    h+='<div style="position:absolute;top:54px;right:62px;width:210px;height:1.5px;background:linear-gradient(to right,transparent,rgba(255,248,185,0.58),rgba(255,248,185,0.16),transparent);transform:rotate(-18deg);transform-origin:right center;animation:lensFlare 10s ease-in-out infinite;animation-delay:3.5s;pointer-events:none;"></div>';
+    // Shimmer sparkles at natural scatter positions
+    var sp=["\u2726","\u2727","\u22c6","\u00b7","\u2726","\u22c6"];
+    var sx=[14,30,58,40,72,20], sy=[64,46,32,80,60,90];
+    for(var s=0;s<6;s++){
+      var sdur=(2.6+Math.random()*3.2).toFixed(1), sdel=(Math.random()*5.5).toFixed(1);
+      var sfsz=(0.68+Math.random()*0.95).toFixed(2);
+      h+='<div style="position:absolute;top:'+sy[s]+'%;left:'+sx[s]+'%;font-size:'+sfsz+'rem;color:rgba(255,248,135,0.90);animation:sunShimmer '+sdur+'s ease-in-out infinite;animation-delay:'+sdel+'s;pointer-events:none;">'+sp[s]+'</div>';
     }
+  }
 
-  }else if(code===2){
-    // ── PARTLY CLOUDY — smaller sun + drifting clouds ──────────────────────
-    h+='<div style="position:absolute;top:-40px;right:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(255,200,50,0.42) 0%,rgba(255,160,0,0.15) 45%,transparent 70%);animation:sunGlow 3s ease-in-out infinite;"></div>';
-    h+='<div style="position:absolute;top:10px;right:10px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(255,225,80,0.70) 0%,rgba(255,185,30,0.38) 60%,transparent 100%);animation:sunGlow 2.5s ease-in-out infinite;"></div>';
-    [{w:180,h:65,t:22,d:0,dur:22,op:0.22},{w:130,h:50,t:48,d:7,dur:28,op:0.18},{w:90,h:40,t:12,d:14,dur:18,op:0.14}].forEach(function(c){
-      h+='<div style="position:absolute;top:'+c.t+'%;left:-'+c.w+'px;width:'+c.w+'px;height:'+c.h+'px;background:rgba(255,255,255,'+c.op+');border-radius:'+c.h+'px;filter:blur(10px);animation:cloudDrift '+c.dur+'s '+c.d+'s linear infinite;"></div>';
+  // ── PARTLY CLOUDY ────────────────────────────────────────────────────────
+  else if(code===2){
+    setSky("partCld");
+    // Smaller sun peeking top-right
+    h+='<div style="position:absolute;top:-25px;right:-15px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(255,210,62,0.38) 0%,rgba(255,165,22,0.14) 50%,transparent 70%);animation:sunCorona 7s ease-in-out infinite;pointer-events:none;"></div>';
+    h+='<div style="position:absolute;top:2px;right:6px;width:66px;height:66px;border-radius:50%;background:radial-gradient(circle,rgba(255,248,135,0.94) 0%,rgba(255,215,58,0.74) 50%,transparent 100%);box-shadow:0 0 26px 13px rgba(255,205,52,0.32);animation:sunGlow 4.2s ease-in-out infinite;pointer-events:none;"></div>';
+    // 3 parallax cloud layers — near (fast), mid, far (slow + faint)
+    var layers=[
+      {dMin:14,dMax:20,opacity:0.78,sizes:["4.4rem","6rem"],tops:[6,20,36],count:2},
+      {dMin:26,dMax:38,opacity:0.52,sizes:["3.4rem","4.8rem"],tops:[32,50,62],count:2},
+      {dMin:44,dMax:60,opacity:0.30,sizes:["2.4rem","3.6rem"],tops:[56,72],count:1}
+    ];
+    layers.forEach(function(l){
+      for(var c=0;c<l.count;c++){
+        var dur=(l.dMin+Math.random()*(l.dMax-l.dMin)).toFixed(1);
+        var sz=l.sizes[c%l.sizes.length];
+        var top=l.tops[c%l.tops.length];
+        var del=(Math.random()*parseFloat(dur)*0.88).toFixed(1);
+        h+='<div style="position:absolute;top:'+top+'%;left:-380px;font-size:'+sz+';opacity:0;animation:cloudDrift '+dur+'s linear infinite;animation-delay:'+del+'s;pointer-events:none;">\u2601</div>';
+      }
     });
+  }
 
-  }else if(code===3){
-    // ── OVERCAST — heavy layered cloud masses ───────────────────────────────
-    [{w:380,h:90,t:-10,d:0,dur:32,op:0.24},{w:300,h:75,t:18,d:9,dur:26,op:0.20},{w:420,h:100,t:38,d:4,dur:38,op:0.18},{w:250,h:65,t:58,d:15,dur:22,op:0.16},{w:310,h:80,t:75,d:2,dur:30,op:0.14}].forEach(function(c){
-      h+='<div style="position:absolute;top:'+c.t+'%;left:-'+c.w+'px;width:'+c.w+'px;height:'+c.h+'px;background:rgba(185,198,215,'+c.op+');border-radius:'+c.h+'px;filter:blur(14px);animation:cloudDrift '+c.dur+'s '+c.d+'s linear infinite;"></div>';
+  // ── OVERCAST ─────────────────────────────────────────────────────────────
+  else if(code===3){
+    setSky("overcast");
+    var oData=[
+      {spd:10,sz:"5.8rem",top:0,  opFilt:"brightness(0.58)"},
+      {spd:14,sz:"5.0rem",top:14, opFilt:"brightness(0.52)"},
+      {spd:20,sz:"6.4rem",top:26, opFilt:"brightness(0.46)"},
+      {spd:30,sz:"4.4rem",top:40, opFilt:"brightness(0.42)"},
+      {spd:44,sz:"5.2rem",top:56, opFilt:"brightness(0.36)"}
+    ];
+    oData.forEach(function(o){
+      for(var j=0;j<2;j++){
+        var dur=o.spd+j*5;
+        var del=(Math.random()*dur*0.92).toFixed(1);
+        var top=o.top+j*7;
+        h+='<div style="position:absolute;top:'+top+'%;left:-380px;font-size:'+o.sz+';opacity:0;filter:'+o.opFilt+';animation:cloudDrift '+dur+'s linear infinite;animation-delay:'+del+'s;pointer-events:none;">\u2601</div>';
+      }
     });
+  }
 
-  }else if(code===45||code===48){
-    // ── FOG / RIME FOG — layered horizontal mist ────────────────────────────
-    for(var f=0;f<6;f++){
-      var ft=8+f*16,fh=20+f*4,fdur=14+f*6,fdel=f*3.5,fop=(0.18+f*0.04).toFixed(2),fop2=(parseFloat(fop)*1.5).toFixed(2);
-      h+='<div style="position:absolute;top:'+ft+'%;left:-60%;width:220%;height:'+fh+'px;background:linear-gradient(to right,transparent 0%,rgba(195,210,225,'+fop+') 20%,rgba(195,210,225,'+fop2+') 50%,rgba(195,210,225,'+fop+') 80%,transparent 100%);filter:blur(7px);animation:fogDrift '+fdur+'s '+fdel.toFixed(1)+'s linear infinite;"></div>';
+  // ── FOG ──────────────────────────────────────────────────────────────────
+  else if(code===45||code===48){
+    setSky("fog");
+    for(var f=0;f<7;f++){
+      var fdur=(11+f*3.8+Math.random()*5.5).toFixed(1);
+      var fdel=(Math.random()*parseFloat(fdur)*0.82).toFixed(1);
+      var fopac=(0.58-f*0.055).toFixed(2);
+      var fblur=(1.2+f*0.85).toFixed(1);
+      var fhpx=(26+f*5+Math.random()*14).toFixed(0);
+      var ftop=(f*13+Math.random()*4.5).toFixed(0);
+      var grad="rgba(208,222,234,"+fopac+")";
+      h+='<div style="position:absolute;top:'+ftop+'%;left:-66%;width:232%;height:'+fhpx+'px;background:linear-gradient(to right,transparent 4%,'+grad+' 28%,'+grad+' 72%,transparent 96%);border-radius:50%;filter:blur('+fblur+'px);animation:fogDrift '+fdur+'s ease-in-out infinite;animation-delay:'+fdel+'s;pointer-events:none;"></div>';
     }
+  }
 
-  }else if((code>=51&&code<=55)){
-    // ── DRIZZLE — fine light streaks ────────────────────────────────────────
-    for(var i=0;i<20;i++){
-      var l=Math.random()*100,del=(Math.random()*2.5).toFixed(2),dur=(0.7+Math.random()*0.7).toFixed(2),rh=6+Math.random()*8,op=(0.45+Math.random()*0.3).toFixed(2);
-      h+='<div style="position:absolute;left:'+l+'%;top:-15px;width:1px;height:'+rh+'px;background:linear-gradient(to bottom,transparent,rgba(160,215,255,'+op+'));border-radius:2px;animation:rainFall '+dur+'s '+del+'s linear infinite;"></div>';
-    }
-
-  }else if((code>=61&&code<=65)||(code>=80&&code<=82)){
-    // ── RAIN / SHOWERS — medium streaks ─────────────────────────────────────
-    var cnt=code>=80?35:28;
-    for(var i=0;i<cnt;i++){
-      var l=Math.random()*100,del=(Math.random()*2).toFixed(2),dur=(0.45+Math.random()*0.5).toFixed(2),rh=10+Math.random()*14,op=(0.55+Math.random()*0.3).toFixed(2);
-      h+='<div style="position:absolute;left:'+l+'%;top:-20px;width:1.5px;height:'+rh+'px;background:linear-gradient(to bottom,transparent,rgba(147,210,255,'+op+'));border-radius:2px;animation:rainFall '+dur+'s '+del+'s linear infinite;"></div>';
-    }
-
-  }else if(code===66||code===67){
-    // ── FREEZING RAIN — icy streaks ──────────────────────────────────────────
-    for(var i=0;i<28;i++){
-      var l=Math.random()*100,del=(Math.random()*2).toFixed(2),dur=(0.5+Math.random()*0.5).toFixed(2),rh=10+Math.random()*12;
-      h+='<div style="position:absolute;left:'+l+'%;top:-20px;width:2px;height:'+rh+'px;background:linear-gradient(to bottom,transparent,rgba(180,230,255,0.75));border-radius:2px;animation:rainFall '+dur+'s '+del+'s linear infinite;"></div>';
-    }
-
-  }else if(code>=71&&code<=77){
-    // ── SNOW — drifting flakes ───────────────────────────────────────────────
-    var flakes=["❄","❅","❆","✦","•","◦"];
+  // ── DRIZZLE ──────────────────────────────────────────────────────────────
+  else if(code>=51&&code<=55){
+    setSky("rain");
     for(var i=0;i<22;i++){
-      var l=Math.random()*100,sz=(0.55+Math.random()*0.9).toFixed(2),del=(Math.random()*5).toFixed(2),dur=(3+Math.random()*3.5).toFixed(1),ch=flakes[Math.floor(Math.random()*flakes.length)];
-      h+='<div style="position:absolute;left:'+l+'%;top:-22px;font-size:'+sz+'rem;color:rgba(255,255,255,0.88);text-shadow:0 0 4px rgba(180,220,255,0.6);animation:snowDrift '+dur+'s '+del+'s linear infinite;">'+ch+'</div>';
+      var w=(0.85+Math.random()*0.65).toFixed(2);
+      var h2=(8+Math.random()*11).toFixed(0);
+      var top=(Math.random()*14).toFixed(0);
+      var left=(Math.random()*108).toFixed(0);
+      var dur=(0.65+Math.random()*0.55).toFixed(2);
+      var del=(Math.random()*2.8).toFixed(2);
+      h+='<div style="position:absolute;top:'+top+'%;left:'+left+'%;width:'+w+'px;height:'+h2+'px;background:linear-gradient(to bottom,transparent,rgba(192,228,255,0.74));border-radius:2px;opacity:0;animation:rainFall '+dur+'s linear infinite;animation-delay:'+del+'s;pointer-events:none;"></div>';
     }
+  }
 
-  }else if(code===85||code===86){
-    // ── SNOW SHOWERS / HAIL — rounded pellets ────────────────────────────────
-    for(var i=0;i<28;i++){
-      var l=Math.random()*100,sz=(3+Math.random()*4).toFixed(1),del=(Math.random()*1.8).toFixed(2),dur=(0.38+Math.random()*0.38).toFixed(2);
-      h+='<div style="position:absolute;left:'+l+'%;top:-12px;width:'+sz+'px;height:'+sz+'px;border-radius:50%;background:radial-gradient(circle,rgba(220,240,255,0.90),rgba(170,210,255,0.60));animation:hailFall '+dur+'s '+del+'s linear infinite;"></div>';
+  // ── RAIN / SHOWERS / FREEZING RAIN ───────────────────────────────────────
+  else if((code>=61&&code<=67)||(code>=80&&code<=82)){
+    setSky("rain");
+    var cnt=(code>=80)?38:30;
+    var ropBase=(code===66||code===67)?0.92:0.88;
+    for(var i=0;i<cnt;i++){
+      var rw=(0.95+Math.random()*2.1).toFixed(2);
+      var rh2=(14+Math.random()*24).toFixed(0);
+      var rtop=(Math.random()*16).toFixed(0);
+      var rleft=(Math.random()*112).toFixed(0);
+      var rdur=(0.26+Math.random()*0.30).toFixed(2);
+      var rdel=(Math.random()*1.8).toFixed(2);
+      h+='<div style="position:absolute;top:'+rtop+'%;left:'+rleft+'%;width:'+rw+'px;height:'+rh2+'px;background:linear-gradient(to bottom,transparent,rgba(155,215,255,'+ropBase+'));border-radius:2px;opacity:0;animation:rainFall '+rdur+'s linear infinite;animation-delay:'+rdel+'s;pointer-events:none;"></div>';
     }
+    for(var w=0;w<5;w++){
+      var ww=(52+Math.random()*95).toFixed(0);
+      var wtop=(14+Math.random()*72).toFixed(0);
+      var wdur=(0.95+Math.random()*1.6).toFixed(1);
+      var wdel=(Math.random()*2.8).toFixed(1);
+      h+='<div style="position:absolute;top:'+wtop+'%;left:-125px;width:'+ww+'px;height:1.5px;background:linear-gradient(to right,transparent,rgba(178,215,255,0.46),transparent);border-radius:2px;animation:windStreak '+wdur+'s '+wdel+'s linear infinite;pointer-events:none;"></div>';
+    }
+  }
 
-  }else if(code>=95){
-    // ── THUNDERSTORM — heavy rain + lightning + dark clouds ──────────────────
-    for(var i=0;i<42;i++){
-      var l=Math.random()*100,del=(Math.random()*1.5).toFixed(2),dur=(0.32+Math.random()*0.28).toFixed(2),rh=14+Math.random()*18,op=(0.60+Math.random()*0.28).toFixed(2);
-      h+='<div style="position:absolute;left:'+l+'%;top:-22px;width:2px;height:'+rh+'px;background:linear-gradient(to bottom,transparent,rgba(147,210,255,'+op+'));border-radius:2px;animation:rainFall '+dur+'s '+del+'s linear infinite;"></div>';
+  // ── SNOW ─────────────────────────────────────────────────────────────────
+  else if(code>=71&&code<=77){
+    setSky("snow");
+    var flakes=["\u2744","\u2745","\u2746","\u2726","\u2022","\u25e6","\u00b7","\u2744","\u2745"];
+    for(var i=0;i<24;i++){
+      var fsz=(0.70+Math.random()*1.15).toFixed(2);
+      var fblurS=parseFloat(fsz)<0.92?"blur(0.7px)":"none";
+      var ftop=(Math.random()*9).toFixed(0);
+      var fleft=(Math.random()*103).toFixed(0);
+      var fdur=(3.8+Math.random()*5.8).toFixed(1);
+      var fdel=(Math.random()*7.5).toFixed(1);
+      var fopac=(0.70+parseFloat(fsz)*0.14).toFixed(2);
+      h+='<div style="position:absolute;top:'+ftop+'%;left:'+fleft+'%;font-size:'+fsz+'rem;color:rgba(225,242,255,'+fopac+');filter:'+fblurS+';opacity:0;animation:snowDrift '+fdur+'s ease-in-out infinite;animation-delay:'+fdel+'s;pointer-events:none;">'+flakes[i%flakes.length]+'</div>';
     }
-    [{lft:12,del:0.3},{lft:45,del:2.8},{lft:74,del:1.5}].forEach(function(bolt){
-      h+='<div style="position:absolute;left:'+bolt.lft+'%;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,rgba(255,255,180,0.85),rgba(255,255,100,0.50),transparent);animation:lightningFlash 5s '+bolt.del+'s ease-in-out infinite;clip-path:polygon(35% 0%,65% 0%,52% 42%,72% 42%,28% 100%,48% 55%,22% 55%);width:24px;margin-left:-12px;"></div>';
-    });
-    [{w:380,h:110,t:-20,d:0,dur:28,op:0.42},{w:310,h:90,t:8,d:7,dur:22,op:0.36}].forEach(function(c){
-      h+='<div style="position:absolute;top:'+c.t+'%;left:-'+c.w+'px;width:'+c.w+'px;height:'+c.h+'px;background:rgba(30,35,60,'+c.op+');border-radius:'+c.h+'px;filter:blur(18px);animation:stormCloud '+c.dur+'s '+c.d+'s linear infinite;"></div>';
-    });
+  }
+
+  // ── HAIL ─────────────────────────────────────────────────────────────────
+  else if(code===85||code===86){
+    setSky("hail");
+    for(var i=0;i<30;i++){
+      var hpx=(3.5+Math.random()*4.5).toFixed(1);
+      var htop=(Math.random()*9).toFixed(0);
+      var hleft=(Math.random()*104).toFixed(0);
+      var hdur=(0.20+Math.random()*0.30).toFixed(2);
+      var hdel=(Math.random()*1.8).toFixed(2);
+      h+='<div style="position:absolute;top:'+htop+'%;left:'+hleft+'%;width:'+hpx+'px;height:'+hpx+'px;border-radius:50%;background:radial-gradient(circle,rgba(235,246,255,0.97) 24%,rgba(185,220,248,0.78) 100%);box-shadow:0 0 3px rgba(205,232,255,0.68);opacity:0;animation:hailFall '+hdur+'s linear infinite;animation-delay:'+hdel+'s;pointer-events:none;"></div>';
+    }
+  }
+
+  // ── THUNDERSTORM ─────────────────────────────────────────────────────────
+  else if(code>=95){
+    setSky("storm");
+    // Card-wide lightning flash overlay (stormFlash keyframe)
+    h+='<div style="position:absolute;top:0;left:0;width:100%;height:100%;background:transparent;border-radius:inherit;animation:stormFlash 5.5s ease-in-out infinite;animation-delay:1.4s;z-index:4;pointer-events:none;"></div>';
+    // 46 heavy angled rain streaks
+    for(var i=0;i<46;i++){
+      var rw=(1.4+Math.random()*2.4).toFixed(2);
+      var rh2=(18+Math.random()*30).toFixed(0);
+      var rtop=(Math.random()*16).toFixed(0);
+      var rleft=(Math.random()*114).toFixed(0);
+      var rdur=(0.20+Math.random()*0.22).toFixed(2);
+      var rdel=(Math.random()*1.5).toFixed(2);
+      h+='<div style="position:absolute;top:'+rtop+'%;left:'+rleft+'%;width:'+rw+'px;height:'+rh2+'px;background:linear-gradient(to bottom,transparent,rgba(152,214,255,0.94));border-radius:2px;opacity:0;animation:rainFall '+rdur+'s linear infinite;animation-delay:'+rdel+'s;pointer-events:none;"></div>';
+    }
+    // 3 lightning bolts at varied positions
+    var lpos=[[14,38],[54,18],[78,52]];
+    for(var l=0;l<3;l++){
+      var ldur=(4.2+Math.random()*5.2).toFixed(1);
+      var ldel=(Math.random()*5.5).toFixed(1);
+      var lsz=(1.75+Math.random()*0.85).toFixed(2);
+      h+='<div style="position:absolute;top:'+lpos[l][1]+'%;left:'+lpos[l][0]+'%;font-size:'+lsz+'rem;color:rgba(255,254,185,0.98);filter:drop-shadow(0 0 12px rgba(255,250,88,0.90));text-shadow:0 0 28px rgba(255,252,105,1);animation:lightningFlash '+ldur+'s ease-in-out infinite;animation-delay:'+ldel+'s;pointer-events:none;">\u26a1</div>';
+    }
+    // 2 massive dark storm cloud masses sweeping across
+    for(var sc=0;sc<2;sc++){
+      var scdur=(20+Math.random()*18).toFixed(0);
+      var scdel=(Math.random()*parseFloat(scdur)*0.82).toFixed(1);
+      h+='<div style="position:absolute;top:'+(sc*30)+'%;left:-440px;font-size:7.5rem;opacity:0;filter:brightness(0.26) blur(1.5px);animation:stormCloud '+scdur+'s linear infinite;animation-delay:'+scdel+'s;pointer-events:none;">\u26c8</div>';
+    }
+    // 6 wind streaks
     for(var w=0;w<6;w++){
-      var wt=15+w*15,wh=2+Math.random()*2,ww=80+Math.random()*120,wdur=(1.2+Math.random()*1.5).toFixed(1),wdel=(Math.random()*3).toFixed(1);
-      h+='<div style="position:absolute;top:'+wt+'%;left:-120px;width:'+ww+'px;height:'+wh+'px;background:linear-gradient(to right,transparent,rgba(180,210,255,0.38),transparent);border-radius:2px;animation:windStreak '+wdur+'s '+wdel+'s linear infinite;"></div>';
+      var ww=(68+Math.random()*130).toFixed(0);
+      var wtop=(10+Math.random()*80).toFixed(0);
+      var wdur=(0.88+Math.random()*1.25).toFixed(1);
+      var wdel=(Math.random()*3.2).toFixed(1);
+      h+='<div style="position:absolute;top:'+wtop+'%;left:-125px;width:'+ww+'px;height:2px;background:linear-gradient(to right,transparent,rgba(178,215,255,0.52),transparent);border-radius:2px;animation:windStreak '+wdur+'s '+wdel+'s linear infinite;pointer-events:none;"></div>';
     }
   }
 

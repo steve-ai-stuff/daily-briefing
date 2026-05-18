@@ -161,6 +161,8 @@ var BRIEFINGS = [
   [30, 3, 2026, "Daily-Briefing_30-03-2026.html"],
   [29, 3, 2026, "Daily-Briefing_29-03-2026.html"],
   [28, 3, 2026, "Daily-Briefing_28-03-2026.html"]
+,
+  [18, 5, 2026, "Daily-Briefing_18-05-2026.html"]
 ];
 
 var MONTH_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -210,8 +212,7 @@ function render(){
     var d = b[0], mo = b[1], y = b[2], fn = b[3];
     var dateObj = toDateObj(d,mo,y);
     var isToday = (fn === todayFn);
-    var weekday = DAY_SHORT[dateObj.getDay(),
-    [18, 5, 2026, "Daily-Briefing_18-05-2026.html"]
+    var weekday = DAY_SHORT[dateObj.getDay()
 ];
     var title   = DAY_NAMES[dateObj.getDay()] + ' ' + d + ' ' + MONTH_FULL[mo-1] + ' ' + y;
     var cardClass = 'briefing-card' + (isToday ? ' is-today' : '');

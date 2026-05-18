@@ -80,16 +80,22 @@ body::after {
 }
 /* Progress bar */
 #progress-bar {
-  background: rgba(8,22,13,0.85);
-  border:2px solid rgba(74,222,128,0.40);
-  border-radius:18px;
-  padding:16px 20px;
-  margin-bottom:18px;
+  background: rgba(8,22,13,0.92);
+  border-bottom:1px solid rgba(74,222,128,0.35);
+  border-radius:0;
+  padding:8px 20px;
+  margin-bottom:0;
   position:sticky;
   top:0;
   z-index:100;
   overflow:hidden;
   backdrop-filter:blur(14px);
+  width:100%;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
 }
 .progress-topic {
   font-size:0.72rem;
@@ -267,8 +273,6 @@ body::after {
 </head>
 <body>
 <div id="toast"></div>
-<div class="container">
-
 <!-- PROGRESS BAR -->
 <div id="progress-bar">
   <div id="rocket-wrap">&#x1F680;</div>
@@ -295,6 +299,9 @@ body::after {
     </div>
   </div>
 </div>
+<div class="container">
+
+
 
 <!-- WEATHER CARD -->
 <div class="weather-card">

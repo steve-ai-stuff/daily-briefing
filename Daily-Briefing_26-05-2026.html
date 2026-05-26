@@ -826,7 +826,7 @@ function renderRoadworks(){
   ROADWORKS.forEach(function(r){html+="<div style=\"font-size:0.80rem;color:rgba(240,253,244,0.85);margin-bottom:2px;\">\U0001f6a7 "+r+"</div>";});
   el.innerHTML=html;
 }
-var OPENMETEO_URL="https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm";
+var OPENMETEO_URL="https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=mm";
 var WTTR_URL="https://wttr.in/Invergordon,Scotland?format=j1";
 function wmoIcon(c){if(c===0)return"\u2600\ufe0f";if(c<=2)return"\u26c5";if(c===3)return"\u2601\ufe0f";if(c<=48)return"\U0001f32b\ufe0f";if(c<=55)return"\U0001f326\ufe0f";if(c<=67)return"\U0001f327\ufe0f";if(c<=77)return"\u2744\ufe0f";if(c<=82)return"\U0001f326\ufe0f";if(c<=86)return"\U0001f328\ufe0f";if(c>=95)return"\u26c8\ufe0f";return"\U0001f324\ufe0f";}
 function wmoDesc(c){if(c===0)return"Clear sky";if(c<=2)return"Partly cloudy";if(c===3)return"Overcast";if(c<=48)return"Foggy";if(c<=55)return"Drizzle";if(c<=67)return"Rain";if(c<=77)return"Snow";if(c<=82)return"Rain showers";if(c>=95)return"Thunderstorm";return"Variable";}
@@ -846,7 +846,7 @@ function renderWeatherOM(data){
     fc+="<div class=\"weather-day\"><div>"+days[d.getDay()]+"</div><div style=\"font-size:1.1rem;\">"+wmoIcon(data.daily.weathercode[i])+"</div><div style=\"color:#fbbf24;\">"+Math.round(data.daily.temperature_2m_max[i])+"\u00b0</div><div style=\"color:rgba(255,255,255,0.70);\">"+Math.round(data.daily.temperature_2m_min[i])+"\u00b0</div></div>";
   }
   document.getElementById("weather-forecast").innerHTML=fc;
-  setWeatherAnimation(code);
+  setWeatherAnimation(code,cur.is_day);
 }
 function renderWeatherWttr(data){
   try{
@@ -863,18 +863,21 @@ function renderWeatherWttr(data){
       fc2+="<div class=\"weather-day\"><div>"+days2[d2.getDay()]+"</div><div style=\"font-size:1.1rem;\">"+wttrIcon(dc)+"</div><div style=\"color:#fbbf24;\">"+cToF(w.maxtempC)+"\u00b0</div><div style=\"color:rgba(255,255,255,0.70);\">"+cToF(w.mintempC)+"\u00b0</div></div>";
     });
     document.getElementById("weather-forecast").innerHTML=fc2;
-    setWeatherAnimation(code);
+    var h2=new Date().getHours();var isDay2=(h2>=5&&h2<22)?1:0;
+    setWeatherAnimation(code,isDay2);
   }catch(e){showWeatherFallback();}
 }
 function showWeatherFallback(){
   document.getElementById("weather-temp").textContent="\U0001f321\ufe0f Unavailable";
   document.getElementById("weather-desc").innerHTML="<a href=\"https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0\" target=\"_blank\" style=\"color:#fbbf24;\">Check Met Office \u2197</a>";
 }
-function setWeatherAnimation(code){
+function setWeatherAnimation(code,isDay){
   var el=document.getElementById("weather-particles");
   if(!el)return;
   var h="",card=el.parentElement;
-  function getSolarPhase(){
+  // Determine phase using API is_day as authority; calculate elevation for twilight only
+  var phase="day",elev=45;
+  try{
     var now=new Date(),lat=57.6875,lon=-4.1613;
     var doy=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
     var dec=-23.45*Math.cos((360/365*(doy+10))*Math.PI/180);
@@ -882,12 +885,12 @@ function setWeatherAnimation(code){
     var solarHr=(now.getHours()+now.getMinutes()/60-tzOff)+lon/15;
     var ha=(solarHr-12)*15;
     var latR=lat*Math.PI/180,decR=dec*Math.PI/180,haR=ha*Math.PI/180;
-    var elev=Math.asin(Math.sin(latR)*Math.sin(decR)+Math.cos(latR)*Math.cos(decR)*Math.cos(haR))*180/Math.PI;
-    if(elev>4)return{phase:"day",elev:elev};
-    if(elev>-6)return{phase:"twilight",elev:elev};
-    return{phase:"night",elev:elev};
-  }
-  var P=getSolarPhase(),phase=P.phase,elev=P.elev;
+    elev=Math.asin(Math.sin(latR)*Math.sin(decR)+Math.cos(latR)*Math.cos(decR)*Math.cos(haR))*180/Math.PI;
+  }catch(e){}
+  // API is_day is authoritative for day vs night; elevation only used for twilight band
+  if(isDay===0){phase="night";}
+  else if(isDay===1){phase=(elev>=4&&elev<10)?"twilight":"day";}
+  else{phase=elev>4?"day":elev>-6?"twilight":"night";}
   var SKY={
     dclear:"linear-gradient(175deg,rgba(8,72,188,0.90) 0%,rgba(14,142,224,0.84) 42%,rgba(36,194,208,0.76) 100%)",
     dpart:"linear-gradient(175deg,rgba(18,90,194,0.86) 0%,rgba(36,150,220,0.80) 46%,rgba(62,190,208,0.72) 100%)",

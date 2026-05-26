@@ -68,7 +68,7 @@ body::before{
 .weather-card > *{position:relative;z-index:1;}
 .weather-main{font-size:2.2rem;font-weight:700;}
 .weather-desc{font-size:1rem;color:rgba(255,255,255,0.88);margin-bottom:10px;}
-.weather-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+.weather-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;}
 .weather-stat{text-align:center;background:rgba(0,0,0,0.22);border-radius:8px;padding:8px 4px;}
 .weather-stat-val{font-size:1.1rem;font-weight:600;}
 .weather-stat-label{font-size:0.68rem;color:rgba(255,255,255,0.70);}
@@ -162,6 +162,7 @@ body::before{
     <div class="weather-desc" id="weather-desc"></div>
     <div class="weather-grid">
       <div class="weather-stat"><div class="weather-stat-val" id="weather-feels">--</div><div class="weather-stat-label">Feels Like</div></div>
+    <div class="weather-stat"><div class="weather-stat-val" id="weather-cloud">--</div><div class="weather-stat-label">Cloud Cover</div></div>
       <div class="weather-stat"><div class="weather-stat-val" id="weather-wind">--</div><div class="weather-stat-label">Wind mph</div></div>
       <div class="weather-stat"><div class="weather-stat-val" id="weather-rain">--</div><div class="weather-stat-label">Precip mm</div></div>
     </div>
@@ -811,7 +812,7 @@ function renderShipBanner(){
       banner.innerHTML="<span style=\"color:#86efac;\">⚓ Season complete</span>";
     }
   }else{
-    var html="<strong style=\"color:#fbbf24;\">\U0001f6a2 "+todayShips.length+" ship"+(todayShips.length===1?"":"s")+" in port today!</strong><br>";
+    var html="<strong style=\"color:#fbbf24;\">🚢 "+todayShips.length+" ship"+(todayShips.length===1?"":"s")+" in port today!</strong><br>";
     todayShips.forEach(function(s){
       html+="<span style=\"color:#f0fdf4;\">"+s.ship+"</span> <span style=\"color:#86efac;\">("+s.company+")</span> "+s.arrival+" \u2013 "+s.departure+"<br>";
     });
@@ -822,15 +823,15 @@ function renderRoadworks(){
   var el=document.getElementById("roadworks-content");
   if(!el)return;
   if(!ROADWORKS||ROADWORKS.length===0){el.style.display="none";return;}
-  var html="<div style=\"font-size:0.78rem;color:rgba(240,253,244,0.70);margin-bottom:4px;\">\U0001f6a7 Active Roadworks Nearby</div>";
-  ROADWORKS.forEach(function(r){html+="<div style=\"font-size:0.80rem;color:rgba(240,253,244,0.85);margin-bottom:2px;\">\U0001f6a7 "+r+"</div>";});
+  var html="<div style=\"font-size:0.78rem;color:rgba(240,253,244,0.70);margin-bottom:4px;\">🚧 Active Roadworks Nearby</div>";
+  ROADWORKS.forEach(function(r){html+="<div style=\"font-size:0.80rem;color:rgba(240,253,244,0.85);margin-bottom:2px;\">🚧 "+r+"</div>";});
   el.innerHTML=html;
 }
 var OPENMETEO_URL="https://api.open-meteo.com/v1/forecast?latitude=57.68&longitude=-4.17&current=temperature_2m,apparent_temperature,windspeed_10m,precipitation,cloudcover,weathercode,is_day&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FLondon&forecast_days=5&windspeed_unit=mph&precipitation_unit=mm";
 var WTTR_URL="https://wttr.in/Invergordon,Scotland?format=j1";
-function wmoIcon(c){if(c===0)return"\u2600\ufe0f";if(c<=2)return"\u26c5";if(c===3)return"\u2601\ufe0f";if(c<=48)return"\U0001f32b\ufe0f";if(c<=55)return"\U0001f326\ufe0f";if(c<=67)return"\U0001f327\ufe0f";if(c<=77)return"\u2744\ufe0f";if(c<=82)return"\U0001f326\ufe0f";if(c<=86)return"\U0001f328\ufe0f";if(c>=95)return"\u26c8\ufe0f";return"\U0001f324\ufe0f";}
+function wmoIcon(c){if(c===0)return"\u2600\ufe0f";if(c<=2)return"\u26c5";if(c===3)return"\u2601\ufe0f";if(c<=48)return"🌫️";if(c<=55)return"🌦️";if(c<=67)return"🌧️";if(c<=77)return"\u2744\ufe0f";if(c<=82)return"🌦️";if(c<=86)return"🌨️";if(c>=95)return"\u26c8\ufe0f";return"🌤️";}
 function wmoDesc(c){if(c===0)return"Clear sky";if(c<=2)return"Partly cloudy";if(c===3)return"Overcast";if(c<=48)return"Foggy";if(c<=55)return"Drizzle";if(c<=67)return"Rain";if(c<=77)return"Snow";if(c<=82)return"Rain showers";if(c>=95)return"Thunderstorm";return"Variable";}
-function wttrIcon(c){if(c===113)return"\u2600\ufe0f";if(c===116)return"\U0001f324\ufe0f";if(c>=119&&c<=122)return"\u2601\ufe0f";if(c>=200&&c<=230)return"\u26c8\ufe0f";if(c>=263&&c<=321)return"\U0001f327\ufe0f";if(c>=323&&c<=395)return"\U0001f328\ufe0f";return"\U0001f321\ufe0f";}
+function wttrIcon(c){if(c===113)return"\u2600\ufe0f";if(c===116)return"🌤️";if(c>=119&&c<=122)return"\u2601\ufe0f";if(c>=200&&c<=230)return"\u26c8\ufe0f";if(c>=263&&c<=321)return"🌧️";if(c>=323&&c<=395)return"🌨️";return"🌡️";}
 function cToF(c){return Math.round(parseFloat(c)*9/5+32);}
 function renderWeatherOM(data){
   var cur=data.current,code=cur.weathercode;
@@ -839,6 +840,7 @@ function renderWeatherOM(data){
   document.getElementById("weather-feels").textContent=Math.round(cur.apparent_temperature)+"\u00b0C";
   document.getElementById("weather-wind").textContent=Math.round(cur.windspeed_10m)+" mph";
   document.getElementById("weather-rain").textContent=(cur.precipitation||0).toFixed(1)+" mm";
+    document.getElementById("weather-cloud").textContent=(cur.cloudcover||0)+"%";
   var days=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],fc="";
   var dts=data.daily.time||[];
   for(var i=0;i<Math.min(5,dts.length);i++){
@@ -868,7 +870,7 @@ function renderWeatherWttr(data){
   }catch(e){showWeatherFallback();}
 }
 function showWeatherFallback(){
-  document.getElementById("weather-temp").textContent="\U0001f321\ufe0f Unavailable";
+  document.getElementById("weather-temp").textContent="🌡️ Unavailable";
   document.getElementById("weather-desc").innerHTML="<a href=\"https://www.metoffice.gov.uk/weather/forecast/gcpv0ukn0\" target=\"_blank\" style=\"color:#fbbf24;\">Check Met Office \u2197</a>";
 }
 function setWeatherAnimation(code,isDay){

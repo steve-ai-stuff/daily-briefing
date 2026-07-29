@@ -176,7 +176,7 @@ body::before{
   <div style="font-size:2rem;font-weight:800;color:#f0fdf4;line-height:1.2;">Good Morning, Steve! 💻</div>
   <div style="font-size:1rem;color:#86efac;margin-top:6px;margin-bottom:12px;">Today's focus: <strong style="color:#fbbf24;">JavaScript</strong> — Day 7 of your 10-day rotation</div>
   <div style="font-size:0.85rem;color:rgba(240,253,244,0.80);line-height:1.6;">
-    JavaScript is the language of the web — every website you visit runs it. Today you'll focus on practical JS basics that make you more valuable in remote tech roles. A cruise ship is in port today: <strong>Majestic Princess</strong> (Princess Cruises) arrives 07:00 and departs 18:00, bringing up to 3,560 passengers ashore in Invergordon.
+    Today's focus is JavaScript — the language behind every interactive web page and a growing skill for AI, automation, and front-end work. The Majestic Princess (Princess Cruises, 3,800 passengers) is in port today — arriving from Kirkwall at 07:00 and departing for Leith at 18:00. Even basic JS skills dramatically expand your remote job options.
   </div>
   <div id="live-clock" style="font-size:1.1rem;font-weight:600;color:#fbbf24;margin-top:10px;"></div>
   <div class="traffic-box">
@@ -190,10 +190,10 @@ body::before{
 
 <!-- DAILY THOUGHT -->
 <div class="card">
-  <div class="card-title">💡 Today's JavaScript Thought</div>
-  <div style="font-size:1.05rem;font-style:italic;color:#fbbf24;line-height:1.6;">"JavaScript is the world's most misunderstood programming language — yet it's also the world's most deployed. Understanding it deeply is one of the highest-leverage skills in modern tech."</div>
-  <div style="font-size:0.80rem;color:rgba(240,253,244,0.60);margin-top:8px;">— Douglas Crockford, JavaScript: The Good Parts</div>
-  <div style="font-size:0.88rem;color:#86efac;margin-top:10px;line-height:1.5;">For your job search: Even non-developer roles (content, community, ops) increasingly value JS literacy. Being able to read a script, understand an API response, or tweak a webpage makes you stand out in remote tech roles — and it's very learnable.</div>
+  <div class="card-title">💡 Today&apos;s JavaScript Thought</div>
+  <div style="font-size:1.05rem;font-style:italic;color:#fbbf24;line-height:1.6;">"Any fool can write code that a computer can understand. Good programmers write code that humans can understand."</div>
+  <div style="font-size:0.80rem;color:rgba(240,253,244,0.60);margin-top:8px;">— Martin Fowler</div>
+  <div style="font-size:0.88rem;color:#86efac;margin-top:10px;line-height:1.5;">You don't need to be a full-stack developer to benefit from JavaScript skills. Even basic JS lets you automate browser tasks, build interactive briefings like this one, and understand how web apps work — making you a far stronger candidate for AI tools and content roles.</div>
 </div>
 
 
@@ -215,10 +215,13 @@ body::before{
 
 <!-- TOPIC TIP -->
 <div class="card">
-  <div class="card-title">💻 JavaScript — Console as Your Learning Playground</div>
+  <div class="card-title">💻 JavaScript — The One Concept That Unlocks Everything</div>
   <div class="tip-box">
-    <div style="font-size:0.93rem;font-weight:600;color:#fbbf24;margin-bottom:6px;">Your Browser is Already a JS IDE — No Install Needed</div>
-    <div style="font-size:0.88rem;color:rgba(240,253,244,0.88);line-height:1.6;">Open any webpage, press <strong>F12</strong> (or Cmd+Option+I on Mac) → click <strong>Console</strong>. Type <code style="background:rgba(74,222,128,0.12);padding:2px 6px;border-radius:4px;font-size:0.85rem;">console.log("Hello, Invergordon!")</code> and hit Enter. You just ran JavaScript. Try <code style="background:rgba(74,222,128,0.12);padding:2px 6px;border-radius:4px;font-size:0.85rem;">2 + 2</code> or <code style="background:rgba(74,222,128,0.12);padding:2px 6px;border-radius:4px;font-size:0.85rem;">["cruise","ship","port"].join(" ")</code>. This console is your free, zero-setup JS sandbox — use it every morning for 5 minutes to build the habit.</div>
+    <div style="font-size:0.93rem;font-weight:600;color:#fbbf24;margin-bottom:6px;">Master async/await — it's everywhere in modern JS</div>
+    <div style="font-size:0.88rem;color:rgba(240,253,244,0.88);line-height:1.6;">Almost every real-world JavaScript task — fetching data from an API, reading a file, waiting for a user action — is asynchronous. The <code style="background:rgba(255,255,255,0.1);padding:1px 5px;border-radius:3px;">async/await</code> pattern (built on Promises) is the modern, readable way to handle this without callback hell.<br><br>
+    <strong>Try this in your browser console right now:</strong><br>
+    <code style="display:block;background:rgba(0,0,0,0.3);padding:8px;border-radius:5px;margin-top:6px;font-size:0.82rem;">async function getPrice() {<br>  const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=gbp');<br>  const data = await res.json();<br>  console.log('BTC price (GBP):', data.bitcoin.gbp);<br>}<br>getPrice();</code><br>
+    This fetches the live Bitcoin price from a real API — and it's only 6 lines of modern JS.</div>
   </div>
 </div>
 
@@ -228,19 +231,19 @@ body::before{
 <div class="card">
   <div class="card-title">🏔 Highlands &amp; Invergordon News</div>
   <div class="news-item">
-    <div class="news-headline"><a href="https://www.nhshighland.scot.nhs.uk/news/2026/07/nhs-highland-launches-a-new-pilot-walk-in-clinic-model-in-invergordon/" target="_blank">NHS Highland Launches Walk-In Clinic Pilot at County Community Hospital, Invergordon</a></div>
-    <div class="news-source">NHS Highland · 13 Jul 2026</div>
-    <div class="news-summary">A new walk-in clinic is now open at County Community Hospital in Invergordon, running Monday and Friday 12pm–6pm. NHS Highland plans to expand to 7-day opening (12pm–8pm) if the pilot proves successful — a significant boost to local healthcare access in Easter Ross.</div>
+    <div class="news-headline"><a href="https://www.nhshighland.scot.nhs.uk/news/2026/07/nhs-highland-launches-a-new-pilot-walk-in-clinic-model-in-invergordon/" target="_blank">NHS Highland launches new walk-in clinic pilot at Invergordon's County Community Hospital</a></div>
+    <div class="news-source">NHS Highland · Jul 2026</div>
+    <div class="news-summary">A pilot same-day urgent care service is now running at County Community Hospital, Invergordon — open 12pm–6pm on Mondays and Fridays. The carefully managed rollout is testing a new model for Highland healthcare access.</div>
   </div>
-  <div class="news-item" style="margin-top:14px;">
-    <div class="news-headline"><a href="https://www.ross-shirejournal.co.uk/" target="_blank">Murray Travel Named Scotland's Best Small Travel Agency at UK Industry Awards</a></div>
-    <div class="news-source">Ross-shire Journal · Jul 2026</div>
-    <div class="news-summary">The Highland-based travel agency has won the prestigious title at the UK travel industry awards, a strong sign of confidence in the Highlands tourism sector as the cruise season hits its busiest mid-summer period.</div>
+  <div class="news-item">
+    <div class="news-headline"><a href="https://www.inverness-courier.co.uk/news/overnight-traffic-restrictions-return-to-a9-cromarty-bridge-436745/" target="_blank">A9 Cromarty Bridge overnight maintenance continues — traffic lights 7pm–6am</a></div>
+    <div class="news-source">Inverness Courier · Jul 2026</div>
+    <div class="news-summary">Ongoing cathodic protection work on the A9 Cromarty Bridge near Dingwall continues with overnight traffic lights (19:00–06:00, Mon–Fri) and a 24-hour 30mph speed restriction. Plan journeys accordingly.</div>
   </div>
-  <div class="news-item" style="margin-top:14px;">
-    <div class="news-headline"><a href="https://www.ross-shirejournal.co.uk/whats-on/" target="_blank">Belladrum 2026 Final Ticket Batch Released as Festival Season Peaks</a></div>
-    <div class="news-source">Ross-shire Journal · Jul 2026</div>
-    <div class="news-summary">Highland music lovers have been given a final opportunity to attend Belladrum Festival 2026, with the last batch of tickets now on sale. The Tartan Heart Festival is one of the most beloved events in the Northern Highlands calendar and typically sells out weeks in advance.</div>
+  <div class="news-item">
+    <div class="news-headline"><a href="https://www.ross-shirejournal.co.uk/sport/new-club-accepted-into-highland-league-for-next-season-431568/" target="_blank">Invergordon FC accepted into the Scottish Highland League for 2026/27 season</a></div>
+    <div class="news-source">Ross-shire Journal · 2026</div>
+    <div class="news-summary">Invergordon Football Club has been formally accepted into Tier 5 of Scottish Football for the 2026/27 season after fulfilling all entry criteria for the Highland Football League — a historic step for the local club.</div>
   </div>
 </div>
 
@@ -250,34 +253,34 @@ body::before{
 <div class="card">
   <div class="card-title">🤖 AI &amp; Tech News — 29 July 2026</div>
   <div class="news-item">
-    <div class="news-headline"><a href="https://techcrunch.com/2026/07/28/recursive-superintelligence-signs-400-compute-deal-with-amazon/" target="_blank">Recursive Superintelligence Signs $410M Compute Deal with Amazon Web Services</a></div>
-    <div class="news-source">TechCrunch · 28 Jul 2026</div>
-    <div class="news-summary">The self-improving AI startup that emerged from stealth in May with $650M in funding has locked in a massive AWS compute agreement. The company's approach — open-ended recursive self-improvement — is seen as one of the more compute-hungry bets in frontier AI research.</div>
-    <div class="news-relevance">💡 Huge enterprise AI infrastructure investment signals where the big money is flowing — AI infrastructure and AI-adjacent roles are booming.</div>
+    <div class="news-headline"><a href="https://www.anthropic.com/news/redeploying-fable-5" target="_blank">Claude Fable 5 fully restored after US export control restrictions lifted</a></div>
+    <div class="news-source">Anthropic · 1 Jul 2026</div>
+    <div class="news-summary">Anthropic redeployed Claude Fable 5 globally on July 1 after 19 days offline, adding a new cybersecurity safety classifier blocking the jailbreak exploit in 99%+ of cases. Access was extended through July 19 for paid subscribers at no extra charge.</div>
+    <div class="news-relevance">💡 Fable 5 leads SWE-bench Pro at 80.3% — understanding its capabilities is key for any AI-adjacent role Steve is targeting.</div>
   </div>
-  <div class="news-item" style="margin-top:14px;">
-    <div class="news-headline"><a href="https://aitoolsrecap.com/Blog/AINewsJuly2026.aspx" target="_blank">Kimi K3: China's 2.8 Trillion Parameter Open Model Tops Global Coding Leaderboard</a></div>
-    <div class="news-source">AI Tools Recap · Jul 2026</div>
-    <div class="news-summary">Moonshot AI's Kimi K3 stunned the US tech industry after the massive open-weights model (594GB download, modified MIT licence) debuted at #1 on a major coding benchmark. The release reignited the US-China AI rivalry debate and showed open-source competing at frontier level.</div>
-    <div class="news-relevance">💡 Open models getting stronger = more tools for your own AI-assisted job search, content creation, and skill-building.</div>
+  <div class="news-item">
+    <div class="news-headline"><a href="https://www.notebookcheck.net/Kimi-K3-tops-Frontend-Code-Arena-in-a-first-for-Chinese-AI-models.1347112.0.html" target="_blank">Kimi K3 tops Frontend Code Arena leaderboard — first Chinese model to do so</a></div>
+    <div class="news-source">Notebookcheck / Moonshot AI · 16 Jul 2026</div>
+    <div class="news-summary">Moonshot AI's Kimi K3 (2.8T MoE, 1M-token context) scored 1,679 Elo on Arena.ai's Frontend Code leaderboard, overtaking Claude Fable 5 (1,631) and GPT-5.6 Sol (1,618). It leads 6 of 7 front-end domains.</div>
+    <div class="news-relevance">💡 For today's JavaScript focus — Kimi K3 is free to test and excels at front-end code. A great AI coding assistant to practise with.</div>
   </div>
-  <div class="news-item" style="margin-top:14px;">
-    <div class="news-headline"><a href="https://www.zonetechify.com/blog/ai-news-july-2026-latest-ai-developments" target="_blank">EU Orders Google to Open Android Fully to AI Rivals</a></div>
-    <div class="news-source">ZoneTechify · Jul 2026</div>
-    <div class="news-summary">The European Union has issued a landmark ruling requiring Google to allow competing AI assistants full access to Android, citing anti-competitive behaviour. This is one of the most significant AI regulatory actions since the EU AI Act came into force.</div>
-    <div class="news-relevance">💡 Regulatory shifts reshape the AI landscape and create openings for smaller, challenger AI products and the people who support them.</div>
+  <div class="news-item">
+    <div class="news-headline"><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-20-2026-16-biggest-stories" target="_blank">2026 World AI Conference closes in Shanghai with 29-nation cooperation body launched</a></div>
+    <div class="news-source">BuildFastWithAI · 20 Jul 2026</div>
+    <div class="news-summary">The 2026 World AI Conference saw Xi Jinping deliver his first-ever AI keynote and launch the World Artificial Intelligence Cooperation Organization with 29 founding countries — a geopolitical milestone for AI governance.</div>
+    <div class="news-relevance">💡 Global AI regulation is tightening — understanding this landscape strengthens Steve's AI content and community management pitches.</div>
   </div>
-  <div class="news-item" style="margin-top:14px;">
-    <div class="news-headline"><a href="https://its.tech/blog/ai-update-july-2026/" target="_blank">The AI Agent Shift: All Major Platforms Now Racing to Build "Do the Work" Tools</a></div>
-    <div class="news-source">ITS Tech · Jul 2026</div>
-    <div class="news-summary">Microsoft, Anthropic, OpenAI, and Google have all pivoted to AI agents — software that doesn't just answer questions but completes tasks end-to-end. Agents can now analyse data, flag fast-growing accounts, draft emails and schedule meetings autonomously.</div>
-    <div class="news-relevance">💡 AI agent fluency is the new Excel fluency — remote workers who understand and can direct AI agents will be first-pick hires.</div>
+  <div class="news-item">
+    <div class="news-headline"><a href="https://www.marketingprofs.com/opinions/2026/55247/ai-update-july-10-2026-ai-news-and-views-from-the-past-week" target="_blank">Enterprise AI adoption hits record levels — agents automating data entry, invoicing, triage</a></div>
+    <div class="news-source">MarketingProfs · 10 Jul 2026</div>
+    <div class="news-summary">Early enterprise pilots are reporting meaningful time savings on repetitive workflows — data entry, invoice processing, customer triage. Autonomous AI agents and faster/cheaper AI chips are driving the fastest adoption wave yet.</div>
+    <div class="news-relevance">💡 This is exactly the space Steve's target roles operate in — AI tools, automation, customer success. Knowing the use cases makes interviews stronger.</div>
   </div>
-  <div class="news-item" style="margin-top:14px;">
-    <div class="news-headline"><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-20-2026-16-biggest-stories" target="_blank">World AI Conference Shanghai Closes with 29 Countries Founding New Cooperation Body</a></div>
-    <div class="news-source">Build Fast With AI · 20 Jul 2026</div>
-    <div class="news-summary">The 2026 World AI Conference in Shanghai wrapped after four days, with Xi Jinping delivering his first-ever AI keynote and the launch of the World Artificial Intelligence Cooperation Organisation (WAICO) with 29 founding nations including Russia, Pakistan, and Kazakhstan.</div>
-    <div class="news-relevance">💡 Global AI governance is crystallising — companies building in this space need content creators who understand both the tech and the policy context.</div>
+  <div class="news-item">
+    <div class="news-headline"><a href="https://www.artificialintelligence-news.com/" target="_blank">Reddit LLM moderation blocks 23 million spam views daily with 20% reduction in Q1</a></div>
+    <div class="news-source">AI News · Jul 2026</div>
+    <div class="news-summary">Reddit deployed LLM-based tools to detect subtle coordinated spam, blocking 23M spam views daily and cutting exposure by 20% in Q1 2026. A strong proof point for AI in community management.</div>
+    <div class="news-relevance">💡 Directly relevant to crypto community manager roles — AI-assisted moderation is becoming a required skill. Steve can reference this in applications.</div>
   </div>
 </div>
 
@@ -286,179 +289,176 @@ body::before{
 <!-- JOB LEADS -->
 <div class="card">
   <div class="card-title">💼 Remote Job Leads — 29 July 2026 | 10 Found</div>
-  <div style="font-size:0.78rem;color:rgba(240,253,244,0.60);margin-bottom:14px;">Sources: BitcoinerJobs · CryptoJobsList · GoodMoves · web3.career</div>
+  <div style="font-size:0.78rem;color:rgba(240,253,244,0.60);margin-bottom:14px;">Sources: BitcoinerJobs · CryptoJobsList · web3.career · GoodMoves · CryptoJobs</div>
 
   <div class="job-card job-tier1">
     <div class="job-header">
       <div>
-        <div class="job-title">Social Media &amp; Community Manager</div>
-        <div class="job-company">NOAH — Bitcoin-Native Banking</div>
+        <div class="job-title">Social Media Manager</div>
+        <div class="job-company">NOAH — BitcoinerJobs</div>
       </div>
       <span class="job-fit fit-perfect">PERFECT</span>
     </div>
     <div class="job-tags">
       <span class="job-tag">Tier 1</span>
-      <span class="job-tag">Salary TBC + bonus</span>
-      <span class="job-tag">🌐 Remote</span>
+      <span class="job-tag">~£40–55k</span>
+      <span class="job-tag">Remote</span>
     </div>
-    <div class="job-desc">Lead all day-to-day social media operations (Twitter/X, Discord, Telegram, LinkedIn), manage content and distribution strategy, build the audience and engage the community. NOAH is a bitcoin-native banking solution for the unbanked, fully remote, London-registered. Bitcoin passion required — your crypto background is the selling point here.</div>
+    <div class="job-desc">Lead all day-to-day operations of NOAH's social media — Twitter, Discord, Telegram, LinkedIn. 2+ years marketing/community management experience required. Bitcoin-native company, English fluency essential.</div>
     <a href="https://bitcoinerjobs.com/job/518809-social-media-manager-noah" target="_blank" class="apply-btn">Apply →</a>
   </div>
 
-  <div class="job-card job-tier1" style="margin-top:12px;">
+  <div class="job-card job-tier1">
+    <div class="job-header">
+      <div>
+        <div class="job-title">Social Media Coordinator</div>
+        <div class="job-company">Foundation — BitcoinerJobs</div>
+      </div>
+      <span class="job-fit fit-perfect">PERFECT</span>
+    </div>
+    <div class="job-tags">
+      <span class="job-tag">Tier 1</span>
+      <span class="job-tag">~£35–50k</span>
+      <span class="job-tag">Remote</span>
+    </div>
+    <div class="job-desc">Create engaging content for X/Twitter, Nostr, LinkedIn, Reddit and more for Foundation — makers of Passport Bitcoin hardware wallet. Ideal for someone passionate about Bitcoin self-custody and community.</div>
+    <a href="https://bitcoinerjobs.com/job/1255927-social-media-coordinator-foundation" target="_blank" class="apply-btn">Apply →</a>
+  </div>
+
+  <div class="job-card job-tier1">
+    <div class="job-header">
+      <div>
+        <div class="job-title">English Copywriter</div>
+        <div class="job-company">Braiins — BitcoinerJobs</div>
+      </div>
+      <span class="job-fit fit-perfect">PERFECT</span>
+    </div>
+    <div class="job-tags">
+      <span class="job-tag">Tier 1</span>
+      <span class="job-tag">~£38–52k</span>
+      <span class="job-tag">Remote</span>
+    </div>
+    <div class="job-desc">Write technical and marketing copy for Braiins, the team behind Slush Pool and Braiins OS. Bitcoin mining expertise a plus but not required — strong English writing and Bitcoin knowledge valued highly.</div>
+    <a href="https://bitcoinerjobs.com/job/1376382-english-copywriter-braiins" target="_blank" class="apply-btn">Apply →</a>
+  </div>
+
+  <div class="job-card job-tier1">
+    <div class="job-header">
+      <div>
+        <div class="job-title">SEO Writer</div>
+        <div class="job-company">Lightning News — BitcoinerJobs</div>
+      </div>
+      <span class="job-fit fit-perfect">PERFECT</span>
+    </div>
+    <div class="job-tags">
+      <span class="job-tag">Tier 1</span>
+      <span class="job-tag">~£28–42k</span>
+      <span class="job-tag">Remote</span>
+    </div>
+    <div class="job-desc">Write SEO-optimised content covering the Bitcoin and Lightning Network ecosystem. Bitcoin knowledge required. Fully remote, flexible hours. Great entry point with strong byline-building potential.</div>
+    <a href="https://bitcoinerjobs.com/job/1949167-seo-writer-lightning-news" target="_blank" class="apply-btn">Apply →</a>
+  </div>
+
+  <div class="job-card job-tier1">
+    <div class="job-header">
+      <div>
+        <div class="job-title">Remote Community Manager</div>
+        <div class="job-company">Bond Labs — web3.career</div>
+      </div>
+      <span class="job-fit fit-perfect">PERFECT</span>
+    </div>
+    <div class="job-tags">
+      <span class="job-tag">Tier 1</span>
+      <span class="job-tag">$50–80k</span>
+      <span class="job-tag">Remote</span>
+    </div>
+    <div class="job-desc">Build and manage Bond Labs' Web3 community across Discord, Telegram, Twitter. DeFi/crypto knowledge preferred. Remote-first, async-friendly team. Strong overlap with Steve's customer service + crypto background.</div>
+    <a href="https://web3.career/community-manager+remote-jobs" target="_blank" class="apply-btn">Apply →</a>
+  </div>
+
+  <div class="job-card job-tier1">
     <div class="job-header">
       <div>
         <div class="job-title">Community Manager</div>
-        <div class="job-company">Immunefi — Web3 Bug Bounty Leader</div>
-      </div>
-      <span class="job-fit fit-perfect">PERFECT</span>
-    </div>
-    <div class="job-tags">
-      <span class="job-tag">Tier 1</span>
-      <span class="job-tag">Salary TBC</span>
-      <span class="job-tag">🌐 Remote</span>
-      <span class="job-tag">Full Time</span>
-    </div>
-    <div class="job-desc">Build and manage the community for Immunefi, the #1 crypto bug bounty platform. Community management, Discord/Telegram engagement, content support. Non-technical role — your customer service, event coordination, and crypto knowledge are a strong match.</div>
-    <a href="https://cryptojobslist.com/jobs/community-manager-remote-at-immunefi" target="_blank" class="apply-btn">Apply →</a>
-  </div>
-
-  <div class="job-card job-tier1" style="margin-top:12px;">
-    <div class="job-header">
-      <div>
-        <div class="job-title">Director of Marketing, Media &amp; Events</div>
-        <div class="job-company">Scarce City — Bitcoin Marketplace</div>
-      </div>
-      <span class="job-fit fit-perfect">PERFECT</span>
-    </div>
-    <div class="job-tags">
-      <span class="job-tag">Tier 1</span>
-      <span class="job-tag">Competitive</span>
-      <span class="job-tag">🌐 Remote</span>
-    </div>
-    <div class="job-desc">Lead marketing, social media, community management, media efforts, and event planning for a Bitcoin-native marketplace. Exactly matches your event coordination and community background. Bitcoin literacy is a strong plus.</div>
-    <a href="https://bitcoinerjobs.com/job/225442-director-of-marketing-media-and-events-scarce-city" target="_blank" class="apply-btn">Apply →</a>
-  </div>
-
-  <div class="job-card job-tier1" style="margin-top:12px;">
-    <div class="job-header">
-      <div>
-        <div class="job-title">Head of Marketing @ Zion</div>
-        <div class="job-company">Zion — Decentralised Creator Platform</div>
+        <div class="job-company">Windranger Labs — CryptoJobsList</div>
       </div>
       <span class="job-fit fit-high">HIGH</span>
     </div>
     <div class="job-tags">
       <span class="job-tag">Tier 1</span>
-      <span class="job-tag">Competitive</span>
-      <span class="job-tag">🌐 Remote</span>
+      <span class="job-tag">$45–75k</span>
+      <span class="job-tag">Remote</span>
     </div>
-    <div class="job-desc">Lead external communications for a decentralised community platform that connects creators with audiences. Oversee all marketing channels, strategy, and brand message. Bitcoin/crypto experience valued — your community and content background maps well.</div>
-    <a href="https://bitcoinerjobs.com/job/544102-head-of-marketing-zion" target="_blank" class="apply-btn">Apply →</a>
+    <div class="job-desc">Manage Windranger Labs' online communities and coordinate events across Discord and Telegram. Web3-native environment, fully remote. Some DeFi/blockchain background expected.</div>
+    <a href="https://cryptojobslist.com/remote_community-manager" target="_blank" class="apply-btn">Apply →</a>
   </div>
 
-  <div class="job-card job-tier1" style="margin-top:12px;">
+  <div class="job-card job-tier1">
     <div class="job-header">
       <div>
-        <div class="job-title">KOL &amp; Community Growth Manager</div>
-        <div class="job-company">dev.fun — AI Agent Arenas (Poker Arena)</div>
+        <div class="job-title">Content Writer (Crypto)</div>
+        <div class="job-company">CryptoJobsList — Multiple Companies</div>
       </div>
       <span class="job-fit fit-high">HIGH</span>
     </div>
     <div class="job-tags">
       <span class="job-tag">Tier 1</span>
-      <span class="job-tag">£38k–£66k/yr</span>
-      <span class="job-tag">🌐 Remote</span>
-      <span class="job-tag">Full Time</span>
+      <span class="job-tag">$38–65k</span>
+      <span class="job-tag">Remote</span>
     </div>
-    <div class="job-desc">Build KOL networks across EN + CN crypto/AI communities, run campaigns tied to product launches, own user activation metrics. Platform drew 30,000+ AI agents in week one. AI + crypto crossover role — excellent growth space. Note: Chinese fluency valued but EN-only candidates encouraged to apply.</div>
-    <a href="https://cryptojobslist.com/jobs/kol-community-growth-manager-at-dev-fun" target="_blank" class="apply-btn">Apply →</a>
+    <div class="job-desc">203 content writer roles in Web3 currently listed across CryptoJobsList including companies like Cosmoverse, Glow, and Gravity Team. Research and apply to the highest-matching 3–4 today.</div>
+    <a href="https://cryptojobslist.com/remote" target="_blank" class="apply-btn">Browse →</a>
   </div>
 
-  <div class="job-card job-tier1" style="margin-top:12px;">
+  <div class="job-card job-tier2">
     <div class="job-header">
       <div>
-        <div class="job-title">Head of Product Marketing</div>
-        <div class="job-company">Anagram — Web3 Venture Studio</div>
-      </div>
-      <span class="job-fit fit-high">HIGH</span>
-    </div>
-    <div class="job-tags">
-      <span class="job-tag">Tier 1</span>
-      <span class="job-tag">£63k–£95k/yr</span>
-      <span class="job-tag">🌐 Remote</span>
-    </div>
-    <div class="job-desc">Own product marketing strategy for a Web3 venture studio. Content, positioning, campaigns, and community narrative. Remote-first, strong salary band. Web3 knowledge required — your crypto background is the unlock here.</div>
-    <a href="https://cryptojobslist.com/jobs/head-of-product-marketing-at-anagram" target="_blank" class="apply-btn">Apply →</a>
-  </div>
-
-  <div class="job-card job-tier2" style="margin-top:12px;">
-    <div class="job-header">
-      <div>
-        <div class="job-title">Partnerships Manager</div>
-        <div class="job-company">ETHGlobal Inc — Ethereum Hackathon Network</div>
+        <div class="job-title">Social Media Manager</div>
+        <div class="job-company">Multiple — CryptoJobs.com</div>
       </div>
       <span class="job-fit fit-high">HIGH</span>
     </div>
     <div class="job-tags">
       <span class="job-tag">Tier 2</span>
-      <span class="job-tag">£71k–£95k/yr</span>
-      <span class="job-tag">🌐 Remote</span>
+      <span class="job-tag">$17–48/hr</span>
+      <span class="job-tag">Remote</span>
     </div>
-    <div class="job-desc">Build and manage sponsor and partner relationships for the world's largest Ethereum hackathon series. Relationship-building, community connections, and event coordination are core skills here — maps well to your background.</div>
-    <a href="https://cryptojobslist.com/jobs/partnerships-manager-at-ethglobal-inc-1" target="_blank" class="apply-btn">Apply →</a>
+    <div class="job-desc">CryptoJobs.com lists full-time and part-time social media management roles at Web3 companies globally. Roles include content calendar management, analytics, and community engagement across major platforms.</div>
+    <a href="https://www.cryptojobs.com/social-media-management" target="_blank" class="apply-btn">Browse →</a>
   </div>
 
-  <div class="job-card job-tier2" style="margin-top:12px;">
+  <div class="job-card job-tier2">
     <div class="job-header">
       <div>
-        <div class="job-title">Mantle Squad — Community &amp; Content (Part Time)</div>
-        <div class="job-company">Windranger Labs — Mantle Ecosystem</div>
-      </div>
-      <span class="job-fit fit-medium">MEDIUM</span>
-    </div>
-    <div class="job-tags">
-      <span class="job-tag">Tier 2</span>
-      <span class="job-tag">Unlisted</span>
-      <span class="job-tag">🌐 Remote</span>
-      <span class="job-tag">Part Time</span>
-    </div>
-    <div class="job-desc">Contribute to the Mantle Web3 ecosystem as a part-time community or content squad member. Good entry point to Web3 ecosystem work with a major backer (Windranger Labs). Flexible commitment makes it stackable with other work.</div>
-    <a href="https://cryptojobslist.com/jobs/mantle-squad-at-windranger-labs" target="_blank" class="apply-btn">Apply →</a>
-  </div>
-
-  <div class="job-card job-tier2" style="margin-top:12px;">
-    <div class="job-header">
-      <div>
-        <div class="job-title">Project Development Officer</div>
+        <div class="job-title">Partnership and Development Lead</div>
         <div class="job-company">Scottish Flood Forum — GoodMoves</div>
       </div>
       <span class="job-fit fit-medium">MEDIUM</span>
     </div>
     <div class="job-tags">
       <span class="job-tag">Tier 2</span>
-      <span class="job-tag">~£35k/yr</span>
-      <span class="job-tag">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland Remote</span>
+      <span class="job-tag">~£35k</span>
+      <span class="job-tag">Remote (Scotland)</span>
     </div>
-    <div class="job-desc">Home-based role supporting Scottish Flood Forum projects across mainland Scotland. Community liaison, stakeholder engagement, project support. Closing 31 July 2026 — act fast. Suits your background in customer engagement and community coordination.</div>
-    <a href="https://goodmoves.org/search?workplace[]=Remote" target="_blank" class="apply-btn">Apply →</a>
+    <div class="job-desc">Full-time home-based role with extensive travel across Scotland. Leads partnerships and development for the Scottish Flood Forum. Closes 31 July — apply today. Strong transferable skills match for Steve.</div>
+    <a href="https://goodmoves.org/" target="_blank" class="apply-btn">Apply →</a>
   </div>
 
-  <div class="job-card job-tier2" style="margin-top:12px;">
+  <div class="job-card job-tier2">
     <div class="job-header">
       <div>
-        <div class="job-title">B2B Marketing Manager — Brave Search APIs</div>
-        <div class="job-company">Brave — Privacy Browser &amp; Search</div>
+        <div class="job-title">Mentor Support Worker</div>
+        <div class="job-company">Down&apos;s Syndrome Scotland — GoodMoves</div>
       </div>
       <span class="job-fit fit-medium">MEDIUM</span>
     </div>
     <div class="job-tags">
       <span class="job-tag">Tier 2</span>
-      <span class="job-tag">£71k–£95k/yr</span>
-      <span class="job-tag">🌐 Remote (USA/EU)</span>
+      <span class="job-tag">£30,013 pro-rata</span>
+      <span class="job-tag">Remote (Perth area)</span>
     </div>
-    <div class="job-desc">Lead B2B marketing for Brave's search API product line. Privacy, crypto, and Web3 adjacent — Brave has a BAT token ecosystem. Marketing strategy, content, and business relationships. EU candidates accepted (includes UK).</div>
-    <a href="https://cryptojobslist.com/jobs/b2b-marketing-manager-brave-search-usa-and-eu-at-brave" target="_blank" class="apply-btn">Apply →</a>
+    <div class="job-desc">Part-time remote role supporting adults with Down's syndrome through an Inclusive Employment Programme. Closes TODAY (29 July). Based in/around Perth. Strong customer service and community background valued.</div>
+    <a href="https://goodmoves.org/" target="_blank" class="apply-btn">Apply TODAY →</a>
   </div>
 </div>
 
@@ -467,19 +467,19 @@ body::before{
 <!-- LEARNING FOCUS -->
 <div class="card">
   <div class="card-title">📚 30-Min Learning Focus — JavaScript</div>
-  <div style="font-size:1.05rem;font-weight:700;color:#fbbf24;margin-bottom:10px;">Today: Variables, Data Types &amp; Your First Function</div>
-  <div style="font-size:0.88rem;color:rgba(240,253,244,0.85);line-height:1.6;margin-bottom:12px;">JavaScript has just a handful of core concepts that unlock everything else. Today you'll learn the building blocks: <code style="background:rgba(74,222,128,0.12);padding:1px 5px;border-radius:3px;">let</code>/<code style="background:rgba(74,222,128,0.12);padding:1px 5px;border-radius:3px;">const</code>, strings, numbers, arrays, and how to write a simple function. Open your browser console (F12 → Console) to run every example as you go.</div>
+  <div style="font-size:1.05rem;font-weight:700;color:#fbbf24;margin-bottom:10px;">Today: Build a Live Data Fetcher with Fetch API &amp; async/await</div>
+  <div style="font-size:0.88rem;color:rgba(240,253,244,0.85);line-height:1.6;margin-bottom:12px;">You're going to write a short JavaScript snippet that fetches live data from a real public API, parses the JSON, and displays a result. No frameworks, no installs — just a browser and 30 minutes. This is the foundational skill behind every modern web app.</div>
   <div class="tip-box">
-    <div style="font-size:0.88rem;font-weight:700;color:var(--green-bright);margin-bottom:6px;">📖 Free Resource: javascript.info — "The Modern JavaScript Tutorial"</div>
-    <div style="font-size:0.83rem;color:rgba(240,253,244,0.80);">The best free JS resource on the internet. Start at Chapter 1: "Hello World" then Chapter 2: "Variables". Each chapter takes ~5 minutes and has live runnable examples. No signup required. URL: <strong>javascript.info</strong></div>
+    <div style="font-size:0.88rem;font-weight:700;color:var(--green-bright);margin-bottom:6px;">📖 Free Resource: javascript.info — Fetch API chapter</div>
+    <div style="font-size:0.83rem;color:rgba(240,253,244,0.80);">The gold standard for learning modern JS. Go to javascript.info → "Fetching data" — read the async/await + fetch section (20-min read, excellent examples). Free, no login.</div>
   </div>
   <div class="tip-box" style="margin-top:10px;">
-    <div style="font-size:0.88rem;font-weight:700;color:var(--green-bright);margin-bottom:6px;">🎬 Free Resource: freeCodeCamp "JavaScript for Beginners" (YouTube)</div>
-    <div style="font-size:0.83rem;color:rgba(240,253,244,0.80);">Search YouTube for "freeCodeCamp javascript beginners full course". Jump to the 8-minute mark to skip setup and go straight to syntax. Watch at 1.25x speed for 10 minutes, pause, practice in console.</div>
+    <div style="font-size:0.88rem;font-weight:700;color:var(--green-bright);margin-bottom:6px;">🎬 Free Resource: Fireship.io — "Async Await in 100 Seconds"</div>
+    <div style="font-size:0.83rem;color:rgba(240,253,244,0.80);">Search "Fireship async await" on YouTube — a 2-minute video that makes the concept crystal clear, followed by a practical walkthrough. Fireship is the best free JS channel for busy learners.</div>
   </div>
   <div style="margin-top:12px;padding:10px;background:rgba(251,191,36,0.08);border-radius:8px;border-left:3px solid #fbbf24;">
     <div style="font-size:0.83rem;font-weight:700;color:#fbbf24;margin-bottom:4px;">⏱ Your 30-min structure:</div>
-    <div style="font-size:0.80rem;color:rgba(240,253,244,0.85);line-height:1.7;">⏱ 0–5 min: Open browser console (F12). Type <code style="background:rgba(74,222,128,0.12);padding:1px 4px;border-radius:3px;">let name = "Steve"; console.log("Hello " + name)</code><br>⏱ 5–15 min: Read javascript.info Chapter 2 (Variables) — follow along in console<br>⏱ 15–20 min: Create an array: <code style="background:rgba(74,222,128,0.12);padding:1px 4px;border-radius:3px;">let skills = ["crypto","community","drones"]; console.log(skills[0])</code><br>⏱ 20–28 min: Write your first function: <code style="background:rgba(74,222,128,0.12);padding:1px 4px;border-radius:3px;">function greet(name) { return "Hello, " + name + "!" }</code><br>⏱ 28–30 min: Call it: <code style="background:rgba(74,222,128,0.12);padding:1px 4px;border-radius:3px;">greet("Invergordon")</code> — log the result, celebrate!</div>
+    <div style="font-size:0.80rem;color:rgba(240,253,244,0.85);line-height:1.7;">0–5 min: Watch the Fireship 100-second video on async/await<br>5–15 min: Read the javascript.info Fetch chapter, take 3 notes<br>15–25 min: Open your browser console (F12), type out the BTC price example from the tip card above — then modify it to fetch ETH price too<br>25–30 min: Write a 2-sentence summary of what you learned and save it to your notes. Done!</div>
   </div>
 </div>
 
@@ -487,10 +487,10 @@ body::before{
 
 <!-- TODAY'S ONE ACTION -->
 <div class="card">
-  <div class="card-title">⚡ Today's One Action</div>
+  <div class="card-title">⚡ Today&apos;s One Action</div>
   <div class="action-box">
-    <div class="action-text">🎯 Apply to NOAH Social Media Manager — your crypto background makes this a near-perfect fit</div>
-    <div style="font-size:0.85rem;color:rgba(240,253,244,0.80);margin-top:12px;line-height:1.6;">NOAH is a fully remote, bitcoin-native company looking for someone to own their social media and community presence across Twitter/X, Discord, Telegram, and LinkedIn. You have: crypto background, customer service experience, content creation skills, and community management ability. This is exactly the intersection they're hiring for. Go to <strong>bitcoinerjobs.com/job/518809-social-media-manager-noah</strong>, read the full description, and submit your application today. Spend 45 minutes: 15 min reading the job spec, 20 min tailoring your cover letter to highlight your crypto knowledge and community experience, 10 min submitting. One application done beats five half-started ones.</div>
+    <div class="action-text">🎯 Apply to the Partnership &amp; Development Lead role at Scottish Flood Forum — closes TOMORROW (31 July)</div>
+    <div style="font-size:0.85rem;color:rgba(240,253,244,0.80);margin-top:12px;line-height:1.6;">This GoodMoves role closes in 2 days and is a strong match: remote (home-based, mainland Scotland), £35k, requires partnership-building and communication skills. Go to goodmoves.org → search "Scottish Flood Forum" → read the full JD → spend 25 minutes tailoring your CV intro and cover letter to highlight your event coordination, community engagement, and Highlands connection. Submit before end of day tomorrow.</div>
   </div>
 </div>
 
@@ -554,12 +554,12 @@ var SAVED_LEARN_HOURS=0;
 var SAVED_APPS=0;
 var SAVED_INTERVIEWS=0;
 var SAVED_SESSIONS=0;
-var SAVED_DAILY_HISTORY=[{"date": "2026-07-19", "apps": 0, "hours": 0}, {"date": "2026-07-20", "apps": 0, "hours": 0}, {"date": "2026-07-23", "apps": 0, "hours": 0}, {"date": "2026-07-24", "apps": 0, "hours": 0}, {"date": "2026-07-25", "apps": 0, "hours": 0}, {"date": "2026-07-26", "apps": 0, "hours": 0}, {"date": "2026-07-27", "apps": 0, "hours": 0}];
+var SAVED_DAILY_HISTORY=[{"date": "2026-07-20", "apps": 0, "hours": 0}, {"date": "2026-07-23", "apps": 0, "hours": 0}, {"date": "2026-07-24", "apps": 0, "hours": 0}, {"date": "2026-07-25", "apps": 0, "hours": 0}, {"date": "2026-07-26", "apps": 0, "hours": 0}, {"date": "2026-07-27", "apps": 0, "hours": 0}, {"date": "2026-07-29", "apps": 0, "hours": 0}];
 var SAVED_SKILLS={"Data Analysis": 0, "Prompt Engineering": 0, "Python": 0, "AI Tools & Systems": 0, "Drone & Regs": 0, "Photography": 0, "JavaScript": 0, "LinkedIn": 0, "Freelancing": 0, "Freelancing Platforms": 0};
 var TODAY_DATE="2026-07-29";
 var TODAY_TOPIC="JavaScript";
-var CRUISE_SCHEDULE=[{"date": "2026-07-29", "ship": "Majestic Princess", "arrival": "07:00", "departure": "18:00", "passengers": 3560}];
-var ROADWORKS=["A9 Dualling (Tay Crossing\u2013Ballinluig) \u2014 overnight signals northbound 19:00\u201306:00", "A9 at Tomatin \u2014 traffic management changes from 13 Jul, allow extra time northbound", "A9 at Dunrobin Castle \u2014 resurfacing from 2 Aug, 19:00\u201306:00 for 15 nights"];
+var CRUISE_SCHEDULE=[{"date": "2026-07-29", "ship": "Majestic Princess", "company": "Princess Cruises", "arrival": "07:00", "departure": "18:00", "passengers": 3800, "from": "Kirkwall", "to": "Leith"}];
+var ROADWORKS=["A9 Cromarty Bridge \u2014 overnight maintenance works 19:00\u201306:00 Mon\u2013Fri (temporary traffic lights)"];
 var state={news:false,applied:false,learn:false,action:false,apps:0,learn_hours:0,sessions:0};
 var rocketFired=false;
 function loadState(){
